@@ -1,0 +1,78 @@
+sword:
+  name: sword
+  version: 1.0.0
+  copyrightYear: 2021
+  profile: sword
+  addressEnabled: false
+server:
+  port: 8063
+  servlet:
+    context-path: /api
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 800
+    min-spare-threads: 30
+  max-http-header-size: 102400
+  
+logging:
+  level:
+    com.soyatec.sword: debug
+    org.springframework: warn
+user:
+  password:
+    maxRetryCount: 5
+spring:
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    cache: false
+  messages:
+    basename: static/i18n/messages
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    generator:
+      write-bigdecimal-as-plain: true
+      write-numbers-as-strings: true
+  profiles:
+    active: #profileActive#
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+  devtools:
+    restart:
+      enabled: true
+mybatis:
+  typeAliasesPackage: com.soyatec.sword.**.domain
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  configLocation: classpath:mybatis/mybatis-config.xml
+pagehelper:
+  helperDialect: mysql
+  reasonable: false
+  supportMethodsArguments: true
+  params: count=countSql
+shiro:
+  user:
+    loginUrl: 
+    unauthorizedUrl:
+    indexUrl:
+    captchaEnabled: false
+    captchaType: math
+  cookie:
+    domain: null
+    path: /
+    httpOnly: true
+    maxAge: 30
+    cipherKey: dFydscLVXt58nWBv/sl/AA==
+  session:
+    expireTime: -1
+    dbSyncPeriod: 6000000
+    validationInterval: 10080
+    maxSession: -1
+    kickoutAfter: false
+xss:
+  enabled: true
+  excludes: /system/notice/*
+  urlPatterns: /system/*,/monitor/*,/tool/*
+  

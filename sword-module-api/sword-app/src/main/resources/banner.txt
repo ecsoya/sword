@@ -1,0 +1,2 @@
+Application Version: ${beeplus.version}
+Spring Boot Version: ${spring-boot.version}

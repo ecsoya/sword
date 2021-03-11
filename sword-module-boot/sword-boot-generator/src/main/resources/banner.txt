@@ -1,0 +1,2 @@
+Application Version: ${sword.version}
+Spring Boot Version: ${spring-boot.version}

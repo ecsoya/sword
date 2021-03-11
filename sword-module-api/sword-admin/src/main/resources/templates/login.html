@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>蜜蜂PLUS</title>
+    <meta name="description" content="蜜蜂PLUS">
+    <link href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css"
+          th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/admin.css" th:href="@{/css/admin.css}"
+          rel="stylesheet"/>
+	<!-- 360浏览器急速模式 -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>
+    <style type="text/css">label.error { position:inherit;  }</style>
+    <script>
+        if(window.top!==window.self){alert('未登录或登录超时。请重新登录');window.top.location=window.location};
+    </script>
+</head>
+
+<body class="signin">
+
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-6 col-md-offset-3">
+            <form id="signupForm">
+                <h1 class="no-margins" align="center">蜜蜂PLUS</h1>
+                <p class="m-t-md" align="center">后台管理登录</p>
+                <input type="text" name="username" class="form-control uname"
+                       placeholder="用户名"/> <input type="password" name="password"
+                                                  class="form-control pword" placeholder="密码"/>
+                <div class="row m-t" th:if="${captchaEnabled==true}">
+                    <div class="col-xs-6">
+                        <input type="text" name="validateCode" class="form-control code"
+                               placeholder="验证码" maxlength="5" autocomplete="off">
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="javascript:void(0);" title="点击更换验证码"> <img
+                                th:src="@{/captcha/captchaImage(type=${captchaType})}" class="imgcode" width="85%"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="checkbox-custom"
+                     th:classappend="${captchaEnabled==false} ? 'm-t'">
+                    <input type="checkbox" id="rememberme" name="rememberme">
+                    <label for="rememberme">记住我</label>
+                </div>
+                <button class="btn btn-block" style="background-color: rgb(40,130,135); color: white" id="btnSubmit"
+                        data-loading="正在验证登录，请稍后...">登录
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="signup-footer">
+        <div align="center" style="color: white;">
+            &copy; 2021 All Rights Reserved. 蜜蜂PLUS 🐝<br>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]];  var captchaType = [[${captchaType}]];  </script>
+<!-- 全局js -->
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js"
+        th:src="@{/js/bootstrap.min.js}"></script>
+<!-- 验证插件 -->
+<script src="../static/ajax/libs/validate/jquery.validate.min.js"
+        th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<script src="../static/ajax/libs/validate/messages_zh.min.js"
+        th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+<script src="../static/ajax/libs/layer/layer.min.js"
+        th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script src="../static/ajax/libs/blockUI/jquery.blockUI.js"
+        th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script src="../static/js/ry-ui.js"
+        th:src="@{/js/ry-ui.js?v=4.1.0}"></script>
+<script src="../static/js/login.js" th:src="@{/js/login.js?v=1.0.0}"></script>
+</body>
+</html>

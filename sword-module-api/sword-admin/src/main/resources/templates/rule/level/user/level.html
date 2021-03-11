@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('用户级别列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>级别：</label> <select name="levelId" id="levelId"
+								th:value="${levelId}" onchange="$.table.search()">
+									<option value="">全部</option>
+									<option th:each="level : ${levels}" th:text="${level.name}"
+										th:value="${level.id}" th:selected="${levelId == level.id}"></option>
+							</select></li>
+							<li><label>月度考核：</label> <select name="type"
+								onchange="$.table.search()">
+									<option value="">所有</option>
+									<option value="0">参与考核</option>
+									<option value="1">不参与考核</option>
+							</select></li>
+							<!-- <li><label>状态：</label> <select name="status">
+									<option value="">所有</option>
+									<option value="0">考核成功</option>
+									<option value="1">考核失败</option>
+							</select></li> -->
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="admin:rule:level:edit"> <i
+					class="fa fa-plus"></i> 添加
+				</a> <a class="btn btn-danger multiple disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="admin:rule:level:remove"> <i
+					class="fa fa-remove"></i> 删除
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-bordered">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('admin:rule:level:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('admin:rule:level:edit')}]];
+        
+        var levels = [[${levels}]];
+        
+        var prefix = ctx + "admin/rule/level";
+
+        $(function() {
+            var options = {
+                url: prefix + "/users",
+                createUrl: prefix + "/users/add?levelId=" + $('#levelId').val(),
+                removeUrl: prefix + "/users/remove",
+                modalName: "用户级别",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'userId',
+                    title: '用户Id',
+                    visible: false
+                },
+                {
+                    field: 'loginName',
+                    title: '用户名',
+                },
+                {
+                    field: 'email',
+                    title: '邮箱',
+                },
+                {
+                    field: 'mobile',
+                    title: '电话',
+                },
+                {
+                    field: 'levelId',
+                    title: '级别',
+                    formatter: function(value, row, index) {
+                    	var level = levels.filter(l=>l.id==value)[0];
+                    	if (level) {
+                    		return level.name;
+                    	}
+                    	return value;
+                    }
+                },
+                {
+                    field: 'type',
+                    title: '月度考核',
+                    formatter: function(value, row, index) {
+                    	return typeTools(row);
+                    }
+                },
+                /* {
+                    field: 'status',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatStatus(['考核成功', '考核失败'], value);
+                    }
+                }, */
+                {
+                    field: 'verifyTime',
+                    title: '考核时间'
+                },
+                {
+                    field: 'remark',
+                    title: '备注'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.userId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        function typeTools(row) {
+    	    if (row.type == 1) {
+    			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.userId + '\')"></i> ';
+    		} else {
+    			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.userId + '\')"></i> ';
+    		}
+    	}
+    	
+    	/* 用户管理-停用 */
+    	function disable(userId) {
+    		$.modal.confirm("确认不参与月度考核吗？", function() {
+    			$.operate.post(prefix + "/users/type", { "userId": userId, "type": 1 });
+    	    })
+    	}
+
+    	/* 用户管理启用 */
+    	function enable(userId) {
+    		$.modal.confirm("确认要参与月度考核吗？", function() {
+    			$.operate.post(prefix + "/users/type", { "userId": userId, "type": 0 });
+    	    })
+    	}
+    </script>
+</body>
+</html>
