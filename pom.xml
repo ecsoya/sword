@@ -197,10 +197,16 @@
 				<artifactId>sword-core</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
-			<!-- 核心业务 -->
+			<!-- 后台 -->
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>
 				<artifactId>sword-admin</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<!-- 前端API -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-app</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 

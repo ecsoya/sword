@@ -1,4 +1,4 @@
-//package com.soyatec.beeplus.controller.monitor;
+//package com.soyatec.sword.controller.monitor;
 //
 //import java.util.List;
 //
@@ -11,18 +11,18 @@
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.ResponseBody;
 //
-//import com.soyatec.beeplus.common.annotation.Log;
-//import com.soyatec.beeplus.common.core.controller.BaseController;
-//import com.soyatec.beeplus.common.core.domain.AjaxResult;
-//import com.soyatec.beeplus.common.core.page.TableDataInfo;
-//import com.soyatec.beeplus.common.core.text.Convert;
-//import com.soyatec.beeplus.common.enums.BusinessType;
-//import com.soyatec.beeplus.common.enums.OnlineStatus;
-//import com.soyatec.beeplus.framework.shiro.session.OnlineSession;
-//import com.soyatec.beeplus.framework.shiro.session.OnlineSessionDAO;
-//import com.soyatec.beeplus.framework.shiro.util.ShiroUtils;
-//import com.soyatec.beeplus.system.domain.SysUserOnline;
-//import com.soyatec.beeplus.system.service.ISysUserOnlineService;
+//import com.soyatec.sword.common.annotation.Log;
+//import com.soyatec.sword.common.core.controller.BaseController;
+//import com.soyatec.sword.common.core.domain.AjaxResult;
+//import com.soyatec.sword.common.core.page.TableDataInfo;
+//import com.soyatec.sword.common.core.text.Convert;
+//import com.soyatec.sword.common.enums.BusinessType;
+//import com.soyatec.sword.common.enums.OnlineStatus;
+//import com.soyatec.sword.framework.shiro.session.OnlineSession;
+//import com.soyatec.sword.framework.shiro.session.OnlineSessionDAO;
+//import com.soyatec.sword.framework.shiro.util.ShiroUtils;
+//import com.soyatec.sword.system.domain.SysUserOnline;
+//import com.soyatec.sword.system.service.ISysUserOnlineService;
 //
 ///**
 // * 在线用户监控

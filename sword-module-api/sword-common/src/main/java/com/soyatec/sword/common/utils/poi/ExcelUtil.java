@@ -46,9 +46,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.soyatec.sword.common.annotation.Excel;
-import com.soyatec.sword.common.annotation.Excels;
 import com.soyatec.sword.common.annotation.Excel.ColumnType;
 import com.soyatec.sword.common.annotation.Excel.Type;
+import com.soyatec.sword.common.annotation.Excels;
 import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.text.Convert;

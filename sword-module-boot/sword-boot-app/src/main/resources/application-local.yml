@@ -1,0 +1,60 @@
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    database: 4
+    timeout: 60000
+    jedis:
+      pool:
+        max-active: 1000
+        max-wait: -1
+        max-idle: 10
+        min-idle: 5
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      master:
+        #url: jdbc:mysql://127.0.0.1:3306/sword?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        #username: root
+        #password: 123456
+        url: jdbc:mysql://bj-cdb-fmgl4u90.sql.tencentcdb.com:61237/sword?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: sword
+        password: '%Password%!123456'
+      slave:
+        enabled: false
+        url: null
+        username: null
+        password: null
+      initialSize: 5
+      minIdle: 10
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      maxEvictableIdleTimeMillis: 900000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        allow: null
+        url-pattern: /druid/*
+        login-username: null
+        login-password: null
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+            
+swagger:
+  enabled: true
+

@@ -71,7 +71,7 @@ public class ShiroUtils {
 		UserRealm realm = (UserRealm) rsm.getRealms().iterator().next();
 		realm.clearAllCachedAuthorizationInfo();
 	}
-	
+
 	/**
 	 * 生成随机盐
 	 */

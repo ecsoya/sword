@@ -1,0 +1,162 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.soyatec.sword</groupId>
+    <artifactId>sword-module-deploy</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>sword-deploy-nginx</artifactId>
+  <packaging>pom</packaging>
+  <name>sword-deploy-nginx</name>
+  
+  <profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>buildnumber-maven-plugin</artifactId>
+						<version>1.4</version>
+						<configuration>
+							<timestampFormat>yyyyMMddHHmmss</timestampFormat>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>create-timestamp</goal>
+								</goals>
+							</execution>
+						</executions>
+						<inherited>false</inherited>
+					</plugin>
+					<!-- =========================================== -->
+					<!-- make sure antrun is after packaging plugins -->
+					<!-- =========================================== -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>deploy</id>
+								<phase>package</phase>
+
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<scp localFile="${project.basedir}/dev/deploy-alpha.sh"
+											remoteToFile="${dev.root}:${dev.password}@${dev.host}:/home/sword/nginx/sword-nginx.sh"
+											verbose="true" passphrase="" trust="true">
+										</scp>
+										<!-- <scp localFile="${project.basedir}/dev/nginx/nginx.conf"
+											remoteToFile="${dev.root}:${dev.password}@${dev.host}:/home/sword/nginx/nginx.conf"
+											verbose="true" passphrase="" trust="true">
+										</scp> -->
+										<!-- calls deploy script -->
+										<sshexec host="${dev.host}" trust="yes"
+											username="${dev.root}" password="${dev.password}"
+											passphrase=""
+											command="sh /home/sword/nginx/sword-nginx.sh" />
+
+										<!-- SSH -->
+										<taskdef name="sshexec"
+											classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"
+											classpathref="maven.plugin.classpath" />
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+						<!-- libraries for scp impl -->
+						<!-- antrun doesn't use os's scp -->
+						<dependencies>
+							<dependency>
+								<groupId>com.jcraft</groupId>
+								<artifactId>jsch</artifactId>
+								<version>0.1.53</version>
+							</dependency>
+							<dependency>
+								<groupId>ant</groupId>
+								<artifactId>ant-jsch</artifactId>
+								<version>1.6.5</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+					<!-- =========================================== -->
+					<!-- antrun plugin end -->
+					<!-- =========================================== -->
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
+			<build>
+				<plugins>
+					<!-- =========================================== -->
+					<!-- make sure antrun is after packaging plugins -->
+					<!-- =========================================== -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>deploy</id>
+								<phase>package</phase>
+
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<scp localFile="${project.basedir}/prod/deploy-release.sh"
+											remoteToFile="${prod.root}:${prod.password}@${prod.host}:/home/nginx/release-nginx.sh"
+											verbose="true" passphrase="" trust="true">
+										</scp>
+										<scp localFile="${project.basedir}/prod/nginx/nginx.conf"
+											remoteToFile="${prod.root}:${prod.password}@${prod.host}:/home/nginx/nginx.conf"
+											verbose="true" passphrase="" trust="true">
+										</scp>
+										<!-- calls deploy script -->
+										<sshexec host="${prod.host}" trust="yes"
+											username="${prod.root}" password="${prod.password}"
+											passphrase=""
+											command="sh /home/nginx/release-nginx.sh" />
+
+										<!-- SSH -->
+										<taskdef name="sshexec"
+											classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"
+											classpathref="maven.plugin.classpath" />
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+						<!-- libraries for scp impl -->
+						<!-- antrun doesn't use os's scp -->
+						<dependencies>
+							<dependency>
+								<groupId>com.jcraft</groupId>
+								<artifactId>jsch</artifactId>
+								<version>0.1.53</version>
+							</dependency>
+							<dependency>
+								<groupId>ant</groupId>
+								<artifactId>ant-jsch</artifactId>
+								<version>1.6.5</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+					<!-- =========================================== -->
+					<!-- antrun plugin end -->
+					<!-- =========================================== -->
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

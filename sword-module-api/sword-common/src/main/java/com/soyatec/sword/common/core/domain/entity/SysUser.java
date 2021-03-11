@@ -12,9 +12,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.soyatec.sword.common.annotation.Excel;
-import com.soyatec.sword.common.annotation.Excels;
 import com.soyatec.sword.common.annotation.Excel.ColumnType;
 import com.soyatec.sword.common.annotation.Excel.Type;
+import com.soyatec.sword.common.annotation.Excels;
 import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**

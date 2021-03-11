@@ -213,5 +213,7 @@
 	</build>
 	<modules>
 		<module>sword-boot-admin</module>
+		<module>sword-boot-app</module>
+		<module>sword-boot-generator</module>
 	</modules>
 </project>
