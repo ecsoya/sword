@@ -31,7 +31,7 @@
 				style="position: relative; width: auto; height: 100%;">
 				<div class="sidebar-collapse" style="width: auto; height: 100%;">
 					<ul class="nav" id="side-menu">
-						<a th:href="@{/index}">
+						<a th:href="@{/tool/gen}">
 							<li class="logo"><span class="logo-lg">GENERATOR</span></li>
 						</a>
 						<li class="active"><a href="#"> <i class="fa fa-bars"></i>
@@ -39,9 +39,9 @@
 						</a>
 							<ul class="nav nav-second-level collapse in" aria-expanded="true"
 								style="">
-								<li><a class="menuItem" href="/tool/build" data-index="16">表单构建</a>
+								<li><a class="menuItem" th:href="@{/tool/build}" data-index="16">表单构建</a>
 								</li>
-								<li><a class="menuItem" href="/tool/gen" data-index="17">代码生成</a>
+								<li><a class="menuItem" th:href="@{/tool/gen}" data-index="17">代码生成</a>
 								</li>
 							</ul></li>
 					</ul>

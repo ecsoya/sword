@@ -209,6 +209,12 @@
 				<artifactId>sword-app</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
+			<!-- 挖矿业务 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-mining</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
 
 			<!-- swagger2 -->
 			<dependency>
@@ -292,4 +298,10 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+	<modules>
+		<module>sword-module-api</module>
+		<module>sword-module-boot</module>
+		<module>sword-module-deploy</module>
+		<module>sword-module-mining</module>
+	</modules>
 </project>

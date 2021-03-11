@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyatec.sword.task.mapper.SwordTaskMapper">
+    
+    <resultMap type="SwordTask" id="SwordTaskResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="date"    column="date"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectSwordTaskVo">
+        select id, name, date, status, create_time, update_time, remark from t_sword_task
+    </sql>
+
+    <select id="selectSwordTaskList" parameterType="SwordTask" resultMap="SwordTaskResult">
+        <include refid="selectSwordTaskVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="date != null "> and date = #{date}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectSwordTaskById" parameterType="Long" resultMap="SwordTaskResult">
+        <include refid="selectSwordTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSwordTask" parameterType="SwordTask" useGeneratedKeys="true" keyProperty="id">
+        insert into t_sword_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="date != null">date,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="date != null">#{date},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSwordTask" parameterType="SwordTask">
+        update t_sword_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="date != null">date = #{date},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSwordTaskById" parameterType="Long">
+        delete from t_sword_task where id = #{id}
+    </delete>
+
+    <delete id="deleteSwordTaskByIds" parameterType="String">
+        delete from t_sword_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+	<select id="selectSwordTaskByName" resultMap="SwordTaskResult">
+        <include refid="selectSwordTaskVo"/>
+        where name = #{name} and `date` = date(#{date})
+    </select>
+</mapper>
