@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyatec.sword.wallet.mapper.UserWalletAccountMapper">
+    
+    <resultMap type="UserWalletAccount" id="UserWalletAccountResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="symbol"    column="symbol"    />
+        <result property="address"    column="address"    />
+        <result property="addressUrl"    column="address_url"    />
+        <result property="amount"    column="amount"    />
+        <result property="lastAmount"    column="last_amount"    />
+        <result property="minHoldAmount"    column="min_hold_amount"    />
+        <result property="frozenAmount"    column="frozen_amount"    />
+        <result property="lockedAmount"    column="locked_amount"    />
+        <result property="withdrawalEnabled"    column="withdrawal_enabled"    />
+        <result property="withdrawalFee"    column="withdrawal_fee"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectUserWalletAccountVo">
+        select a.id, a.user_id, a.symbol, a.address, a.address_url, a.amount, a.last_amount, a.min_hold_amount, a.frozen_amount, a.locked_amount, a.withdrawal_enabled, b.withdrawal_fee, a.create_time, a.update_time, a.remark from t_user_wallet_account a
+        left join (select symbol as bsymbol, withdrawal_fee from t_sword_symbol) as b on a.symbol = b.bsymbol
+    </sql>
+
+    <select id="selectUserWalletAccountList" parameterType="UserWalletAccount" resultMap="UserWalletAccountResult">
+        <include refid="selectUserWalletAccountVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="symbol != null  and symbol != ''"> and symbol = #{symbol}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="addressUrl != null  and addressUrl != ''"> and address_url = #{addressUrl}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="lastAmount != null "> and last_amount = #{lastAmount}</if>
+            <if test="minHoldAmount != null "> and min_hold_amount = #{minHoldAmount}</if>
+            <if test="frozenAmount != null "> and frozen_amount = #{frozenAmount}</if>
+            <if test="lockedAmount != null "> and locked_amount = #{lockedAmount}</if>
+            <if test="withdrawalEnabled != null "> and withdrawal_enabled = #{withdrawalEnabled}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserWalletAccountById" parameterType="Long" resultMap="UserWalletAccountResult">
+        <include refid="selectUserWalletAccountVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserWalletAccount" parameterType="UserWalletAccount" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user_wallet_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="symbol != null and symbol != ''">symbol,</if>
+            <if test="address != null">address,</if>
+            <if test="addressUrl != null">address_url,</if>
+            <if test="amount != null">amount,</if>
+            <if test="lastAmount != null">last_amount,</if>
+            <if test="minHoldAmount != null">min_hold_amount,</if>
+            <if test="frozenAmount != null">frozen_amount,</if>
+            <if test="lockedAmount != null">locked_amount,</if>
+            <if test="withdrawalEnabled != null">withdrawal_enabled,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="symbol != null and symbol != ''">#{symbol},</if>
+            <if test="address != null">#{address},</if>
+            <if test="addressUrl != null">#{addressUrl},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="lastAmount != null">#{lastAmount},</if>
+            <if test="minHoldAmount != null">#{minHoldAmount},</if>
+            <if test="frozenAmount != null">#{frozenAmount},</if>
+            <if test="lockedAmount != null">#{lockedAmount},</if>
+            <if test="withdrawalEnabled != null">#{withdrawalEnabled},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserWalletAccount" parameterType="UserWalletAccount">
+        update t_user_wallet_account
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="symbol != null and symbol != ''">symbol = #{symbol},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="addressUrl != null">address_url = #{addressUrl},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="lastAmount != null">last_amount = #{lastAmount},</if>
+            <if test="minHoldAmount != null">min_hold_amount = #{minHoldAmount},</if>
+            <if test="frozenAmount != null">frozen_amount = #{frozenAmount},</if>
+            <if test="lockedAmount != null">locked_amount = #{lockedAmount},</if>
+            <if test="withdrawalEnabled != null">withdrawal_enabled = #{withdrawalEnabled},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserWalletAccountById" parameterType="Long">
+        delete from t_user_wallet_account where id = #{id}
+    </delete>
+
+    <delete id="deleteUserWalletAccountByIds" parameterType="String">
+        delete from t_user_wallet_account where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+ 	<select id="selectUserWalletAccount" resultMap="UserWalletAccountResult">
+        <include refid="selectUserWalletAccountVo"/>
+        where user_id = #{userId} and symbol = #{symbol}
+    </select>
+        
+    <select id="lockUserWalletAccountById" parameterType="Long" resultMap="UserWalletAccountResult">
+        <include refid="selectUserWalletAccountVo"/>
+        where id = #{id} for update
+    </select>
+    
+    <select id="selectUserAccountAmount" resultType="BigDecimal">
+    	select <if test="kind==0">sum(amount)</if> <if test="kind==1">sum(frozen_amount)</if> <if test="kind==2">sum(locked_amount)</if> 
+    	from t_user_wallet_account where symbol = #{symbol}
+    </select>
+        
+</mapper>

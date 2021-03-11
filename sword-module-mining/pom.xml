@@ -2,9 +2,16 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.soyatec.sword</groupId>
-    <artifactId>sword-module-api</artifactId>
+    <artifactId>sword</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>sword-mining</artifactId>
-  <name>sword-mining</name>
+  <artifactId>sword-module-mining</artifactId>
+  <packaging>pom</packaging>
+  <name>sword-module-mining</name>
+  <modules>
+  	<module>sword-mining</module>
+  	<module>sword-wallet</module>
+  	<module>sword-wallet-zbx</module>
+  	<module>sword-mining-zbx</module>
+  </modules>
 </project>

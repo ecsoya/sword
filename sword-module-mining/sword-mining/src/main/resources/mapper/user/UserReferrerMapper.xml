@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyatec.sword.user.mapper.UserReferrerMapper">
+    
+    <resultMap type="UserReferrer" id="UserReferrerResult">
+        <result property="userId"    column="user_id"    />
+        <result property="referralId"    column="referral_id"    />
+        <result property="referralCode"    column="referral_code"    />
+        <result property="leftCode"    column="left_code"    />
+        <result property="leftCodeUrl"    column="left_code_url"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="leftCodeEnabled"    column="left_code_enabled"    />
+        <result property="btree"    column="btree"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="rightCode"    column="right_code"    />
+        <result property="remark"    column="remark"    />
+        <result property="rightCodeUrl"    column="right_code_url"    />
+        <result property="rightCodeEnabled"    column="right_code_enabled"    />
+        <result property="baseUrl"    column="base_url"    />
+    </resultMap>
+
+    <sql id="selectUserReferrerVo">
+        select user_id, referral_id, referral_code, left_code, left_code_url, create_time, left_code_enabled, btree, update_time, right_code, remark, right_code_url, right_code_enabled, base_url from t_user_referrer
+    </sql>
+
+    <select id="selectUserReferrerList" parameterType="UserReferrer" resultMap="UserReferrerResult">
+        <include refid="selectUserReferrerVo"/>
+        <where>  
+            <if test="referralId != null "> and referral_id = #{referralId}</if>
+            <if test="referralCode != null  and referralCode != ''"> and referral_code = #{referralCode}</if>
+            <if test="leftCode != null  and leftCode != ''"> and left_code = #{leftCode}</if>
+            <if test="leftCodeUrl != null  and leftCodeUrl != ''"> and left_code_url = #{leftCodeUrl}</if>
+            <if test="leftCodeEnabled != null "> and left_code_enabled = #{leftCodeEnabled}</if>
+            <if test="btree != null "> and btree = #{btree}</if>
+            <if test="rightCode != null  and rightCode != ''"> and right_code = #{rightCode}</if>
+            <if test="rightCodeUrl != null  and rightCodeUrl != ''"> and right_code_url = #{rightCodeUrl}</if>
+            <if test="rightCodeEnabled != null "> and right_code_enabled = #{rightCodeEnabled}</if>
+            <if test="baseUrl != null  and baseUrl != ''"> and base_url = #{baseUrl}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserReferrerById" parameterType="Long" resultMap="UserReferrerResult">
+        <include refid="selectUserReferrerVo"/>
+        where user_id = #{userId}
+    </select>
+        
+    <insert id="insertUserReferrer" parameterType="UserReferrer">
+        insert into t_user_referrer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="referralId != null">referral_id,</if>
+            <if test="referralCode != null and referralCode != ''">referral_code,</if>
+            <if test="leftCode != null and leftCode != ''">left_code,</if>
+            <if test="leftCodeUrl != null">left_code_url,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="leftCodeEnabled != null">left_code_enabled,</if>
+            <if test="btree != null">btree,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="rightCode != null">right_code,</if>
+            <if test="remark != null">remark,</if>
+            <if test="rightCodeUrl != null">right_code_url,</if>
+            <if test="rightCodeEnabled != null">right_code_enabled,</if>
+            <if test="baseUrl != null and baseUrl != ''">base_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="referralId != null">#{referralId},</if>
+            <if test="referralCode != null and referralCode != ''">#{referralCode},</if>
+            <if test="leftCode != null and leftCode != ''">#{leftCode},</if>
+            <if test="leftCodeUrl != null">#{leftCodeUrl},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="leftCodeEnabled != null">#{leftCodeEnabled},</if>
+            <if test="btree != null">#{btree},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="rightCode != null">#{rightCode},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="rightCodeUrl != null">#{rightCodeUrl},</if>
+            <if test="rightCodeEnabled != null">#{rightCodeEnabled},</if>
+            <if test="baseUrl != null and baseUrl != ''">#{baseUrl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserReferrer" parameterType="UserReferrer">
+        update t_user_referrer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="referralId != null">referral_id = #{referralId},</if>
+            <if test="referralCode != null and referralCode != ''">referral_code = #{referralCode},</if>
+            <if test="leftCode != null and leftCode != ''">left_code = #{leftCode},</if>
+            <if test="leftCodeUrl != null">left_code_url = #{leftCodeUrl},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="leftCodeEnabled != null">left_code_enabled = #{leftCodeEnabled},</if>
+            <if test="btree != null">btree = #{btree},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="rightCode != null">right_code = #{rightCode},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="rightCodeUrl != null">right_code_url = #{rightCodeUrl},</if>
+            <if test="rightCodeEnabled != null">right_code_enabled = #{rightCodeEnabled},</if>
+            <if test="baseUrl != null and baseUrl != ''">base_url = #{baseUrl},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteUserReferrerById" parameterType="Long">
+        delete from t_user_referrer where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteUserReferrerByIds" parameterType="String">
+        delete from t_user_referrer where user_id in 
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+        
+    <select id="selectUserReferrerByCode" parameterType="String" resultMap="UserReferrerResult">
+        <include refid="selectUserReferrerVo"/>
+        where left_code = #{code} or right_code =#{code}
+    </select>
+
+	<select id="selectAllUserIds" resultType="Long">
+		select user_id from t_user_referrer where user_id != 3
+	</select>
+	
+	<select id="selectReferralUserIdsByUserId" parameterType="Long" resultType="Long">
+		select user_id from t_user_referrer where referral_id = #{userId}
+	</select>
+	
+	<select id="selectReferralCountByUserId" resultType="Long">
+		select count(user_id) from t_user_referrer where referral_id = #{userId} 
+		<if test="start!=null">and create_time &gt;=#{start}</if>
+		<if test="end!=null">and create_time &lt;=#{end}</if>
+	</select>
+	
+	 <select id="selectUserReferrerListForUpdate" resultMap="UserReferrerResult">
+        <include refid="selectUserReferrerVo"/>
+        where left_code_enabled=1 or right_code_enabled=1 or base_url!=#{baseUrl}
+    </select>
+</mapper>

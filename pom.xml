@@ -215,6 +215,16 @@
 				<artifactId>sword-mining</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-wallet</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-wallet-zbx</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
 
 			<!-- swagger2 -->
 			<dependency>
@@ -302,6 +312,7 @@
 		<module>sword-module-api</module>
 		<module>sword-module-boot</module>
 		<module>sword-module-deploy</module>
+		
 		<module>sword-module-mining</module>
 	</modules>
 </project>

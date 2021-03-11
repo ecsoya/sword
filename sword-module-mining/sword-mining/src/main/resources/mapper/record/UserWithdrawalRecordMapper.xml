@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyatec.sword.record.mapper.UserWithdrawalRecordMapper">
+    
+    <resultMap type="UserWithdrawalRecord" id="UserWithdrawalRecordResult">
+        <result property="id"    column="id"    />
+        <result property="height"    column="height"    />
+        <result property="txId"    column="tx_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="type"    column="type"    />
+        <result property="symbol"    column="symbol"    />
+        <result property="amount"    column="amount"    />
+        <result property="fee"    column="fee"    />
+        <result property="status"    column="status"    />
+        <result property="walletFee"    column="wallet_fee"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectUserWithdrawalRecordVo">
+        select id, height, tx_id, user_id, order_no, type, symbol, amount, fee, status, wallet_fee, create_time, update_time, remark from t_user_record_withdrawal
+    </sql>
+
+    <select id="selectUserWithdrawalRecordList" parameterType="UserWithdrawalRecord" resultMap="UserWithdrawalRecordResult">
+        <include refid="selectUserWithdrawalRecordVo"/>
+        <where>  
+            <if test="height != null "> and height = #{height}</if>
+            <if test="txId != null  and txId != ''"> and tx_id = #{txId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="symbol != null  and symbol != ''"> and symbol = #{symbol}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="fee != null "> and fee = #{fee}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="walletFee != null "> and wallet_fee = #{walletFee}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserWithdrawalRecordById" parameterType="Long" resultMap="UserWithdrawalRecordResult">
+        <include refid="selectUserWithdrawalRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserWithdrawalRecord" parameterType="UserWithdrawalRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user_record_withdrawal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="height != null">height,</if>
+            <if test="txId != null">tx_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="type != null">type,</if>
+            <if test="symbol != null and symbol != ''">symbol,</if>
+            <if test="amount != null">amount,</if>
+            <if test="fee != null">fee,</if>
+            <if test="status != null">status,</if>
+            <if test="walletFee != null">wallet_fee,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="height != null">#{height},</if>
+            <if test="txId != null">#{txId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="type != null">#{type},</if>
+            <if test="symbol != null and symbol != ''">#{symbol},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="fee != null">#{fee},</if>
+            <if test="status != null">#{status},</if>
+            <if test="walletFee != null">#{walletFee},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserWithdrawalRecord" parameterType="UserWithdrawalRecord">
+        update t_user_record_withdrawal
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="height != null">height = #{height},</if>
+            <if test="txId != null">tx_id = #{txId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="symbol != null and symbol != ''">symbol = #{symbol},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="fee != null">fee = #{fee},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="walletFee != null">wallet_fee = #{walletFee},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserWithdrawalRecordById" parameterType="Long">
+        delete from t_user_record_withdrawal where id = #{id}
+    </delete>
+
+    <delete id="deleteUserWithdrawalRecordByIds" parameterType="String">
+        delete from t_user_record_withdrawal where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+	<update id="updateUserWithdrawalRecordHeightByTxId">
+		update t_user_record_withdrawal set height = #{height} where tx_id = #{txId}
+	</update>
+	
+	<select id="selectUserWithdrawalAmountByDate" resultType="BigDecimal">
+		select sum(amount) from t_user_record_withdrawal 
+		<where>
+			<if test="symbol != null and symbol != ''">and symbol=#{symbol}</if>
+			<if test="start != null">and create_time &gt;=#{start}</if>
+			<if test="end != null">and create_time &lt;=#{end}</if>
+		</where>
+	</select>
+</mapper>

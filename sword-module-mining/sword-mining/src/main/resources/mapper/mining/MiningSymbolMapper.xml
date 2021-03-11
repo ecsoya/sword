@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyatec.mining.mining.mapper.MiningSymbolMapper">
+    
+    <resultMap type="MiningSymbol" id="MiningSymbolResult">
+        <result property="symbol"    column="symbol"    />
+        <result property="chain"    column="chain"    />
+        <result property="withdrawalFee"    column="withdrawal_fee"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="withdrawalMinimum"    column="withdrawal_minimum"    />
+        <result property="withdrawalEnabled"    column="withdrawal_enabled"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="withdrawalMaximum"    column="withdrawal_maximum"    />
+        <result property="withdrawalDaily"    column="withdrawal_daily"    />
+        <result property="remark"    column="remark"    />
+        <result property="withdrawalTotally"    column="withdrawal_totally"    />
+    </resultMap>
+
+    <sql id="selectMiningSymbolVo">
+        select symbol, chain, withdrawal_fee, create_time, withdrawal_minimum, withdrawal_enabled, update_time, withdrawal_maximum, withdrawal_daily, remark, withdrawal_totally from t_mining_symbol
+    </sql>
+
+    <select id="selectMiningSymbolList" parameterType="MiningSymbol" resultMap="MiningSymbolResult">
+        <include refid="selectMiningSymbolVo"/>
+        <where>  
+            <if test="chain != null  and chain != ''"> and chain = #{chain}</if>
+            <if test="withdrawalFee != null "> and withdrawal_fee = #{withdrawalFee}</if>
+            <if test="withdrawalMinimum != null "> and withdrawal_minimum = #{withdrawalMinimum}</if>
+            <if test="withdrawalEnabled != null "> and withdrawal_enabled = #{withdrawalEnabled}</if>
+            <if test="withdrawalMaximum != null "> and withdrawal_maximum = #{withdrawalMaximum}</if>
+            <if test="withdrawalDaily != null "> and withdrawal_daily = #{withdrawalDaily}</if>
+            <if test="withdrawalTotally != null "> and withdrawal_totally = #{withdrawalTotally}</if>
+        </where>
+    </select>
+    
+    <select id="selectMiningSymbolById" parameterType="String" resultMap="MiningSymbolResult">
+        <include refid="selectMiningSymbolVo"/>
+        where symbol = #{symbol}
+    </select>
+        
+    <insert id="insertMiningSymbol" parameterType="MiningSymbol">
+        insert into t_mining_symbol
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="symbol != null">symbol,</if>
+            <if test="chain != null and chain != ''">chain,</if>
+            <if test="withdrawalFee != null">withdrawal_fee,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="withdrawalMinimum != null">withdrawal_minimum,</if>
+            <if test="withdrawalEnabled != null">withdrawal_enabled,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="withdrawalMaximum != null">withdrawal_maximum,</if>
+            <if test="withdrawalDaily != null">withdrawal_daily,</if>
+            <if test="remark != null">remark,</if>
+            <if test="withdrawalTotally != null">withdrawal_totally,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="symbol != null">#{symbol},</if>
+            <if test="chain != null and chain != ''">#{chain},</if>
+            <if test="withdrawalFee != null">#{withdrawalFee},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="withdrawalMinimum != null">#{withdrawalMinimum},</if>
+            <if test="withdrawalEnabled != null">#{withdrawalEnabled},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="withdrawalMaximum != null">#{withdrawalMaximum},</if>
+            <if test="withdrawalDaily != null">#{withdrawalDaily},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="withdrawalTotally != null">#{withdrawalTotally},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMiningSymbol" parameterType="MiningSymbol">
+        update t_mining_symbol
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="chain != null and chain != ''">chain = #{chain},</if>
+            <if test="withdrawalFee != null">withdrawal_fee = #{withdrawalFee},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="withdrawalMinimum != null">withdrawal_minimum = #{withdrawalMinimum},</if>
+            <if test="withdrawalEnabled != null">withdrawal_enabled = #{withdrawalEnabled},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="withdrawalMaximum != null">withdrawal_maximum = #{withdrawalMaximum},</if>
+            <if test="withdrawalDaily != null">withdrawal_daily = #{withdrawalDaily},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="withdrawalTotally != null">withdrawal_totally = #{withdrawalTotally},</if>
+        </trim>
+        where symbol = #{symbol}
+    </update>
+
+    <delete id="deleteMiningSymbolById" parameterType="String">
+        delete from t_mining_symbol where symbol = #{symbol}
+    </delete>
+
+    <delete id="deleteMiningSymbolByIds" parameterType="String">
+        delete from t_mining_symbol where symbol in 
+        <foreach item="symbol" collection="array" open="(" separator="," close=")">
+            #{symbol}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.soyatec.sword.wallet.mapper.UserWalletUnionRecordMapper">
+
+	<resultMap type="UserWalletUnionRecord" id="WalletRecordResult">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="orderNo" column="order_no" />
+		<result property="type" column="type" />
+		<result property="symbol" column="symbol" />
+		<result property="amount" column="amount" />
+		<result property="status" column="status" />
+		<result property="kind" column="kind" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<select id="selectWalletRecordListByUserId"
+		resultMap="WalletRecordResult">
+		select kind, id, user_id, order_no, type, symbol, amount,
+		status,
+		create_time from t_user_wallet_union_record
+		<if test="kind == null || kind == 1">
+			union
+			(select 1, id, user_id, order_no, type, symbol,
+			amount, status, create_time
+			from t_user_record_deposit where user_id = #{userId} and status = 1
+			<if test="symbol != null and symbol !=''">and symbol=#{symbol}</if>
+			<if test="start != null">and create_time &gt;=#{start}</if>
+			<if test="end != null">and create_time &lt;=#{end}</if>
+			)
+			union
+			(select 1, id, user_id, order_no, type, symbol,
+			amount, status, create_time
+			from t_user_record_transfer where user_id = #{userId} and type = 0 and status = 1
+			<if test="symbol != null and symbol !=''">and symbol=#{symbol}</if>
+			<if test="start != null">and create_time &gt;=#{start}</if>
+			<if test="end != null">and create_time &lt;=#{end}</if>
+			)
+		</if>
+		<if test="kind == null || kind == 2">
+			union
+			(select 2, id, user_id, order_no, type, symbol,
+			amount, status, create_time
+			from t_user_record_transfer where user_id = #{userId} and type = 1 and status = 1
+			<if test="symbol != null and symbol !=''">and symbol=#{symbol}</if>
+			<if test="start != null">and create_time &gt;=#{start}</if>
+			<if test="end != null">and create_time &lt;=#{end}</if>
+			)
+			union
+			(select 2, id, user_id, order_no, type, symbol,
+			amount, status, create_time
+			from t_user_record_withdrawal where user_id = #{userId} and status = 1
+			<if test="symbol != null and symbol !=''">and symbol=#{symbol}</if>
+			<if test="start != null">and create_time &gt;=#{start}</if>
+			<if test="end != null">and create_time &lt;=#{end}</if>
+			)
+		</if>
+	</select>
+
+
+</mapper>

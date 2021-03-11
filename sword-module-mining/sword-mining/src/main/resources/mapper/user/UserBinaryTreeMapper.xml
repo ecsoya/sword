@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyatec.sword.user.mapper.UserBinaryTreeMapper">
+    
+    <resultMap type="UserBinaryTree" id="UserBinaryTreeResult">
+        <result property="userId"    column="user_id"    />
+        <result property="leftId"    column="left_id"    />
+        <result property="leftTime"    column="left_time"    />
+        <result property="rightId"    column="right_id"    />
+        <result property="rightTime"    column="right_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectUserBinaryTreeVo">
+        select user_id, left_id, left_time, right_id, right_time, create_time, update_time, remark from t_user_binary_tree
+    </sql>
+
+    <select id="selectUserBinaryTreeList" parameterType="UserBinaryTree" resultMap="UserBinaryTreeResult">
+        <include refid="selectUserBinaryTreeVo"/>
+        <where>  
+            <if test="leftId != null "> and left_id = #{leftId}</if>
+            <if test="leftTime != null "> and left_time = #{leftTime}</if>
+            <if test="rightId != null "> and right_id = #{rightId}</if>
+            <if test="rightTime != null "> and right_time = #{rightTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserBinaryTreeById" parameterType="Long" resultMap="UserBinaryTreeResult">
+        <include refid="selectUserBinaryTreeVo"/>
+        where user_id = #{userId}
+    </select>
+        
+    <insert id="insertUserBinaryTree" parameterType="UserBinaryTree">
+        insert into t_user_binary_tree
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="leftId != null">left_id,</if>
+            <if test="leftTime != null">left_time,</if>
+            <if test="rightId != null">right_id,</if>
+            <if test="rightTime != null">right_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="leftId != null">#{leftId},</if>
+            <if test="leftTime != null">#{leftTime},</if>
+            <if test="rightId != null">#{rightId},</if>
+            <if test="rightTime != null">#{rightTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserBinaryTree" parameterType="UserBinaryTree">
+        update t_user_binary_tree
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="leftId != null">left_id = #{leftId},</if>
+            <if test="leftTime != null">left_time = #{leftTime},</if>
+            <if test="rightId != null">right_id = #{rightId},</if>
+            <if test="rightTime != null">right_time = #{rightTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteUserBinaryTreeById" parameterType="Long">
+        delete from t_user_binary_tree where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteUserBinaryTreeByIds" parameterType="String">
+        delete from t_user_binary_tree where user_id in 
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+    
+    <select id="isInBinaryTree" parameterType="Long"
+		resultType="Integer">
+		select count(1) from t_user_binary_tree where left_id = #{userId} or
+		right_id = #{userId}
+	</select>
+	
+	<select id="queryUserBinaryTreeCount" resultType="Integer">
+		select count(1) from t_user_binary_tree
+	</select>
+	
+	<select id="selectUserBinaryTrees" resultMap="UserBinaryTreeResult">
+        <include refid="selectUserBinaryTreeVo"/>
+        <if test="start != null and limit != null">
+        	limit #{start}, #{limit}
+        </if>
+    </select>
+
+</mapper>
