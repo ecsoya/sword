@@ -46,6 +46,9 @@ public class SysIndexController extends BaseController {
 	@Autowired
 	private SysPasswordService passwordService;
 
+	@Autowired
+	private GlobalConfig config;
+
 	// 系统首页
 	@GetMapping("/index")
 	public String index(ModelMap mmap) {
@@ -55,6 +58,7 @@ public class SysIndexController extends BaseController {
 		List<SysMenu> menus = menuService.selectMenusByUser(user);
 		mmap.put("menus", menus);
 		mmap.put("user", user);
+		mmap.put("config", config);
 		mmap.put("sideTheme", configService.selectConfigValueByKey("sys.index.sideTheme"));
 		mmap.put("skinName", configService.selectConfigValueByKey("sys.index.skinName"));
 		mmap.put("ignoreFooter", configService.selectConfigValueByKey("sys.index.ignoreFooter"));

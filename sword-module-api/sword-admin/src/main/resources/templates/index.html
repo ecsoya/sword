@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>蜜蜂PLUS</title>
+    <title>[[${config.name}]]</title>
     <!-- 避免IE使用兼容模式 -->
  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link th:href="@{favicon.ico}" rel="shortcut icon"/>
@@ -26,7 +26,7 @@
         </div>
         <a th:href="@{/index}">
             <li class="logo hidden-xs">
-                <span class="logo-lg">蜜蜂PLUS</span>
+                <span class="logo-lg">[[${config.name}]]</span>
             </li>
          </a>
         <div class="sidebar-collapse">
@@ -143,7 +143,7 @@
         </div>
         
         <div th:if="${ignoreFooter}" class="footer">
-            <div class="pull-right">© [[${copyrightYear}]] 蜜蜂PLUS 🐝 Copyright </div>
+            <div class="pull-right">© [[${config.copyrightYear}]] [[${config.name}]] Copyright [[${config.version}]]</div>
         </div>
     </div>
     <!--右侧部分结束-->
