@@ -3,7 +3,6 @@ package com.soyatec.sword.zbx.service;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,6 +20,7 @@ import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.common.utils.http.HttpUtils;
 import com.soyatec.sword.wallet.domain.Address;
 import com.soyatec.sword.wallet.domain.Ticker;
 import com.soyatec.sword.wallet.domain.WithdrawalResponse;
@@ -52,7 +52,7 @@ public class ZbxService implements IWalletDelegateService {
 		String paramName = apiConfig.getTicker().getMarket();
 		String url = apiConfig.getTicker().getPlusUrl();
 		try {
-			String json = HttpUtil.get(url, Collections.singletonMap(paramName, paramValue));
+			String json = HttpUtils.sendSSLPost(url, paramName + "=" + paramValue);
 			if (json != null) {
 				ZbxTicker ticker = JSON.parseObject(json, ZbxTicker.class);
 				if (ticker != null) {
@@ -135,9 +135,10 @@ public class ZbxService implements IWalletDelegateService {
 	}
 
 	private <T> CommonResult<T> post(String url, Map<String, Object> params, Class<T> type) {
-		log.debug("发送请求：url=" + url + "?" + HttpUtil.paramToUrl(params));
+		String paramToUrl = HttpUtil.paramToUrl(params);
+		log.debug("发送请求：url=" + url + "?" + paramToUrl);
 		try {
-			String json = HttpUtil.post(url, params);
+			String json = HttpUtils.sendSSLPost(url, paramToUrl);
 			return parse(type, json);
 		} catch (Exception e) {
 			return CommonResult.fail(e.getLocalizedMessage());
