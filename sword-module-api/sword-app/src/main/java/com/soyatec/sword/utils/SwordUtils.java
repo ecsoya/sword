@@ -30,9 +30,6 @@ public class SwordUtils {
 
 	private static RedisTemplate<String, Object> redis = SpringUtils.getBean("template");
 
-	private SwordUtils() {
-	}
-
 	public static Long getUserId() throws UserNotLoginException {
 		return getUser().getUserId();
 	}

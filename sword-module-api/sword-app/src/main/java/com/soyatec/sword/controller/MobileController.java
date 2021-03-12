@@ -49,11 +49,11 @@ public class MobileController extends BaseController {
 
 	@ApiOperation("发送手机验证码，手机")
 	@PostMapping("/deliveryByMobile")
-	public CommonResult<?> deliveryByEmail(String email) {
-		if (!StringUtils.isValidEmail(email)) {
-			return CommonResult.fail("Invalid email address");
+	public CommonResult<?> deliveryBymobile(String mobile) {
+		if (!StringUtils.isEmpty(mobile)) {
+			return CommonResult.fail("Invalid mobile address");
 		}
-		return mobileService.sendCode(email);
+		return mobileService.sendCode(mobile);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class MobileController extends BaseController {
 	 */
 	@ApiOperation("验证手机验证码，手机")
 	@GetMapping("/verifyByMobile")
-	public CommonResult<?> verifyByEmail(String mobile, String code) {
+	public CommonResult<?> verifyByMobile(String mobile, String code) {
 		return mobileService.verifyCode(mobile, code);
 	}
 
