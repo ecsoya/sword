@@ -19,8 +19,9 @@ import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.exceptions.LockableException;
 import com.soyatec.sword.exceptions.TransactionException;
-import com.soyatec.sword.lock.service.ILockService;
+import com.soyatec.sword.mining.domain.MiningSymbol;
 import com.soyatec.sword.mining.service.IMiningSymbolService;
+import com.soyatec.sword.service.ILockService;
 import com.soyatec.sword.user.domain.UserCertificate;
 import com.soyatec.sword.user.service.IUserCertificateService;
 import com.soyatec.sword.utils.MathUtils;
@@ -174,8 +175,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	@Override
 	public int updateUserWalletAccountByUserId(Long userId) {
-		createUserWalletAccount(userId, IMiningConstants.SYMBOL_FIL);
-		createUserWalletAccount(userId, IMiningConstants.SYMBOL_USDT);
+		List<MiningSymbol> symbols = symbolService.selectMiningSymbolList(new MiningSymbol());
+		for (MiningSymbol miningSymbol : symbols) {
+			createUserWalletAccount(userId, miningSymbol.getSymbol());
+		}
 		return 1;
 	}
 

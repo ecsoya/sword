@@ -1,4 +1,4 @@
-package com.soyatec.sword.lock.service.impl;
+package com.soyatec.sword.service.impl;
 
 import java.time.Duration;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.exceptions.LockableException;
-import com.soyatec.sword.lock.service.ILockService;
+import com.soyatec.sword.service.ILockService;
 
 @Service
 public class LockServiceImpl implements ILockService {

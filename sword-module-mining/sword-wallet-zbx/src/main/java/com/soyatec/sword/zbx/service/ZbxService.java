@@ -3,6 +3,7 @@ package com.soyatec.sword.zbx.service;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,7 +21,6 @@ import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
-import com.soyatec.sword.common.utils.http.HttpUtils;
 import com.soyatec.sword.wallet.domain.Address;
 import com.soyatec.sword.wallet.domain.Ticker;
 import com.soyatec.sword.wallet.domain.WithdrawalResponse;
@@ -52,7 +52,7 @@ public class ZbxService implements IWalletDelegateService {
 		String paramName = apiConfig.getTicker().getMarket();
 		String url = apiConfig.getTicker().getPlusUrl();
 		try {
-			String json = HttpUtils.sendGet(url, paramName + "=" + paramValue);
+			String json = HttpUtil.get(url, Collections.singletonMap(paramName, paramValue));
 			if (json != null) {
 				ZbxTicker ticker = JSON.parseObject(json, ZbxTicker.class);
 				if (ticker != null) {
@@ -158,8 +158,9 @@ public class ZbxService implements IWalletDelegateService {
 					T t = ((JSONObject) data).toJavaObject(type);
 					obj.setData(t);
 				}
+				return obj;
 			}
-			return obj;
+			return CommonResult.fail();
 		} catch (Exception e) {
 			return CommonResult.fail();
 		}

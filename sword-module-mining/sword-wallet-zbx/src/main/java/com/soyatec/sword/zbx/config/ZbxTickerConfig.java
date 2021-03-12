@@ -4,7 +4,7 @@ public class ZbxTickerConfig {
 
 	private String oneUrl = "https://api.zbx.one/data/api/v1/getTicker";
 
-	private String plusUrl = "https://api.zbx.plus/data/api/v1/getTicker";
+	private String plusUrl = "https://api.hexhk.com/data/api/v1/getTicker";
 
 	private String market = "market";
 

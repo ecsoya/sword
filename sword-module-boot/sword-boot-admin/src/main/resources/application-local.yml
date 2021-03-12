@@ -65,8 +65,8 @@ wallet:
     ticker:
       market: market
       one-url: https://api.zbx.one/data/api/v1/getTicker
-      plus-url: https://api.zbx.plus/data/api/v1/getTicker
-    url: https://test.zbx.plus
+      plus-url: https://api.hexhk.com/data/api/v1/getTicker
+    url: https://test.hexhk.com
     access-key: 8e03db41-68ae-4445-92f1-d6e7f88e27a6
     secret-key: f4c4dd54f42d7dcb1f3081c507a7927d87b8cc23
     get-deposit-address: /exchange-main/open/v1/test/getDepositAddress

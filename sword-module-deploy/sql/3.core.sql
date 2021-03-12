@@ -7,7 +7,7 @@
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
 # Database: sword
-# Generation Time: 2021-03-11 04:46:58 +0000
+# Generation Time: 2021-03-12 02:16:44 +0000
 # ************************************************************
 
 

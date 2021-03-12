@@ -7,7 +7,7 @@
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
 # Database: sword
-# Generation Time: 2021-03-11 08:25:08 +0000
+# Generation Time: 2021-03-12 02:17:06 +0000
 # ************************************************************
 
 
@@ -20,12 +20,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table t_miming_symbol
+# Dump of table t_mining_symbol
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `t_miming_symbol`;
+DROP TABLE IF EXISTS `t_mining_symbol`;
 
-CREATE TABLE `t_miming_symbol` (
+CREATE TABLE `t_mining_symbol` (
   `symbol` varchar(20) NOT NULL DEFAULT '' COMMENT '名称',
   `chain` varchar(128) NOT NULL DEFAULT '' COMMENT '链码',
   `withdrawal_fee` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币手续费',

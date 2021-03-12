@@ -1,4 +1,4 @@
-package com.soyatec.sword.lock.service;
+package com.soyatec.sword.service;
 
 import java.time.Duration;
 

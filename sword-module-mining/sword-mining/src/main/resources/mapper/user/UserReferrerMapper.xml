@@ -80,6 +80,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="rightCodeEnabled != null">#{rightCodeEnabled},</if>
             <if test="baseUrl != null and baseUrl != ''">#{baseUrl},</if>
          </trim>
+         on duplicate key update 
+		<trim prefix="" suffixOverrides=",">
+		 	<if test="referralId != null">referral_id = #{referralId},</if>
+            <if test="referralCode != null and referralCode != ''">referral_code = #{referralCode},</if>
+            <if test="leftCode != null and leftCode != ''">left_code = #{leftCode},</if>
+            <if test="leftCodeUrl != null">left_code_url = #{leftCodeUrl},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="leftCodeEnabled != null">left_code_enabled = #{leftCodeEnabled},</if>
+            <if test="btree != null">btree = #{btree},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="rightCode != null">right_code = #{rightCode},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="rightCodeUrl != null">right_code_url = #{rightCodeUrl},</if>
+            <if test="rightCodeEnabled != null">right_code_enabled = #{rightCodeEnabled},</if>
+            <if test="baseUrl != null and baseUrl != ''">base_url = #{baseUrl},</if>
+		</trim>
     </insert>
 
     <update id="updateUserReferrer" parameterType="UserReferrer">

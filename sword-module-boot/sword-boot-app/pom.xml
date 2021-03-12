@@ -1,20 +1,22 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.soyatec.sword</groupId>
-    <artifactId>sword-module-boot</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-  </parent>
-  <artifactId>sword-boot-app</artifactId>
-  <name>sword-boot-app</name>
-  <dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.soyatec.sword</groupId>
+		<artifactId>sword-module-boot</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>sword-boot-app</artifactId>
+	<name>sword-boot-app</name>
+	<dependencies>
 		<dependency>
 			<groupId>com.soyatec.sword</groupId>
 			<artifactId>sword-app</artifactId>
 		</dependency>
 	</dependencies>
-	
-		<profiles>
+
+	<profiles>
 		<profile>
 			<id>dev</id>
 			<properties>
@@ -189,10 +191,8 @@
 								</goals>
 								<configuration>
 									<tasks>
-										<!-- <scp localFile="${project.basedir}/Dockerfile"
-											remoteToFile="${prod.root}:${prod.password}@${prod.host}:/home/sword/app/Dockerfile"
-											verbose="true" passphrase="" trust="true">
-										</scp> -->
+										<!-- <scp localFile="${project.basedir}/Dockerfile" remoteToFile="${prod.root}:${prod.password}@${prod.host}:/home/sword/app/Dockerfile" 
+											verbose="true" passphrase="" trust="true"> </scp> -->
 										<scp localFile="${project.basedir}/target/app.jar"
 											remoteToFile="${prod.root}:${prod.password}@${prod.host}:/home/sword/app/app.jar"
 											verbose="true" passphrase="" trust="true">
@@ -224,5 +224,5 @@
 			</build>
 		</profile>
 	</profiles>
-	
+
 </project>

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
-import com.soyatec.sword.lock.service.ILockService;
+import com.soyatec.sword.service.ILockService;
 import com.soyatec.sword.user.domain.UserBinaryTree;
 import com.soyatec.sword.user.domain.UserReferrer;
 import com.soyatec.sword.user.mapper.UserBinaryTreeMapper;

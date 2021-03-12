@@ -209,10 +209,20 @@
 				<artifactId>sword-app</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-app-mining</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
 			<!-- 挖矿业务 -->
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>
 				<artifactId>sword-mining</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-mining-zbx</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>

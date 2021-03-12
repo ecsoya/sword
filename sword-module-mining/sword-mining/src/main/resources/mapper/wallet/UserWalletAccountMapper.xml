@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="selectUserWalletAccountVo">
         select a.id, a.user_id, a.symbol, a.address, a.address_url, a.amount, a.last_amount, a.min_hold_amount, a.frozen_amount, a.locked_amount, a.withdrawal_enabled, b.withdrawal_fee, a.create_time, a.update_time, a.remark from t_user_wallet_account a
-        left join (select symbol as bsymbol, withdrawal_fee from t_sword_symbol) as b on a.symbol = b.bsymbol
+        left join (select symbol as bsymbol, withdrawal_fee from t_mining_symbol) as b on a.symbol = b.bsymbol
     </sql>
 
     <select id="selectUserWalletAccountList" parameterType="UserWalletAccount" resultMap="UserWalletAccountResult">
