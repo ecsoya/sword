@@ -124,6 +124,9 @@ public class SysIndexController extends BaseController {
 	@GetMapping("/system/main")
 	public String main(ModelMap mmap) {
 		mmap.put("version", GlobalConfig.getVersion());
+		if (StringUtils.isNotEmpty(GlobalConfig.getMainPage())) {
+			return GlobalConfig.getMainPage();
+		}
 		return "main_v1";
 	}
 

@@ -54,4 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select email from sys_user where login_name = #{username}
 	</select>
 	
+	<select id="selectUserIdsByType" parameterType="String" resultType="Long">
+		select user_id from sys_user <if test="userType != null and userType != ''">where user_type = #{userType}</if>
+	</select>
+	
 </mapper> 

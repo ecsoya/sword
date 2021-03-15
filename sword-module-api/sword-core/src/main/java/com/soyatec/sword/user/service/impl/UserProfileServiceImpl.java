@@ -238,4 +238,8 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		}
 	}
 
+	@Override
+	public List<Long> selectUserIdsByType(String userType) {
+		return userProfileMapper.selectUserIdsByType(userType);
+	}
 }

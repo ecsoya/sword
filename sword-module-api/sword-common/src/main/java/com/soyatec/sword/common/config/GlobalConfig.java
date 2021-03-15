@@ -33,6 +33,8 @@ public class GlobalConfig {
 
 	private static boolean emailCode = true;
 
+	private static String mainPage;
+
 	public static String getName() {
 		return name;
 	}
@@ -106,7 +108,7 @@ public class GlobalConfig {
 		return prodUrl;
 	}
 
-	public static void setProdUrl(String prodUrl) {
+	public void setProdUrl(String prodUrl) {
 		GlobalConfig.prodUrl = prodUrl;
 	}
 
@@ -114,8 +116,16 @@ public class GlobalConfig {
 		return emailCode;
 	}
 
-	public static void setEmailCode(boolean emailCode) {
+	public void setEmailCode(boolean emailCode) {
 		GlobalConfig.emailCode = emailCode;
+	}
+
+	public static String getMainPage() {
+		return mainPage;
+	}
+
+	public void setMainPage(String mainPage) {
+		GlobalConfig.mainPage = mainPage;
 	}
 
 }

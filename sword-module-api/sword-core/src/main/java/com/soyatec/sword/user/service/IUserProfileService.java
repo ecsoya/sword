@@ -51,4 +51,6 @@ public interface IUserProfileService {
 	String selectUserMobileById(Long userId);
 
 	String selectUserMobileByUsername(String username);
+
+	List<Long> selectUserIdsByType(String userType);
 }

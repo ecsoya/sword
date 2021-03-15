@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('用户账户')" />
+<link th:href="@{/ajax/libs/treetable/css/jquery.treetable.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{/ajax/libs/treetable/css/jquery.treetable.theme.default.css}"
+	rel="stylesheet" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="user-form">
+					<div class="select-list">
+						<ul>
+							<li>登录名称：<input type="text" name="loginName" />
+							</li>
+							<li>手机：<input type="text" name="mobile" />
+							</li>
+							<li><label>邮箱：</label> <input type="text" id="email"
+								name="email"></li>
+							<li><label>VIP等级：</label> <select id="levelId"
+								name="levelId" onchange="refreshUserList()">
+									<option value="">全部</option>
+									<option th:each="level : ${levels}" th:text="${level.name}"
+										th:value="${level.id}"></option>
+							</select></li>
+							<li class="select-time"><label>注册时间： </label> <input
+								type="text" class="time-input" id="startTime" placeholder="开始时间"
+								name="params[startTime]" /> <span>-</span> <input type="text"
+								class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]" /></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="refreshUserList()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="resetTree()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-sm-12 select-table table-bordered">
+				<div class="btn-group-sm" role="group" style="padding-bottom: 10px;"
+					id="toolbar">
+					<a class="btn btn-success" onclick="toAddUser()"
+						shiro:hasPermission="mining:user:add"> <i
+						class="fa fa-plus"></i> 新增用户
+					</a> <a class="btn btn-primary single disabled" onclick="toEditUser()"
+						shiro:hasPermission="mining:user:edit"> <i
+						class="fa fa-edit"></i> 重置密码
+					</a>
+
+					<!-- <a class="btn btn-danger" onclick="clean()"
+						shiro:hasPermission="mining:user:edit" th:style="'display:' + ${reset ? 'inline' : 'none'}" > <i
+						class="fa fa-remove"></i> 系统重置
+					</a> -->
+				</div>
+				<table id="bootstrap-table">
+					<thead >
+						<tr>
+							<th colspan="4" align="center"><label
+								style="text-align: center; width: 100%;">基本信息</label></th>
+							<th colspan="3" align="center"><label
+								style="text-align: center; width: 100%;">等级状态</label></th>
+							<th colspan="4" align="center" th:each="a : ${accounts}" ><label
+								style="text-align: center; width: 100%;">[[${a.toUpperCase() + '资产'} ]]</label></th>
+						</tr>
+						<tr>
+							<th>#</th>
+							<th>用户名</th>
+							<th><label style="text-align: center; width: 100%;">手机</label></th>
+							<th><label style="text-align: center; width: 100%;">邮箱</label></th>
+							<!-- <th><label style="text-align: center; width: 100%;">所在区</label></th> -->
+							<th><label style="text-align: center; width: 100%;">等级</label></th>
+							<th><label style="text-align: center; width: 100%;">状态</label></th>
+							<th><label style="text-align: center; width: 100%;">注册时间</label></th>
+							<div  th:each="a : ${accounts}" >
+							<th><label style="text-align: center; width: 100%;">可用额度</label></th>
+							<th><label style="text-align: center; width: 100%;">锁定额度</label></th>
+							<th><label style="text-align: center; width: 100%;">冻结额度</label></th>
+							<th><label style="text-align: center; width: 100%;">提币开关</label></th>
+							</div>
+							<!-- <th><label style="text-align: center; width: 100%;">可用额度</label></th>
+							<th><label style="text-align: center; width: 100%;">锁定额度</label></th>
+							<th><label style="text-align: center; width: 100%;">冻结额度</label></th>
+							<th><label style="text-align: center; width: 100%;">提币开关</label></th>
+ -->
+
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<div id="totalDiv" style="display: none">
+					<h4 style="float: left">共计：</h4>
+					<h4 style="float: left; color: #1ab394" id="total">0</h4>
+					<h4 style="float: left; margin-left: 6px;">人</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<th:block th:include="include :: footer" />
+	<script th:src="@{/ajax/libs/treetable/js/jquery.treetable.js?v=3.2.0}"></script>
+	<script th:inline="javascript">
+    const labelStyles = ['label-default', 'label-primary',
+        'label-success', 'label-info', 'label-warning', 'label-danger']
+    const buttonStyles = ['btn-primary',
+        'btn-success', 'btn-info', 'btn-warning', 'btn-danger']
+    var viewFlag = [[${@permission.hasPermi('mining:user:view')}]];
+    var editFlag = [[${@permission.hasPermi('mining:user:edit')}]];
+    var prefix = ctx + "mining/user";
+    
+    var vipLevels = [[${levels}]];
+    var symbolArray = [[${accounts}]];
+
+    $(function () {
+        queryUserList();
+    });
+    
+    function resetTree() {
+    	$.form.reset();
+    	refreshUserList();
+    }
+
+    function refreshUserList() {
+        $('#bootstrap-table tbody').html('');
+        $('#bootstrap-table').treetable('destroy');
+        $('#bootstrap-table').bootstrapTable('refresh');
+    }
+
+    function queryUserList() {
+        var options = {
+            pagination: false,
+            ajax: function (params) {
+                var email = $("#email").val();
+                var levelId= $('#levelId').val();
+                var url = prefix + '/list?' + $('#user-form').serialize();
+                $.modal.loading("加载中");
+                $.ajax({
+                    async: false, // Must be false, otherwise loadBranch happens after showChildren?
+                    url: url,
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: "json",
+                    type: "post"
+                }).done(function (res) {
+                    params.success(res);
+                    createTree(res.rows);
+                    /* if (levelId != '') { */
+                        $('#total').html(res.rows.length);
+                        $('#totalDiv').show();
+                    /* } else {
+                        $('#totalDiv').hide();
+                    } */
+                    $.modal.closeLoading();
+                });
+            }
+        };
+        $('#bootstrap-table').bootstrapTable(options);
+    }
+
+    function createTree(data) {
+        $('#bootstrap-table tbody').html('');
+        $('#bootstrap-table').treetable('destroy');
+        var html = buildTreeItems(data);
+        $('#bootstrap-table tbody').html(html);
+
+        var table = $('#bootstrap-table');
+        table.treetable({
+            expandable: true,
+            column: 1,
+            clickableNodeNames: true,
+            stringCollapse: '收起',
+            stringExpand: '展开',
+            onNodeCollapse: function () {
+                var node = this;
+                //table.treetable("unloadBranch", node);
+            },
+            onNodeExpand: function () {
+                var node = this;
+                if (node.virtualSize == node.children.length) {
+                    return;
+                }
+                var email = $("#email").val();
+                var levelId= $('#levelId').val();
+                var url = prefix + '/list?parentId=' + node.id + '&'+ $('#user-form').serialize();
+                $.modal.loading('加载中……');
+                // Render loader/spinner while loading
+                $.ajax({
+                    async: true,
+                    url: url,
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: "json",
+                    type: "post"
+                }).done(
+                    function (res) {
+                        var html = buildTreeItems(res.rows);
+                        var rows = $(html).filter("tr");
+                        table.treetable("loadBranch", node, rows);
+                        for (var i = 0; i < res.rows.length; i++) {
+                            var user = res.rows[i];
+                            if (user.childCount !== 0) {
+                                var current = table.treetable("node",
+                                    user.userId);
+                                table.treetable("setVirtualSize",
+                                    current, user.childCount);
+                            }
+                        }
+                        $.modal.closeLoading();
+                    });
+            },
+            onNodeInitialized: function () {
+                //$.modal.closeLoading();
+            }
+        });
+
+        for (var i = 0; i < data.length; i++) {
+            var user = data[i];
+            if (user.childCount !== 0) {
+                var current = table.treetable("node", user.userId);
+                table.treetable("setVirtualSize", current, user.childCount);
+            }
+        }
+    }
+
+    function buildTreeItems(data) {
+        var html = '';
+        for (var i = 0; i < data.length; i++) {
+            var user = data[i];
+            html += buildTBody(user);
+        }
+        return html;
+    }
+
+    function buildTBody(user) {
+        var html = '';
+        html += '<tr data-tt-id="' + user.userId + '"';
+        if (user.parentId != null && user.parentId !== 0) {
+            html += ' data-tt-parent-id="' + user.parentId + '" ';
+        }
+        html += '>';
+        html += buildTd(user);
+        html += '</tr>';
+
+        return html;
+    }
+
+    function buildTd(user) {
+        var html = '';
+        html += '<td><input type="checkbox" name="checkbox" value="'
+            + user.userId + '" onclick="updateActions()"></td>';
+        html += '<td>' + getDisplayString(user.loginName) + '</td>';
+        html += '<td><label style="text-align: center; width: 100%;">' + getMobileEditor(user) + '</label></td>';
+        html += '<td><label style="text-align: center; width: 100%;">' + getEmailEditor(user) + '</label></td>';
+        //html += '<td><label style="text-align: center; width: 100%;">' + getZoneStr(user.leftZone) + '</label></td>';
+        html += '<td><label style="text-align: center; width: 100%;"> ' + getLevelSpan(0, user.userId, user.levelId, user.levelName)
+            + '</span></label></td>';
+        html += '<td><label style="text-align: center; width: 100%;">' + statusTools(user) + '</label></td>';
+        html += '<td><label style="text-align: center; width: 100%;">' + getDisplayString(user.createTime) + '</label></td>';
+        for (var i = 0; i < symbolArray.length; i++) {
+	        html += '<td><label style="text-align: center; width: 100%;">' + getWalletAmount(user, i, '0') + '</label></td>';
+    	    html += '<td><label style="text-align: center; width: 100%;">' + getWalletAmount(user, i, '2') + '</label></td>';
+        	html += '<td><label style="text-align: center; width: 100%;">' + getWalletAmount(user, i, '1') + '</label></td>';
+        	html += '<td><label style="text-align: center; width: 100%;">' + getWalletWithdrawal(user, i) + '</label></td>';
+        }
+//        html += '<td><label style="text-align: center; width: 100%;">' + getWalletAmount(user, '1', '0') + '</label></td>';
+  //      html += '<td><label style="text-align: center; width: 100%;">' + getWalletAmount(user, '1', '2') + '</label></td>';
+    //    html += '<td><label style="text-align: center; width: 100%;">' + getWalletAmount(user, '1', '1') + '</label></td>';
+      //  html += '<td><label style="text-align: center; width: 100%;">' + getWalletWithdrawal(user, '1') + '</label></td>';
+        /* html += '<td>' + withdrawalTools(user) + '</td>';
+        html += '<td>';
+        if (viewFlag != 'hidden') {
+	        html += '<a href="javascript:;" onclick="toViewProfit(' + user.userId
+            	+ ')"><i class="fa fa-eye"></i> 查看 </a> ';
+        }
+        html += '</td>'; */
+        /* var operator = '<td><div class="operation_box">';
+        operator += '<button class="btn btn-primary btn-xs view_btn" type="button" onclick="toAddUser('
+                + user.userId + ')"><i class="fa fa-plus"></i> 添加 </button>';
+        if (user.userId > 2) {
+            operator += '<button class="btn btn-success btn-xs view_btn" style="margin-left:15px" type="button" onclick="toSetUserLevel('
+                    + user.userId
+                    + ', '
+                    + user.levelId
+                    + ')"><i class="icon-eye-open"></i> 设置会员等级 </button>';
+            operator += '<button class="btn btn-danger btn-xs view_btn" style="margin-left:15px" type="button" onclick="toSetUserWallet('
+                    + user.userId
+                    + ')"><i class="icon-eye-open"></i> 更新会员钱包 </button>';
+            operator += '<button class="btn btn-warning btn-xs view_btn" style="margin-left:15px" type="button" onclick="toEditUser('
+                    + user.userId
+                    + ')"><i class="icon-eye-open"></i> 修改用户资料 </button>';
+        }
+        operator += '</div></td>';
+        html += operator; */
+        return html;
+    }
+    
+    function getMobileEditor(user) {
+    	if (!user) {
+    		return '';
+    	}
+    	var mobile = getDisplayString(user.mobile, '');
+    	if (editFlag == 'hidden') {
+    		return mobile;
+    	} else if (mobile == ''){
+            return "<a class='btn btn-danger btn-xs ' href='javascript:void(0)' onclick='editUserMobile(" + user.userId + ", \"\")'><i class='fa fa-edit'></i> 修改</a> ";
+    	} else {
+    		var more = [];
+            more.push("<a class='btn btn-danger btn-xs ' href='javascript:void(0)' onclick='editUserMobile(" + user.userId + ", "+mobile+")'><i class='fa fa-edit'></i> 修改</a> ");
+            return '<a class="btn btn-warning btn-xs" role="button"  data-placement="bottom" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '">'+mobile+' <i class="fa fa-chevron-circle-right"></i></a>';
+    	}
+    }
+    
+    function editUserMobile(userId, mobile) {
+    	layer.prompt({
+    		title: '修改用户手机',
+    		content: '<input type="text" class="layui-layer-input" value="'+mobile+'">'
+    	},function(val, index){
+    		layer.close(index);
+    		$.operate.post(prefix + '/updateUserMobile?userId=' + userId + '&mobile=' + val, {}, function(res){
+ 			   if (res.code == 0) {
+ 				   updateUser(userId);
+ 			   }
+ 		   })
+    	});
+    }
+
+    function getEmailEditor(user) {
+    	if (!user) {
+    		return '';
+    	}
+    	var email = getDisplayString(user.email, '');
+    	if (editFlag == 'hidden') {
+    		return email;
+    	} else if (email == ''){
+            return "<a class='btn btn-danger btn-xs ' href='javascript:void(0)' onclick='editUserEmail(" + user.userId + ")'><i class='fa fa-edit'></i> 修改</a> ";
+    	} else {
+    		var more = [];
+            more.push("<a class='btn btn-danger btn-xs ' href='javascript:void(0)' data='"+email+"' onclick='editUserEmail(" + user.userId + ")'><i class='fa fa-edit'></i> 修改</a> ");
+            return '<a class="btn btn-info btn-xs" role="button"  data-placement="bottom" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '">'+email+' <i class="fa fa-chevron-circle-right"></i></a>';
+    	}
+    }
+    
+    function editUserEmail(userId) {
+    	var email = $(this).attr('data') || '';
+    	layer.prompt({
+    		title: '修改用户邮箱',
+    		content: '<input type="text" class="layui-layer-input" value="'+email+'">'
+    	},function(val, index){
+    		layer.close(index);
+    		$.operate.post(prefix + '/updateUserEmail?userId=' + userId + '&email=' + val, {}, function(res){
+ 			   if (res.code == 0) {
+ 				   updateUser(userId);
+ 			   }
+ 		   })
+    	});
+    }
+    
+    function getWalletAmount(user, symbolIndex, kindIndex) {
+    	if (!user || !user.accounts) {
+    		return '';
+    	}
+    	var symbol = symbolArray[symbolIndex];
+    	var account = user.accounts.filter(a=>a.symbol==symbol)[0];
+    	if (!account) {
+    		return '';
+    	}
+    	var kind = kindArray[kindIndex];
+    	var amount = account[kind];
+    	if (editFlag == 'hidden') {
+    		return amount;
+    	}
+    	else {
+    		var more = [];
+            more.push("<a class='btn btn-danger btn-xs ' href='javascript:void(0)' onclick='editWalletAmount(" + user.userId + ", "+amount+", "+symbolIndex+", "+kindIndex+")'><i class='fa fa-edit'></i> 修改</a> ");
+            return '<a class="btn '+buttonStyles[kindIndex]+' btn-xs" role="button"  data-placement="bottom" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '">'+amount+' <i class="fa fa-chevron-circle-right"></i></a>';
+    	}
+    }
+    
+    var kindArray = ['amount', 'frozenAmount', 'lockedAmount'];
+    
+    function editWalletAmount(userId, amount, symbolIndex, kindIndex) {
+    	var symbol = symbolArray[symbolIndex];
+    	var kind = kindArray[kindIndex];
+    	var title = symbol.toUpperCase();
+    	layer.prompt({
+    		title: '设置'+title+'余额',
+    		content: '<input type="number" min="0" max="9999999999" steps="4" class="layui-layer-input" value="'+amount+'">'
+    	},function(val, index){
+    		var newAmount = parseFloat(val);
+    		layer.close(index);
+    		$.operate.post(prefix + '/setWalletAmount?userId=' + userId + '&value=' + newAmount + "&symbol=" + symbol + "&kind=" + kindIndex, {}, function(res){
+ 			   if (res.code == 0) {
+ 				   updateUser(userId);
+ 			   }
+ 		   })
+    	});
+    }
+
+    function getWalletWithdrawal(user, symbolIndex) {
+    	if (!user || !user.accounts) {
+    		return '';
+    	}
+    	var symbol = symbolArray[symbolIndex];
+    	var account = user.accounts.filter(a=>a.symbol==symbol)[0];
+    	if (!account) {
+    		return '';
+    	}
+    	if (editFlag == 'hidden') {
+			if (account.withdrawalEnabled == 0) {
+    			return '开启';
+    		} else {
+    			return '关闭';
+    		}
+		} else if (account.withdrawalEnabled == 1) {
+			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="changeWithdrawalEnabled(\'' + user.userId + '\', \''+account.symbol+'\', 0)"></i> ';
+		} else {
+			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="changeWithdrawalEnabled(\'' + user.userId + '\', \''+account.symbol+'\', 1)"></i> ';
+		}
+    }
+    
+    function changeWithdrawalEnabled(userId, symbol, enabled) {
+    	var label = '';
+    	if (enabled == '1') {
+    		label = '你确定要关闭此用户的提币功能吗？';
+    	} else {
+    		label = '你确定要开启此用户的提币功能吗？';
+    	}
+    	$.modal.confirm(label, function() {
+			$.operate.post(prefix + "/changeWithdrawalEnabled", { "userId": userId, "symbol": symbol, "enabled": enabled }, function(){
+				updateUser(userId);
+			});
+	    })
+    }
+    
+    function getZoneStr(v) {
+    	if ('1' == v) {
+    		return '<h5 style="color: #1ab394">A区</h5>';
+    	}
+    	return '<h5 style="color: #jashd12">B区</h5>';
+    }
+
+    function getLevelSpan(type, userId, id, name) {
+    	if (userId == null) {
+    		return '';
+    	}
+    	if (editFlag == 'hidden') {
+    		return getFlatLevelSpan(id, name);
+    	}
+    	if (id == null) {
+//    		return "<a class='btn btn-default btn-xs ' href='javascript:void(0)' onclick='addLevel(" + userId + ", "+type+ ")'><i class='fa fa-plus'></i> 设置</a>";
+			var more = type == 0 ? buildLevelActions(userId, type, vipLevels): buildLevelActions(userId, type, withdrawalLevels);
+    		return '<a class="btn btn-default btn-xs role="button"  data-placement="bottom" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '">设置 <i class="fa fa-chevron-circle-right"></i></a>'; 
+    	} else {
+    		var more = [];
+            more.push("<a class='btn btn-danger btn-xs ' href='javascript:void(0)' onclick='removeLevel(" + userId + ", "+type+")'><i class='fa fa-remove'></i> 删除</a> ");
+            //more.push("<a class='btn btn-warning btn-xs ' href='javascript:void(0)' onclick='editLevel(" + userId + ", "+id+", "+type+")'><i class='fa fa-edit'></i> 修改</a>");
+            return '<a class="btn '+buttonStyles[id%buttonStyles.length]+' btn-xs" role="button"  data-placement="bottom" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '">'+name+' <i class="fa fa-chevron-circle-right"></i></a>';
+    	}
+   }
+    
+    function buildLevelActions(userId, type, list) {
+    	if (!list) {
+    		return [];
+    	}
+    	var more = [];
+    	for(var i = 0; i < list.length; i++) {
+    		var level = list[i];
+    		var btnStyles = buttonStyles[i];
+            more.push("<a class='btn "+btnStyles+" btn-xs ' href='javascript:void(0)' onclick='setLevel(" + userId + ", "+type+", "+level.id+")'><i class='fa fa-plus'></i> "+level.name+"</a> ");
+    	}
+    	return more;
+    }
+    
+   function setLevel(userId, type, id) {
+	   //alert('setlevel> userId=' + userId + ', type=' + type + ', id=' + id);
+	   $.operate.post(prefix + '/setLevel?userId=' + userId + '&type=' + type + '&id=' + id, {}, function(res){
+		   if (res.code == 0) {
+			   updateUser(userId);
+		   }
+	   })
+   }
+   
+   function removeLevel(userId, type) {
+	   //alert('removelevel> userId=' + userId + ', type=' + type);
+	   $.operate.post(prefix + '/removeLevel?userId=' + userId + '&type=' + type, {}, function(res){
+		   if (res.code == 0) {
+			   updateUser(userId);
+		   }
+	   })
+   }
+   
+   function editLevel(userId, id, type) {
+	   alert('editlevel> userId=' + userId + ', id='+ id + ', type=' + type);
+   }
+   function getFlatLevelSpan(id, name) {
+        return '<span class="label ' + getLevelSpanStyle(id)
+            + '" style="padding: 0.2em">' + getDisplayString(name, "")
+            + '</span>';
+    } 
+
+    function getLevelSpanStyle(levelId) {
+        var i = parseInt(levelId) % 5;
+        if (isNaN(i)) {
+            i = 0
+        }
+        return labelStyles[i];
+    }
+
+
+    function getDisplayString(value, defaultValue) {
+        if (value == null || value == undefined) {
+            if (defaultValue != null && defaultValue != undefined) {
+                return defaultValue;
+            }
+            return "-";
+        }
+        return value;
+    }
+
+    function toDecimal(x) {
+        var f = parseFloat(x);
+        if (isNaN(f)) {
+            return '0.00';
+        }
+        var f = Math.round(x * 100) / 100;
+        var s = f.toString();
+        var rs = s.indexOf('.');
+        if (rs < 0) {
+            rs = s.length;
+            s += '.';
+        }
+        while (s.length <= rs + 2) {
+            s += '0';
+        }
+        return s;
+    }
+
+    function toSetUserLevel() {
+        if (checkedIds.length != 1) {
+            return;
+        }
+        var id = checkedIds[0];
+        var table = $('#bootstrap-table');
+        var node = table.treetable('node', id);
+        var levelId = null;
+        if (levelId == null) {
+            levelId = 1;
+        }
+        $('#userId').val(id);
+        var type = $("input[name='type']:checked").val();
+        if (type == '1') {
+            $('#matrixLevelSelect').val(levelId)
+            $('#matrixLevelGroup').show();
+            $('#binaryLevelGroup').hide();
+        } else {
+            $('#binaryLevelSelect').val(levelId);
+            $('#matrixLevelGroup').hide();
+            $('#binaryLevelGroup').show();
+        }
+        $('#levelModal').modal('show');
+    }
+
+    function saveUserLevel() {
+        var id = $('#userId').val();
+        var type = $("input[name='type']:checked").val();
+        var value;
+        if (type == '1') {
+            value = $('#matrixLevelSelect').val();
+        } else {
+            value = $('#binaryLevelSelect').val();
+        }
+        $('#levelModal').modal('hide');
+        $.ajax(
+            {
+                async: false, // Must be false, otherwise loadBranch happens after showChildren?
+                url: prefix + '/level?id=' + id + '&level=' + value
+                    + '&type=' + type,
+                contentType: "application/x-www-form-urlencoded",
+                dataType: "json",
+                type: "post"
+            }).done(function (res) {
+            if (res != null) {
+                /* refreshUserList(); */
+                /* $('tr [data-tt-id='+id+']').html(buildTd(res)); */
+                var table = $('#bootstrap-table')
+                var node = table.treetable('node', id);
+                if (node.parentId != null) {
+                    var parent = table.treetable('node', node.parentId);
+                    table.treetable('unloadBranch', parent);
+                    table.treetable('collapseNode', node.parentId);
+                    table.treetable('expandNode', node.parentId);
+                } else {
+                    refreshUserList();
+                }
+            }
+        });
+
+    }
+
+    function updateUser(id) {
+        var table = $('#bootstrap-table')
+        if (!id || id == '3') {
+        	refreshUserList();
+        	setTimeout(function(){
+        		refreshUserList();
+       		}, 500);
+        } else {
+	        var node = table.treetable('node', id);
+	        if (node != null && node.parentId != null) {
+	            var parent = table.treetable('node', node.parentId);
+	            if (parent) {
+	            	table.treetable('unloadBranch', parent);
+		            table.treetable('collapseNode', node.parentId);
+		            table.treetable('expandNode', node.parentId);
+	            } else {
+	            	setTimeout(function(){
+	            		refreshUserList();
+	            	}, 500);
+	            }
+	        } else {
+	        	setTimeout(function(){
+            		refreshUserList();
+            	}, 500);
+	        }
+        }
+    }
+
+    function toAddUser() {
+        if (checkedIds.length > 1) {
+        	$.modal.msgError("请选择一个用户");
+        }
+        var id = checkedIds.length == 1 ? checkedIds[0] : '';
+        $.modal.openTab("添加用户", prefix + '/add?id=' + id);
+    }
+
+    /* 用户状态显示 */
+	function statusTools(row) {
+		if (editFlag == 'hidden') {
+			if (row.status == 1) {
+    			return '关闭';
+    		} else {
+    			return '正常';
+    		}
+		} else
+	    if (row.status == 1) {
+			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.userId + '\')"></i> ';
+		} else {
+			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.userId + '\')"></i> ';
+		}
+	}
+	
+	/* 用户管理-停用 */
+	function disable(userId) {
+		$.modal.confirm("确认要停用用户吗？", function() {
+			$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 1 }, function(){
+				updateUser(userId);
+			});
+	    })
+	}
+
+	/* 用户管理启用 */
+	function enable(userId) {
+		$.modal.confirm("确认要启用用户吗？", function() {
+			$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 0 }, function(){
+				updateUser(userId);
+			});
+	    })
+	}
+
+    function toEditUser() {
+        if (checkedIds.length != 1) {
+            return;
+        }
+        var userId = checkedIds[0];
+        $.modal.openTab("修改密码", prefix + '/edit?id=' + userId);
+    }
+
+    /* 用户管理-重置密码 */
+    function resetPwd() {
+        if (checkedIds.length != 1) {
+            return;
+        }
+        var userId = checkedIds[0];
+        var url = prefix + '/resetPwd/' + userId;
+        $.modal.open("重置密码", url, '800', '300');
+    }
+
+    function getCheckedIds() {
+        var checkedIds = [];
+        $('#bootstrap-table tr').each(
+            function () {
+                if ($(this).is(':visible')) {
+                    if ($(this).find('input[name="checkbox"]').is(
+                        ":checked")) {
+                        checkedIds.push($(this).find(
+                            'input[name="checkbox"]').val());
+                    }
+                }
+            });
+        return checkedIds;
+    }
+
+    function updateActions() {
+        checkedIds = getCheckedIds();
+        $('#toolbar .single').toggleClass('disabled',
+            checkedIds.length != 1);
+        // 非多个禁用
+        $('#toolbar .multiple').toggleClass('disabled', !checkedIds.length);
+    }
+
+    var checkedIds = [];
+
+    function toViewProfit(userId) {
+        $.modal
+            .open("用户收益", prefix + '/profit?userId=' + userId, null,
+                510);
+    }
+    
+    function clean() {
+    	$.modal.confirm('你确定要重置系统吗？此功能会删除所有的用户数据，请三思！', function(){
+    		$.operate.save(prefix + '/clean');
+    	})
+    }
+</script>
+</body>
+</html>

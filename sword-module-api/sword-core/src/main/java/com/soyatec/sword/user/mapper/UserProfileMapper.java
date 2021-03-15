@@ -29,4 +29,6 @@ public interface UserProfileMapper {
 
 	String selectUserMobileByLoginName(String username);
 
+	List<Long> selectUserIdsByType(String userType);
+
 }

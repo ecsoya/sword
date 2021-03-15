@@ -1,2 +1,3 @@
-Application Version: ${sword.version}
+Application Name: ${sword.name}
+Application Version: ${sword.version} @${sword.copyrightYear}
 Spring Boot Version: ${spring-boot.version}

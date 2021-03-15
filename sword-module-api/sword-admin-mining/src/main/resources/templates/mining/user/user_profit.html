@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('用户收益')"/>
+    <th:block th:include="include :: select2-css"/>
+</head>
+<body>
+<div class="main-content">
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h2 class="m-b-md">推荐人</h2>
+                <h4>
+                    <label>电话：</label> <label class="text-navy"
+                                              th:text="${profit.referralMobile}"></label> <label
+                        style="margin-left: 20px;"> 被推荐入：</label> <label
+                        class="text-navy" th:text="${profit.referralArea}"></label>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6" style="min-height: 247px">
+        <div class="ibox" style="min-height: 222px">
+            <div class="ibox-content">
+                <h2 class="m-b-md">银河系空间</h2>
+                <h4>
+                    <label>银河系空间入单量：</label> <label class="text-navy"
+                                                 th:text="${profit.binaryAmount}"></label>
+                </h4>
+                <h4>伞下总业绩</h4>
+                <ul>
+                    <li><label>存储A：</label> <label class="text-navy"
+                                                  th:text="${profit.binaryAreaAmounts[0]}"></label></li>
+                    <li><label>存储B：</label> <label class="text-navy"
+                                                  th:text="${profit.binaryAreaAmounts[1]}"></label></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6" style="min-height: 247px">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h2 class="m-b-md">太阳系空间</h2>
+                <h4>
+                    <label>太阳系空间入单量：</label> <label class="text-navy"
+                                                 th:text="${profit.matrixAmount}"></label>
+                </h4>
+                <h4>伞下总业绩</h4>
+                <ul>
+                    <li><label>存储A：</label> <label class="text-navy"
+                                                  th:text="${profit.matrixAreaAmounts[0]}"></label></li>
+                    <li><label>存储B：</label> <label class="text-navy"
+                                                  th:text="${profit.matrixAreaAmounts[1]}"></label></li>
+                    <li><label>存储C：</label> <label class="text-navy"
+                                                  th:text="${profit.matrixAreaAmounts[2]}"></label></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: select2-js"/>
+<script type="text/javascript">
+    var prefix = ctx + "admin/user";
+</script>
+</body>
+</html>

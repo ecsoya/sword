@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="include :: header('修改用户')" />
+<th:block th:include="include :: select2-css" />
+</head>
+<body>
+	<div class="main-content">
+		<form class="form-horizontal" id="form-user-edit" th:object="${user}">
+			<input name="userId" type="hidden" th:field="*{userId}" />
+			<h4 class="form-header h4">基本信息</h4>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label is-required">登录账号：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input class="form-control" type="text" readonly
+									id="loginName" th:field="*{loginName}" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label is-required">邮箱：</label>
+						<div class="col-sm-8">
+							<input name="email" placeholder="请输入邮箱" class="form-control"
+								type="text" maxlength="50" th:field="*{email}" readonly required>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6" id="pwdGrp">
+					<div class="form-group">
+						<label class="col-sm-4 control-label is-required">账户密码：</label>
+						<div class="col-sm-8">
+							<input name="password" class="form-control" type="password"
+								maxlength="20" placeholder="请输入账户密码" required>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col-sm-6" id="pwdGrp">
+					<div class="form-group">
+						<label class="col-sm-4 control-label is-required">钱包密码：</label>
+						<div class="col-sm-8">
+							<input name="walletPassword" class="form-control" type="password"
+								maxlength="20" placeholder="请输入钱包密码" required>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</form>
+	</div>
+	<div class="row">
+		<div class="col-sm-offset-5 col-sm-10">
+			<button type="button" class="btn btn-sm btn-primary"
+				onclick="submitHandler()">
+				<i class="fa fa-check"></i>保 存
+			</button>
+			&nbsp;
+			<button type="button" class="btn btn-sm btn-danger"
+				onclick="closeItem()">
+				<i class="fa fa-reply-all"></i>关 闭
+			</button>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: select2-js" />
+	<script type="text/javascript">
+		var prefix = ctx + "admin/user";
+
+		$("#form-user-edit").validate({
+			onkeyup : false,
+			rules : {
+				/* email : {
+				    email : true,
+				    remote : {
+				        url : prefix + "/checkEmailUnique",
+				        type : "post",
+				        dataType : "json",
+				        data : {
+				            "userId" : function() {
+				                return $("#userId").val();
+				            },
+				            "email" : function() {
+				                return $.common.trim($("#email").val());
+				            }
+				        },
+				        dataFilter : function(data, type) {
+				            return $.validate.unique(data);
+				        }
+				    }
+				}, */
+				loginName : {
+					minlength : 2,
+					maxlength : 20,
+					remote : {
+						url : prefix + "/checkLoginNameUnique2",
+						type : "post",
+						dataType : "json",
+						data : {
+							"userId" : function() {
+								return $("#userId").val();
+							},
+							"loginName" : function() {
+								return $.common.trim($("#loginName").val());
+							}
+						},
+						dataFilter : function(data, type) {
+							return $.validate.unique(data);
+						}
+					}
+				},
+				phonenumber : {
+					isPhone : true,
+					remote : {
+						url : prefix + "/checkPhoneUnique2",
+						type : "post",
+						dataType : "json",
+						data : {
+							"userId" : function() {
+								return $("#userId").val();
+							},
+							"phonenumber" : function() {
+								return $.common.trim($("#phonenumber").val());
+							}
+						},
+						dataFilter : function(data, type) {
+							return $.validate.unique(data);
+						}
+					}
+				},
+				password : {
+					required : true,
+					minlength : 5,
+					maxlength : 20
+				},
+			},
+			messages : {
+				"email" : {
+					remote : "Email已经存在"
+				},
+				"phonenumber" : {
+					remote : "手机号码已经存在"
+				},
+				"loginName" : {
+					remote : "登录名已经存在"
+				}
+			},
+			focusCleanup : true
+		});
+
+		function submitHandler() {
+			if ($.validate.form()) {
+				var userId = $("#form-user-edit input[name='userId']").val();
+				var data = $("#form-user-edit").serializeArray();
+				var status = $("input[id='status']").is(':checked') == true ? 0
+						: 1;
+				var user = [];
+				if (!$("input[id='modifyLoginName']").is(':checked')) {
+					for (var i = 0; i < data.length; i++) {
+						if (data[i].name == "password") {
+							continue;
+						}
+						user.push(data[i]);
+					}
+				} else {
+					user = user.concat(data);
+				}
+				user.push({
+					"name" : "status",
+					"value" : status
+				});
+				$.operate.saveTab(prefix + "/edit", user, function() {
+					var topWindow = $(window.parent.document);
+					var $contentWindow = $(
+							'.RuoYi_iframe[data-id="/admin/admin/user"]',
+							topWindow)[0].contentWindow;
+					$contentWindow.updateUser(userId);
+				});
+			}
+		}
+
+		/*用户管理-修改-选择部门树*/
+		function selectDeptTree() {
+			var deptId = $.common.isEmpty($("#treeId").val()) ? "100" : $(
+					"#treeId").val();
+			var url = ctx + "system/dept/selectDeptTree/" + deptId;
+			var options = {
+				title : '选择部门',
+				width : "380",
+				url : url,
+				callBack : doSubmit
+			};
+			$.modal.openOptions(options);
+		}
+
+		function doSubmit(index, layero) {
+			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+			if ($.tree.notAllowParents(tree)) {
+				var body = layer.getChildFrame('body', index);
+				$("#treeId").val(body.find('#treeId').val());
+				$("#treeName").val(body.find('#treeName').val());
+				layer.close(index);
+			}
+		}
+
+		$(function() {
+			$('#post').select2({
+				placeholder : "请选择岗位",
+				allowClear : true
+			});
+		})
+
+		function changeLoginName() {
+			var checked = $("input[id='modifyLoginName']").is(':checked');
+			if (checked) {
+				$.modal.confirm('你确定要更改登录账号吗？登录密码也需要重置！', function() {
+					$('#loginName').removeAttr('readonly');
+					$('#pwdGrp').show();
+				});
+			} else {
+				$('#loginName').attr('readonly', true);
+				$('#pwdGrp').hide();
+			}
+
+		}
+	</script>
+</body>
+</html>

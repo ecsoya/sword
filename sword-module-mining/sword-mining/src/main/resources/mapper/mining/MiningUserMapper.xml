@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyatec.sword.mining.mapper.MiningUserMapper">
+    
+    <resultMap type="MiningUser" id="MiningUserResult">
+        <result property="userId" column="user_id" />
+		<result property="loginName" column="login_name" />
+		<result property="email" column="email" />
+		<result property="mobile" column="phonenumber" />
+		<result property="status" column="status" />
+		<result property="levelId" column="level_id" />
+		<result property="levelName" column="level_name" />
+		<result property="createTime" column="create_time" />
+		<result property="referralId" column="referral_id" />
+		<result property="referralName" column="referral_name" />
+		<result property="referralEmail" column="referral_email" />
+		<result property="referralMobile" column="referral_mobile" />
+		<result property="childCount" column="child_count" />
+    </resultMap>
+	
+	<select id="selectMiningUserList" parameterType="MiningUser" resultMap="MiningUserResult">
+		select a.user_id, a.login_name, a.email, a.phonenumber, a.status, a.create_time, b.level_id, c.level_name, d.referral_id, e.referral_name, e.referral_email, e.referral_mobile, f.child_count from sys_user a
+		left join (select user_id as bid, level_id from t_user_level) as b on a.user_id = b.bid
+		left join (select id as cid, name as level_name from t_mining_level) as c on b.level_id = c.cid
+		left join (select user_id as did, referral_id from t_user_referrer) as d on a.user_id = d.did
+		left join (select user_id as eid, login_name as referral_name, email as referral_email, phonenumber as referral_mobile from sys_user) as e on d.referral_id = e.eid
+		left join (select referral_id as fid, count(user_id) as child_count from t_user_referrer group by referral_id) as f on a.user_id = f.fid
+		
+		where user_type = '01'
+	    <if test="parentId != null"> and referral_id = #{parentId}</if>
+	    <if test="levelId != null"> and level_id = #{levelId}</if>
+		<if test="email != null and email != ''"> and email like concat('%',  #{email}, '%')</if>
+		<if test="mobile != null and mobile != ''"> and phonenumber like concat('%',  #{mobile}, '%')</if>
+		<if test="loginName != null and loginName != ''"> and login_name like concat('%', #{loginName}, '%')</if>
+		<if test="params != null and params.startTime != ''"> and create_time &gt;= #{params.startTime}</if>
+		<if test="params != null and params.endTime != ''"> and create_time &lt;= #{params.startTime}</if>
+	</select>
+	
+	<resultMap type="DateCount" id="DateCountResult">
+		<result property="date" column="date" />
+		<result property="count" column="count" />
+	</resultMap>
+
+	<select id="selectRegisterUserCountsByDate" resultMap="DateCountResult">
+		SELECT date(e.create_time) as date, COUNT(*) as count FROM sys_user e where date(e.create_time) is not null GROUP BY date(e.create_time) ORDER BY date(e.create_time);
+	</select>
+
+</mapper>

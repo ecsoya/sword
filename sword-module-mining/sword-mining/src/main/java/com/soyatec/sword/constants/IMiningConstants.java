@@ -2,6 +2,7 @@ package com.soyatec.sword.constants;
 
 public interface IMiningConstants {
 
+	String ROOT_USER_ID = "sword.rootUserId"; // 根用户ID
 	String ENABLE_USER_CERTIFICATE = "sword.enableUserCertificate";// 启用实名认证
 	String REGISTER_NEED_REFERRER_CODE = "sword.registerNeedReferrerCode";// 注册推荐码
 	String REGISTER_NEED_MOBILE = "sword.registerNeedMobile";// 注册需要手机号
@@ -11,6 +12,7 @@ public interface IMiningConstants {
 	String USER_REFERRAL_LINK_URL = "sword.referralLinkUrl";
 
 	String SYMBOL_FIL = "fil";
+	String SYMBOL_BGA = "bga";
 	String SYMBOL_USDT = "usdt";
 	String CHAIN = "";
 	String PARAM_CHAIN = "chain";
