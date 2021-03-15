@@ -32,6 +32,10 @@ public class SwaggerConfig {
 	/** 是否开启swagger */
 	@Value("${swagger.enabled}")
 	private boolean enabled;
+	@Value("${swagger.publishUrl:}")
+	private String publishUrl;
+	@Value("${swagger.title:Sword}")
+	private String title;
 
 	@Bean
 	public UiConfiguration uiConfig() {
@@ -60,9 +64,9 @@ public class SwaggerConfig {
 		// 用ApiInfoBuilder进行定制
 		return new ApiInfoBuilder()
 				// 设置标题
-				.title("Bee+ API")
+				.title(title)
 				// 描述
-				.description("正式环境API：http://129.28.182.163/api/")
+				.description("正式环境API：" + publishUrl)
 				// 作者信息
 				.contact(new Contact("AngryRED", "https://ecsoya.github.io", "angryred@qq.com"))
 				// 版本

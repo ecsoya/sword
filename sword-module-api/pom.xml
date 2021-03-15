@@ -20,5 +20,6 @@
   	<module>sword-app</module>
   	<module>sword-core</module>
   	<module>sword-app-mining</module>
+  	<module>sword-admin-mining</module>
   </modules>
 </project>

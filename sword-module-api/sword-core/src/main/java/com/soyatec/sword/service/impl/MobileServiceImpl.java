@@ -31,9 +31,9 @@ public class MobileServiceImpl implements IMobileService {
 	private SendMobileCodeHandler sendMobileHandler;
 
 	@Override
-	public CommonResult<?> sendCode(String mobile, String content) {
+	public CommonResult<?> sendCode(String mobile, String code) {
 		if (sendMobileHandler != null) {
-			return sendMobileHandler.send(mobile, content);
+			return sendMobileHandler.send(mobile, code);
 		}
 		return CommonResult.fail("没有实现");
 	}

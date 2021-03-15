@@ -7,7 +7,7 @@ public interface IMobileService {
 	/**
 	 * 发送邮件
 	 */
-	public CommonResult<?> sendCode(String mobile, String content);
+	public CommonResult<?> sendCode(String mobile, String code);
 
 	/**
 	 * 发送验证码
