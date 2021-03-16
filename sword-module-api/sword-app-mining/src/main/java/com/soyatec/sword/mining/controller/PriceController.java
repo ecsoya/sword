@@ -23,7 +23,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/price")
+@RequestMapping("/open/price")
 @Api(tags = { "实时价格" }, description = "实时价格、历史价格")
 public class PriceController extends BaseController {
 

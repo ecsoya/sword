@@ -103,7 +103,7 @@ public class SwordUtils {
 		return SWORD_CACHE + name;
 	}
 
-	private static boolean isProd() {
+	private static boolean isDev() {
 		HttpServletRequest request = ServletUtils.getRequest();
 		if (request == null) {
 			return false;
@@ -112,11 +112,15 @@ public class SwordUtils {
 		if (requestURL == null) {
 			return false;
 		}
-		return requestURL.toString().contains(GlobalConfig.getProdUrl());
+		String prodUrl = GlobalConfig.getProdUrl();
+		if (StringUtils.isNotEmpty(prodUrl)) {
+			return !requestURL.toString().contains(prodUrl);
+		}
+		return true;
 	}
 
 	public static CommonResult<?> verifyCode(String code) {
-		if (!isProd() && StringUtils.equals("000000", code)) {
+		if (isDev() && StringUtils.equals("000000", code)) {
 			return CommonResult.success();
 		}
 		if (StringUtils.isEmpty(code)) {
@@ -132,7 +136,7 @@ public class SwordUtils {
 	}
 
 	public static CommonResult<?> verifyCodeByUsername(String username, String code) {
-		if (!isProd() && StringUtils.equals("000000", code)) {
+		if (isDev() && StringUtils.equals("000000", code)) {
 			return CommonResult.success();
 		}
 		if (StringUtils.isEmpty(code)) {
@@ -148,7 +152,7 @@ public class SwordUtils {
 	}
 
 	public static CommonResult<?> verifyCode(String source, String code) {
-		if (!isProd() && StringUtils.equals("000000", code)) {
+		if (isDev() && StringUtils.equals("000000", code)) {
 			return CommonResult.success();
 		}
 		if (StringUtils.isEmpty(source) || StringUtils.isEmpty(code)) {

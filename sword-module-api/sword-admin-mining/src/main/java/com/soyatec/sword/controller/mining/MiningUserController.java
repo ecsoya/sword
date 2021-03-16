@@ -50,7 +50,7 @@ import com.soyatec.sword.wallet.service.IUserWalletService;
 @RequestMapping("/mining/user")
 public class MiningUserController extends BaseController {
 
-	private static final String prefix = "mining/user/";
+	private static final String prefix = "mining/user";
 
 	@Autowired
 	private IMiningUserService miningUserService;

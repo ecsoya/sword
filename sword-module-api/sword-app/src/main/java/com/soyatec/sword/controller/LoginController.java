@@ -23,6 +23,7 @@ import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
 import com.soyatec.sword.common.utils.MessageUtils;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.framework.shiro.realm.AnonymousAuthenticationToken;
 import com.soyatec.sword.framework.shiro.realm.TypedAuthenticationToken;
 import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 import com.soyatec.sword.system.service.ISysUserService;
@@ -72,6 +73,50 @@ public class LoginController extends BaseController {
 		}
 
 		TypedAuthenticationToken token = new TypedAuthenticationToken(username, password, true,
+				UserConstants.REGISTER_USER_TYPE);
+		Subject subject = SecurityUtils.getSubject();
+		try {
+			subject.login(token);
+			Session session = subject.getSession();
+			return CommonResult.success(session.getId());
+		} catch (AuthenticationException e) {
+			String msg = MessageUtils.message("LoginController.3"); //$NON-NLS-1$
+			if (StringUtils.isNotEmpty(e.getMessage())) {
+				msg = e.getMessage();
+			}
+			return CommonResult.fail(msg);
+		}
+	}
+
+	/**
+	 * 用户登录
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	@ApiOperation("手机号验证码登录")
+	@PostMapping("/loginByMobile")
+	@RepeatSubmit
+	public CommonResult<?> loginByMobile(@ApiParam("用户名") String mobile, @ApiParam("验证码") String code, Long version) {
+		log.info("mobile={}, version={}", mobile, version);
+		CommonResult<?> checkVersion = SwordUtils.checkVersion(version);
+		if (!checkVersion.isSuccess()) {
+			return checkVersion;
+		}
+		if (StringUtils.isEmpty(mobile)) {
+			return CommonResult.fail(MessageUtils.message("LoginController.0")); //$NON-NLS-1$
+		}
+		CommonResult<?> verifiedCode = SwordUtils.verifyCode(mobile, code);
+		if (!verifiedCode.isSuccess()) {
+			return verifiedCode;
+		}
+		SysUser user = sysUserService.selectUserByPhoneNumber(mobile);
+		if (user == null) {
+			return CommonResult.fail("此号码尚未注册，请注册后使用");
+		}
+
+		AnonymousAuthenticationToken token = new AnonymousAuthenticationToken(user, true,
 				UserConstants.REGISTER_USER_TYPE);
 		Subject subject = SecurityUtils.getSubject();
 		try {

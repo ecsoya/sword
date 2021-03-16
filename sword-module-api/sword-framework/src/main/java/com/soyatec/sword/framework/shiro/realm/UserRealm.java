@@ -91,29 +91,33 @@ public class UserRealm extends AuthorizingRealm {
 		if (upToken.getPassword() != null) {
 			password = new String(upToken.getPassword());
 		}
+		SysUser user = null;
 		List<String> userTypes = new ArrayList<>();
 		boolean withoutPassword = false;
 		if (token instanceof TypedAuthenticationToken) {
 			userTypes.addAll(Arrays.asList(((TypedAuthenticationToken) token).getUserTypes()));
+		} else if (token instanceof AnonymousAuthenticationToken) {
+			user = ((AnonymousAuthenticationToken) token).getUser();
 		}
-		SysUser user = null;
-		try {
-			user = loginService.login(username, password, userTypes, withoutPassword);
-		} catch (CaptchaException e) {
-			throw new AuthenticationException(e.getMessage(), e);
-		} catch (UserNotExistsException e) {
-			throw new UnknownAccountException(e.getMessage(), e);
-		} catch (UserPasswordNotMatchException e) {
-			throw new IncorrectCredentialsException(e.getMessage(), e);
-		} catch (UserPasswordRetryLimitExceedException e) {
-			throw new ExcessiveAttemptsException(e.getMessage(), e);
-		} catch (UserBlockedException e) {
-			throw new LockedAccountException(e.getMessage(), e);
-		} catch (RoleBlockedException e) {
-			throw new LockedAccountException(e.getMessage(), e);
-		} catch (Exception e) {
-			log.info("对用户[" + username + "]进行登录验证..验证未通过{}", e.getMessage());
-			throw new AuthenticationException(e.getMessage(), e);
+		if (user == null) {
+			try {
+				user = loginService.login(username, password, userTypes, withoutPassword);
+			} catch (CaptchaException e) {
+				throw new AuthenticationException(e.getMessage(), e);
+			} catch (UserNotExistsException e) {
+				throw new UnknownAccountException(e.getMessage(), e);
+			} catch (UserPasswordNotMatchException e) {
+				throw new IncorrectCredentialsException(e.getMessage(), e);
+			} catch (UserPasswordRetryLimitExceedException e) {
+				throw new ExcessiveAttemptsException(e.getMessage(), e);
+			} catch (UserBlockedException e) {
+				throw new LockedAccountException(e.getMessage(), e);
+			} catch (RoleBlockedException e) {
+				throw new LockedAccountException(e.getMessage(), e);
+			} catch (Exception e) {
+				log.info("对用户[" + username + "]进行登录验证..验证未通过{}", e.getMessage());
+				throw new AuthenticationException(e.getMessage(), e);
+			}
 		}
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
 		return info;

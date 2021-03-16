@@ -325,8 +325,8 @@
 	</pluginRepositories>
 	<modules>
 		<module>sword-module-api</module>
-		<module>sword-module-boot</module>
-		<module>sword-module-deploy</module>
+		
+		
 		
 		<module>sword-module-mining</module>
 	</modules>
