@@ -242,4 +242,9 @@ public class UserProfileServiceImpl implements IUserProfileService {
 	public List<Long> selectUserIdsByType(String userType) {
 		return userProfileMapper.selectUserIdsByType(userType);
 	}
+
+	@Override
+	public List<UserProfile> fuzzySearchUserList(String loginName) {
+		return userProfileMapper.fuzzySearchUserList(loginName);
+	}
 }

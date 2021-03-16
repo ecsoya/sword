@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userId"    column="user_id"    />
         <result property="loginName"    column="login_name"    />
         <result property="email"    column="email"    />
+        <result property="mobile"    column="mobile"    />
         <result property="address"    column="address"    />
         <result property="amount"    column="amount"    />
         <result property="fee"    column="fee"    />
@@ -25,8 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectUserWithdrawalOrderVo">
-        select a.id, a.order_no, a.user_id, b.login_name, b.email, a.address, a.amount, a.fee, a.withdrawal, a.symbol, a.chain, a.status, a.feedback, a.callable, a.create_time, a.update_time, a.remark from t_user_order_withdrawal a
-        left join (select user_id as bid, login_name, email from sys_user) as b on a.user_id = b.bid
+        select a.id, a.order_no, a.user_id, b.login_name, b.email, b.mobile, a.address, a.amount, a.fee, a.withdrawal, a.symbol, a.chain, a.status, a.feedback, a.callable, a.create_time, a.update_time, a.remark from t_user_order_withdrawal a
+        left join (select user_id as bid, login_name, email, phonenumber as mobile from sys_user) as b on a.user_id = b.bid
     </sql>
 
     <select id="selectUserWithdrawalOrderList" parameterType="UserWithdrawalOrder" resultMap="UserWithdrawalOrderResult">

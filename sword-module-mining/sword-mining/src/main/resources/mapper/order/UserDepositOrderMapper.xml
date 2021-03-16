@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userId"    column="user_id"    />
         <result property="loginName"    column="login_name"    />
         <result property="email"    column="email"    />
+        <result property="mobile"    column="mobile"    />
         <result property="address"    column="address"    />
         <result property="amount"    column="amount"    />
         <result property="symbol"    column="symbol"    />
@@ -22,8 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectUserDepositOrderVo">
-        select a.id, a.order_no, a.user_id, b.login_name, b.email, a.address, a.amount, a.symbol, a.chain, a.status, a.tx_id, a.create_time, a.update_time, a.remark from t_user_order_deposit a
-        left join (select user_id as bid, login_name, email from sys_user) as b on a.user_id = b.bid
+        select a.id, a.order_no, a.user_id, b.login_name, b.email, b.mobile, a.address, a.amount, a.symbol, a.chain, a.status, a.tx_id, a.create_time, a.update_time, a.remark from t_user_order_deposit a
+        left join (select user_id as bid, login_name, email, phonenumber as mobile from sys_user) as b on a.user_id = b.bid
     </sql>
 
     <select id="selectUserDepositOrderList" parameterType="UserDepositOrder" resultMap="UserDepositOrderResult">

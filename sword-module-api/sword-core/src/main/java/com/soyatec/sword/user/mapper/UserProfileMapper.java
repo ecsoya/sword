@@ -31,4 +31,6 @@ public interface UserProfileMapper {
 
 	List<Long> selectUserIdsByType(String userType);
 
+	List<UserProfile> fuzzySearchUserList(String loginName);
+
 }

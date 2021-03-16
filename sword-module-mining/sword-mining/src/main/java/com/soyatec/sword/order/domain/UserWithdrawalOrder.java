@@ -46,6 +46,8 @@ public class UserWithdrawalOrder extends BaseEntity {
 
 	private String email;
 
+	private String mobile;
+
 	/** 提现地址 */
 	@Excel(name = "提现地址")
 	private String address;
@@ -196,5 +198,13 @@ public class UserWithdrawalOrder extends BaseEntity {
 
 	public void setCallable(Integer callable) {
 		this.callable = callable;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 }

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('充值订单列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>订单ID：</label> <input type="text" name="orderNo" />
+							</li>
+							<li><label>用户名：</label> <input type="text" name="loginName" />
+							</li>
+							<li><label>邮箱：</label> <input type="text" name="email" /></li>
+							<li><label>充值地址：</label> <input type="text" name="address" />
+							</li>
+							<li><label>充值币种：</label> <select name="symbol"
+								onchange="$.table.search()">
+									<option value="">全部</option>
+									<option value="fil">FIL</option>
+									<option value="usdt">USDT</option>
+							</select></li>
+							<li><label>状态：</label> <select name="status"
+								onchange="$.table.search()">
+									<option value="">所有</option>
+									<option value="0">待确认</option>
+									<option value="1">成功</option>
+									<option value="2">归集中</option>
+									<option value="3">已完成</option>
+							</select></li>
+							<li><label>交易ID：</label> <input type="text" name="txId" /></li>
+							<li class="select-time"><label>创建时间： </label> <input
+								type="text" class="time-input" id="startTime" placeholder="开始时间"
+								name="start" /> <span>-</span> <input type="text"
+								class="time-input" id="endTime" placeholder="结束时间"
+								name="end" /></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<div class="select-list">
+					<ul id="tableParams">
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-12 select-table table-bordered">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: bootstrap-table-export-js" />
+
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('mining:wallet:deposit:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('mining:wallet:deposit:remove')}]];
+        var prefix = ctx + "mining/wallet/deposit";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "充值订单",
+                sortName: "createTime",
+                sortOrder: "desc",
+                showExport: true,
+		        exportOptions: {
+		        	ignoreColumn: [0]  //忽略第一列和最后一列
+		        },
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: 'ID',
+                    visible: false
+                },
+                {
+                    field: 'orderNo',
+                    title: '订单ID'
+                },
+                {
+                    field: 'loginName',
+                    title: '用户名'
+                },
+                {
+                    field: 'email',
+                    title: '邮箱'
+                },
+                {
+                    field: 'mobile',
+                    title: '手机'
+                },
+                {
+                    field: 'address',
+                    title: '充值地址'
+                },
+                {
+                    field: 'amount',
+                    title: '充值金额',
+                    formatter: function(value, rows, index) {
+                    	return $.common.formatNumber(value);
+                    },
+                },
+                {
+                    field: 'symbol',
+                    title: '充值币种',
+                    formatter: function(value, rows, index) {
+                    	return value.toUpperCase();
+                    }
+                },
+                {
+                    field: 'status',
+                    title: '状态',
+                    formatter: function(value, rows, index) {
+                    	return $.common.formatStatus(['待审核', '成功', '归集中', '已完成'], value);
+                    }
+                },
+                {
+                    field: 'txId',
+                    title: '交易ID',
+                    formatter: function(value, row, index){
+                    	if (!value || value == '') {
+                    		return '';
+                    	}
+                    	if (row.symbol == 'usdt') {
+                    		return '<a href="https://tronscan.io/#/transaction/'+value+'" target="_blank">' +value+'</a>';
+                    	} else if (row.symbol == 'fil') {
+                    		return '<a href="https://filfox.info/zh/message/'+value+'" target="_blank">' +value+'</a>';
+                    	}
+                    	return $.tooltip(value, 50, 'open');
+                    }
+               
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                },
+                {
+                    field: 'remark',
+                    title: '备注'
+                }
+                ],
+                responseHandler: function(res) {
+                	if (res.code == web_status.SUCCESS && res.params) {
+                		$("#tableParams").html('');
+                		$.each(res.params, function(name, value) {
+                			$('#tableParams').append('<li><label>'+name+'：</label> <label class="text-danger" style="text-align: center">'+value+'</label></li>');
+                		});
+                	}
+                }
+            };
+            $.table.init(options);
+        });
+        
+        function collectWalletMoney() {
+        	$.modal.confirm('你确定要将资金归集到系统设定的外部账户吗？', function(){
+        		$.operate.post(prefix + '/collectWalletMoney');
+        	});
+        }
+    </script>
+</body>
+</html>

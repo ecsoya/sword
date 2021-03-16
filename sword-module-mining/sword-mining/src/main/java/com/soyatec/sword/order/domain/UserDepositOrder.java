@@ -36,6 +36,8 @@ public class UserDepositOrder extends BaseEntity implements IConstants {
 
 	private String email;
 
+	private String mobile;
+
 	/** 充值地址 */
 	@Excel(name = "充值地址")
 	private String address;
@@ -155,5 +157,13 @@ public class UserDepositOrder extends BaseEntity implements IConstants {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 }

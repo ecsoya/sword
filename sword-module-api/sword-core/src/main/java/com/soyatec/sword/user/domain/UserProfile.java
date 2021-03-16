@@ -12,6 +12,8 @@ public class UserProfile {
 
 	private String email;
 
+	private String mobile;
+
 	private String avatar;
 
 	private Date createTime;
@@ -72,6 +74,14 @@ public class UserProfile {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 }

@@ -9,12 +9,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="loginName" column="login_name" />
 		<result property="userName" column="user_name" />
 		<result property="email" column="email" />
+		<result property="mobile" column="mobile" />
 		<result property="avatar" column="avatar" />
 		<result property="status" column="status" />
 		<result property="createTime" column="create_time" />
 	</resultMap>
 	<select id="selectUserProfileById" parameterType="Long" resultMap="UserProfileResult">
-		select a.user_id, a.login_name, a.user_name, a.email, a.avatar, a.status, a.create_time from sys_user a
+		select a.user_id, a.login_name, a.user_name, a.email, a.phonenumber as mobile, a.avatar, a.status, a.create_time from sys_user a
 		where a.user_id = #{userId}
 	</select>
 	
@@ -56,6 +57,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectUserIdsByType" parameterType="String" resultType="Long">
 		select user_id from sys_user <if test="userType != null and userType != ''">where user_type = #{userType}</if>
+	</select>
+	
+	<select id="fuzzySearchUserList" parameterType="String" resultMap="UserProfileResult">
+		select user_id, login_name, phonenumber, email, create_time from sys_user where user_type = 01 and user_id > 3 
+		<if test="loginName != null and login_name !=''">and login_name like concat('%', #{loginName}, '%')</if>
 	</select>
 	
 </mapper> 

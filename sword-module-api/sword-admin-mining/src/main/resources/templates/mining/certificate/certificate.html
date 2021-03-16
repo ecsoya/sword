@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('用户实名列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>用户名：</label> <input type="text" name="loginName" />
+							</li>
+							<li><label>电话：</label> <input type="text" name="mobile" /></li>
+							<li><label>邮箱：</label> <input type="text" name="email" /></li>
+							<li><label>实名：</label> <input type="text" name="realName" />
+							</li>
+							<li><label>状态：</label> <select name="status"
+								onchange="$.table.search()">
+									<option value="">所有</option>
+									<option value="0">待审核</option>
+									<option value="1">已拒绝</option>
+									<option value="2">已通过</option>
+							</select></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="mining:certificate:add"> <i
+					class="fa fa-plus"></i> 添加
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-bordered">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('mining:certificate:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('mining:certificate:remove')}]];
+        var countries = [[${countries}]];
+        var prefix = ctx + "mining/certificate";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "用户实名",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'userId',
+                    title: '用户ID',
+                    visible: false
+                },
+                {
+                    field: 'loginName',
+                    title: '用户名'
+                },
+                {
+                    field: 'mobile',
+                    title: '电话'
+                },
+                {
+                    field: 'email',
+                    title: '邮箱'
+                },
+                {
+                    field: 'country',
+                    title: '国家',
+                    formatter: function(value, row, index) {
+                    	var country = countries.filter(c=>c.name == value)[0];
+                    	if (country) {
+                    		return country.chineseName;
+                    	}
+                    	return value;
+                    }
+                },
+                {
+                    field: 'type',
+                    title: '类型',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatStatus(['身份证', '护照', '其它'], value);
+                    }
+                },
+                {
+                    field: 'realName',
+                    title: '实名'
+                },
+                {
+                    field: 'identityNumber',
+                    title: '号码'
+                },
+                {
+                    field: 'frontImageUrl',
+                    title: '正面照片',
+                    formatter: function(value, row, index) {
+                    	return $.table.imageView(value, 600, 800)
+                    }
+                },
+                {
+                    field: 'backImageUrl',
+                    title: '背面照片',
+                    formatter: function(value, row, index) {
+                    	return $.table.imageView(value, 600, 800)
+                    }
+                },
+                {
+                    field: 'holdingImageUrl',
+                    title: '手持照片',
+                    formatter: function(value, row, index) {
+                    	return $.table.imageView(value, 600, 800)
+                    }
+                },
+                {
+                    field: 'status',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatStatus(['待审核', '已拒绝', '已通过'], value);
+                    }
+                },
+                {
+                    field: 'remark',
+                    title: '备注',
+                    formatter: function(value, row, index) {
+                    	return $.table.tooltip(value, 30)
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        if(row.status == 0) {
+	                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.userId + '\')"><i class="fa fa-edit"></i> 编辑</a> ');
+    	                    actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="pass(\'' + row.userId + '\')"><i class="fa fa-check"></i> 通过</a> ');
+    	                    actions.push('<a class="btn btn-danger btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="deny(\'' + row.userId + '\')"><i class="fa fa-remove"></i> 拒绝</a> ');
+                        } 
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        function pass(userId) {
+        	$.operate.post(prefix + '/pass?userId=' + userId);
+        }
+
+        function deny(userId) {
+        	$.modal.prompt('决绝理由？', function(res){
+        		$.operate.post(prefix + '/deny?userId=' + userId + "&remark=" + res);
+        	})
+        	
+        }
+    </script>
+</body>
+</html>
