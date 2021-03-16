@@ -62,7 +62,7 @@ public class DataScopeAspect {
 
 	@Before("dataScopePointCut()")
 	public void doBefore(JoinPoint point) throws Throwable {
-		handleDataScope(point);
+//		handleDataScope(point);
 	}
 
 	protected void handleDataScope(final JoinPoint joinPoint) {

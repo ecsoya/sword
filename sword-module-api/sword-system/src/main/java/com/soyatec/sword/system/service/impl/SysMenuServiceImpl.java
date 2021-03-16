@@ -122,9 +122,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
 		List<SysMenu> menuList = selectMenuAll(userId);
 		if (StringUtils.isNotNull(roleId)) {
 			List<String> roleMenuList = menuMapper.selectMenuTree(roleId);
-			ztrees = initZtree(menuList, roleMenuList, true);
+			ztrees = initZtree(menuList, roleMenuList, false);
 		} else {
-			ztrees = initZtree(menuList, null, true);
+			ztrees = initZtree(menuList, null, false);
 		}
 		return ztrees;
 	}
