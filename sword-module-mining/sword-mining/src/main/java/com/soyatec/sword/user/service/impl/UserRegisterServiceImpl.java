@@ -3,6 +3,7 @@ package com.soyatec.sword.user.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.constant.UserConstants;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.StringUtils;
@@ -55,18 +56,29 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 			referralId = referral.getUserId();
 		}
 		if (user.getUserId() == null) {
-			String email = user.getEmail();
-			boolean needEmail = "true" //$NON-NLS-1$
-					.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_NEED_EMAIL));
-			if (needEmail && StringUtils.isEmpty(email)) {
-				return CommonResult.fail("注册邮箱不能为空"); //$NON-NLS-1$
-			}
+			// 使用邮箱验证码
+			if (GlobalConfig.getEmailCode()) {
+				String email = user.getEmail();
+				if (StringUtils.isEmpty(email)) {
+					return CommonResult.fail("注册邮箱不能为空"); //$NON-NLS-1$
+				}
+				boolean emailUnique = "true" //$NON-NLS-1$
+						.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_EMAIL_UNIQUE));
+				if (emailUnique && !UserConstants.USER_EMAIL_UNIQUE.equals(userService.checkEmailUnique(user))) {
+					return CommonResult.fail("此邮箱已被占用");
+				}
 
-			String mobile = user.getPhonenumber();
-			boolean needMobile = "true" //$NON-NLS-1$
-					.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_NEED_MOBILE));
-			if (needMobile && StringUtils.isEmpty(mobile)) {
-				return CommonResult.fail("注册手机不能为空"); //$NON-NLS-1$
+			} else {
+				String mobile = user.getPhonenumber();
+				if (StringUtils.isEmpty(mobile)) {
+					return CommonResult.fail("注册手机不能为空"); //$NON-NLS-1$
+				}
+				boolean mobileUnique = "true" //$NON-NLS-1$
+						.equalsIgnoreCase(
+								configService.selectConfigValueByKey(IMiningConstants.REGISTER_MOBILE_UNIQUE));
+				if (mobileUnique && !UserConstants.USER_PHONE_UNIQUE.equals(userService.checkPhoneUnique(user))) {
+					return CommonResult.fail("此手机号已被占用");
+				}
 			}
 
 			String msg = "", username = user.getLoginName(), password = user.getPassword(); //$NON-NLS-1$

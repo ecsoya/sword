@@ -10,7 +10,7 @@
         <input type="hidden" name="parentId" th:value="${parentId}"/>
         <h4 class="form-header h4">基本信息</h4>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12" th:if="${binaryTreeEnabled}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label ">注册区：</label>
                     <div class="col-sm-6">
@@ -35,11 +35,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-12" th:if="${emailEnabled}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label is-required">邮箱：</label>
                     <div class="col-sm-6">
                         <input id="email" name="email" placeholder="请输入邮箱"
+                               class="form-control" type="text" maxlength="40" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" th:if="${!emailEnabled}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label is-required">手机：</label>
+                    <div class="col-sm-6">
+                        <input id="phonenumber" name="phonenumber" placeholder="请输入手机号"
                                class="form-control" type="text" maxlength="40" required>
                     </div>
                 </div>
@@ -113,7 +122,7 @@
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: select2-js"/>
 <script>
-    var prefix = ctx + "admin/user";
+    var prefix = ctx + "mining/user";
 
     $("#form-user-add").validate({
         onkeyup: false,
@@ -156,7 +165,7 @@
                 function () {
                     var topWindow = $(window.parent.document);
                     var $contentWindow = $(
-                        '.RuoYi_iframe[data-id="/admin/admin/user/data"]',
+                        '.RuoYi_iframe[data-id="/admin/mining/user"]',
                         topWindow)[0].contentWindow;
                     $contentWindow.updateUser(parentId);
                 });

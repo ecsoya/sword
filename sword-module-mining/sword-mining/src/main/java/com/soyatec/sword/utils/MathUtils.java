@@ -148,4 +148,24 @@ public class MathUtils {
 			return null;
 		}
 	}
+
+	public static int compare(BigDecimal o1, BigDecimal o2) {
+		if (o1 == null || o2 == null) {
+			return 0;
+		}
+		return o1.compareTo(o2);
+	}
+
+	public static boolean between(BigDecimal amount, BigDecimal min, BigDecimal max) {
+		if (amount == null || min == null || max == null) {
+			return false;
+		}
+		if (lt(amount, min)) {
+			return false;
+		}
+		if (MathUtils.isValid(max) && gte(amount, max)) {
+			return false;
+		}
+		return true;
+	}
 }

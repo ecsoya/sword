@@ -3,6 +3,9 @@ package com.soyatec.sword.user.service.impl;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Stack;
+import java.util.Vector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +45,8 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	@Override
 	public UserReferrer selectUserReferrerById(Long userId) {
 		UserReferrer userReferrer = userReferrerMapper.selectUserReferrerById(userId);
-		if (StringUtils.isEmpty(userReferrer.getLeftCodeUrl()) || StringUtils.isEmpty(userReferrer.getRightCodeUrl())) {
+		if (userReferrer != null && StringUtils.isEmpty(userReferrer.getLeftCodeUrl())
+				|| StringUtils.isEmpty(userReferrer.getRightCodeUrl())) {
 			return refreshQrcode(userReferrer, null);
 		}
 		return userReferrer;
@@ -296,5 +300,61 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	@Override
 	public List<UserReferrer> selectAll() {
 		return selectUserReferrerList(new UserReferrer());
+	}
+
+	@Override
+	public List<Long> selectUmbrellaUserIds(Long userId, List<UserReferrer> allUsers) {
+		if (userId == null || allUsers == null || allUsers.isEmpty()) {
+			return Collections.emptyList();
+		}
+		Vector<Long> results = new Vector<>();
+		UserReferrer root = findUserReferrer(userId, allUsers);
+		if (root == null) {
+			return Collections.emptyList();
+		}
+		Stack<UserReferrer> stack = new Stack<UserReferrer>();
+		stack.add(root);
+		UserReferrer tree;
+		while (!stack.isEmpty()) {
+			tree = stack.pop();
+			List<UserReferrer> list = findReferralList(tree.getUserId(), allUsers);
+			list.forEach(user -> {
+				stack.add(user);
+				Long id = user.getUserId();
+				if (!results.contains(id)) {
+					results.add(id);
+				}
+			});
+		}
+		return results;
+	}
+
+	private UserReferrer findUserReferrer(Long userId, List<UserReferrer> allUsers) {
+		if (userId == null || allUsers == null || allUsers.isEmpty()) {
+			return null;
+		}
+		return allUsers.stream().filter(u -> userId.equals(u.getUserId())).findFirst().orElse(null);
+	}
+
+	@Override
+	public List<Long> selectUmbrellaUserIdsDepthFirstly(Long userId, List<UserReferrer> allUsers) {
+		if (userId == null || allUsers == null || allUsers.isEmpty()) {
+			return Collections.emptyList();
+		}
+		Vector<Long> results = new Vector<>();
+		List<UserReferrer> referrers = findReferralList(userId, allUsers);
+		for (UserReferrer userReferrer : referrers) {
+			Long id = userReferrer.getUserId();
+			results.add(id);
+			results.addAll(selectUmbrellaUserIds(id, allUsers));
+		}
+		return results;
+	}
+
+	private List<UserReferrer> findReferralList(Long userId, List<UserReferrer> allUsers) {
+		if (userId == null || allUsers == null || allUsers.isEmpty()) {
+			return Collections.emptyList();
+		}
+		return allUsers.stream().filter(u -> userId.equals(u.getReferralId())).collect(Collectors.toList());
 	}
 }

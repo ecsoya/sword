@@ -102,4 +102,14 @@ public interface IUserReferrerService {
 	public int updateUserReferrerCodeEnabled(Long userId);
 
 	public List<UserReferrer> selectAll();
+
+	/**
+	 * 查询所有的伞下用户
+	 */
+	public List<Long> selectUmbrellaUserIds(Long userId, List<UserReferrer> allUsers);
+
+	/**
+	 * 查询所有的伞下用户
+	 */
+	public List<Long> selectUmbrellaUserIdsDepthFirstly(Long userId, List<UserReferrer> allUsers);
 }

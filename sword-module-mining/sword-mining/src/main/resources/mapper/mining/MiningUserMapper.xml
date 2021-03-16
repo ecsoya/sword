@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<select id="selectMiningUserList" parameterType="MiningUser" resultMap="MiningUserResult">
-		select a.user_id, a.login_name, a.email, a.phonenumber, a.status, a.create_time, b.level_id, c.level_name, d.referral_id, e.referral_name, e.referral_email, e.referral_mobile, f.child_count from sys_user a
+		select a.user_id, d.referral_id as parentId, a.login_name, a.email, a.phonenumber, a.status, a.create_time, b.level_id, c.level_name, d.referral_id, e.referral_name, e.referral_email, e.referral_mobile, f.child_count from sys_user a
 		left join (select user_id as bid, level_id from t_user_level) as b on a.user_id = b.bid
 		left join (select id as cid, name as level_name from t_mining_level) as c on b.level_id = c.cid
 		left join (select user_id as did, referral_id from t_user_referrer) as d on a.user_id = d.did

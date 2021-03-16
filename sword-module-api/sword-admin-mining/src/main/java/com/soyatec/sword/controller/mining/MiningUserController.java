@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.soyatec.sword.common.annotation.Log;
+import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.domain.CommonResult;
@@ -49,7 +50,7 @@ import com.soyatec.sword.wallet.service.IUserWalletService;
 @RequestMapping("/mining/user")
 public class MiningUserController extends BaseController {
 
-	private static final String prefix = "mining/user";
+	private static final String prefix = "mining/user/";
 
 	@Autowired
 	private IMiningUserService miningUserService;
@@ -106,6 +107,9 @@ public class MiningUserController extends BaseController {
 			id = MathUtils.parseLong(configService.selectConfigValueByKey(IMiningConstants.ROOT_USER_ID));
 		}
 		mmap.put("parentId", id);
+		mmap.put("binaryTreeEnabled", "true"
+				.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.USER_BINARY_TREE_ENABLE)));
+		mmap.put("emailEnabled", GlobalConfig.getEmailCode());
 		return prefix + "addUser";
 	}
 
@@ -126,7 +130,8 @@ public class MiningUserController extends BaseController {
 		if (parentId == null) {
 			parentId = MathUtils.parseLong(configService.selectConfigValueByKey(IMiningConstants.ROOT_USER_ID));
 		}
-		if (referral == null) {
+		if (referral == null && "true"
+				.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.USER_BINARY_TREE_ENABLE))) {
 			return AjaxResult.error("添加失败");
 		}
 		UserReferrer userReferrer = referrerService.selectUserReferrerById(parentId);
@@ -134,7 +139,7 @@ public class MiningUserController extends BaseController {
 			return AjaxResult.error("注册失败");
 		}
 		String referralCode = userReferrer.getLeftCode();
-		if (referral == 2) {
+		if (referral != null && referral == 2) {
 			referralCode = userReferrer.getRightCode();
 		}
 		CommonResult<?> result = userRegisterService.registerUser(user, referralCode, walletPassword);
@@ -149,6 +154,7 @@ public class MiningUserController extends BaseController {
 	public String edit(Long id, ModelMap mmap) {
 		mmap.put("user", userProfileService.selectUserProfileById(id));
 		mmap.put("levels", levelService.selectMiningLevelList(new MiningLevel()));
+		mmap.put("emailEnabled", GlobalConfig.getEmailCode());
 		return prefix + "editUser";
 	}
 
