@@ -97,5 +97,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{symbol}
         </foreach>
     </delete>
+    
+    <select id="selectMiningSymbols" resultType="String">
+    	select symbol from t_mining_symbol order by symbol
+    </select>
 
 </mapper>

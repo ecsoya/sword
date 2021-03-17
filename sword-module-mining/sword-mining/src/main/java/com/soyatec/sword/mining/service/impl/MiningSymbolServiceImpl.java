@@ -91,4 +91,9 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 	public int deleteMiningSymbolById(String symbol) {
 		return miningSymbolMapper.deleteMiningSymbolById(symbol);
 	}
+
+	@Override
+	public List<String> selectMiningSymbols() {
+		return miningSymbolMapper.selectMiningSymbols();
+	}
 }

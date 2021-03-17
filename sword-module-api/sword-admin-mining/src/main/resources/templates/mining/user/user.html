@@ -469,7 +469,7 @@
     	var more = [];
     	for(var i = 0; i < list.length; i++) {
     		var level = list[i];
-    		var btnStyles = buttonStyles[i];
+    		var btnStyles = buttonStyles[i % buttonStyles.length];
             more.push("<a class='btn "+btnStyles+" btn-xs ' href='javascript:void(0)' onclick='setLevel(" + userId + ", "+type+", "+level.id+")'><i class='fa fa-plus'></i> "+level.name+"</a> ");
     	}
     	return more;

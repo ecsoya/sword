@@ -3,7 +3,6 @@ package com.soyatec.sword.controller.mining;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.util.Arrays;
 
 import javax.sql.DataSource;
 
@@ -32,6 +31,7 @@ import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.mining.domain.MiningLevel;
 import com.soyatec.sword.mining.domain.MiningUser;
 import com.soyatec.sword.mining.service.IMiningLevelService;
+import com.soyatec.sword.mining.service.IMiningSymbolService;
 import com.soyatec.sword.mining.service.IMiningUserService;
 import com.soyatec.sword.system.service.ISysConfigService;
 import com.soyatec.sword.system.service.ISysUserService;
@@ -85,11 +85,14 @@ public class MiningUserController extends BaseController {
 	@Autowired
 	private DataSource dataSource;
 
+	@Autowired
+	private IMiningSymbolService symbolService;
+
 	@GetMapping()
 	@RequiresPermissions("mining:user:view")
 	public String index(ModelMap mmap) {
 		mmap.put("levels", levelService.selectMiningLevelList(new MiningLevel()));
-		mmap.put("accounts", Arrays.asList("bga"));
+		mmap.put("accounts", symbolService.selectMiningSymbols());
 		return prefix + "/user";
 	}
 

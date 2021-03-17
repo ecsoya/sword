@@ -58,4 +58,6 @@ public interface IMiningSymbolService {
 	 * @return 结果
 	 */
 	public int deleteMiningSymbolById(String symbol);
+
+	List<String> selectMiningSymbols();
 }
