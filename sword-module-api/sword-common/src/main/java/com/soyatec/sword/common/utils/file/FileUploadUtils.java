@@ -14,6 +14,7 @@ import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.region.Region;
+import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.utils.StringUtils;
 
 import io.github.ecsoya.uploader.TencentFileUploader;
@@ -27,7 +28,7 @@ import io.github.ecsoya.uploader.core.UploadData;
  * @author Jin Liu (angryred@qq.com)
  */
 public class FileUploadUtils {
-	private static UploadConfig config;
+//	private static UploadConfig config;
 
 	private static final String accelerateUrl = "https://beecluster-1301683227.file.myqcloud.com";
 	private static final String normalUrl = "https://beecluster-1301683227.cos.ap-chongqing.myqcloud.com";
@@ -46,6 +47,7 @@ public class FileUploadUtils {
 	}
 
 	private static final UploadConfig getUploadConfig() {
+		UploadConfig config = GlobalConfig.getTencent();
 		if (config == null) {
 			config = UploadConfig.build().setBaseUrl("https://beecluster-1301683227.file.myqcloud.com")
 					.setAccessKey("AKIDTY0IKIkDj01IMAeJbeRqyRjkVEHn41kD").setBucket("beecluster-1301683227")
@@ -66,7 +68,7 @@ public class FileUploadUtils {
 			fileName = Long.toString(System.nanoTime());
 		}
 		String name = null;
-		if (config.isAddDatePath()) {
+		if (getUploadConfig().isAddDatePath()) {
 			name = datePath() + "/" + encodingFilename(fileName);
 		} else {
 			name = encodingFilename(fileName);
