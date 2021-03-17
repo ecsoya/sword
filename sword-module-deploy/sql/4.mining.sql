@@ -6,8 +6,8 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
-# Database: zbx-bga
-# Generation Time: 2021-03-16 09:32:18 +0000
+# Database: sword
+# Generation Time: 2021-03-17 07:33:49 +0000
 # ************************************************************
 
 
@@ -346,6 +346,27 @@ CREATE TABLE `t_user_wallet_record` (
   `remark` varchar(256) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户钱包记录';
+
+
+
+# Dump of table t_user_wallet_union_record
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `t_user_wallet_union_record`;
+
+CREATE TABLE `t_user_wallet_union_record` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `order_no` varchar(32) DEFAULT NULL COMMENT '订单号',
+  `type` int(1) NOT NULL DEFAULT '0' COMMENT '类型 0-后台设置 1-加 2-减',
+  `symbol` varchar(32) NOT NULL COMMENT '币种',
+  `amount` double(20,6) NOT NULL DEFAULT '0.000000' COMMENT '金额',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态 0-未同步 1-已同步',
+  `kind` int(1) NOT NULL DEFAULT '0',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `user_id_INDEX` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='钱包记录，联合查询';
 
 
 

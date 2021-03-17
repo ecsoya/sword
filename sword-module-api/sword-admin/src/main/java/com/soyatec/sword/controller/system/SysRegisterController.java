@@ -1,7 +1,6 @@
 package com.soyatec.sword.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,7 @@ import com.soyatec.sword.system.service.ISysConfigService;
  * 
  * @author Jin Liu (angryred@qq.com)
  */
-@Controller
+//@Controller
 public class SysRegisterController extends BaseController {
 	@Autowired
 	private SysRegisterService registerService;

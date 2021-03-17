@@ -30,11 +30,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
 	/** 是否开启swagger */
-	@Value("${swagger.enabled}")
+	@Value("${swagger.enabled: false}")
 	private boolean enabled;
 	@Value("${swagger.publishUrl:}")
 	private String publishUrl;
-	@Value("${swagger.title:Sword}")
+	@Value("${swagger.title:Sword: }")
 	private String title;
 
 	@Bean

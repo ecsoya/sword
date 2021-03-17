@@ -40,7 +40,7 @@ public class MobileServiceImpl implements IMobileService {
 
 	@Override
 	public CommonResult<?> sendCode(String mobile) {
-		if (!StringUtils.isEmpty(mobile)) {
+		if (StringUtils.isEmpty(mobile)) {
 			return CommonResult.fail("手机号为空"); //$NON-NLS-1$
 		}
 		Object code = redis.opsForValue().get(mobile);
@@ -56,7 +56,7 @@ public class MobileServiceImpl implements IMobileService {
 
 	@Override
 	public CommonResult<?> verifyCode(String mobile, String code) {
-		if (!StringUtils.isEmpty(mobile)) {
+		if (StringUtils.isEmpty(mobile)) {
 			return CommonResult.fail("手机号为空"); //$NON-NLS-1$
 		}
 		if (StringUtils.isEmpty(code)) {

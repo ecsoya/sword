@@ -50,7 +50,7 @@ public class MobileController extends BaseController {
 	@ApiOperation("发送手机验证码，手机")
 	@PostMapping("/deliveryByMobile")
 	public CommonResult<?> deliveryBymobile(String mobile) {
-		if (!StringUtils.isEmpty(mobile)) {
+		if (StringUtils.isEmpty(mobile)) {
 			return CommonResult.fail("Invalid mobile address");
 		}
 		return mobileService.sendCode(mobile);

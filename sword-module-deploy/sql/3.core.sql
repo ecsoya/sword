@@ -7,7 +7,7 @@
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
 # Database: sword
-# Generation Time: 2021-03-12 02:16:44 +0000
+# Generation Time: 2021-03-17 07:30:08 +0000
 # ************************************************************
 
 
@@ -18,6 +18,27 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table t_sword_article
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `t_sword_article`;
+
+CREATE TABLE `t_sword_article` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `title` varchar(256) NOT NULL DEFAULT '' COMMENT '标题',
+  `category` varchar(256) DEFAULT NULL COMMENT '分类',
+  `description` varchar(512) NOT NULL DEFAULT '' COMMENT '简介',
+  `image_url` varchar(1024) NOT NULL DEFAULT '' COMMENT '图片',
+  `content` longtext COMMENT '正文',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态（0正常 1关闭）',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章';
+
 
 
 # Dump of table t_sword_task
@@ -116,6 +137,47 @@ CREATE TABLE `t_token_secret` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `access_key_UNIQUE` (`access_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='开放接口API';
+
+
+
+# Dump of table t_user_advise
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `t_user_advise`;
+
+CREATE TABLE `t_user_advise` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `parent_Id` bigint(20) DEFAULT NULL COMMENT '父ID',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
+  `title` varchar(256) DEFAULT NULL COMMENT '标题',
+  `description` varchar(1024) DEFAULT NULL COMMENT '描述',
+  `type` int(1) NOT NULL DEFAULT '0' COMMENT '类型 0-反馈 1-回复',
+  `kind` int(1) NOT NULL DEFAULT '0' COMMENT '类别',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态 0-正常 1-关闭',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户反馈';
+
+
+
+# Dump of table t_user_article
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `t_user_article`;
+
+CREATE TABLE `t_user_article` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `article_Id` bigint(20) DEFAULT NULL COMMENT '文章ID',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
+  `read` int(1) NOT NULL DEFAULT '0' COMMENT '已读',
+  `like` int(1) NOT NULL DEFAULT '0' COMMENT '点赞',
+  `comment` varchar(512) DEFAULT NULL COMMENT '回复',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户文章';
 
 
 

@@ -162,6 +162,7 @@ public class ShiroConfig {
 
 	@Bean
 	public RedisManager redisManager() {
+		log.info("redis={}:{}, password={}", host, port, password);
 		RedisManager redisManager = new RedisManager();
 		redisManager.setHost(host + ":" + port);
 		redisManager.setDatabase(database);
