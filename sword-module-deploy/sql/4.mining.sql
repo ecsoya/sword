@@ -6,8 +6,8 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
-# Database: sword
-# Generation Time: 2021-03-12 02:17:06 +0000
+# Database: zbx-bga
+# Generation Time: 2021-03-16 09:32:18 +0000
 # ************************************************************
 
 
@@ -18,6 +18,32 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table t_mining_level
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `t_mining_level`;
+
+CREATE TABLE `t_mining_level` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(128) DEFAULT NULL COMMENT '名称',
+  `rate` double(11,6) NOT NULL DEFAULT '0.000000' COMMENT '比例',
+  `min_amount` double(20,6) NOT NULL DEFAULT '0.000000' COMMENT '最小值',
+  `max_amount` double(20,6) NOT NULL DEFAULT '0.000000' COMMENT '最大值',
+  `referral_amount` double(20,6) NOT NULL DEFAULT '0.000000' COMMENT '直推',
+  `umbrella_amount` double(20,6) NOT NULL DEFAULT '0.000000' COMMENT '伞下',
+  `child_level_count` int(4) NOT NULL DEFAULT '0' COMMENT '子级别人数',
+  `child_level_id` bigint(20) DEFAULT NULL COMMENT '子级别ID',
+  `type` int(1) NOT NULL DEFAULT '0' COMMENT '类型',
+  `kind` int(1) NOT NULL DEFAULT '0' COMMENT '种类',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remark` varchar(256) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Mining级别';
+
 
 
 # Dump of table t_mining_symbol

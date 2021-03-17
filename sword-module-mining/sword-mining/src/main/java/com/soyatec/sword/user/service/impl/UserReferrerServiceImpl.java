@@ -17,6 +17,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.system.service.ISysConfigService;
+import com.soyatec.sword.user.domain.UserProfile;
 import com.soyatec.sword.user.domain.UserReferrer;
 import com.soyatec.sword.user.mapper.UserReferrerMapper;
 import com.soyatec.sword.user.service.IUserReferrerService;
@@ -356,5 +357,13 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 			return Collections.emptyList();
 		}
 		return allUsers.stream().filter(u -> userId.equals(u.getReferralId())).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<UserProfile> selectUserReferrerListByUserId(Long userId) {
+		if (userId == null) {
+			return Collections.emptyList();
+		}
+		return userReferrerMapper.selectUserReferrerListByUserId(userId);
 	}
 }

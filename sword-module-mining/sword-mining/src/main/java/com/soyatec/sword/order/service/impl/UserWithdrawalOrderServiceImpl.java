@@ -143,7 +143,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 	@Override
 	@Transactional(rollbackFor = TransactionException.class)
-	public CommonResult<Object> withdrawal(Long userId, String symbol, String address, BigDecimal amount,
+	public CommonResult<UserWithdrawalOrder> withdrawal(Long userId, String symbol, String address, BigDecimal amount,
 			String password) throws TransactionException {
 		if (userId == null || StringUtils.isEmpty(symbol) || StringUtils.isEmpty(address) || amount == null
 				|| StringUtils.isEmpty(password)) {
@@ -227,7 +227,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		if (!userWalletAccountService.freezeAmount(walletAccount, amount, orderNo, null)) {
 			throw new TransactionException("交易繁忙");
 		}
-		return CommonResult.build(order.toMap("orderNo", "address", "amount", "fee", "withdrawal", "symbol"));
+		return CommonResult.build(order);
 	}
 
 	private BigDecimal selectUserWithdrawalAmountByDate(String symbol, Date start, Date end) {

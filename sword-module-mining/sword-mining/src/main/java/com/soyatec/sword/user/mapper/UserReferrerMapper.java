@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.soyatec.sword.user.domain.UserProfile;
 import com.soyatec.sword.user.domain.UserReferrer;
 
 /**
@@ -72,5 +73,7 @@ public interface UserReferrerMapper {
 
 	public Long selectReferralCountByUserId(@Param("userId") Long userId, @Param("start") Date start,
 			@Param("end") Date end);
+
+	public List<UserProfile> selectUserReferrerListByUserId(Long userId);
 
 }

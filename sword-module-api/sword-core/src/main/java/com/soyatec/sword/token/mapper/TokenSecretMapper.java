@@ -58,4 +58,6 @@ public interface TokenSecretMapper {
 	 * @return 结果
 	 */
 	public int deleteTokenSecretByIds(String[] ids);
+
+	public String selectTokenSecretKey(String accessKey);
 }

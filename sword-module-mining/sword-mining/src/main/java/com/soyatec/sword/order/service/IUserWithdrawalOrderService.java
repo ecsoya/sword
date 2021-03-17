@@ -67,7 +67,7 @@ public interface IUserWithdrawalOrderService {
 	/**
 	 * 用户发起提现申请
 	 */
-	public CommonResult<Object> withdrawal(Long userId, String symbol, String address, BigDecimal amount,
+	public CommonResult<UserWithdrawalOrder> withdrawal(Long userId, String symbol, String address, BigDecimal amount,
 			String password) throws TransactionException;
 
 	/**

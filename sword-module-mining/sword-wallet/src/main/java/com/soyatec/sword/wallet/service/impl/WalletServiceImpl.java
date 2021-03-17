@@ -106,7 +106,7 @@ public class WalletServiceImpl implements IWalletService {
 	}
 
 	private String getTickerCacheName(String name, Date date) {
-		return "beeplus-wallet:ticker:" + name + ":" + DateUtils.parseDateToStr(TIME_FORMAT, date);
+		return "sword-wallet:ticker:" + name + ":" + DateUtils.parseDateToStr(TIME_FORMAT, date);
 	}
 
 	private void putTickerToRedis(String name, Ticker ticker) {

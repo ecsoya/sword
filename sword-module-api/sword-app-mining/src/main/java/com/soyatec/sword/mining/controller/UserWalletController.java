@@ -16,6 +16,7 @@ import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.mining.utils.SwordMiningUtils;
+import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 import com.soyatec.sword.order.service.IUserWithdrawalOrderService;
 import com.soyatec.sword.utils.MathUtils;
 import com.soyatec.sword.utils.SwordUtils;
@@ -103,10 +104,10 @@ public class UserWalletController extends BaseController {
 		return CommonResult.ajax(userWalletService.resetUserWalletPassword(userId, password));
 	}
 
-	@ApiOperation(value = "提现", notes = "提币申请，需调用/confirm接口确认提币")
+	@ApiOperation(value = "提现申请", notes = "提币申请，需调用/confirm接口确认提币")
 	@PostMapping("/withdrawal")
-	public CommonResult<Object> withdrawal(String symbol, String address, BigDecimal amount, String password,
-			String code) {
+	public CommonResult<UserWithdrawalOrder> withdrawal(String symbol, String address, BigDecimal amount,
+			String password, String code) {
 		CommonResult<?> verifyWalletPassword = SwordMiningUtils.verifyWalletPassword(password);
 		if (!verifyWalletPassword.isSuccess()) {
 			return CommonResult.fail(verifyWalletPassword.getInfo());
@@ -121,6 +122,32 @@ public class UserWalletController extends BaseController {
 		}
 		Long userId = SwordUtils.getUserId();
 		return withdrawalOrderService.withdrawal(userId, symbol, address, amount, password);
+	}
+
+	@ApiOperation(value = "提现申请+确认（二合一）", notes = "提币订单创建后，自动调用确认接口")
+	@PostMapping("/withdrawal/auto")
+	public CommonResult<?> withdrawalAuto(String symbol, String address, BigDecimal amount, String password,
+			String code) {
+		CommonResult<?> verifyWalletPassword = SwordMiningUtils.verifyWalletPassword(password);
+		if (!verifyWalletPassword.isSuccess()) {
+			return CommonResult.fail(verifyWalletPassword.getInfo());
+		}
+		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
+		if (!verifyCode.isSuccess()) {
+			return CommonResult.fail(verifyCode.getInfo());
+		}
+		if (StringUtils.isEmpty(symbol) || StringUtils.isEmpty(address) || MathUtils.isEmpty(amount)
+				|| StringUtils.isEmpty(password)) {
+			return CommonResult.fail("参数错误");
+		}
+		Long userId = SwordUtils.getUserId();
+		CommonResult<UserWithdrawalOrder> withdrawal = withdrawalOrderService.withdrawal(userId, symbol, address,
+				amount, password);
+		if (!withdrawal.isSuccess(true)) {
+			return withdrawal;
+		}
+		UserWithdrawalOrder order = withdrawal.getData();
+		return withdrawalOrderService.confirmWithdrawal(userId, order.getOrderNo());
 	}
 
 	@ApiOperation(value = "提现取消", notes = "取消提现")

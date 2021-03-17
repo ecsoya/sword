@@ -10,7 +10,7 @@ import com.soyatec.sword.common.annotation.Excel;
 import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
- * 币种对象 t_beeplus_symbol
+ * 币种对象 t_sword_symbol
  * 
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-08

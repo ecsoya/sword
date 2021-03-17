@@ -102,9 +102,6 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 		if (StringUtils.isEmpty(accessKey)) {
 			return null;
 		}
-		TokenSecret query = new TokenSecret();
-		query.setAccessKey(accessKey);
-		List<TokenSecret> list = selectTokenSecretList(query);
-		return list.isEmpty() ? null : list.get(0).getSecretKey();
+		return tokenSecretMapper.selectTokenSecretKey(accessKey);
 	}
 }

@@ -3,6 +3,7 @@ package com.soyatec.sword.user.service;
 import java.util.Date;
 import java.util.List;
 
+import com.soyatec.sword.user.domain.UserProfile;
 import com.soyatec.sword.user.domain.UserReferrer;
 
 /**
@@ -112,4 +113,6 @@ public interface IUserReferrerService {
 	 * 查询所有的伞下用户
 	 */
 	public List<Long> selectUmbrellaUserIdsDepthFirstly(Long userId, List<UserReferrer> allUsers);
+
+	public List<UserProfile> selectUserReferrerListByUserId(Long userId);
 }

@@ -152,4 +152,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectUserReferrerVo"/>
         where left_code_enabled=1 or right_code_enabled=1 or base_url!=#{baseUrl}
     </select>
+    
+    <resultMap type="UserProfile" id="UserProfileResult">
+		<id property="userId" column="user_id" />
+		<result property="loginName" column="login_name" />
+		<result property="userName" column="user_name" />
+		<result property="email" column="email" />
+		<result property="mobile" column="mobile" />
+		<result property="avatar" column="avatar" />
+		<result property="status" column="status" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+    <select id="selectUserReferrerListByUserId" parameterType="Long" resultMap="UserProfileResult">
+    	select a.user_id, b.login_name, b.user_name, b.email, b.mobile, b.avatar, b.status, a.create_time from t_user_referrer a
+    	left join (select user_id as bid, login_name, user_name, email, phonenumber as mobile, avatar, status from sys_user) as b on a.user_id = b.bid
+    	where referral_id = #{userId}
+    </select>
 </mapper>
