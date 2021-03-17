@@ -31,24 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="start != null">and create_time &gt;=#{start}</if>
 			<if test="end != null">and create_time &lt;=#{end}</if>
 			)
-			union
-			(select 1, id, user_id, order_no, type, symbol,
-			amount, status, create_time
-			from t_user_record_transfer where user_id = #{userId} and type = 0 and status = 1
-			<if test="symbol != null and symbol !=''">and symbol=#{symbol}</if>
-			<if test="start != null">and create_time &gt;=#{start}</if>
-			<if test="end != null">and create_time &lt;=#{end}</if>
-			)
 		</if>
 		<if test="kind == null || kind == 2">
-			union
-			(select 2, id, user_id, order_no, type, symbol,
-			amount, status, create_time
-			from t_user_record_transfer where user_id = #{userId} and type = 1 and status = 1
-			<if test="symbol != null and symbol !=''">and symbol=#{symbol}</if>
-			<if test="start != null">and create_time &gt;=#{start}</if>
-			<if test="end != null">and create_time &lt;=#{end}</if>
-			)
 			union
 			(select 2, id, user_id, order_no, type, symbol,
 			amount, status, create_time
