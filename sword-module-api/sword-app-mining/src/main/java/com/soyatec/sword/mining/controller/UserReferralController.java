@@ -37,7 +37,7 @@ public class UserReferralController extends BaseController {
 	/**
 	 * 获取推荐码
 	 */
-	@ApiOperation("获取推荐码")
+	@ApiOperation(value = "获取推荐码", notes = "如果只支持一个推荐码，用left开头的变量即可")
 	@GetMapping("/code")
 	public CommonResult<UserReferrer> code() {
 		Long userId = SwordUtils.getUserId();
