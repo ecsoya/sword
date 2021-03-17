@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/open")
-@Api(tags = { "登录" }, description = "登录、退出、账号切换")
+@Api(tags = { "登录" }, description = "登录、退出、账号切换、忘记密码")
 public class LoginController extends BaseController {
 
 	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
