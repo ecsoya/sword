@@ -50,6 +50,10 @@
 			<groupId>com.soyatec.sword</groupId>
 			<artifactId>sword-framework</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.soyatec.sword</groupId>
+			<artifactId>sword-core</artifactId>
+		</dependency>
 
 		<!-- 定时任务 -->
 		<dependency>
