@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.soyatec.sword.user.mapper.UserArticleMapper">
+
+	<resultMap type="UserArticle" id="UserArticleResult">
+		<result property="id" column="id" />
+		<result property="articleId" column="article_Id" />
+		<result property="userId" column="user_id" />
+		<result property="read" column="read" />
+		<result property="like" column="like" />
+		<result property="comment" column="comment" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<sql id="selectUserArticleVo">
+		select id, article_Id, user_id, `read`, `like`, comment, create_time,
+		update_time, remark from t_user_article
+	</sql>
+
+	<select id="selectUserArticleList" parameterType="UserArticle"
+		resultMap="UserArticleResult">
+		<include refid="selectUserArticleVo" />
+		<where>
+			<if test="articleId != null "> and article_Id = #{articleId}</if>
+			<if test="userId != null "> and user_id = #{userId}</if>
+			<if test="read != null "> and `read` = #{read}</if>
+			<if test="like != null "> and `like` = #{like}</if>
+			<if test="comment != null  and comment != ''"> and comment = #{comment}</if>
+		</where>
+	</select>
+
+	<select id="selectUserArticleById" parameterType="Long"
+		resultMap="UserArticleResult">
+		<include refid="selectUserArticleVo" />
+		where id = #{id}
+	</select>
+
+	<insert id="insertUserArticle" parameterType="UserArticle"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_user_article
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="articleId != null">article_Id,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="read != null">`read`,</if>
+			<if test="like != null">`like`,</if>
+			<if test="comment != null">comment,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="updateTime != null">update_time,</if>
+			<if test="remark != null">remark,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="articleId != null">#{articleId},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="read != null">#{read},</if>
+			<if test="like != null">#{like},</if>
+			<if test="comment != null">#{comment},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+			<if test="remark != null">#{remark},</if>
+		</trim>
+	</insert>
+
+	<update id="updateUserArticle" parameterType="UserArticle">
+		update t_user_article
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="articleId != null">article_Id = #{articleId},</if>
+			<if test="userId != null">user_id = #{userId},</if>
+			<if test="read != null">`read` = #{read},</if>
+			<if test="like != null">`like` = #{like},</if>
+			<if test="comment != null">comment = #{comment},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="remark != null">remark = #{remark},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteUserArticleById" parameterType="Long">
+		delete from t_user_article where id = #{id}
+	</delete>
+
+	<delete id="deleteUserArticleByIds" parameterType="String">
+		delete from t_user_article where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+	<resultMap type="UserArticleComment"
+		id="UserArticleCommentResult">
+		<result property="articleId" column="article_Id" />
+		<result property="userId" column="user_id" />
+		<result property="avatar" column="avatar" />
+		<result property="loginName" column="login_name" />
+		<result property="comment" column="comment" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<select id="selectUserArticleCommentList" parameterType="Long"
+		resultMap="UserArticleCommentResult">
+		select a.article_id, a.user_id, b.avatar, b.login_name, a.comment, a.create_time, a.update_time from t_user_article a
+		left join (select user_id as bid, avatar, login_name from sys_user) as b on a.user_id = b.bid
+		where comment is not null and article_id = #{articleId}	
+	</select>
+
+</mapper>
