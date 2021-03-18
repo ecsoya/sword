@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
@@ -49,6 +50,7 @@ public class UserReferralController extends BaseController {
 	 */
 	@ApiOperation("强制刷新二维码")
 	@PostMapping("/refresh")
+	@RepeatSubmit
 	public CommonResult<UserReferrer> refresh() {
 		Long userId = SwordUtils.getUserId();
 		return CommonResult.build(referrerService.refreshUserReferrerById(userId));

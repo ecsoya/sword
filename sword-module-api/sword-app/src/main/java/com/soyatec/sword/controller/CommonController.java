@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.constant.Constants;
 import com.soyatec.sword.common.core.domain.AjaxResult;
@@ -64,6 +65,7 @@ public class CommonController {
 	 */
 	@ApiOperation("通用上传请求")
 	@PostMapping("/common/upload")
+	@RepeatSubmit
 	public AjaxResult uploadFile(MultipartFile file) throws Exception {
 		try {
 			// 上传并返回新文件名称

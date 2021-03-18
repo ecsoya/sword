@@ -12,6 +12,7 @@ import com.soyatec.sword.article.domain.SwordArticle;
 import com.soyatec.sword.article.domain.UserArticle;
 import com.soyatec.sword.article.service.ISwordArticleService;
 import com.soyatec.sword.article.service.IUserArticleService;
+import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
@@ -87,6 +88,7 @@ public class ArticleController extends BaseController {
 
 	@ApiOperation(value = "点赞", notes = "id: 文章Id")
 	@PostMapping("/like")
+	@RepeatSubmit
 	public CommonResult<?> like(Long id) {
 		if (id == null) {
 			return CommonResult.fail("参数错误");
@@ -98,6 +100,7 @@ public class ArticleController extends BaseController {
 
 	@ApiOperation(value = "取消点赞", notes = "id: 文章Id")
 	@PostMapping("/unlike")
+	@RepeatSubmit
 	public CommonResult<?> unlike(Long id) {
 		if (id == null) {
 			return CommonResult.fail("参数错误");
@@ -109,6 +112,7 @@ public class ArticleController extends BaseController {
 
 	@ApiOperation(value = "添加评论", notes = "id: 文章Id，\ncomment：评论内容，当前每篇文章每人仅能发表一次评论")
 	@PostMapping("/comment/add")
+	@RepeatSubmit
 	public CommonResult<?> comment(Long id, String comment) {
 		if (id == null) {
 			return CommonResult.fail("参数错误");

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.user.domain.UserProfile;
@@ -32,6 +33,7 @@ public class ProfileController extends BaseController {
 
 	@ApiOperation("更新用户资料（昵称和头像）")
 	@PostMapping("/edit")
+	@RepeatSubmit
 	public CommonResult<?> edit(String avatar, String userName) {
 		UserProfile profile = new UserProfile();
 		profile.setUserId(SwordUtils.getUserId());
@@ -42,6 +44,7 @@ public class ProfileController extends BaseController {
 
 	@ApiOperation("修改用户密码")
 	@PostMapping("/changePwd")
+	@RepeatSubmit
 	public CommonResult<?> changePwd(String oldPassword, String newPassword, String code) {
 		Long userId = SwordUtils.getUserId();
 		CommonResult<?> verified = SwordUtils.verifyCode(code);
@@ -53,6 +56,7 @@ public class ProfileController extends BaseController {
 
 	@ApiOperation("重置用户密码")
 	@PostMapping("/resetPwd")
+	@RepeatSubmit
 	public CommonResult<?> resetPwd(String password, String code) {
 		Long userId = SwordUtils.getUserId();
 		CommonResult<?> verified = SwordUtils.verifyCode(code);

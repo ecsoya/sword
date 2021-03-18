@@ -165,6 +165,7 @@ public class LoginController extends BaseController {
 
 	@ApiOperation("切换账号")
 	@PostMapping("/switchAccount")
+	@RepeatSubmit
 	public CommonResult<?> switchAccount(String account) {
 		if (StringUtils.isEmpty(account)) {
 			return CommonResult.fail(MessageUtils.message("LoginController.8"));// 参数错误 //$NON-NLS-1$
@@ -210,6 +211,7 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("/exit")
+	@RepeatSubmit
 	public CommonResult<?> logout() {
 		ShiroUtils.logout();
 		return CommonResult.success();

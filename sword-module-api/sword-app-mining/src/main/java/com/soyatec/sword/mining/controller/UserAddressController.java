@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.StringUtils;
@@ -43,6 +44,7 @@ public class UserAddressController extends BaseController {
 
 	@ApiOperation("添加提币地址")
 	@PostMapping("/add")
+	@RepeatSubmit
 	public CommonResult<?> add(String name, String symbol, String address) {
 		if (StringUtils.isEmpty(address) || StringUtils.isEmpty(symbol) || StringUtils.isEmpty(name)) {
 			return CommonResult.fail("Empty Address");
@@ -61,6 +63,7 @@ public class UserAddressController extends BaseController {
 	 */
 	@ApiOperation("更新提币地址")
 	@PostMapping("/edit")
+	@RepeatSubmit
 	public CommonResult<?> edit(String name, Long id, String address) {
 		if (id == null) {
 			return CommonResult.fail();
@@ -78,6 +81,7 @@ public class UserAddressController extends BaseController {
 	 */
 	@ApiOperation("删除提币地址")
 	@PostMapping("/remove")
+	@RepeatSubmit
 	public CommonResult<?> remove(String ids) {
 		if (StringUtils.isEmpty(ids)) {
 			return CommonResult.fail();

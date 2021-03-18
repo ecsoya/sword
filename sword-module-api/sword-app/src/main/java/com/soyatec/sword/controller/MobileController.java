@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.StringUtils;
@@ -29,6 +30,7 @@ public class MobileController extends BaseController {
 
 	@ApiOperation("发送手机验证码，无参")
 	@PostMapping("/delivery")
+	@RepeatSubmit
 	public CommonResult<?> delivery() {
 		Long userId = SwordUtils.getUserId();
 		return mobileService.sendCodeByUserId(userId);
@@ -36,6 +38,7 @@ public class MobileController extends BaseController {
 
 	@ApiOperation("发送手机验证码，用户名")
 	@PostMapping("/deliveryByUsername")
+	@RepeatSubmit
 	public CommonResult<?> deliveryByUserName(String username) {
 		Long userId = null;
 		if (StringUtils.isNotEmpty(username)) {
@@ -49,6 +52,7 @@ public class MobileController extends BaseController {
 
 	@ApiOperation("发送手机验证码，手机")
 	@PostMapping("/deliveryByMobile")
+	@RepeatSubmit
 	public CommonResult<?> deliveryBymobile(String mobile) {
 		if (StringUtils.isEmpty(mobile)) {
 			return CommonResult.fail("Invalid mobile address");
@@ -62,6 +66,7 @@ public class MobileController extends BaseController {
 	 */
 	@ApiOperation("验证手机验证码，无参")
 	@GetMapping("/verify")
+	@RepeatSubmit
 	public CommonResult<?> verify(String code) {
 		Long userId = SwordUtils.getUserId();
 		return mobileService.verifyCodeByUserId(userId, code);
@@ -73,6 +78,7 @@ public class MobileController extends BaseController {
 	 */
 	@ApiOperation("验证手机验证码，用户名")
 	@GetMapping("/verifyByUsername")
+	@RepeatSubmit
 	public CommonResult<?> verifyByUsername(String username, String code) {
 		Long userId = null;
 		if (StringUtils.isNotEmpty(username)) {
@@ -90,6 +96,7 @@ public class MobileController extends BaseController {
 	 */
 	@ApiOperation("验证手机验证码，手机")
 	@GetMapping("/verifyByMobile")
+	@RepeatSubmit
 	public CommonResult<?> verifyByMobile(String mobile, String code) {
 		return mobileService.verifyCode(mobile, code);
 	}

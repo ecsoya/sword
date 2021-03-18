@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.user.domain.UserCertificate;
@@ -73,6 +74,7 @@ public class UserCertificateController extends BaseController {
 			+ "	SVN(\"斯洛文尼亚\", \"Slovenia\"),\n" + "	PER(\"秘鲁\", \"Peru\"),\n"
 			+ "	IDN(\"印度尼西亚\", \"Indonesia\"),\n" + "	GBR(\"英国\", \"United Kingdom\");）")
 	@PostMapping("/edit")
+	@RepeatSubmit
 	public CommonResult<?> edit(UserCertificate uc) {
 		uc.setUserId(SwordUtils.getUserId());
 		uc.setStatus(UserCertificate.STATUS_NONE);

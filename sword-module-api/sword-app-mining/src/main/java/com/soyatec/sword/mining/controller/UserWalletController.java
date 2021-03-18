@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
@@ -84,6 +85,7 @@ public class UserWalletController extends BaseController {
 
 	@ApiOperation("更新钱包/支付密码")
 	@PostMapping("/changePwd")
+	@RepeatSubmit
 	public CommonResult<?> changePassword(String oldPassword, String newPassword, String code) {
 		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {
@@ -95,6 +97,7 @@ public class UserWalletController extends BaseController {
 
 	@ApiOperation("重置钱包/支付密码")
 	@PostMapping("/resetPwd")
+	@RepeatSubmit
 	public CommonResult<?> resetPassword(String password, String code) {
 		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {
@@ -106,6 +109,7 @@ public class UserWalletController extends BaseController {
 
 	@ApiOperation(value = "提现申请", notes = "提币申请，需调用/confirm接口确认提币")
 	@PostMapping("/withdrawal")
+	@RepeatSubmit
 	public CommonResult<UserWithdrawalOrder> withdrawal(String symbol, String address, BigDecimal amount,
 			String password, String code) {
 		CommonResult<?> verifyWalletPassword = SwordMiningUtils.verifyWalletPassword(password);
@@ -126,6 +130,7 @@ public class UserWalletController extends BaseController {
 
 	@ApiOperation(value = "提现申请+确认（二合一）", notes = "提币订单创建后，自动调用确认接口")
 	@PostMapping("/withdrawal/auto")
+	@RepeatSubmit
 	public CommonResult<?> withdrawalAuto(String symbol, String address, BigDecimal amount, String password,
 			String code) {
 		CommonResult<?> verifyWalletPassword = SwordMiningUtils.verifyWalletPassword(password);
@@ -152,6 +157,7 @@ public class UserWalletController extends BaseController {
 
 	@ApiOperation(value = "提现取消", notes = "取消提现")
 	@PostMapping("/withdrawal/cancel")
+	@RepeatSubmit
 	public CommonResult<?> cancelWithdrawal(String orderNo, String code, String remark) {
 		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {
@@ -166,6 +172,7 @@ public class UserWalletController extends BaseController {
 
 	@ApiOperation(value = "提现确认", notes = "确认提现")
 	@PostMapping("/withdrawal/confirm")
+	@RepeatSubmit
 	public CommonResult<?> confirmWithdrawal(String orderNo, String code, String remark) {
 		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {

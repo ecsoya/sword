@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
@@ -38,6 +39,7 @@ public class RegisterController extends BaseController {
 
 	@ApiOperation("新用户邮箱注册")
 	@PostMapping("/register/email")
+	@RepeatSubmit
 	public CommonResult<?> registerUser(String email, String username, String password, String code,
 			String referrerCode, String walletPassword, String mobile) {
 		if (StringUtils.isEmpty(email)) {
@@ -58,6 +60,7 @@ public class RegisterController extends BaseController {
 
 	@ApiOperation("新用户手机注册")
 	@PostMapping("/register/mobile")
+	@RepeatSubmit
 	public CommonResult<?> registerUserByMobile(String email, String username, String password, String code,
 			String referrerCode, String walletPassword, String mobile) {
 		if (StringUtils.isEmpty(mobile)) {
@@ -78,6 +81,7 @@ public class RegisterController extends BaseController {
 
 	@ApiOperation("用户通过手机重置登录密码和钱包支付密码")
 	@PostMapping("/resetPwd/mobile")
+	@RepeatSubmit
 	public CommonResult<?> resetPwdByMobile(String mobile, String password, String code, String walletPassword) {
 		if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(walletPassword) || StringUtils.isEmpty(password)) {
 			return CommonResult.fail("参数错误");
@@ -99,6 +103,7 @@ public class RegisterController extends BaseController {
 
 	@ApiOperation("用户通过邮箱重置登录密码和钱包支付密码")
 	@PostMapping("/resetPwd/email")
+	@RepeatSubmit
 	public CommonResult<?> resetPwdByEmail(String email, String password, String code, String walletPassword) {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(walletPassword) || StringUtils.isEmpty(password)) {
 			return CommonResult.fail("参数错误");
