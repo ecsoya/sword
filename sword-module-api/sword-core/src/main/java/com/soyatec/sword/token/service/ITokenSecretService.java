@@ -60,4 +60,6 @@ public interface ITokenSecretService {
 	public int deleteTokenSecretById(Long id);
 
 	public String selectTokenSecretKey(String accessKey);
+
+	public int generateTokenSecret();
 }

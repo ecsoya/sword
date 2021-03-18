@@ -9,6 +9,7 @@ import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.common.utils.uuid.UUID;
 import com.soyatec.sword.token.domain.TokenSecret;
 import com.soyatec.sword.token.mapper.TokenSecretMapper;
 import com.soyatec.sword.token.service.ITokenSecretService;
@@ -103,5 +104,13 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 			return null;
 		}
 		return tokenSecretMapper.selectTokenSecretKey(accessKey);
+	}
+
+	@Override
+	public int generateTokenSecret() {
+		TokenSecret token = new TokenSecret();
+		token.setAccessKey(UUID.fastUUID().toString());
+		token.setSecretKey(IdWorker.get32UUID());
+		return insertTokenSecret(token);
 	}
 }
