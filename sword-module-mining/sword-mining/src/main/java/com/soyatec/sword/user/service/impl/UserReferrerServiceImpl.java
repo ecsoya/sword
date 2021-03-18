@@ -19,6 +19,7 @@ import com.soyatec.sword.qrcode.QrcodeUtils;
 import com.soyatec.sword.system.service.ISysConfigService;
 import com.soyatec.sword.user.domain.UserProfile;
 import com.soyatec.sword.user.domain.UserReferrer;
+import com.soyatec.sword.user.domain.UserReferrerInfo;
 import com.soyatec.sword.user.mapper.UserReferrerMapper;
 import com.soyatec.sword.user.service.IUserReferrerService;
 
@@ -365,5 +366,10 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 			return Collections.emptyList();
 		}
 		return userReferrerMapper.selectUserReferrerListByUserId(userId);
+	}
+
+	@Override
+	public List<UserReferrerInfo> selectUserReferrerInfoList(UserReferrerInfo query) {
+		return userReferrerMapper.selectUserReferrerInfoList(query);
 	}
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.soyatec.sword.user.domain.UserProfile;
 import com.soyatec.sword.user.domain.UserReferrer;
+import com.soyatec.sword.user.domain.UserReferrerInfo;
 
 /**
  * 用户直推Mapper接口
@@ -75,5 +76,7 @@ public interface UserReferrerMapper {
 			@Param("end") Date end);
 
 	public List<UserProfile> selectUserReferrerListByUserId(Long userId);
+
+	public List<UserReferrerInfo> selectUserReferrerInfoList(UserReferrerInfo query);
 
 }

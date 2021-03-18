@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.upload.core.FileUploadException;
+import com.soyatec.sword.upload.core.UploadConfig;
 import com.soyatec.sword.upload.core.UploadData;
 import com.soyatec.sword.upload.service.IFileUploadService;
 import com.soyatec.sword.upload.uploader.FileUploader;
@@ -20,6 +21,9 @@ public class FileUploadServiceImpl implements IFileUploadService {
 
 	@Autowired(required = false)
 	private FileUploader uploader;
+
+	@Autowired(required = false)
+	private UploadConfig config;
 
 	@Override
 	public CommonResult<String> uploadFile(MultipartFile file) throws FileUploadException {
@@ -43,7 +47,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 			return CommonResult.fail("参数错误");
 		}
 		List<UploadData> datas = files.stream().map(file -> UploadData.build(file)).collect(Collectors.toList());
-		return CommonResult.build(uploader.upload(datas, null));
+		return CommonResult.build(uploader.upload(datas, config));
 	}
 
 	@Override
@@ -54,7 +58,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 		if (content == null) {
 			return CommonResult.fail("参数错误");
 		}
-		return CommonResult.build(uploader.upload(UploadData.build(fileName, content), null));
+		return CommonResult.build(uploader.upload(UploadData.build(fileName, content), config));
 	}
 
 }

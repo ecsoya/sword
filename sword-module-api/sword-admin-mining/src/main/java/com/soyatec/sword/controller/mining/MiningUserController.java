@@ -113,7 +113,7 @@ public class MiningUserController extends BaseController {
 		mmap.put("binaryTreeEnabled", "true"
 				.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.USER_BINARY_TREE_ENABLE)));
 		mmap.put("emailEnabled", GlobalConfig.getEmailCode());
-		return prefix + "addUser";
+		return prefix + "/addUser";
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class MiningUserController extends BaseController {
 		mmap.put("user", userProfileService.selectUserProfileById(id));
 		mmap.put("levels", levelService.selectMiningLevelList(new MiningLevel()));
 		mmap.put("emailEnabled", GlobalConfig.getEmailCode());
-		return prefix + "editUser";
+		return prefix + "/editUser";
 	}
 
 	/**

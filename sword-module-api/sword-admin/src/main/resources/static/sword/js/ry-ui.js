@@ -389,11 +389,12 @@ var table = {
                 });
             },
             // 导入数据
-            importExcel: function(formId, width, height) {
+            importExcel: function(formId, width, height, excel) {
             	table.set();
             	var currentId = $.common.isEmpty(formId) ? 'importTpl' : formId;
             	var _width = $.common.isEmpty(width) ? "400" : width;
                 var _height = $.common.isEmpty(height) ? "230" : height;
+                var _excel = $.common.isEmpty(excel) ? true : false;
             	layer.open({
                     type: 1,
                     area: [_width + 'px', _height + 'px'],
@@ -408,7 +409,7 @@ var table = {
                     shadeClose: true,
                     btn1: function(index, layero){
                         var file = layero.find('#file').val();
-                        if (file == '' || (!$.common.endWith(file, '.xls') && !$.common.endWith(file, '.xlsx'))){
+                        if (_excel && (file == '' || (!$.common.endWith(file, '.xls') && !$.common.endWith(file, '.xlsx')))){
                             $.modal.msgWarning("请选择后缀为 “xls”或“xlsx”的文件。");
                             return false;
                         }

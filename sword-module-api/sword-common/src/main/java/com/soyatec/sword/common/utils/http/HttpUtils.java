@@ -168,7 +168,7 @@ public class HttpUtils {
 			String ret = "";
 			while ((ret = br.readLine()) != null) {
 				if (ret != null && !ret.trim().equals("")) {
-					result.append(new String(ret.getBytes("ISO-8859-1"), "utf-8"));
+					result.append(new String(ret.getBytes("utf-8"), "utf-8"));
 				}
 			}
 			log.info("recv - {}", result);

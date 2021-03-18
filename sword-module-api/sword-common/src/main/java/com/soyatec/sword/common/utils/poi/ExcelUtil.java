@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -282,7 +283,7 @@ public class ExcelUtil<T> {
 	 */
 	public AjaxResult exportExcel(List<T> list, String sheetName) {
 		this.init(list, sheetName, Type.EXPORT);
-		return exportExcel();
+		return exportExcel(Collections.emptyList());
 	}
 
 	/**
@@ -291,9 +292,13 @@ public class ExcelUtil<T> {
 	 * @param sheetName 工作表的名称
 	 * @return 结果
 	 */
-	public AjaxResult importTemplateExcel(String sheetName) {
+	public AjaxResult importTemplateExcel(String sheetName, String... filterNames) {
 		this.init(null, sheetName, Type.IMPORT);
-		return exportExcel();
+		List<String> filters = null;
+		if (filterNames != null && filterNames.length > 0) {
+			filters = Arrays.asList(filterNames);
+		}
+		return exportExcel(filters);
 	}
 
 	/**
@@ -301,7 +306,7 @@ public class ExcelUtil<T> {
 	 * 
 	 * @return 结果
 	 */
-	public AjaxResult exportExcel() {
+	public AjaxResult exportExcel(List<String> filterNames) {
 		OutputStream out = null;
 		try {
 			// 取出一共有多少个sheet.
@@ -315,11 +320,13 @@ public class ExcelUtil<T> {
 				// 写入各个字段的列头名称
 				for (Object[] os : fields) {
 					Excel excel = (Excel) os[1];
+					if (filterNames != null && !filterNames.contains(excel.name())) {
+						continue;
+					}
 					this.createCell(excel, row, column++);
 				}
 				if (Type.EXPORT.equals(type)) {
 					fillExcelData(index, row);
-					addStatisticsRow();
 				}
 			}
 			String filename = encodingFilename(sheetName);

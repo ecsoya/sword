@@ -168,4 +168,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	left join (select user_id as bid, login_name, user_name, email, phonenumber as mobile, avatar, status from sys_user) as b on a.user_id = b.bid
     	where referral_id = #{userId}
     </select>
+    
+    <resultMap type="UserReferrerInfo" id="UserReferrerInfoResult">
+		<result property="userId" column="user_id" />
+		<result property="loginName" column="login_name" />
+		<result property="mobile" column="mobile" />
+		<result property="email" column="email" />
+		<result property="createTime" column="create_time" />
+		<result property="referralCount" column="referral_count" />
+		<result property="referralId" column="referral_id" />
+		<result property="referralName" column="referral_name" />
+		<result property="referralMobile" column="referral_mobile" />
+		<result property="referralEmail" column="referral_email" />
+	</resultMap>
+    <select id="selectUserReferrerInfoList" parameterType="UserReferrerInfo" resultMap="UserReferrerInfoResult">
+    	select a.user_id, a.phonenumber as mobile, a.email, a.login_name, a.create_time, g.referral_count, i.referral_name, i.referral_id, i.referral_mobile, i.referral_email from sys_user a
+		left join (select referral_id as gid, count(user_id) as referral_count from t_user_referrer group by referral_id) as g on a.user_id = g.gid 
+		left join (select user_id as hid, referral_id as hrid from t_user_referrer) as h on a.user_id = h.hid
+		left join (select user_id as referral_id, login_name as referral_name, phonenumber as referral_mobile, email as referral_email from sys_user where user_id > 3) as i on h.hrid = i.referral_id
+		where a.user_id > 3 and user_type = '01'
+		<if test="userId != null"> and user_id = #{userId}</if>
+		<if test="loginName != null and loginName != ''"> and login_name like concat('%', #{loginName}, '%')</if>
+		<if test="mobile != null and mobile != ''"> and a.phonenumber like concat('%', #{mobile}, '%')</if>
+		<if test="email != null and email != ''"> and email = #{email}</if>
+		<if test="referralName != null and referralName != ''"> and referral_name like concat('%', #{referralName}, '%')</if>
+		<if test="referralMobile != null and referralMobile != ''"> and referral_mobile like concat('%', #{referralMobile}, '%')</if>
+		<if test="referralEmail != null and referralEmail != ''"> and referral_email = #{referralEmail}</if>
+    </select>
 </mapper>

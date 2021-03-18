@@ -34,7 +34,9 @@ public class SwaggerConfig {
 	private boolean enabled;
 	@Value("${swagger.publishUrl:}")
 	private String publishUrl;
-	@Value("${swagger.title:Sword: }")
+	@Value("${swagger.devUrl:}")
+	private String devUrl;
+	@Value("${swagger.title:Sword}")
 	private String title;
 
 	@Bean
@@ -66,7 +68,7 @@ public class SwaggerConfig {
 				// 设置标题
 				.title(title)
 				// 描述
-				.description("正式环境API：" + publishUrl)
+				.description("正式环境API：" + publishUrl + "\n测试环境API：" + devUrl)
 				// 作者信息
 				.contact(new Contact("AngryRED", "https://ecsoya.github.io", "angryred@qq.com"))
 				// 版本

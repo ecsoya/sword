@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.soyatec.sword.user.domain.UserProfile;
 import com.soyatec.sword.user.domain.UserReferrer;
+import com.soyatec.sword.user.domain.UserReferrerInfo;
 
 /**
  * 用户直推Service接口
@@ -115,4 +116,6 @@ public interface IUserReferrerService {
 	public List<Long> selectUmbrellaUserIdsDepthFirstly(Long userId, List<UserReferrer> allUsers);
 
 	public List<UserProfile> selectUserReferrerListByUserId(Long userId);
+
+	public List<UserReferrerInfo> selectUserReferrerInfoList(UserReferrerInfo query);
 }

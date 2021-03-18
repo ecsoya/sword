@@ -44,12 +44,30 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-12" th:if="${emailEnabled}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label ">手机：</label>
+                    <div class="col-sm-6">
+                         <input id="phonenumber" name="phonenumber" placeholder="请输入手机号"
+                               class="form-control" type="text" maxlength="40" >
+                    </div>
+                </div>
+            </div>
             <div class="col-sm-12" th:if="${!emailEnabled}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label is-required">手机：</label>
                     <div class="col-sm-6">
                         <input id="phonenumber" name="phonenumber" placeholder="请输入手机号"
                                class="form-control" type="text" maxlength="40" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" th:if="${!emailEnabled}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label ">邮箱：</label>
+                    <div class="col-sm-6">
+                        <input id="email" name="email" placeholder="请输入邮箱"
+                               class="form-control" type="text" maxlength="40" >
                     </div>
                 </div>
             </div>

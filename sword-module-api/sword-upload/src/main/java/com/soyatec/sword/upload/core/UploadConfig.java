@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import com.soyatec.sword.common.utils.StringUtils;
 
 @Configuration
-@ConfigurationProperties("sword.upload.cloud")
+@ConfigurationProperties("sword.upload")
 public class UploadConfig {
 	private String baseUrl;
 
