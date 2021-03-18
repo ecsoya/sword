@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.StringUtils;
-import com.soyatec.sword.service.IMailService;
+import com.soyatec.sword.service.IMailCodeService;
 import com.soyatec.sword.user.service.IUserProfileService;
 import com.soyatec.sword.utils.SwordUtils;
 
@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 public class EmailController extends BaseController {
 
 	@Autowired
-	private IMailService mailService;
+	private IMailCodeService mailService;
 
 	@Autowired
 	private IUserProfileService userService;

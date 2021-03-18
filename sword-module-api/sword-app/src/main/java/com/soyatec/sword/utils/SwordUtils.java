@@ -19,8 +19,8 @@ import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.bean.BeanUtils;
 import com.soyatec.sword.common.utils.spring.SpringUtils;
 import com.soyatec.sword.framework.shiro.util.ShiroUtils;
-import com.soyatec.sword.service.IMailService;
-import com.soyatec.sword.service.IMobileService;
+import com.soyatec.sword.service.IMailCodeService;
+import com.soyatec.sword.service.IMobileCodeService;
 import com.soyatec.sword.version.domain.SwordVersion;
 import com.soyatec.sword.version.service.ISwordVersionService;
 
@@ -127,10 +127,10 @@ public class SwordUtils {
 			return CommonResult.fail("验证码错误");
 		}
 		if (GlobalConfig.getEmailCode()) {
-			IMailService mailService = SpringUtils.getBean(IMailService.class);
+			IMailCodeService mailService = SpringUtils.getBean(IMailCodeService.class);
 			return mailService.verifyCodeByUserId(getUserId(), code);
 		} else {
-			IMobileService mobileService = SpringUtils.getBean(IMobileService.class);
+			IMobileCodeService mobileService = SpringUtils.getBean(IMobileCodeService.class);
 			return mobileService.verifyCodeByUserId(getUserId(), code);
 		}
 	}
@@ -143,10 +143,10 @@ public class SwordUtils {
 			return CommonResult.fail("验证码错误");
 		}
 		if (GlobalConfig.getEmailCode()) {
-			IMailService mailService = SpringUtils.getBean(IMailService.class);
+			IMailCodeService mailService = SpringUtils.getBean(IMailCodeService.class);
 			return mailService.verifyCodeByUsername(username, code);
 		} else {
-			IMobileService mobileService = SpringUtils.getBean(IMobileService.class);
+			IMobileCodeService mobileService = SpringUtils.getBean(IMobileCodeService.class);
 			return mobileService.verifyCodeByUsername(username, code);
 		}
 	}
@@ -159,10 +159,10 @@ public class SwordUtils {
 			return CommonResult.fail("验证码错误");
 		}
 		if (GlobalConfig.getEmailCode()) {
-			IMailService mailService = SpringUtils.getBean(IMailService.class);
+			IMailCodeService mailService = SpringUtils.getBean(IMailCodeService.class);
 			return mailService.verifyCode(source, code);
 		} else {
-			IMobileService mailService = SpringUtils.getBean(IMobileService.class);
+			IMobileCodeService mailService = SpringUtils.getBean(IMobileCodeService.class);
 			return mailService.verifyCode(source, code);
 		}
 	}

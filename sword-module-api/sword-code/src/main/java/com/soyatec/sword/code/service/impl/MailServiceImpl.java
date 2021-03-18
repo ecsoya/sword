@@ -1,4 +1,4 @@
-package com.soyatec.sword.service.impl;
+package com.soyatec.sword.code.service.impl;
 
 import java.time.Duration;
 import java.util.Objects;
@@ -9,20 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.soyatec.sword.code.handler.SendMailCodeHandler;
+import com.soyatec.sword.code.service.IMailService;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.MessageUtils;
 import com.soyatec.sword.common.utils.StringUtils;
-import com.soyatec.sword.handler.SendMailCodeHandler;
-import com.soyatec.sword.service.IMailService;
-import com.soyatec.sword.user.service.IUserProfileService;
 
 @Service
 public class MailServiceImpl implements IMailService {
 
 	private static final Logger log = LoggerFactory.getLogger(MailServiceImpl.class);
-
-	@Autowired
-	private IUserProfileService userService;
 
 	@Autowired
 	private RedisTemplate<String, Object> redis;
@@ -31,15 +27,18 @@ public class MailServiceImpl implements IMailService {
 	private SendMailCodeHandler sendMailHandler;
 
 	@Override
-	public CommonResult<?> sendCode(String email, String subject, String code) {
+	public CommonResult<?> sendEmail(String email, String subject, String content) {
 		if (sendMailHandler != null) {
-			return sendMailHandler.send(email, subject, code);
+			return sendMailHandler.sendEmail(email, subject, content);
 		}
 		return CommonResult.fail("没有实现");
 	}
 
 	@Override
 	public CommonResult<?> sendCode(String email) {
+		if (sendMailHandler == null) {
+			return CommonResult.fail("没有实现");
+		}
 		if (!StringUtils.isValidEmail(email)) {
 			return CommonResult.fail(MessageUtils.message("mail.service.error.invalidEmail")); //$NON-NLS-1$
 		}
@@ -50,9 +49,8 @@ public class MailServiceImpl implements IMailService {
 			log.debug("cacheCode: " + redis.opsForValue().get(email));
 		}
 		log.debug("sendCode: {} = {}", email, code);
-		String subject = MessageUtils.message("mail.service.title");
 
-		return sendCode(email, subject, code.toString());
+		return sendMailHandler.sendCode(email, code.toString());
 
 	}
 
@@ -71,24 +69,4 @@ public class MailServiceImpl implements IMailService {
 		return CommonResult.fail(MessageUtils.message("mail.service.error.invalidEmail4")); //$NON-NLS-1$
 	}
 
-	@Override
-	public CommonResult<?> sendCodeByUserId(Long userId) {
-		String email = userService.selectUserEmailById(userId);
-		return sendCode(email);
-	}
-
-	@Override
-	public CommonResult<?> verifyCodeByUserId(Long userId, String code) {
-		String email = userService.selectUserEmailById(userId);
-		return verifyCode(email, code);
-	}
-
-	@Override
-	public CommonResult<?> verifyCodeByUsername(String username, String code) {
-		String email = userService.selectUserEmailByUsername(username);
-		if (StringUtils.isBlank(email)) {
-			email = username;
-		}
-		return verifyCode(email, code);
-	}
 }

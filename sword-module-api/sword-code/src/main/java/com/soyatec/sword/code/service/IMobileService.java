@@ -1,4 +1,4 @@
-package com.soyatec.sword.service;
+package com.soyatec.sword.code.service;
 
 import com.soyatec.sword.common.core.domain.CommonResult;
 
@@ -7,7 +7,7 @@ public interface IMobileService {
 	/**
 	 * 发送邮件
 	 */
-	public CommonResult<?> sendCode(String mobile, String code);
+	public CommonResult<?> sendMessage(String mobile, String message);
 
 	/**
 	 * 发送验证码
@@ -19,9 +19,4 @@ public interface IMobileService {
 	 */
 	public CommonResult<?> verifyCode(String mobile, String code);
 
-	public CommonResult<?> sendCodeByUserId(Long userId);
-
-	public CommonResult<?> verifyCodeByUserId(Long userId, String code);
-
-	public CommonResult<?> verifyCodeByUsername(String username, String code);
 }

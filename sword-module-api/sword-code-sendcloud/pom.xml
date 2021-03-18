@@ -7,22 +7,20 @@
 		<artifactId>sword-module-api</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>sword-core</artifactId>
-	<name>sword-core</name>
+	<artifactId>sword-code-sendcloud</artifactId>
+	<name>sword-code-sendcloud</name>
+	<description>SendCloud邮箱发送验证码</description>
 	<dependencies>
-		<dependency>
-			<groupId>com.soyatec.sword</groupId>
-			<artifactId>sword-system</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>com.soyatec.sword</groupId>
 			<artifactId>sword-code</artifactId>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
+			<groupId>net.sendcloud.sdk</groupId>
+			<artifactId>sendcloud-sdk-java</artifactId>
+			<version>1.3</version>
 		</dependency>
-
+		
 	</dependencies>
 </project>

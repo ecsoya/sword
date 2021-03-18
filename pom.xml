@@ -183,6 +183,24 @@
 				<artifactId>sword-system</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
+			<!-- 验证码模块 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-code</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<!-- 美联短信 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-code-m5c</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<!-- SendCloud发送邮件 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-code-sendcloud</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
 
 			<!-- 通用工具 -->
 			<dependency>

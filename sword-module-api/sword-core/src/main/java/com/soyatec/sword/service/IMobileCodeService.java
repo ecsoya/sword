@@ -2,22 +2,17 @@ package com.soyatec.sword.service;
 
 import com.soyatec.sword.common.core.domain.CommonResult;
 
-public interface IMailService {
-
-	/**
-	 * 发送邮件
-	 */
-	public CommonResult<?> sendCode(String email, String subject, String code);
+public interface IMobileCodeService {
 
 	/**
 	 * 发送验证码
 	 */
-	public CommonResult<?> sendCode(String email);
+	public CommonResult<?> sendCode(String mobile);
 
 	/**
 	 * 验证验证码是否正确
 	 */
-	public CommonResult<?> verifyCode(String email, String code);
+	public CommonResult<?> verifyCode(String mobile, String code);
 
 	public CommonResult<?> sendCodeByUserId(Long userId);
 
