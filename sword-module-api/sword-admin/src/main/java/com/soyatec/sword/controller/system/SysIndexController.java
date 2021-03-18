@@ -124,7 +124,9 @@ public class SysIndexController extends BaseController {
 	@GetMapping("/system/main")
 	public String main(ModelMap mmap) {
 		mmap.put("version", GlobalConfig.getVersion());
-		if (StringUtils.isNotEmpty(GlobalConfig.getMainPage())) {
+		// 取身份信息
+		SysUser user = ShiroUtils.getSysUser();
+		if (!"develop".equals(user.getLoginName()) && StringUtils.isNotEmpty(GlobalConfig.getMainPage())) {
 			return GlobalConfig.getMainPage();
 		}
 		return "main_v1";
