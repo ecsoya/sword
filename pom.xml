@@ -201,6 +201,30 @@
 				<artifactId>sword-code-sendcloud</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
+			<!-- 文件上传 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-upload</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<!-- 文件上传 腾讯云 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-upload-tencent</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<!-- 文件上传 阿里云 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-upload-aliyun</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<!-- 二维码组件 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-qrcode</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
 
 			<!-- 通用工具 -->
 			<dependency>

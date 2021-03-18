@@ -16,8 +16,8 @@ import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.constant.Constants;
 import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.utils.StringUtils;
-import com.soyatec.sword.common.utils.file.FileUploadUtils;
 import com.soyatec.sword.common.utils.file.FileUtils;
+import com.soyatec.sword.upload.utils.FileUploadUtils;
 
 /**
  * 通用请求处理

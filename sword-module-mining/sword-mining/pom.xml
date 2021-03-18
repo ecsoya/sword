@@ -17,6 +17,10 @@
 			<groupId>com.soyatec.sword</groupId>
 			<artifactId>sword-wallet</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.soyatec.sword</groupId>
+			<artifactId>sword-qrcode</artifactId>
+		</dependency>
 
 	</dependencies>
 </project>

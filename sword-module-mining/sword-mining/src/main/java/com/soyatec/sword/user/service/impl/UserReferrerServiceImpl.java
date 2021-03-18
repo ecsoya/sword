@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
-import com.soyatec.sword.common.utils.QrcodeUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.constants.IMiningConstants;
+import com.soyatec.sword.qrcode.QrcodeUtils;
 import com.soyatec.sword.system.service.ISysConfigService;
 import com.soyatec.sword.user.domain.UserProfile;
 import com.soyatec.sword.user.domain.UserReferrer;

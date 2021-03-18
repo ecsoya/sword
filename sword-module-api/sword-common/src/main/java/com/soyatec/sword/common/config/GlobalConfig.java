@@ -3,8 +3,6 @@ package com.soyatec.sword.common.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import io.github.ecsoya.uploader.core.UploadConfig;
-
 /**
  * 全局配置类
  * 
@@ -36,8 +34,6 @@ public class GlobalConfig {
 	private static boolean emailCode = true;
 
 	private static String mainPage;
-
-	private static UploadConfig tencent;
 
 	public static String getName() {
 		return name;
@@ -130,14 +126,6 @@ public class GlobalConfig {
 
 	public void setMainPage(String mainPage) {
 		GlobalConfig.mainPage = mainPage;
-	}
-
-	public static UploadConfig getTencent() {
-		return tencent;
-	}
-
-	public void setTencent(UploadConfig tencent) {
-		GlobalConfig.tencent = tencent;
 	}
 
 }

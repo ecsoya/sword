@@ -25,5 +25,9 @@
   	<module>sword-code</module>
   	<module>sword-code-m5c</module>
   	<module>sword-code-sendcloud</module>
+  	<module>sword-upload</module>
+  	<module>sword-upload-tencent</module>
+  	<module>sword-upload-aliyun</module>
+  	<module>sword-qrcode</module>
   </modules>
 </project>

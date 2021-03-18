@@ -7,26 +7,17 @@
 		<artifactId>sword-module-api</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>sword-core</artifactId>
-	<name>sword-core</name>
+	<artifactId>sword-upload-aliyun</artifactId>
+	<name>sword-upload-aliyun</name>
 	<dependencies>
-		<dependency>
-			<groupId>com.soyatec.sword</groupId>
-			<artifactId>sword-system</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.soyatec.sword</groupId>
-			<artifactId>sword-code</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>com.soyatec.sword</groupId>
 			<artifactId>sword-upload</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>3.8.0</version>
 		</dependency>
-
 	</dependencies>
 </project>

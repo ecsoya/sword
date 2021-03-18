@@ -19,10 +19,10 @@ import com.soyatec.sword.common.core.domain.entity.SysUser;
 import com.soyatec.sword.common.enums.BusinessType;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
-import com.soyatec.sword.common.utils.file.FileUploadUtils;
 import com.soyatec.sword.framework.shiro.service.SysPasswordService;
 import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 import com.soyatec.sword.system.service.ISysUserService;
+import com.soyatec.sword.upload.utils.FileUploadUtils;
 
 /**
  * 个人信息 业务处理
