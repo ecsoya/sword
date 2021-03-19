@@ -18,6 +18,7 @@ import com.soyatec.sword.utils.SwordUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * 用户推荐码接口
@@ -65,7 +66,7 @@ public class UserReferralController extends BaseController {
 
 	@ApiOperation(value = "获取直推团队列表", notes = "此处只取直推团队")
 	@GetMapping("/list")
-	public TableDataInfo list(Integer pageNum, Integer pageSize) {
+	public TableDataInfo list(@ApiParam("当前页数，第几页") Integer pageNum, @ApiParam("每页显示多少条") Integer pageSize) {
 		startPage("create_time desc");
 		Long userId = SwordUtils.getUserId();
 		return getDataTable(referrerTeamService.selectUserReferrerTeamListByUserId(userId));

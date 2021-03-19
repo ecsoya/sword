@@ -50,7 +50,7 @@ public class UserWalletController extends BaseController {
 
 	@ApiOperation("查询钱包信息")
 	@GetMapping("/records")
-	public TableDataInfo records(@ApiParam(required = true) String symbol, Date start, Date end,
+	public TableDataInfo records(@ApiParam(required = true) String symbol, @ApiParam("起始时间 yyyy-MM-dd") Date start, @ApiParam("结束时间 yyyy-MM-dd") Date end,
 			@ApiParam(value = "1-充值，2-提币，留空为所有") Integer kind) {
 		if (start != null) {
 			start = DateUtils.getStartOf(start);

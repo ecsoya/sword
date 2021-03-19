@@ -19,6 +19,7 @@ import com.soyatec.sword.wallet.service.IUserWalletService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/open")
@@ -40,8 +41,9 @@ public class RegisterController extends BaseController {
 	@ApiOperation("新用户邮箱注册")
 	@PostMapping("/register/email")
 	@RepeatSubmit
-	public CommonResult<?> registerUser(String email, String username, String password, String code,
-			String referrerCode, String walletPassword, String mobile) {
+	public CommonResult<?> registerUser(@ApiParam("邮箱") String email, @ApiParam("用户名") String username,
+			@ApiParam("登录密码") String password, @ApiParam("验证码") String code, @ApiParam("推荐码") String referrerCode,
+			@ApiParam("支付密码") String walletPassword, @ApiParam("手机号") String mobile) {
 		if (StringUtils.isEmpty(email)) {
 			return CommonResult.fail("请输入邮箱");
 		}
@@ -62,8 +64,9 @@ public class RegisterController extends BaseController {
 	@ApiOperation("新用户手机注册")
 	@PostMapping("/register/mobile")
 	@RepeatSubmit
-	public CommonResult<?> registerUserByMobile(String email, String username, String password, String code,
-			String referrerCode, String walletPassword, String mobile) {
+	public CommonResult<?> registerUserByMobile(@ApiParam("邮箱") String email, @ApiParam("用户名") String username,
+			@ApiParam("登录密码") String password, @ApiParam("验证码") String code, @ApiParam("推荐码") String referrerCode,
+			@ApiParam("支付密码") String walletPassword, @ApiParam("手机号") String mobile) {
 		if (StringUtils.isEmpty(mobile)) {
 			return CommonResult.fail("请输入手机号");
 		}
@@ -84,7 +87,8 @@ public class RegisterController extends BaseController {
 	@ApiOperation("用户通过手机重置登录密码和钱包支付密码")
 	@PostMapping("/resetPwd/mobile")
 	@RepeatSubmit
-	public CommonResult<?> resetPwdByMobile(String mobile, String password, String code, String walletPassword) {
+	public CommonResult<?> resetPwdByMobile(@ApiParam("手机号") String mobile, @ApiParam("新的登录密码") String password,
+			@ApiParam("验证码") String code, @ApiParam("新的支付密码") String walletPassword) {
 		if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(walletPassword) || StringUtils.isEmpty(password)) {
 			return CommonResult.fail("参数错误");
 		}
@@ -106,7 +110,8 @@ public class RegisterController extends BaseController {
 	@ApiOperation("用户通过邮箱重置登录密码和钱包支付密码")
 	@PostMapping("/resetPwd/email")
 	@RepeatSubmit
-	public CommonResult<?> resetPwdByEmail(String email, String password, String code, String walletPassword) {
+	public CommonResult<?> resetPwdByEmail(@ApiParam("邮箱") String email, @ApiParam("新的登录密码") String password,
+			@ApiParam("验证码") String code, @ApiParam("新的支付密码") String walletPassword) {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(walletPassword) || StringUtils.isEmpty(password)) {
 			return CommonResult.fail("参数错误");
 		}

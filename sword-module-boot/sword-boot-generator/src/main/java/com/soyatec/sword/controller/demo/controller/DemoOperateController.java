@@ -113,7 +113,7 @@ public class DemoOperateController extends BaseController {
 			return rspData;
 		}
 		Integer pageNum = (pageDomain.getPageNum() - 1) * 10;
-		Integer pageSize = pageDomain.getPageNum() * 10;
+		@ApiParam("每页显示多少条") Integer pageSize = pageDomain.getPageNum() * 10;
 		if (pageSize > userList.size()) {
 			pageSize = userList.size();
 		}

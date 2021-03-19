@@ -14,6 +14,7 @@ import com.soyatec.sword.user.service.IUserReferrerTeamService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * 用户推荐码接口
@@ -37,7 +38,7 @@ public class UserReferrerTeamController extends BaseController {
 
 	@ApiOperation("获取直推团队列表（支持分页）")
 	@GetMapping("/members")
-	public TableDataInfo referralMembers(Integer pageNum, Integer pageSize) {
+	public TableDataInfo referralMembers(@ApiParam("当前页数，第几页") Integer pageNum, @ApiParam("每页显示多少条") Integer pageSize) {
 		startPage();
 		Long userId = SwordMiningUtils.getUserId();
 		return getDataTable(userReferrerTeamService.selectUserReferrerTeamListByUserId(userId));
