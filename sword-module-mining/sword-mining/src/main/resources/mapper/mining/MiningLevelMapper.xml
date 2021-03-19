@@ -17,13 +17,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="childLevelId"    column="child_level_id"    />
         <result property="kind"    column="kind"    />
         <result property="status"    column="status"    />
+        <result property="userCount"    column="user_count"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
     </resultMap>
 
     <sql id="selectMiningLevelVo">
-        select id, name, rate, min_amount, max_amount, referral_amount, umbrella_amount, child_level_count, type, child_level_id, kind, status, create_time, update_time, remark from t_mining_level
+        select a.id, a.name, a.rate, a.min_amount, a.max_amount, a.referral_amount, a.umbrella_amount, a.child_level_count, a.type, a.child_level_id, a.kind, a.status, b.user_count, a.create_time, a.update_time, a.remark from t_mining_level a
+        left join (select level_id, count(user_id) as user_count from t_user_level group by level_id) as b on a.id = b.level_id
     </sql>
 
     <select id="selectMiningLevelList" parameterType="MiningLevel" resultMap="MiningLevelResult">

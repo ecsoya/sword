@@ -64,6 +64,8 @@ public class MiningLevel extends BaseEntity {
 	@Excel(name = "状态")
 	private Integer status;
 
+	private Integer userCount;
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -169,5 +171,13 @@ public class MiningLevel extends BaseEntity {
 				.append("childLevelId", getChildLevelId()).append("kind", getKind()).append("status", getStatus())
 				.append("createTime", getCreateTime()).append("updateTime", getUpdateTime())
 				.append("remark", getRemark()).toString();
+	}
+
+	public Integer getUserCount() {
+		return userCount;
+	}
+
+	public void setUserCount(Integer userCount) {
+		this.userCount = userCount;
 	}
 }
