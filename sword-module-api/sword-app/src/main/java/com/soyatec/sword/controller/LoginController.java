@@ -54,7 +54,7 @@ public class LoginController extends BaseController {
 	 * @param password
 	 * @return
 	 */
-	@ApiOperation("验证码登录")
+	@ApiOperation("用户名+密码+验证码登录")
 	@PostMapping("/login")
 	@RepeatSubmit
 	public CommonResult<?> login(@ApiParam("用户名") String username, @ApiParam("密码") String password,
@@ -95,7 +95,7 @@ public class LoginController extends BaseController {
 	 * @param password
 	 * @return
 	 */
-	@ApiOperation("手机号验证码登录")
+	@ApiOperation(value = "手机号+验证码登录", notes = "使用手机号+短信验证码快捷登录，此API使用于能发手机验证码，且手机号码唯一的系统")
 	@PostMapping("/loginByMobile")
 	@RepeatSubmit
 	public CommonResult<?> loginByMobile(@ApiParam("用户名") String mobile, @ApiParam("验证码") String code, Long version) {
@@ -114,6 +114,50 @@ public class LoginController extends BaseController {
 		SysUser user = sysUserService.selectUserByPhoneNumber(mobile);
 		if (user == null) {
 			return CommonResult.fail("此号码尚未注册，请注册后使用");
+		}
+
+		AnonymousAuthenticationToken token = new AnonymousAuthenticationToken(user, true,
+				UserConstants.REGISTER_USER_TYPE);
+		Subject subject = SecurityUtils.getSubject();
+		try {
+			subject.login(token);
+			Session session = subject.getSession();
+			return CommonResult.success(session.getId());
+		} catch (AuthenticationException e) {
+			String msg = MessageUtils.message("LoginController.3"); //$NON-NLS-1$
+			if (StringUtils.isNotEmpty(e.getMessage())) {
+				msg = e.getMessage();
+			}
+			return CommonResult.fail(msg);
+		}
+	}
+
+	/**
+	 * 用户登录
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	@ApiOperation(value = "邮箱+验证码登录", notes = "使用邮箱+验证码快捷登录，此API适用于能发送邮箱验证码，且邮箱唯一的系统")
+	@PostMapping("/loginByEmail")
+	@RepeatSubmit
+	public CommonResult<?> loginByEmail(@ApiParam("用户名") String email, @ApiParam("验证码") String code, Long version) {
+		log.info("email={}, version={}", email, version);
+		CommonResult<?> checkVersion = SwordUtils.checkVersion(version);
+		if (!checkVersion.isSuccess()) {
+			return checkVersion;
+		}
+		if (StringUtils.isEmpty(email)) {
+			return CommonResult.fail(MessageUtils.message("LoginController.0")); //$NON-NLS-1$
+		}
+		CommonResult<?> verifiedCode = SwordUtils.verifyCode(email, code);
+		if (!verifiedCode.isSuccess()) {
+			return verifiedCode;
+		}
+		SysUser user = sysUserService.selectUserByEmail(email);
+		if (user == null) {
+			return CommonResult.fail("此邮箱尚未注册，请注册后使用");
 		}
 
 		AnonymousAuthenticationToken token = new AnonymousAuthenticationToken(user, true,
