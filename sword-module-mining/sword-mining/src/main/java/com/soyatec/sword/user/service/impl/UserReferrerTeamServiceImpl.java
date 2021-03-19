@@ -29,7 +29,7 @@ public class UserReferrerTeamServiceImpl implements IUserReferrerTeamService {
 		}
 		List<UserReferrer> referrerList = userReferrerService.selectAll();
 		UserReferrerTeam team = new UserReferrerTeam();
-
+		team.setUserId(userId);
 		List<UserReferrer> myReferrals = referrerList.stream().filter(r -> userId.equals(r.getReferralId()))
 				.collect(Collectors.toList());
 		List<Long> myReferralIds = myReferrals.stream().map(r -> r.getUserId()).collect(Collectors.toList());
