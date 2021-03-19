@@ -367,9 +367,9 @@
 	</pluginRepositories>
 	<modules>
 		<module>sword-module-api</module>
-		
-		
-		
 		<module>sword-module-mining</module>
 	</modules>
+	<organization>
+		<name>Soyatec</name>
+	</organization>
 </project>
