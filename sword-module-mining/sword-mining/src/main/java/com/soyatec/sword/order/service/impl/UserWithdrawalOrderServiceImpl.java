@@ -14,6 +14,7 @@ import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.exceptions.TransactionException;
 import com.soyatec.sword.mining.domain.MiningSymbol;
 import com.soyatec.sword.mining.service.IMiningSymbolService;
@@ -157,17 +158,21 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		if (swordSymbol == null) {
 			return CommonResult.fail("币种错误");
 		}
+		// 1. 全局提币通道
 		if (!swordSymbol.checkWithdrawalEnabled()) {
 			return CommonResult.fail("提币通道尚未开放");
 		}
+		// 2. 单笔最小提币量
 		BigDecimal withdrawalMinimum = swordSymbol.getWithdrawalMinimum();
 		if (MathUtils.isPositive(withdrawalMinimum) && MathUtils.lt(amount, withdrawalMinimum)) {
 			return CommonResult.fail("未达到最小提币额");
 		}
+		// 3. 单笔最大提币量
 		BigDecimal withdrawalMaximum = swordSymbol.getWithdrawalMaximum();
 		if (MathUtils.isPositive(withdrawalMaximum) && MathUtils.gt(amount, withdrawalMaximum)) {
 			return CommonResult.fail("超过了最大单笔提币额");
 		}
+		// 4. 单日提币量
 		BigDecimal withdrawalDaily = swordSymbol.getWithdrawalDaily();
 		if (MathUtils.isPositive(withdrawalDaily)) {
 			BigDecimal todayAmount = selectUserWithdrawalAmountByDate(swordSymbol.getSymbol(),
@@ -176,6 +181,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 				return CommonResult.fail("今日提币已达到最大限额");
 			}
 		}
+		// 5. 累积提币量
 		BigDecimal withdrawalTotally = swordSymbol.getWithdrawalTotally();
 		if (MathUtils.isPositive(withdrawalTotally)) {
 			BigDecimal totallyAmount = selectUserWithdrawalAmountByDate(swordSymbol.getSymbol(), null, null);
@@ -183,15 +189,17 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 				return CommonResult.fail("累积提币已达到最大限额");
 			}
 		}
-
+		// 6. 钱包密码确认
 		CommonResult<?> verified = userWalletService.verifyUserWalletPassword(userId, password);
 		if (!verified.isSuccess()) {
 			return CommonResult.fail("密码错误");
 		}
+		// 7. 账户检测，自身提币是否冻结
 		UserWalletAccount walletAccount = userWalletAccountService.selectUserWalletAccount(userId, symbol);
 		if (walletAccount == null || !walletAccount.chechWithdrawalEnabled()) {
 			return CommonResult.fail("钱包异常");
 		}
+		// 8. 余额检测
 		if (MathUtils.isEmpty(walletAccount.getAmount()) || MathUtils.lt(walletAccount.getAmount(), amount)) {
 			return CommonResult.fail("余额不足");
 		}
@@ -199,9 +207,13 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 //		手续费
 		BigDecimal withdrawal = amount;
-		BigDecimal fee = swordSymbol.getWithdrawalFee(); // USDT
+		BigDecimal fee = swordSymbol.getWithdrawalFee();
 		if (MathUtils.isValid(fee)) {
-			fee = walletService.exchangeFromUsdt(symbol, fee);
+			String withdrawalFeeSymbol = swordSymbol.getWithdrawalFeeSymbol();
+			// 手续费兑换
+			if (IMiningConstants.SYMBOL_USDT.equals(withdrawalFeeSymbol)) {
+				fee = walletService.exchangeFromUsdt(symbol, fee);
+			}
 			if (MathUtils.lte(amount, fee)) {
 				return CommonResult.fail("手续费不足");
 			}

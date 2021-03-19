@@ -33,6 +33,9 @@ public class MiningSymbol extends BaseEntity {
 	@Excel(name = "提币手续费")
 	private BigDecimal withdrawalFee;
 
+	/** 提币手续费单位 */
+	private String withdrawalFeeSymbol;
+
 	/** 提币最小 */
 	@Excel(name = "提币最小")
 	private BigDecimal withdrawalMinimum;
@@ -129,5 +132,13 @@ public class MiningSymbol extends BaseEntity {
 
 	public boolean checkWithdrawalEnabled() {
 		return ENABLED.equals(withdrawalEnabled);
+	}
+
+	public String getWithdrawalFeeSymbol() {
+		return withdrawalFeeSymbol;
+	}
+
+	public void setWithdrawalFeeSymbol(String withdrawalFeeSymbol) {
+		this.withdrawalFeeSymbol = withdrawalFeeSymbol;
 	}
 }

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('币种列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="mining:symbol:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-bordered">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('mining:symbol:edit')}]];
+        var prefix = ctx + "mining/symbol";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "提币设置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'symbol',
+                    title: '币种',
+                    formatter: function(value, row, index) {
+                    	return value.toUpperCase();
+                    }
+                },
+                {
+                    field: 'withdrawalEnabled',
+                    title: '提币开关',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return statusTools(row);
+                    }
+                },
+                {
+                    field: 'withdrawalFee',
+                    title: '提币手续费',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	var symbol = row.symbol;
+                    	if (!row.withdrawalFeeSymbol) {
+                    		symbol = row.withdrawalFeeSymbol;
+                    	}
+                    	return $.common.formatNumber(value) + " " + symbol.toUpperCase();
+                    }
+                },
+                {
+                    field: 'withdrawalMinimum',
+                    title: '提币最小额',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatNumber(value) + " " + row.symbol.toUpperCase();
+                    }
+                },
+                
+                {
+                    field: 'withdrawalMaximum',
+                    title: '提币最大额（单笔）',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatNumber(value) + " " + row.symbol.toUpperCase();
+                    }
+                },
+                {
+                    field: 'withdrawalDaily',
+                    title: '每日提币额度',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatNumber(value) + " " + row.symbol.toUpperCase();
+                    }
+                },
+                {
+                    field: 'withdrawalTotally',
+                    title: '提币总额度',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatNumber(value) + " " + row.symbol.toUpperCase();
+                    }
+                },
+                {
+                    field: 'remark',
+                    title: '备注'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.symbol + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        /* 用户状态显示 */
+    	function statusTools(row) {
+    		if (editFlag == 'hidden') {
+    			if (row.withdrawalEnabled == 0) {
+        			return '开启';
+        		} else {
+        			return '关闭';
+        		}
+    		} else
+    	    if (row.withdrawalEnabled == 1) {
+    			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.symbol + '\')"></i> ';
+    		} else {
+    			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.symbol + '\')"></i> ';
+    		}
+    	}
+    	
+    	/* 用户管理-停用 */
+    	function disable(symbol) {
+    		$.modal.confirm("确认要停用用户提币吗？", function() {
+    			$.operate.post(prefix + "/changeStatus", { "symbol": symbol, "withdrawalEnabled": 1 }, function(){
+    			});
+    	    })
+    	}
+
+    	/* 用户管理启用 */
+    	function enable(symbol) {
+    		$.modal.confirm("确认要开启提币吗？", function() {
+    			$.operate.post(prefix + "/changeStatus", { "symbol": symbol, "withdrawalEnabled": 0 }, function(){
+    			});
+    	    })
+    	}
+
+    </script>
+</body>
+</html>
