@@ -53,6 +53,7 @@ public class RegisterController extends BaseController {
 		user.setEmail(email);
 		user.setPhonenumber(mobile);
 		user.setLoginName(username);
+		user.setUserName(username);
 		user.setPassword(password);
 		user.setUserType(User.TYPE_USER);
 		return userRegisterService.registerUser(user, referrerCode, walletPassword);
@@ -74,6 +75,7 @@ public class RegisterController extends BaseController {
 		user.setEmail(email);
 		user.setPhonenumber(mobile);
 		user.setLoginName(username);
+		user.setUserName(username);
 		user.setPassword(password);
 		user.setUserType(User.TYPE_USER);
 		return userRegisterService.registerUser(user, referrerCode, walletPassword);
