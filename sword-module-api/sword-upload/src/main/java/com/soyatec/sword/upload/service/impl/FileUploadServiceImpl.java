@@ -41,7 +41,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 	@Override
 	public CommonResult<List<String>> upload(List<MultipartFile> files) throws FileUploadException {
 		if (uploader == null) {
-			return CommonResult.fail("没有实现");
+			return CommonResult.fail("暂不支持");
 		}
 		if (files == null || files.isEmpty()) {
 			return CommonResult.fail("参数错误");
@@ -53,7 +53,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 	@Override
 	public CommonResult<String> uploadFile(String fileName, InputStream content) throws FileUploadException {
 		if (uploader == null) {
-			return CommonResult.fail("没有实现");
+			return CommonResult.fail("暂不支持");
 		}
 		if (content == null) {
 			return CommonResult.fail("参数错误");

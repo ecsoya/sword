@@ -31,13 +31,13 @@ public class MobileServiceImpl implements IMobileService {
 		if (sendMobileHandler != null) {
 			return sendMobileHandler.sendMessage(mobile, message);
 		}
-		return CommonResult.fail("没有实现");
+		return CommonResult.fail("暂不支持");
 	}
 
 	@Override
 	public CommonResult<?> sendCode(String mobile) {
 		if (sendMobileHandler == null) {
-			return CommonResult.fail("没有实现");
+			return CommonResult.fail("暂不支持");
 		}
 		if (StringUtils.isEmpty(mobile)) {
 			return CommonResult.fail("手机号为空"); //$NON-NLS-1$

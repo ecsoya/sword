@@ -12,6 +12,7 @@ import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.region.Region;
+import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.upload.core.FileUploadException;
 import com.soyatec.sword.upload.core.UploadConfig;
 import com.soyatec.sword.upload.core.UploadData;
@@ -47,7 +48,12 @@ public class TencentFileUploader extends AbstractFileUploader {
 				} else if (file.getDatas() != null && file.getDatas().length != 0) {
 					client.putObject(bucket, path, new String(file.getDatas()));
 				}
-				result.add("https://" + bucket + ".cos." + endpoint + ".myqcloud.com/" + path);
+				// 加速域名
+				if (StringUtils.isNotEmpty(config.getBaseUrl())) {
+					result.add(config.getBaseUrl() + "/" + path);
+				} else {
+					result.add("https://" + bucket + ".cos." + endpoint + ".myqcloud.com/" + path);
+				}
 			} catch (Exception e) {
 				return null;
 			}

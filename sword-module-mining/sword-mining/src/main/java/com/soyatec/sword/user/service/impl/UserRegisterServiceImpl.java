@@ -14,6 +14,7 @@ import com.soyatec.sword.system.service.ISysUserService;
 import com.soyatec.sword.user.domain.User;
 import com.soyatec.sword.user.domain.UserCertificate;
 import com.soyatec.sword.user.domain.UserReferrer;
+import com.soyatec.sword.user.service.IUserBinaryTreeService;
 import com.soyatec.sword.user.service.IUserCertificateService;
 import com.soyatec.sword.user.service.IUserReferrerService;
 import com.soyatec.sword.user.service.IUserRegisterService;
@@ -35,6 +36,9 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 
 	@Autowired
 	private IUserWalletService walletService;
+
+	@Autowired
+	private IUserBinaryTreeService binaryTreeService;
 
 	@Override
 	public CommonResult<?> registerUser(User user, String referrerCode, String walletPassword) {
@@ -129,11 +133,17 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 			userReferrer.setLeftCodeEnabled(UserReferrer.ENABLED);
 			userReferrer.generateRightCode();
 			userReferrer.setRightCodeEnabled(UserReferrer.DISABLED);
+			userReferrer.setBtree(UserReferrer.BTREE_UNFINISHED);
 			referrerService.insertUserReferrer(userReferrer);
 		}
 		// 2. 更新钱包
 		CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WALLET);
 		walletService.createUserWalletByUserId(userId, walletPassword, checked.isSuccess());
+
+		// 3. 注册双区树
+		if ("true".equals(configService.selectConfigValueByKey(IMiningConstants.USER_BINARY_TREE_ENABLE))) {
+			binaryTreeService.updateUserBinaryTrees();
+		}
 		return CommonResult.success(userId);
 	}
 

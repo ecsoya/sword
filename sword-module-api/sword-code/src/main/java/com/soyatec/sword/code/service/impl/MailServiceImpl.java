@@ -31,13 +31,13 @@ public class MailServiceImpl implements IMailService {
 		if (sendMailHandler != null) {
 			return sendMailHandler.sendEmail(email, subject, content);
 		}
-		return CommonResult.fail("没有实现");
+		return CommonResult.fail("暂不支持");
 	}
 
 	@Override
 	public CommonResult<?> sendCode(String email) {
 		if (sendMailHandler == null) {
-			return CommonResult.fail("没有实现");
+			return CommonResult.fail("暂不支持");
 		}
 		if (!StringUtils.isValidEmail(email)) {
 			return CommonResult.fail(MessageUtils.message("mail.service.error.invalidEmail")); //$NON-NLS-1$
