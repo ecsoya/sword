@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.soyatec.sword.common.constant.ScheduleConstants;
 import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.exception.job.TaskException;
+import com.soyatec.sword.common.utils.spring.SpringUtils;
 import com.soyatec.sword.quartz.domain.SysJob;
 import com.soyatec.sword.quartz.mapper.SysJobMapper;
 import com.soyatec.sword.quartz.service.ISysJobService;
@@ -39,6 +40,9 @@ public class SysJobServiceImpl implements ISysJobService {
 	 */
 	@PostConstruct
 	public void init() throws SchedulerException, TaskException {
+		if (SpringUtils.testProfile("local")) {
+			return;
+		}
 		scheduler.clear();
 		List<SysJob> jobList = jobMapper.selectJobAll();
 		for (SysJob job : jobList) {

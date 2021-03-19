@@ -1,5 +1,7 @@
 package com.soyatec.sword.common.utils.spring;
 
+import java.util.Objects;
+
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -132,5 +134,9 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
 	public static String getActiveProfile() {
 		final String[] activeProfiles = getActiveProfiles();
 		return StringUtils.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
+	}
+
+	public static boolean testProfile(String profile) {
+		return Objects.equals(profile, getActiveProfile());
 	}
 }

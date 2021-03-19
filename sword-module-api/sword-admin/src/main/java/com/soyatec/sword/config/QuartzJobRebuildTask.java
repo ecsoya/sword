@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import com.soyatec.sword.common.utils.spring.SpringUtils;
 import com.soyatec.sword.quartz.domain.SysJob;
 import com.soyatec.sword.quartz.mapper.SysJobMapper;
 import com.soyatec.sword.quartz.util.ScheduleUtils;
@@ -29,6 +30,9 @@ public class QuartzJobRebuildTask {
 
 	@Scheduled(fixedRate = 20 * 60 * 1000)
 	private void configureTasks() {
+		if (SpringUtils.testProfile("local")) {
+			return;
+		}
 		log.info("Job recreator");
 		try {
 			List<SysJob> jobList = jobMapper.selectJobAll();
