@@ -22,6 +22,7 @@ import com.soyatec.sword.utils.SwordUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/article")
@@ -46,7 +47,8 @@ public class ArticleController extends BaseController {
 			+ "            \"likes\": null                                                                                        //点赞量\n"
 			+ "        }")
 	@GetMapping("/list")
-	public TableDataInfo list(String category) {
+	public TableDataInfo list(@ApiParam("每页显示多少条") Integer pageSize, @ApiParam("当前页数，第几页") Integer pageNum,
+			String category) {
 		startPage("create_time desc");
 		SwordArticle query = new SwordArticle();
 		query.setStatus(SwordArticle.STATUS_PUBLISH);
@@ -133,7 +135,8 @@ public class ArticleController extends BaseController {
 			+ "            \"articleId\": \"2\",\n" + "            \"userId\": \"1174\",\n"
 			+ "            \"comment\": \"Not Bad\"                                 //用户的评论\n" + "        }")
 	@GetMapping("/comment/list")
-	public TableDataInfo commentList(Long id) {
+	public TableDataInfo commentList(@ApiParam("每页显示多少条") Integer pageSize, @ApiParam("当前页数，第几页") Integer pageNum,
+			Long id) {
 		startPage();
 		return getDataTable(userArticleService.selectUserArticleCommentList(id));
 	}

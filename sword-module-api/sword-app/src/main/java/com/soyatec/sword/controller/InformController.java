@@ -15,6 +15,7 @@ import com.soyatec.sword.system.service.ISysNoticeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/inform")
@@ -26,7 +27,7 @@ public class InformController extends BaseController {
 
 	@ApiOperation("查询消息列表（支持分页）")
 	@GetMapping("/list")
-	public TableDataInfo list() {
+	public TableDataInfo list(@ApiParam("每页显示多少条") Integer pageSize, @ApiParam("当前页数，第几页") Integer pageNum) {
 		startPage("create_time desc");
 		List<SysNotice> informs = noticeService.selectNoticeListByType(SysNotice.NOTICE_TYPE_INFORM);
 		return getDataTable(informs);
