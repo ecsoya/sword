@@ -27,7 +27,7 @@ public class InformController extends BaseController {
 	@ApiOperation("查询消息列表（支持分页）")
 	@GetMapping("/list")
 	public TableDataInfo list() {
-		startPage();
+		startPage("create_time desc");
 		List<SysNotice> informs = noticeService.selectNoticeListByType(SysNotice.NOTICE_TYPE_INFORM);
 		return getDataTable(informs);
 	}
