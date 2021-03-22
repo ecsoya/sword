@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 	<name>sword</name>
 	<description>Sword Spring Boot Development</description>
-	
+
 	<properties>
 		<sword.version>1.0.0-SNAPSHOT</sword.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -372,4 +372,27 @@
 	<organization>
 		<name>Soyatec</name>
 	</organization>
+	<distributionManagement>
+		<repository>
+			<id>rdc-releases</id>
+			<url>https://repo.rdc.aliyun.com/repository/42210-release-mI5S4B/</url>
+		</repository>
+		<snapshotRepository>
+			<id>rdc-snapshots</id>
+			<url>https://repo.rdc.aliyun.com/repository/42210-snapshot-BITvCn/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<scm>
+		<developerConnection>AngryRED (angryred@qq.com)</developerConnection>
+	</scm>
+	<developers>
+		<developer>
+			<name>AngryRED</name>
+			<email>angryred@qq.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
 </project>
