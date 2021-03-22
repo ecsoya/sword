@@ -9,6 +9,7 @@ import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
+import com.soyatec.sword.common.utils.MessageUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.system.service.ISysUserService;
 import com.soyatec.sword.user.domain.User;
@@ -45,7 +46,7 @@ public class RegisterController extends BaseController {
 			@ApiParam("登录密码") String password, @ApiParam("验证码") String code, @ApiParam("推荐码") String referrerCode,
 			@ApiParam("支付密码") String walletPassword, @ApiParam("手机号") String mobile) {
 		if (StringUtils.isEmpty(email)) {
-			return CommonResult.fail("请输入邮箱");
+			return CommonResult.fail(MessageUtils.message("RegisterController.0")); //$NON-NLS-1$
 		}
 		CommonResult<?> verifyCode = SwordUtils.verifyCode(email, code);
 		if (!verifyCode.isSuccess()) {
@@ -68,7 +69,7 @@ public class RegisterController extends BaseController {
 			@ApiParam("登录密码") String password, @ApiParam("验证码") String code, @ApiParam("推荐码") String referrerCode,
 			@ApiParam("支付密码") String walletPassword, @ApiParam("手机号") String mobile) {
 		if (StringUtils.isEmpty(mobile)) {
-			return CommonResult.fail("请输入手机号");
+			return CommonResult.fail(MessageUtils.message("RegisterController.1")); //$NON-NLS-1$
 		}
 		CommonResult<?> verifyCode = SwordUtils.verifyCode(mobile, code);
 		if (!verifyCode.isSuccess()) {
@@ -90,7 +91,7 @@ public class RegisterController extends BaseController {
 	public CommonResult<?> resetPwdByMobile(@ApiParam("手机号") String mobile, @ApiParam("新的登录密码") String password,
 			@ApiParam("验证码") String code, @ApiParam("新的支付密码") String walletPassword) {
 		if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(walletPassword) || StringUtils.isEmpty(password)) {
-			return CommonResult.fail("参数错误");
+			return CommonResult.fail(MessageUtils.message("RegisterController.2")); //$NON-NLS-1$
 		}
 		CommonResult<?> verifyCode = SwordUtils.verifyCode(mobile, code);
 		if (!verifyCode.isSuccess()) {
@@ -98,7 +99,7 @@ public class RegisterController extends BaseController {
 		}
 		SysUser user = userService.selectUserByPhoneNumber(mobile);
 		if (user == null || !User.TYPE_USER.equals(user.getUserType())) {
-			return CommonResult.fail("用户不存在");
+			return CommonResult.fail(MessageUtils.message("RegisterController.3")); //$NON-NLS-1$
 		}
 		CommonResult<?> resetUserPassword = userProfieService.resetUserPassword(user.getUserId(), password);
 		if (!resetUserPassword.isSuccess()) {
@@ -113,7 +114,7 @@ public class RegisterController extends BaseController {
 	public CommonResult<?> resetPwdByEmail(@ApiParam("邮箱") String email, @ApiParam("新的登录密码") String password,
 			@ApiParam("验证码") String code, @ApiParam("新的支付密码") String walletPassword) {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(walletPassword) || StringUtils.isEmpty(password)) {
-			return CommonResult.fail("参数错误");
+			return CommonResult.fail(MessageUtils.message("RegisterController.4")); //$NON-NLS-1$
 		}
 		CommonResult<?> verifyCode = SwordUtils.verifyCode(email, code);
 		if (!verifyCode.isSuccess()) {
@@ -121,7 +122,7 @@ public class RegisterController extends BaseController {
 		}
 		SysUser user = userService.selectUserByEmail(email);
 		if (user == null || !User.TYPE_USER.equals(user.getUserType())) {
-			return CommonResult.fail("用户不存在");
+			return CommonResult.fail(MessageUtils.message("RegisterController.5")); //$NON-NLS-1$
 		}
 		CommonResult<?> resetUserPassword = userProfieService.resetUserPassword(user.getUserId(), password);
 		if (!resetUserPassword.isSuccess()) {

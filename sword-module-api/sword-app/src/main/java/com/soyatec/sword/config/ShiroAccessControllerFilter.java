@@ -36,15 +36,15 @@ public class ShiroAccessControllerFilter extends AccessControlFilter {
 		HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
 
 		// 前端http请求中code为403的时候跳转到登陆页，R.fail()为你返回给前端的json对象
-		renderJson(httpServletResponse, CommonResult.fail(HttpStatus.UNAUTHORIZED.value(), "未登陆"));
+		renderJson(httpServletResponse, CommonResult.fail(HttpStatus.UNAUTHORIZED.value(), "未登陆")); //$NON-NLS-1$
 
 		return false;
 	}
 
 	public static void renderJson(HttpServletResponse response, Object jsonObject) {
 		try {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json"); //$NON-NLS-1$
+			response.setCharacterEncoding("UTF-8"); //$NON-NLS-1$
 			PrintWriter writer = response.getWriter();
 			writer.write(JSON.toJSONString(jsonObject));
 		} catch (IOException e) {

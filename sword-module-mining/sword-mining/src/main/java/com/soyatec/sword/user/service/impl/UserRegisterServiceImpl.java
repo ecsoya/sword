@@ -7,6 +7,7 @@ import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.constant.UserConstants;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.IdWorker;
+import com.soyatec.sword.common.utils.MessageUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.constants.IMiningConstants;
@@ -52,11 +53,11 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 				.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_NEED_REFERRER_CODE));
 		Long referralId = null;
 		if (StringUtils.isEmpty(referrerCode) && needReferrerCode) {
-			return CommonResult.fail("注册推荐码为空"); //$NON-NLS-1$
+			return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.1")); //$NON-NLS-1$
 		} else if (needReferrerCode) {
 			UserReferrer referral = referrerService.selectUserReferrerByCode(referrerCode);
 			if (referral == null) {
-				return CommonResult.fail("无效的推荐码"); //$NON-NLS-1$
+				return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.2")); //$NON-NLS-1$
 			}
 			referralId = referral.getUserId();
 		}
@@ -66,47 +67,46 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 			if (GlobalConfig.getEmailCode()) {
 				String email = user.getEmail();
 				if (StringUtils.isEmpty(email)) {
-					return CommonResult.fail("注册邮箱不能为空"); //$NON-NLS-1$
+					return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.3")); //$NON-NLS-1$
 				}
 				boolean emailUnique = "true" //$NON-NLS-1$
 						.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_EMAIL_UNIQUE));
 				if (emailUnique && !UserConstants.USER_EMAIL_UNIQUE.equals(userService.checkEmailUnique(user))) {
-					return CommonResult.fail("此邮箱已被占用");
+					return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.5")); //$NON-NLS-1$
 				}
 
 			} else {
 				String mobile = user.getPhonenumber();
 				if (StringUtils.isEmpty(mobile)) {
-					return CommonResult.fail("注册手机不能为空"); //$NON-NLS-1$
+					return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.6")); //$NON-NLS-1$
 				}
-				boolean mobileUnique = "true" //$NON-NLS-1$
-						.equalsIgnoreCase(
-								configService.selectConfigValueByKey(IMiningConstants.REGISTER_MOBILE_UNIQUE));
+				boolean mobileUnique = "true".equalsIgnoreCase( //$NON-NLS-1$
+						configService.selectConfigValueByKey(IMiningConstants.REGISTER_MOBILE_UNIQUE));
 				if (mobileUnique && !UserConstants.USER_PHONE_UNIQUE.equals(userService.checkPhoneUnique(user))) {
-					return CommonResult.fail("此手机号已被占用");
+					return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.8")); //$NON-NLS-1$
 				}
 			}
 
 			String msg = "", username = user.getLoginName(), password = user.getPassword(); //$NON-NLS-1$
 
 			if (StringUtils.isEmpty(username)) {
-				msg = "用户名为空"; //$NON-NLS-1$
+				msg = MessageUtils.message("UserRegisterServiceImpl.10"); //$NON-NLS-1$
 			} else if (StringUtils.isEmpty(password)) {
-				msg = "密码为空"; //$NON-NLS-1$
+				msg = MessageUtils.message("UserRegisterServiceImpl.11"); //$NON-NLS-1$
 			} else if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
 					|| password.length() > UserConstants.PASSWORD_MAX_LENGTH) {
-				msg = "密码长度5-20个字符"; //$NON-NLS-1$
+				msg = MessageUtils.message("UserRegisterServiceImpl.12"); //$NON-NLS-1$
 			} else if (username.length() < UserConstants.USERNAME_MIN_LENGTH
 					|| username.length() > UserConstants.USERNAME_MAX_LENGTH) {
-				msg = "用户名2-20个字符"; //$NON-NLS-1$
+				msg = MessageUtils.message("UserRegisterServiceImpl.13"); //$NON-NLS-1$
 			} else if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(username))) {
-				msg = "用户名" + username //$NON-NLS-1$
-						+ "已被占用"; //$NON-NLS-1$
+				msg = MessageUtils.message("UserRegisterServiceImpl.14") + username //$NON-NLS-1$
+						+ MessageUtils.message("UserRegisterServiceImpl.15"); //$NON-NLS-1$
 			} else {
 				user.setSalt(StringUtils.randomStr(6));
 				user.setPassword(StringUtils.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
 				if (!userService.registerUser(user)) {
-					return CommonResult.fail("注册失败"); //$NON-NLS-1$
+					return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.16")); //$NON-NLS-1$
 				}
 				return postRegisterUser(user.getUserId(), referralId, referrerCode, walletPassword, async);
 			}
@@ -114,7 +114,7 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 		} else {
 			user.setUserType(User.TYPE_USER);
 			if (userService.updateUser(user) <= 0) {
-				return CommonResult.fail("注册失败");
+				return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.17")); //$NON-NLS-1$
 			}
 			return postRegisterUser(user.getUserId(), referralId, referrerCode, walletPassword, async);
 		}
@@ -143,7 +143,7 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 		walletService.createUserWalletByUserId(userId, walletPassword, checked.isSuccess());
 
 		// 3. 注册双区树
-		if ("true".equals(configService.selectConfigValueByKey(IMiningConstants.USER_BINARY_TREE_ENABLE))) {
+		if ("true".equals(configService.selectConfigValueByKey(IMiningConstants.USER_BINARY_TREE_ENABLE))) { //$NON-NLS-1$
 			binaryTreeService.updateUserBinaryTrees();
 		}
 		return CommonResult.success(userId);
