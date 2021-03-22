@@ -24,6 +24,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectLogininforList" parameterType="SysLogininfor" resultMap="SysLogininforResult">
 		select info_id,login_name,ipaddr,login_location,browser,os,status,msg,login_time from sys_logininfor
 		<where>
+			<if test="params!= null and params.admin != '' and params.admin !='develop'">
+				AND login_name != 'develop'
+			</if>
 			<if test="ipaddr != null and ipaddr != ''">
 				AND ipaddr like concat('%', #{ipaddr}, '%')
 			</if>

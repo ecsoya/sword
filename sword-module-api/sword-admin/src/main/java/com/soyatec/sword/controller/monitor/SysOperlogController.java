@@ -18,6 +18,7 @@ import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.enums.BusinessType;
 import com.soyatec.sword.common.utils.poi.ExcelUtil;
+import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 import com.soyatec.sword.system.domain.SysOperLog;
 import com.soyatec.sword.system.service.ISysOperLogService;
 
@@ -45,6 +46,7 @@ public class SysOperlogController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysOperLog operLog) {
 		startPage();
+		operLog.getParams().put("admin", ShiroUtils.getLoginName());
 		List<SysOperLog> list = operLogService.selectOperLogList(operLog);
 		return getDataTable(list);
 	}
@@ -54,6 +56,7 @@ public class SysOperlogController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysOperLog operLog) {
+		operLog.getParams().put("admin", ShiroUtils.getLoginName());
 		List<SysOperLog> list = operLogService.selectOperLogList(operLog);
 		ExcelUtil<SysOperLog> util = new ExcelUtil<SysOperLog>(SysOperLog.class);
 		return util.exportExcel(list, "操作日志");

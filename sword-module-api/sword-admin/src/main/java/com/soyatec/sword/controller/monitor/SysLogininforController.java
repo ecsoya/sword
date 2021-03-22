@@ -17,6 +17,7 @@ import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.enums.BusinessType;
 import com.soyatec.sword.common.utils.poi.ExcelUtil;
 import com.soyatec.sword.framework.shiro.service.SysPasswordService;
+import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 import com.soyatec.sword.system.domain.SysLogininfor;
 import com.soyatec.sword.system.service.ISysLogininforService;
 
@@ -47,6 +48,7 @@ public class SysLogininforController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysLogininfor logininfor) {
 		startPage();
+		logininfor.getParams().put("admin", ShiroUtils.getLoginName());
 		List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
 		return getDataTable(list);
 	}
@@ -56,6 +58,7 @@ public class SysLogininforController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysLogininfor logininfor) {
+		logininfor.getParams().put("admin", ShiroUtils.getLoginName());
 		List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
 		ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
 		return util.exportExcel(list, "登录日志");
