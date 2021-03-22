@@ -75,7 +75,7 @@
 	<th:block th:include="include :: footer" />
 	<th:block th:include="include :: select2-js" />
 	<script type="text/javascript">
-		var prefix = ctx + "emailEnabled/user";
+		var prefix = ctx + "mining/user";
 
 		$("#form-user-edit").validate({
 			onkeyup : false,
@@ -182,7 +182,7 @@
 				$.operate.saveTab(prefix + "/edit", user, function() {
 					var topWindow = $(window.parent.document);
 					var $contentWindow = $(
-							'.RuoYi_iframe[data-id="/admin/admin/user"]',
+							'.RuoYi_iframe[data-id="'+prefix+'"]',
 							topWindow)[0].contentWindow;
 					$contentWindow.updateUser(userId);
 				});

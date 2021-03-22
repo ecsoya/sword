@@ -196,7 +196,7 @@
 				$.operate.saveTab(prefix + "/add", data, function() {
 					var topWindow = $(window.parent.document);
 					var $contentWindow = $(
-							'.RuoYi_iframe[data-id="/admin/mining/user"]',
+							'.RuoYi_iframe[data-id="'+prefix+'"]',
 							topWindow)[0].contentWindow;
 					$contentWindow.updateUser(parentId);
 				});
