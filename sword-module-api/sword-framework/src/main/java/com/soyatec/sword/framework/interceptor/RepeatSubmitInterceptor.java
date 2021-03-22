@@ -10,7 +10,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import com.soyatec.sword.common.annotation.RepeatSubmit;
-import com.soyatec.sword.common.core.domain.AjaxResult;
+import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.json.JSON;
 import com.soyatec.sword.common.utils.ServletUtils;
 
@@ -28,12 +28,11 @@ public abstract class RepeatSubmitInterceptor implements AsyncHandlerInterceptor
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
 			Method method = handlerMethod.getMethod();
 			RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
-			if (annotation != null) {
-				if (this.isRepeatSubmit(request)) {
-					AjaxResult ajaxResult = AjaxResult.error("不允许重复提交，请稍后再试");
-					ServletUtils.renderString(response, JSON.marshal(ajaxResult));
-					return false;
-				}
+			if (annotation != null && this.isRepeatSubmit(request)) {
+//					AjaxResult ajaxResult = AjaxResult.error("不允许重复提交，请稍后再试");
+				CommonResult<?> result = CommonResult.fail("重复提交，请稍后再试");
+				ServletUtils.renderString(response, JSON.marshal(result));
+				return false;
 			}
 		}
 		return true;
