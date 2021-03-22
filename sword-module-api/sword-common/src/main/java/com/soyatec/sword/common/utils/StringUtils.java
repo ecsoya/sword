@@ -66,6 +66,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return isNull(coll) || coll.isEmpty();
 	}
 
+	public static boolean isEmpty(Object obj) {
+		return obj == null || obj.equals("");
+	}
+
 	/**
 	 * * 判断一个Collection是否非空，包含List，Set，Queue
 	 * 

@@ -45,6 +45,7 @@ import com.soyatec.sword.generator.util.VelocityUtils;
  * @author Jin Liu (angryred@qq.com)
  */
 @Service
+@SuppressWarnings("deprecation")
 public class GenTableServiceImpl implements IGenTableService {
 	private static final Logger log = LoggerFactory.getLogger(GenTableServiceImpl.class);
 

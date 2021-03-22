@@ -321,14 +321,15 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 				|| !UserWithdrawalOrder.CALLABLE_NONE.equals(order.getCallable())) {
 			return CommonResult.fail("订单已处理");
 		}
-		// 实际提币额度
-		BigDecimal withdrawal = order.getWithdrawal();
-		String address = order.getAddress();
-		String symbol = order.getSymbol();
 		// 发起交易
 		if (walletService == null) {
 			return CommonResult.fail("暂不支持提币");
 		}
+		// 实际提币额度
+		BigDecimal withdrawal = order.getWithdrawal();
+		String address = order.getAddress();
+		String symbol = order.getSymbol();
+
 		CommonResult<WithdrawalResponse> dispatched = walletService.withdrawal(orderNo, symbol, null, address, "",
 				withdrawal);
 		Long id = order.getId();

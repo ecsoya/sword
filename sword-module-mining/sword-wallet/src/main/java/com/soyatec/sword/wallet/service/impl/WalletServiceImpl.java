@@ -33,11 +33,11 @@ public class WalletServiceImpl implements IWalletService {
 
 	@Override
 	public CommonResult<Ticker> getTicker(String symbol) {
+		if (delegateService == null || delegateService == this) {
+			return CommonResult.fail("钱包尚未实现");
+		}
 		if (StringUtils.isEmpty(symbol)) {
 			return CommonResult.fail("币种错误");
-		}
-		if (delegateService == null) {
-			return CommonResult.fail("无钱包对接");
 		}
 		CommonResult<Ticker> ticker = delegateService.getTicker(symbol);
 		if (ticker != null && ticker.isSuccess(true)) {
@@ -163,10 +163,10 @@ public class WalletServiceImpl implements IWalletService {
 
 	@Override
 	public CommonResult<Address> getDepositAddress(String symbol, String chain) {
-		if (delegateService != null) {
-			return delegateService.getDepositAddress(symbol, chain);
+		if (delegateService == null || delegateService == this) {
+			return CommonResult.fail("钱包尚未实现");
 		}
-		return CommonResult.fail("无钱包对接");
+		return delegateService.getDepositAddress(symbol, chain);
 	}
 
 	@Override
@@ -203,11 +203,11 @@ public class WalletServiceImpl implements IWalletService {
 	}
 
 	@Override
-	public CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address, String memo,
-			BigDecimal amount) {
-		if (delegateService != null) {
-			return delegateService.withdrawal(orderNo, symbol, chain, address, null, amount);
+	public CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
+			String memo, BigDecimal amount) {
+		if (delegateService == null || delegateService == this) {
+			return CommonResult.fail("钱包尚未实现");
 		}
-		return CommonResult.fail("无钱包对接");
+		return delegateService.withdrawal(orderNo, symbol, chain, address, null, amount);
 	}
 }

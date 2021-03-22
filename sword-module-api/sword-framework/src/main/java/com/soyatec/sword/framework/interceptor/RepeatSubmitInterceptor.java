@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.domain.AjaxResult;
@@ -20,7 +20,7 @@ import com.soyatec.sword.common.utils.ServletUtils;
  * @author Jin Liu (angryred@qq.com)
  */
 @Component
-public abstract class RepeatSubmitInterceptor extends HandlerInterceptorAdapter {
+public abstract class RepeatSubmitInterceptor implements AsyncHandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -35,10 +35,8 @@ public abstract class RepeatSubmitInterceptor extends HandlerInterceptorAdapter 
 					return false;
 				}
 			}
-			return true;
-		} else {
-			return super.preHandle(request, response, handler);
 		}
+		return true;
 	}
 
 	/**

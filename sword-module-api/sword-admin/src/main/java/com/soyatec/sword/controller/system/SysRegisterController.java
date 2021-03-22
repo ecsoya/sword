@@ -1,7 +1,6 @@
 package com.soyatec.sword.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
+import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.framework.shiro.service.SysRegisterService;
 import com.soyatec.sword.system.service.ISysConfigService;
 

@@ -2,7 +2,6 @@ package com.soyatec.sword.framework.shiro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import com.soyatec.sword.common.constant.Constants;
 import com.soyatec.sword.common.constant.ShiroConstants;
@@ -11,6 +10,7 @@ import com.soyatec.sword.common.core.domain.entity.SysUser;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.MessageUtils;
 import com.soyatec.sword.common.utils.ServletUtils;
+import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.framework.manager.factory.AsyncFactory;
 import com.soyatec.sword.framework.shiro.util.ShiroUtils;

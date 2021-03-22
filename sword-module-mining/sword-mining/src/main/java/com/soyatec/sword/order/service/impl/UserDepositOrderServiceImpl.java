@@ -12,9 +12,7 @@ import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.order.domain.UserDepositOrder;
 import com.soyatec.sword.order.mapper.UserDepositOrderMapper;
 import com.soyatec.sword.order.service.IUserDepositOrderService;
-import com.soyatec.sword.record.service.IUserDepositRecordService;
 import com.soyatec.sword.utils.MathUtils;
-import com.soyatec.sword.wallet.service.IUserWalletAccountService;
 
 /**
  * 充值订单Service业务层处理
@@ -26,15 +24,6 @@ import com.soyatec.sword.wallet.service.IUserWalletAccountService;
 public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 	@Autowired
 	private UserDepositOrderMapper userDepositOrderMapper;
-
-	@Autowired
-	private IUserDepositRecordService userDepositRecordService;
-
-	@Autowired
-	private IUserWalletAccountService userWalletAccountService;
-
-//	@Autowired
-//	private IswordWalletBusinessService walletBusinessService;
 
 	/**
 	 * 查询充值订单
