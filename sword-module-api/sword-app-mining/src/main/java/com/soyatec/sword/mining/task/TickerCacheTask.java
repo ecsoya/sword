@@ -10,7 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import com.soyatec.sword.common.utils.DateUtils;
+import com.soyatec.sword.exceptions.LockableException;
 import com.soyatec.sword.mining.service.IMiningSymbolService;
+import com.soyatec.sword.service.ILockService;
 import com.soyatec.sword.wallet.service.IWalletService;
 
 @Configuration
@@ -19,16 +21,32 @@ public class TickerCacheTask {
 
 	private static final Logger log = LoggerFactory.getLogger(TickerCacheTask.class);
 
+	private static final String LOCK_NAME = "sword.tickerCacheLock";
+
 	@Autowired
 	private IWalletService walletService;
 
 	@Autowired
 	private IMiningSymbolService symbolService;
 
+	@Autowired
+	private ILockService lockService;
+
 	@Scheduled(cron = "0 */5 * * * ?")
 	public void cacheKcPrice() {
 		log.info("TickerCacheTask at {}", DateUtils.getNowDateStr());
-		List<String> symbols = symbolService.selectMiningSymbols();
-		symbols.forEach(symbol -> walletService.updateTickerCache(symbol));
+		boolean locked = false;
+		try {
+			locked = lockService.tryLock(LOCK_NAME);
+			List<String> symbols = symbolService.selectMiningSymbols();
+			symbols.forEach(symbol -> walletService.updateTickerCache(symbol));
+		} catch (LockableException e) {
+			log.warn("TickerCacheTask missing");
+		} finally {
+			if (locked) {
+				lockService.releaseLock(LOCK_NAME);
+			}
+		}
+
 	}
 }
