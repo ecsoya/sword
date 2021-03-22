@@ -9,6 +9,7 @@ public interface IMiningConstants {
 	String REGISTER_EMAIL_UNIQUE = "sword.registerEmailUnique";// 注册需要邮箱
 	String USER_PROFIT_ENABLED = "sword.userProfitEnabled"; // 收益全局开关
 	String USER_BINARY_TREE_ENABLE = "sword.userBinaryTreeEnabled"; // 双区树
+	String WALLET_DEFAULT_PASSWORD = "wallet.defaultPassword"; // 钱包默认密码
 
 	/* 二维码前缀 */
 	String USER_REFERRAL_LINK_URL = "sword.referralLinkUrl";

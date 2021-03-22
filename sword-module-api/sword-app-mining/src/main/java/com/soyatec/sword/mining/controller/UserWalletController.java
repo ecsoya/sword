@@ -16,9 +16,11 @@ import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.mining.utils.SwordMiningUtils;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 import com.soyatec.sword.order.service.IUserWithdrawalOrderService;
+import com.soyatec.sword.system.service.ISysConfigService;
 import com.soyatec.sword.utils.MathUtils;
 import com.soyatec.sword.utils.SwordUtils;
 import com.soyatec.sword.wallet.domain.UserWallet;
@@ -48,10 +50,13 @@ public class UserWalletController extends BaseController {
 	@Autowired
 	private IUserWalletUnionRecordService walletRecordService;
 
+	@Autowired
+	private ISysConfigService configService;
+
 	@ApiOperation("查询钱包信息")
 	@GetMapping("/records")
-	public TableDataInfo records(@ApiParam(required = true) String symbol, @ApiParam("起始时间 yyyy-MM-dd") Date start, @ApiParam("结束时间 yyyy-MM-dd") Date end,
-			@ApiParam(value = "1-充值，2-提币，留空为所有") Integer kind) {
+	public TableDataInfo records(@ApiParam(required = true) String symbol, @ApiParam("起始时间 yyyy-MM-dd") Date start,
+			@ApiParam("结束时间 yyyy-MM-dd") Date end, @ApiParam(value = "1-充值，2-提币，留空为所有") Integer kind) {
 		if (start != null) {
 			start = DateUtils.getStartOf(start);
 		}
@@ -81,6 +86,25 @@ public class UserWalletController extends BaseController {
 	@GetMapping("/account")
 	public CommonResult<UserWalletAccount> account(String symbol) {
 		return CommonResult.build(userWalletAccountService.selectUserWalletAccount(SwordUtils.getUserId(), symbol));
+	}
+
+	@ApiOperation("检测钱包密码是否是初始值，如果是，提醒用户修改，code==200说明正常，code==500说明异常，提示info，并跳转到修改页面")
+	@PostMapping("/checkPwd")
+	@RepeatSubmit
+	public CommonResult<?> checkPassword() {
+		String password = configService.selectConfigValueByKey(IMiningConstants.WALLET_DEFAULT_PASSWORD);
+		if (StringUtils.isNotEmpty(password)) {
+			CommonResult<?> verified = SwordMiningUtils.verifyWalletPassword(password);
+			if (verified.isSuccess()) {
+				return CommonResult.fail("默认支付密码，请及时修改");
+			}
+		}
+		Long userId = SwordUtils.getUserId();
+		UserWallet wallet = userWalletService.selectUserWalletById(userId);
+		if (wallet == null || StringUtils.isEmpty(wallet.getPassword())) {
+			return CommonResult.fail("未设置支付密码");
+		}
+		return CommonResult.success("支付密码正常");
 	}
 
 	@ApiOperation("更新钱包/支付密码")
