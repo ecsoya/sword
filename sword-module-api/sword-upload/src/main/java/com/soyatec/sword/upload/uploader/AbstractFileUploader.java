@@ -28,7 +28,7 @@ public abstract class AbstractFileUploader implements FileUploader {
 		if (file == null) {
 			throw new FileUploadException("Upload file is empty");
 		}
-		return upload(Collections.singletonList(file), null).stream().findFirst().orElse(null);
+		return upload(Collections.singletonList(file), config).stream().findFirst().orElse(null);
 	}
 
 	@Override
@@ -87,7 +87,6 @@ public abstract class AbstractFileUploader implements FileUploader {
 		return baseUrl + fileName;
 	}
 
-	protected abstract List<String> doUpload(List<UploadData> files, UploadConfig config)
-			throws FileUploadException;
+	protected abstract List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException;
 
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.exceptions.LockableException;
 import com.soyatec.sword.exceptions.TransactionException;
+import com.soyatec.sword.mining.domain.MiningSymbol;
 import com.soyatec.sword.mining.service.IMiningSymbolService;
 import com.soyatec.sword.qrcode.QrcodeUtils;
 import com.soyatec.sword.service.ILockService;
@@ -77,8 +79,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	@Override
 	public List<UserWalletAccount> selectUserWalletAccountList(UserWalletAccount userWalletAccount) {
 		List<UserWalletAccount> list = userWalletAccountMapper.selectUserWalletAccountList(userWalletAccount);
+		List<MiningSymbol> symbols = symbolService.selectMiningSymbolList(new MiningSymbol());
 		list.forEach(account -> {
-			account.setWithdrawal(symbolService.selectMiningSymbolById(account.getSymbol()));
+			account.setWithdrawal(symbols.stream().filter(s -> Objects.equals(s.getSymbol(), account.getSymbol()))
+					.findFirst().orElse(null));
 		});
 		return list;
 	}
@@ -142,12 +146,12 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		}
 		UserWalletAccount account = userWalletAccountMapper.selectUserWalletAccount(userId, symbol);
 		if (account == null) {
-			account = createUserWalletAccount(userId, symbol);
+			account = updateUserWalletAccountAddress(userId, symbol);
 		}
 		return account;
 	}
 
-	private UserWalletAccount createUserWalletAccount(Long userId, String symbol) {
+	public UserWalletAccount updateUserWalletAccountAddress(Long userId, String symbol) {
 		CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WALLET);
 		if (!checked.isSuccess()) {
 			return null;
@@ -176,7 +180,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	public int updateUserWalletAccountByUserId(Long userId) {
 		List<String> symbols = symbolService.selectMiningSymbols();
 		for (String symbol : symbols) {
-			createUserWalletAccount(userId, symbol);
+			updateUserWalletAccountAddress(userId, symbol);
 		}
 		return 1;
 	}

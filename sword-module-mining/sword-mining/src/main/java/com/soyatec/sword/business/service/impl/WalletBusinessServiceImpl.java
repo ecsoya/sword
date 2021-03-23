@@ -35,7 +35,7 @@ public class WalletBusinessServiceImpl implements IWalletBusinessService {
 			return 0;
 		}
 		// 查询用户的钱包，检测充值地址
-		walletAccountService.selectUserWalletAccount(account.getUserId(), account.getSymbol());
+		walletAccountService.updateUserWalletAccountAddress(account.getUserId(), account.getSymbol());
 		return 1;
 	}
 

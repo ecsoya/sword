@@ -130,4 +130,6 @@ public interface IUserWalletAccountService {
 
 	public BigDecimal selectUserAccountAmount(String symbol, Integer kind);
 
+	public UserWalletAccount updateUserWalletAccountAddress(Long userId, String symbol);
+
 }
