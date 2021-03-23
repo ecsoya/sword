@@ -145,6 +145,7 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 		UserWithdrawalOrder update = new UserWithdrawalOrder();
 		update.setId(order.getId());
 		update.setFeedback(feedback);
+		update.setStatus(UserWithdrawalOrder.STATUS_NOTIFIED);
 		return userWithdrawalOrderService.updateUserWithdrawalOrder(update);
 	}
 
