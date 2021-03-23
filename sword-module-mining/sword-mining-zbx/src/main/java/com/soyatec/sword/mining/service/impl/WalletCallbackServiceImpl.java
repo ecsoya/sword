@@ -187,6 +187,12 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 		if (MathUtils.isInvalid(amount)) {
 			return CommonResult.fail("充值金额错误"); //$NON-NLS-1$
 		}
+
+		// 充值金额小于0.001不于到账
+		if (MathUtils.lt(amount, BigDecimal.valueOf(0.001))) {
+			return CommonResult.success("充值金额小于0.001");
+		}
+
 		String orderNo = IdWorker.get32UUID();
 		// 1. 生成订单
 		UserDepositOrder order = new UserDepositOrder();
