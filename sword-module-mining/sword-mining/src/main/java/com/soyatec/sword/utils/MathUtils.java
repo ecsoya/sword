@@ -95,7 +95,7 @@ public class MathUtils {
 	}
 
 	public static BigDecimal divide(BigDecimal value, BigDecimal divisor) {
-		if (value == null || divisor == null || BigDecimal.ZERO.equals(divisor)) {
+		if (value == null || divisor == null || value.doubleValue() == 0 || divisor.doubleValue() == 0) {
 			return BigDecimal.ZERO;
 		}
 		return value.divide(divisor, 6, RoundingMode.HALF_UP);
