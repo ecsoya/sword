@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.mining.domain.MiningUser;
 import com.soyatec.sword.mining.mapper.MiningUserMapper;
@@ -32,7 +33,11 @@ public class MiningUserServiceImpl implements IMiningUserService {
 			query = new MiningUser();
 		}
 		Long parentId = query.getParentId();
-		if (parentId == null) {
+		if (parentId == null
+				&& (StringUtils.isEmpty(query.getLoginName()) && StringUtils.isEmpty(query.getMobile())
+						&& StringUtils.isEmpty(query.getEmail()) && query.getLevelId() == null
+						&& StringUtils.isEmpty(query.getParams().get("endTime")))
+				&& StringUtils.isEmpty(query.getParams().get("startTime"))) {
 			query.setParentId(MathUtils.parseLong(configService.selectConfigValueByKey(IMiningConstants.ROOT_USER_ID)));
 		}
 		List<MiningUser> list = miningUserMapper.selectMiningUserList(query);
