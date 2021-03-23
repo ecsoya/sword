@@ -3,6 +3,7 @@ package com.soyatec.sword.common.utils;
 import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -452,5 +453,14 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 			return false;
 		}
 		return true;
+	}
+
+	public static boolean isWeekend(Date date) {
+		if (date == null) {
+			return false;
+		}
+		LocalDateTime time = localDateTime(date);
+		DayOfWeek dayOfWeek = time.getDayOfWeek();
+		return DayOfWeek.SATURDAY.equals(dayOfWeek) || DayOfWeek.SUNDAY.equals(dayOfWeek);
 	}
 }

@@ -3,9 +3,12 @@ package com.soyatec.sword.user.service.impl;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Stack;
 import java.util.Vector;
 import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,13 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	@Autowired
 	private ISysConfigService configService;
 
+	private String baseUrl;
+
+	@PostConstruct
+	public void init() {
+		baseUrl = configService.selectConfigValueByKey(IMiningConstants.USER_REFERRAL_LINK_URL);
+	}
+
 	/**
 	 * 查询用户直推
 	 * 
@@ -48,7 +58,8 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	public UserReferrer selectUserReferrerById(Long userId) {
 		UserReferrer userReferrer = userReferrerMapper.selectUserReferrerById(userId);
 		if (userReferrer != null && StringUtils.isEmpty(userReferrer.getLeftCodeUrl())
-				|| StringUtils.isEmpty(userReferrer.getRightCodeUrl())) {
+				|| StringUtils.isEmpty(userReferrer.getRightCodeUrl())
+				|| !Objects.equals(userReferrer.getBaseUrl(), baseUrl)) {
 			return refreshQrcode(userReferrer, null);
 		}
 		return userReferrer;
