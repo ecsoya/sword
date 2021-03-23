@@ -63,28 +63,31 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 		}
 		if (user.getUserId() == null) {
 			user.setUserId(IdWorker.getId());// 避免和导入用户ID冲突
-			// 使用邮箱验证码
-			if (GlobalConfig.getEmailCode()) {
-				String email = user.getEmail();
+			boolean emailUnique = "true" //$NON-NLS-1$
+					.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_EMAIL_UNIQUE));
+			String email = user.getEmail();
+			// 使用邮箱验证码或邮箱唯一
+			if (GlobalConfig.getEmailCode() || emailUnique) {
 				if (StringUtils.isEmpty(email)) {
 					return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.3")); //$NON-NLS-1$
 				}
-				boolean emailUnique = "true" //$NON-NLS-1$
-						.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_EMAIL_UNIQUE));
-				if (emailUnique && !UserConstants.USER_EMAIL_UNIQUE.equals(userService.checkEmailUnique(user))) {
-					return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.5")); //$NON-NLS-1$
-				}
+			}
 
-			} else {
-				String mobile = user.getPhonenumber();
+			if (emailUnique && !UserConstants.USER_EMAIL_UNIQUE.equals(userService.checkEmailUnique(user))) {
+				return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.5")); //$NON-NLS-1$
+			}
+
+			String mobile = user.getPhonenumber();
+			boolean mobileUnique = "true".equalsIgnoreCase( //$NON-NLS-1$
+					configService.selectConfigValueByKey(IMiningConstants.REGISTER_MOBILE_UNIQUE));
+			// 使用手机验证码或手机唯一
+			if (!GlobalConfig.getEmailCode() || mobileUnique) {
 				if (StringUtils.isEmpty(mobile)) {
 					return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.6")); //$NON-NLS-1$
 				}
-				boolean mobileUnique = "true".equalsIgnoreCase( //$NON-NLS-1$
-						configService.selectConfigValueByKey(IMiningConstants.REGISTER_MOBILE_UNIQUE));
-				if (mobileUnique && !UserConstants.USER_PHONE_UNIQUE.equals(userService.checkPhoneUnique(user))) {
-					return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.8")); //$NON-NLS-1$
-				}
+			}
+			if (mobileUnique && !UserConstants.USER_PHONE_UNIQUE.equals(userService.checkPhoneUnique(user))) {
+				return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.8")); //$NON-NLS-1$
 			}
 
 			String msg = "", username = user.getLoginName(), password = user.getPassword(); //$NON-NLS-1$
@@ -111,7 +114,9 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 				return postRegisterUser(user.getUserId(), referralId, referrerCode, walletPassword, async);
 			}
 			return CommonResult.fail(msg);
-		} else {
+		} else
+
+		{
 			user.setUserType(User.TYPE_USER);
 			if (userService.updateUser(user) <= 0) {
 				return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.17")); //$NON-NLS-1$
