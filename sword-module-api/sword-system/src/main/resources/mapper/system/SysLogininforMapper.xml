@@ -22,8 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="selectLogininforList" parameterType="SysLogininfor" resultMap="SysLogininforResult">
-		select info_id,login_name,ipaddr,login_location,browser,os,status,msg,login_time from sys_logininfor
-		<where>
+		select a.info_id,a.login_name, b.user_type, a.ipaddr,a.login_location,a.browser,a.os,a.status,a.msg,a.login_time from sys_logininfor a
+		left join (select login_name as name, user_type from sys_user) as b on a.login_name = b.name
+		where user_type != '01'
 			<if test="params!= null and params.admin != '' and params.admin !='develop'">
 				AND login_name != 'develop'
 			</if>
@@ -42,7 +43,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
 				and date_format(login_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
 			</if>
-		</where>
 	</select>
 	
 	<delete id="deleteLogininforByIds" parameterType="String">
