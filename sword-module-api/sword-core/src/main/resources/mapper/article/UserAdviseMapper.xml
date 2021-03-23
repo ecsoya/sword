@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="parentId"    column="parent_Id"    />
         <result property="userId"    column="user_id"    />
+        <result property="loginName"    column="login_name"    />
         <result property="title"    column="title"    />
         <result property="description"    column="description"    />
         <result property="type"    column="type"    />
@@ -18,7 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectUserAdviseVo">
-        select id, parent_Id, user_id, title, description, type, kind, status, create_time, update_time from t_user_advise
+        select a.id, a.parent_Id, a.user_id, a.title, a.description, a.type, a.kind, a.status, a.create_time, a.update_time from t_user_advise a
+        left join (select user_id as bid, login_name from sys_user) as b on a.user_id = b.bid
     </sql>
 
     <select id="selectUserAdviseList" parameterType="UserAdvise" resultMap="UserAdviseResult">

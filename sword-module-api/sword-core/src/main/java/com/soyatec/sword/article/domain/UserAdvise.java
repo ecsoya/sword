@@ -31,6 +31,8 @@ public class UserAdvise extends BaseEntity {
 	@Excel(name = "用户ID")
 	private Long userId;
 
+	private String loginName;
+
 	/** 标题 */
 	@Excel(name = "标题")
 	private String title;
@@ -132,5 +134,13 @@ public class UserAdvise extends BaseEntity {
 
 	public void setReplies(List<UserAdvise> replies) {
 		this.replies = replies;
+	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
 }
