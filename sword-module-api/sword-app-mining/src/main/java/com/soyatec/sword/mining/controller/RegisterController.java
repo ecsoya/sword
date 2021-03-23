@@ -112,7 +112,8 @@ public class RegisterController extends BaseController {
 	@PostMapping("/resetPwd/email")
 	@RepeatSubmit
 	public CommonResult<?> resetPwdByEmail(@ApiParam("邮箱") String email, @ApiParam("新的登录密码") String password,
-			@ApiParam("验证码") String code, @ApiParam("新的支付密码") String walletPassword) {
+			@ApiParam("验证码") String code, @ApiParam("新的支付密码") String walletPassword, @ApiParam("手机") String mobile,
+			@ApiParam("用户名") String loginName) {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(walletPassword) || StringUtils.isEmpty(password)) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.4")); //$NON-NLS-1$
 		}
@@ -123,6 +124,12 @@ public class RegisterController extends BaseController {
 		SysUser user = userService.selectUserByEmail(email);
 		if (user == null || !User.TYPE_USER.equals(user.getUserType())) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.5")); //$NON-NLS-1$
+		}
+		if (StringUtils.isNotEmpty(mobile) && !StringUtils.equals(mobile, user.getPhonenumber())) {
+			return CommonResult.fail(MessageUtils.message("RegisterController.5") + "【1】");
+		}
+		if (StringUtils.isNotEmpty(loginName) && !StringUtils.equals(loginName, user.getLoginName())) {
+			return CommonResult.fail(MessageUtils.message("RegisterController.5") + "【2】");
 		}
 		CommonResult<?> resetUserPassword = userProfieService.resetUserPassword(user.getUserId(), password);
 		if (!resetUserPassword.isSuccess()) {
