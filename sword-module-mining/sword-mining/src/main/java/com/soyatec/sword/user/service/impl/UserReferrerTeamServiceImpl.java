@@ -41,7 +41,7 @@ public class UserReferrerTeamServiceImpl implements IUserReferrerTeamService {
 		UserTeamCount today = new UserTeamCount();
 		today.setUserId(userId);
 		today.setReferrerCount(myReferrals.stream().filter(r -> DateUtils.isDuringToday(r.getCreateTime())).count());
-		today.setUmbrellaCount(referrerList.stream().filter(r -> myUmbrellaIds.contains(r.getReferralId()))
+		today.setUmbrellaCount(referrerList.stream().filter(r -> myUmbrellaIds.contains(r.getUserId()))
 				.filter(r -> DateUtils.isDuringToday(r.getCreateTime())).count());
 		team.setToday(today);
 		// 昨日人数
@@ -49,7 +49,7 @@ public class UserReferrerTeamServiceImpl implements IUserReferrerTeamService {
 		yesterday.setUserId(userId);
 		yesterday.setReferrerCount(
 				myReferrals.stream().filter(r -> DateUtils.isDuringYesterday(r.getCreateTime())).count());
-		yesterday.setUmbrellaCount(referrerList.stream().filter(r -> myUmbrellaIds.contains(r.getReferralId()))
+		yesterday.setUmbrellaCount(referrerList.stream().filter(r -> myUmbrellaIds.contains(r.getUserId()))
 				.filter(r -> DateUtils.isDuringYesterday(r.getCreateTime())).count());
 		team.setYesterday(yesterday);
 		// 全部人数
