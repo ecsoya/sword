@@ -18,7 +18,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label is-required">类型：</label>
 				<div class="col-sm-8">
-					<select name="type" class="form-control m-b" required>
+					<select name="type" class="form-control m-b" th:field="*{type}" required>
 						<option value="android">Android</option>
 						<option value="ios">iOS</option>
 					</select>
