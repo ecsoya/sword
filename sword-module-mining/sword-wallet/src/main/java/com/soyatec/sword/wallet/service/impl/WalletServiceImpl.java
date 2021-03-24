@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.wallet.config.WalletConfig;
 import com.soyatec.sword.wallet.domain.Address;
 import com.soyatec.sword.wallet.domain.Ticker;
 import com.soyatec.sword.wallet.domain.WithdrawalResponse;
@@ -30,6 +31,9 @@ public class WalletServiceImpl implements IWalletService {
 
 	@Autowired(required = false)
 	private RedisTemplate<String, Object> templates;
+
+	@Autowired
+	private WalletConfig config;
 
 	@Override
 	public CommonResult<Ticker> getTicker(String symbol) {
@@ -102,7 +106,23 @@ public class WalletServiceImpl implements IWalletService {
 				return ticker.getData();
 			}
 		}
-		return getTikcerFromRedis(symbol, time);
+		Ticker ticker = getTikcerFromRedis(symbol, time);
+		if (ticker == null && config != null) {
+			BigDecimal price = config.getPrice(symbol, time);
+			if (price != null) {
+				ticker = new Ticker();
+				ticker.setSymbol(symbol);
+				ticker.setDate(time);
+				ticker.setPrice(price);
+			}
+		}
+		if (ticker == null) {
+			ticker = new Ticker();
+			ticker.setSymbol(symbol);
+			ticker.setDate(time);
+			ticker.setPrice(BigDecimal.ZERO);
+		}
+		return ticker;
 	}
 
 	private String getTickerCacheName(String name, Date date) {
@@ -142,12 +162,6 @@ public class WalletServiceImpl implements IWalletService {
 				log.warn("over 60 times");
 				break;
 			}
-		}
-		if (ticker == null) {
-			ticker = new Ticker();
-			ticker.setSymbol(name);
-			ticker.setDate(date);
-			ticker.setPrice(BigDecimal.valueOf(0.1));
 		}
 		return ticker;
 	}
