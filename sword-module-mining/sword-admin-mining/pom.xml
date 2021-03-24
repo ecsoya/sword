@@ -4,21 +4,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.soyatec.sword</groupId>
-		<artifactId>sword-module-api</artifactId>
+		<artifactId>sword-module-mining</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>sword-app-mining</artifactId>
-	<name>sword-app-mining</name>
+	<artifactId>sword-admin-mining</artifactId>
+	<name>sword-admin-mining</name>
 	<dependencies>
-
 		<dependency>
 			<groupId>com.soyatec.sword</groupId>
-			<artifactId>sword-app</artifactId>
+			<artifactId>sword-admin</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.soyatec.sword</groupId>
 			<artifactId>sword-mining</artifactId>
 		</dependency>
-
 	</dependencies>
 </project>

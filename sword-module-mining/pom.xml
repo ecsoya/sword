@@ -9,9 +9,13 @@
   <packaging>pom</packaging>
   <name>sword-module-mining</name>
   <modules>
-  	<module>sword-mining</module>
   	<module>sword-wallet</module>
   	<module>sword-wallet-zbx</module>
+
+  	<module>sword-mining</module>
   	<module>sword-mining-zbx</module>
+
+  	<module>sword-admin-mining</module>
+  	<module>sword-app-mining</module>
   </modules>
 </project>
