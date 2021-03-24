@@ -39,7 +39,7 @@ public abstract class AbstractFileUploader implements FileUploader {
 		if (config == null) {
 			throw new FileUploadException("Upload config is empty");
 		}
-		config.checkValid();
+		config.testCloudValidated();
 		return doUpload(files, config);
 	}
 

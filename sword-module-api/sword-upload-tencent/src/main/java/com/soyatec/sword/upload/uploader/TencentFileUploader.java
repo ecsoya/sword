@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.qcloud.cos.COSClient;
@@ -20,21 +22,24 @@ import com.soyatec.sword.upload.core.UploadData;
 @Service
 public class TencentFileUploader extends AbstractFileUploader {
 
+	private static final Logger log = LoggerFactory.getLogger(TencentFileUploader.class);
+
 	@Override
 	protected List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException {
+		log.info("TencentFileUploader, config={}", config);
+
 		COSCredentials cred = new BasicCOSCredentials(config.getAccessKey(), config.getSecretKey());
 		String endpoint = config.getEndpoint();
 		ClientConfig clientConfig = new ClientConfig(new Region(endpoint));
-		// 3 生成cos客户端
 		COSClient client = new COSClient(cred, clientConfig);
 
 		String bucket = config.getBucket();
 		List<String> result = new ArrayList<>();
-		for (UploadData file : files) {
-			String contentType = file.getContentType();
-			Long length = file.getLength();
-			String path = getFileName(file, config);
-			try {
+		try {
+			for (UploadData file : files) {
+				String contentType = file.getContentType();
+				Long length = file.getLength();
+				String path = getFileName(file, config);
 				InputStream inputStream = file.getInputStream();
 				if (inputStream != null && inputStream.available() > 0) {
 					ObjectMetadata metadata = new ObjectMetadata();
@@ -54,13 +59,12 @@ public class TencentFileUploader extends AbstractFileUploader {
 				} else {
 					result.add("https://" + bucket + ".cos." + endpoint + ".myqcloud.com/" + path);
 				}
-			} catch (Exception e) {
-				return null;
 			}
+		} catch (Exception e) {
+			log.warn("TencentFileUploader, error={}", e.getLocalizedMessage());
+		} finally {
+			client.shutdown();
 		}
-
-		client.shutdown();
-
 		return result;
 	}
 

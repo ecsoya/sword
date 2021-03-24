@@ -27,5 +27,6 @@
   	<module>sword-upload-tencent</module>
   	<module>sword-upload-aliyun</module>
   	<module>sword-qrcode</module>
+  	<module>sword-upload-local</module>
   </modules>
 </project>

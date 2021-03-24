@@ -8,17 +8,41 @@ import com.soyatec.sword.common.utils.StringUtils;
 @Configuration
 @ConfigurationProperties("sword.upload")
 public class UploadConfig {
+
+	/**
+	 * 对象存储，文件上传之后的域名前缀
+	 */
 	private String baseUrl;
 
+	/**
+	 * 对象存储，地域
+	 */
 	private String endpoint;
 
+	/**
+	 * 对象存储，AccessKey
+	 */
 	private String accessKey;
 
+	/**
+	 * 对象存储，SecretKey
+	 */
 	private String secretKey;
 
+	/**
+	 * 对象存储，存储桶
+	 */
 	private String bucket;
 
+	/**
+	 * 添加时间路径
+	 */
 	private boolean addDatePath = true;
+
+	/**
+	 * 本地存储，根目录
+	 */
+	private String uploadPath;
 
 	public String getBaseUrl() {
 		return baseUrl;
@@ -74,11 +98,16 @@ public class UploadConfig {
 		return this;
 	}
 
-	public static UploadConfig build() {
-		return new UploadConfig();
+	public String getUploadPath() {
+		return uploadPath;
 	}
 
-	public void checkValid() throws FileUploadException {
+	public UploadConfig setUploadPath(String uploadPath) {
+		this.uploadPath = uploadPath;
+		return this;
+	}
+
+	public void testCloudValidated() throws FileUploadException {
 		if (StringUtils.isEmpty(baseUrl)) {
 			throw new FileUploadException("Base URL is empty");
 		}
@@ -94,6 +123,22 @@ public class UploadConfig {
 		if (StringUtils.isEmpty(endpoint)) {
 			throw new FileUploadException("Endpoint or Region is empty");
 		}
+	}
+
+	public void testLocalValidated() throws FileUploadException {
+		if (StringUtils.isEmpty(uploadPath)) {
+			throw new FileUploadException("Upload path is empty");
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "[baseUrl=" + baseUrl + ", endpoint=" + endpoint + ", accessKey=" + accessKey + ", bucket=" + bucket
+				+ ", addDatePath=" + addDatePath + ", uploadPath=" + uploadPath + "]";
+	}
+
+	public static UploadConfig build() {
+		return new UploadConfig();
 	}
 
 }

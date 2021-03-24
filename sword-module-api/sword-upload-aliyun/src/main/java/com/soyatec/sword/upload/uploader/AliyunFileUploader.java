@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.aliyun.oss.OSS;
@@ -21,8 +23,12 @@ import com.soyatec.sword.upload.core.UploadData;
 @Service
 public class AliyunFileUploader extends AbstractFileUploader {
 
+	private static final Logger log = LoggerFactory.getLogger(AliyunFileUploader.class);
+
 	@Override
 	protected List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException {
+		log.info("AliyunFileUploader, config={}", config);
+
 		OSS client = new OSSClientBuilder().build(config.getEndpoint(), config.getAccessKey(), config.getSecretKey());
 
 		List<String> result = new ArrayList<>();
@@ -45,7 +51,8 @@ public class AliyunFileUploader extends AbstractFileUploader {
 				String url = getUrl(config.getBaseUrl(), fileName);
 				result.add(url);
 			}
-		} catch (Exception oe) {
+		} catch (Exception e) {
+			log.warn("AliyunFileUploader, error={}", e.getLocalizedMessage());
 		} finally {
 			/*
 			 * Do not forget to shut down the client finally to release all allocated
