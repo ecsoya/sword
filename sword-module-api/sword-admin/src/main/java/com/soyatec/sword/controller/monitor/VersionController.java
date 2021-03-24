@@ -113,7 +113,7 @@ public class VersionController extends BaseController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 		SwordVersion beeplusVersion = swordVersionService.selectSwordVersionById(id);
-		mmap.put("beeplusVersion", beeplusVersion);
+		mmap.put("swordVersion", beeplusVersion);
 		return prefix + "/edit";
 	}
 
