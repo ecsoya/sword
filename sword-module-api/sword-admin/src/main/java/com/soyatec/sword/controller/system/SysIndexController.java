@@ -88,6 +88,7 @@ public class SysIndexController extends BaseController {
 	// 锁定屏幕
 	@GetMapping("/lockscreen")
 	public String lockscreen(ModelMap mmap) {
+		mmap.put("config", config);
 		mmap.put("user", ShiroUtils.getSysUser());
 		ServletUtils.getSession().setAttribute(ShiroConstants.LOCK_SCREEN, true);
 		return "lock";
