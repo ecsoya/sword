@@ -59,7 +59,7 @@ public class SwordUtils {
 
 	@SuppressWarnings("unchecked")
 	public static <T> T getCache(String name, Class<T> t) {
-		if (redis == null || StringUtils.isEmpty(name) || t == null) {
+		if (isDev() || redis == null || StringUtils.isEmpty(name) || t == null) {
 			return null;
 		}
 		String key = getCacheName(name);
@@ -104,19 +104,7 @@ public class SwordUtils {
 	}
 
 	private static boolean isDev() {
-		HttpServletRequest request = ServletUtils.getRequest();
-		if (request == null) {
-			return false;
-		}
-		StringBuffer requestURL = request.getRequestURL();
-		if (requestURL == null) {
-			return false;
-		}
-		String prodUrl = GlobalConfig.getProdUrl();
-		if (StringUtils.isNotEmpty(prodUrl)) {
-			return !requestURL.toString().contains(prodUrl);
-		}
-		return true;
+		return SpringUtils.testProfile("dev");
 	}
 
 	public static CommonResult<?> verifyCode(String code) {

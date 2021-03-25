@@ -29,8 +29,6 @@ public class GlobalConfig {
 	/** 获取地址开关 */
 	private static boolean addressEnabled;
 
-	private static String prodUrl;
-
 	private static boolean emailCode = true;
 
 	private static String mainPage;
@@ -102,14 +100,6 @@ public class GlobalConfig {
 	 */
 	public static String getUploadPath() {
 		return getProfile() + "/upload";
-	}
-
-	public static String getProdUrl() {
-		return prodUrl;
-	}
-
-	public void setProdUrl(String prodUrl) {
-		GlobalConfig.prodUrl = prodUrl;
 	}
 
 	public static boolean getEmailCode() {
