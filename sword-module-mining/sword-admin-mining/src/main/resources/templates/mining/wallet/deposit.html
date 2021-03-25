@@ -65,6 +65,7 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('mining:wallet:deposit:edit')}]];
         var removeFlag = [[${@permission.hasPermi('mining:wallet:deposit:remove')}]];
+        var showExport = 'hidden' != [[${@permission.hasPermi('mining:wallet:deposit:export')}]];
         var prefix = ctx + "mining/wallet/deposit";
 
         $(function() {
@@ -77,7 +78,7 @@
                 modalName: "充值订单",
                 sortName: "createTime",
                 sortOrder: "desc",
-                showExport: true,
+                showExport: showExport,
 		        exportOptions: {
 		        	ignoreColumn: [0]  //忽略第一列和最后一列
 		        },

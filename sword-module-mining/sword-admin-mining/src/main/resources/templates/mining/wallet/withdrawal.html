@@ -74,6 +74,8 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('mining:wallet:withdrawal:edit')}]];
         var removeFlag = [[${@permission.hasPermi('mining:wallet:withdrawal:remove')}]];
+        var showExport = 'hidden' != [[${@permission.hasPermi('mining:wallet:withdrawal:export')}]];
+
         var prefix = ctx + "mining/wallet/withdrawal";
 
         $(function() {
@@ -88,7 +90,7 @@
                 sortOrder: "desc",
                 footerStyle: footerStyle,
                 showFooter: true,
-                showExport: true,
+                showExport: showExport,
 		        exportOptions: {
 		        	ignoreColumn: [0]  //忽略第一列和最后一列
 		        },
