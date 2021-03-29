@@ -47,7 +47,7 @@ public class M5cSendMobileCodeHandler implements SendMobileCodeHandler {
 			mobile = "86" + mobile;
 		}
 		M5cResult result = mobileService.sendMessage(mobile, message);
-		log.info("GBA send sms to mobile {} with message {}, and result is: {}", mobile, message, result);
+		log.info("m5c send sms to mobile {} with message {}, and result is: {}", mobile, message, result);
 		if (result != null && result.isSuccess()) {
 			return CommonResult.success(message);
 		}
