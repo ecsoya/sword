@@ -389,12 +389,13 @@ var table = {
                 });
             },
             // 导入数据
-            importExcel: function(formId, width, height, excel) {
+            importExcel: function(formId, width, height, excel, urlOption) {
             	table.set();
             	var currentId = $.common.isEmpty(formId) ? 'importTpl' : formId;
             	var _width = $.common.isEmpty(width) ? "400" : width;
                 var _height = $.common.isEmpty(height) ? "230" : height;
                 var _excel = $.common.isEmpty(excel) ? true : false;
+                var _importUrl =  $.common.isEmpty(urlOption) ? table.options.importUrl : table.options[urlOption];
             	layer.open({
                     type: 1,
                     area: [_width + 'px', _height + 'px'],
@@ -417,7 +418,7 @@ var table = {
                         $.modal.disable();
                         var formData = new FormData(layero.find('form')[0]);
                         $.ajax({
-                            url: table.options.importUrl,
+                            url: _importUrl,
                             data: formData,
                             cache: false,
                             contentType: false,
