@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.constant.UserConstants;
 import com.soyatec.sword.common.core.domain.CommonResult;
-import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.MessageUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
@@ -62,7 +61,7 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 			referralId = referral.getUserId();
 		}
 		if (user.getUserId() == null) {
-			user.setUserId(IdWorker.getId());// 避免和导入用户ID冲突
+			// user.setUserId(100000000l + StringUtils.randomNum(8));// 避免和导入用户ID冲突
 			boolean emailUnique = "true" //$NON-NLS-1$
 					.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_EMAIL_UNIQUE));
 			String email = user.getEmail();
