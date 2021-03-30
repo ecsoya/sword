@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.sendcloud.sdk.builder.SendCloudBuilder;
 import com.sendcloud.sdk.config.Credential;
-import com.sendcloud.sdk.config.Region;
 import com.sendcloud.sdk.core.SendCloud;
 import com.sendcloud.sdk.model.MailAddressReceiver;
 import com.sendcloud.sdk.model.MailBody;
@@ -47,7 +46,7 @@ public class SendCloudService {
 
 		SendCloud sc = SendCloudBuilder.build();
 		Credential credential = new Credential(config.getApiUser(), config.getApiKey());
-		return sc.sendMail(mail, credential, Region.CN);
+		return sc.sendMail(mail, credential, config.getRegion());
 	}
 
 	public ResponseData sendTemplate(String email, String subject, String template) throws Throwable {
@@ -69,7 +68,7 @@ public class SendCloudService {
 
 		SendCloud sc = SendCloudBuilder.build();
 		Credential credential = new Credential(config.getApiUser(), config.getApiKey());
-		return sc.sendMail(mail, credential, Region.CN);
+		return sc.sendMail(mail, credential, config.getRegion());
 	}
 
 }

@@ -3,6 +3,7 @@ package com.soyatec.sword.code.sendcloud;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import com.sendcloud.sdk.config.Region;
 import com.sendcloud.sdk.config.SendcloudConfig;
 import com.soyatec.sword.code.config.CodeProperties;
 
@@ -18,6 +19,8 @@ public class SendCloudProperties extends CodeProperties {
 	private String fromName;
 
 	private String subject;
+
+	private Region region = Region.CN;
 
 	public String getApiUser() {
 		return apiUser;
@@ -59,5 +62,13 @@ public class SendCloudProperties extends CodeProperties {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public Region getRegion() {
+		return region;
+	}
+
+	public void setRegion(Region region) {
+		this.region = region;
 	}
 }
