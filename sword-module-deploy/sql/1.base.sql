@@ -443,7 +443,17 @@ VALUES
 	(1056,'任务导出',110,7,'#','','F','0','1','monitor:job:export','#','admin','2021-01-05 15:07:06','',NULL,''),
 	(1057,'版本查询',115,1,'#','','F','0','1','tool:version:list','#','admin','2021-01-05 15:07:06','',NULL,''),
 	(1058,'版本修改',115,2,'#','','F','0','1','tool:version:edit','#','admin','2021-01-05 15:07:06','',NULL,''),
-	(1059,'版本删除',115,3,'#','','F','0','1','tool:version:remove','#','admin','2021-01-05 15:07:06','',NULL,'');
+	(1059,'版本删除',115,3,'#','','F','0','1','tool:version:remove','#','admin','2021-01-05 15:07:06','',NULL,''),
+	(1126, '密钥管理', 3, 3, '/admin/token', 'menuItem', 'C', '0', '1', 'admin:token:view', 'fa fa-bomb', 'develop', '2021-03-18 08:13:11', 'develop', '2021-03-18 08:13:59', ''),
+	(1127, '添加', 1126, 1, '#', 'menuItem', 'F', '0', '1', 'admin:token:add', '#', 'develop', '2021-03-18 08:13:11', '', NULL, ''),
+	(1128, '删除', 1126, 2, '#', 'menuItem', 'F', '0', '1', 'admin:token:remove', '#', 'develop', '2021-03-18 08:13:11', '', NULL, ''),
+	(1129, '修改', 1126, 3, '#', 'menuItem', 'F', '0', '1', 'admin:token:edit', '#', 'develop', '2021-03-18 08:13:11', '', NULL, ''),
+	(1130, '查询', 1126, 4, '#', 'menuItem', 'F', '0', '1', 'admin:token:list', '#', 'develop', '2021-03-18 08:13:11', '', NULL, ''),
+	(1131, '验证码', 3, 5, '/admin/code', 'menuItem', 'C', '0', '1', 'admin:code:view', 'fa fa-envelope', 'develop', '2021-03-18 08:41:12', '', NULL, ''),
+	(1132, '查询', 1131, 4, '#', 'menuItem', 'F', '0', '1', 'admin:code:list', '#', 'develop', '2021-03-18 08:41:12', '', NULL, ''),
+	(1133, '二维码', 3, 3, '/tool/resource', 'menuItem', 'C', '0', '1', 'tool:resource:view', 'fa fa-file-image-o', 'develop', '2021-03-26 17:16:46', '', NULL, '');
+
+
 
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;

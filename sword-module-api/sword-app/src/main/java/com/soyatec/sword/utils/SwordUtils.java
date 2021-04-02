@@ -180,15 +180,18 @@ public class SwordUtils {
 	}
 
 	private static String getType(HttpServletRequest request) {
-		if (request == null) {
-			return SwordVersion.TYPE_ANDROID;
-		}
-		String agent = request.getHeader("User-Agent");
-		if (agent != null) {
-			String name = agent.toLowerCase();
-			if (name.indexOf("mac") != -1 || name.indexOf("iphone") != -1) {
-				return SwordVersion.TYPE_IOS;
+		try {
+			if (request == null) {
+				return SwordVersion.TYPE_ANDROID;
 			}
+			String agent = request.getHeader("User-Agent");
+			if (agent != null) {
+				String name = agent.toLowerCase();
+				if (name.indexOf("mac") != -1 || name.indexOf("iphone") != -1) {
+					return SwordVersion.TYPE_IOS;
+				}
+			}
+		} catch (Exception e) {
 		}
 		return SwordVersion.TYPE_ANDROID;
 	}
