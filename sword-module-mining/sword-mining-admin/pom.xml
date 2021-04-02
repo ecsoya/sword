@@ -6,14 +6,17 @@
 		<groupId>com.soyatec.sword</groupId>
 		<artifactId>sword-module-mining</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>sword-wallet-zbx</artifactId>
+	<artifactId>sword-mining-admin</artifactId>
+	<name>sword-mining-admin</name>
 	<dependencies>
-		<!-- 通用工具 -->
 		<dependency>
 			<groupId>com.soyatec.sword</groupId>
-			<artifactId>sword-wallet</artifactId>
+			<artifactId>sword-admin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.soyatec.sword</groupId>
+			<artifactId>sword-mining</artifactId>
 		</dependency>
 	</dependencies>
 </project>

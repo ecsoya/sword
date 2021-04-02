@@ -247,7 +247,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>
-				<artifactId>sword-admin-mining</artifactId>
+				<artifactId>sword-mining-admin</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 前端API -->
@@ -258,7 +258,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>
-				<artifactId>sword-app-mining</artifactId>
+				<artifactId>sword-mining-app</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 挖矿业务 -->
@@ -274,12 +274,12 @@
 			</dependency>
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>
-				<artifactId>sword-wallet</artifactId>
+				<artifactId>sword-mining-wallet</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>
-				<artifactId>sword-wallet-zbx</artifactId>
+				<artifactId>sword-mining-wallet-zbx</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 

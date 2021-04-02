@@ -33,9 +33,9 @@
 	
 4. sword-module-mining 挖矿项目工具集
 
-	* sword-admin-mining 挖矿项目后台模块
-	* sword-app-mining 挖矿项目前端模块
+	* sword-mining-admin 挖矿项目后台模块
+	* sword-mining-app 挖矿项目前端模块
 	* sword-mining 挖矿项目基础API模块，扩展了钱包、充提、直推等用户基础数据
 	* sword-mining-zbx 挖矿项目集成ZBX钱包模块 
-	* sword-wallet 挖矿项目基础钱包模块
-	* sword-wallet-zbx 挖矿项目对接ZBX钱包模块
+	* sword-mining-wallet 挖矿项目基础钱包模块
+	* sword-mining-wallet-zbx 挖矿项目对接ZBX钱包模块

@@ -6,8 +6,8 @@
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>sword-wallet</artifactId>
-  <name>sword-wallet</name>
+  <artifactId>sword-mining-wallet</artifactId>
+  <name>sword-mining-wallet</name>
   <dependencies>
         <!-- 通用工具-->
         <dependency>

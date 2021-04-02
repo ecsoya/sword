@@ -16,7 +16,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.soyatec.sword</groupId>
-			<artifactId>sword-wallet-zbx</artifactId>
+			<artifactId>sword-mining-wallet-zbx</artifactId>
 		</dependency>
 	</dependencies>
 </project>

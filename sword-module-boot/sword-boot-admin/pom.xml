@@ -74,7 +74,7 @@
 								</include>
 								<include>
 									<groupId>com.soyatec.sword</groupId>
-									<artifactId>sword-wallet</artifactId>
+									<artifactId>sword-mining-wallet</artifactId>
 								</include>
 								<include>
 									<groupId>com.soyatec.sword</groupId>
@@ -179,7 +179,7 @@
 								</include>
 								<include>
 									<groupId>com.soyatec.sword</groupId>
-									<artifactId>sword-wallet</artifactId>
+									<artifactId>sword-mining-wallet</artifactId>
 								</include>
 								<include>
 									<groupId>com.soyatec.sword</groupId>
