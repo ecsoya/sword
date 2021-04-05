@@ -26,7 +26,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	private static final String RANDOM_HOLDER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 	/** 邮箱验证器 */
-	private static final String MAIL_REGEX = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+	private static final String MAIL_REGEX = "^([a-z0-9A-Z_]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 
 	public static String randomStr(int length) {
 		Random random = new Random();
@@ -434,4 +434,5 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 			return false;
 		}
 	}
+
 }
