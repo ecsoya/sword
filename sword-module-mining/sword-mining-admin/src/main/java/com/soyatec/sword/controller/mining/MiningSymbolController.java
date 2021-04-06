@@ -77,13 +77,27 @@ public class MiningSymbolController extends BaseController {
 	 * 修改保存币种
 	 */
 	@RequiresPermissions("mining:symbol:edit")
-	@Log(title = "启停提币设置", businessType = BusinessType.UPDATE)
+	@Log(title = "启停提币开关", businessType = BusinessType.UPDATE)
 	@PostMapping("/changeStatus")
 	@ResponseBody
 	public AjaxResult changeStatus(String symbol, Integer withdrawalEnabled) {
 		MiningSymbol miningSymbol = new MiningSymbol();
 		miningSymbol.setSymbol(symbol);
 		miningSymbol.setWithdrawalEnabled(withdrawalEnabled);
+		return toAjax(miningSymbolService.updateMiningSymbol(miningSymbol));
+	}
+
+	/**
+	 * 修改保存币种
+	 */
+	@RequiresPermissions("mining:symbol:edit")
+	@Log(title = "启停提币人工审核", businessType = BusinessType.UPDATE)
+	@PostMapping("/changeManualAudit")
+	@ResponseBody
+	public AjaxResult changeManualAudit(String symbol, Integer withdrawalManualAudit) {
+		MiningSymbol miningSymbol = new MiningSymbol();
+		miningSymbol.setSymbol(symbol);
+		miningSymbol.setWithdrawalManualAudit(withdrawalManualAudit);
 		return toAjax(miningSymbolService.updateMiningSymbol(miningSymbol));
 	}
 

@@ -6,7 +6,7 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
-# Database: zbx-bga
+# Database: sword-filminer
 # Generation Time: 2021-03-25 01:22:53 +0000
 # ************************************************************
 

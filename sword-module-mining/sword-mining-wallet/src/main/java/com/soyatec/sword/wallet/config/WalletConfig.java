@@ -51,6 +51,9 @@ public class WalletConfig {
 			return null;
 		}
 		Map<Date, BigDecimal> values = histories.get(symbol);
+		if (values == null) {
+			return null;
+		}
 		Set<Entry<Date, BigDecimal>> entrySet = values.entrySet();
 		for (Entry<Date, BigDecimal> entry : entrySet) {
 			if (DateUtils.dayEquals(date, entry.getKey())) {

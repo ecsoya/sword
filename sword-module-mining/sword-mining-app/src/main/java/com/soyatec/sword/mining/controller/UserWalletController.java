@@ -3,6 +3,7 @@ package com.soyatec.sword.mining.controller;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,8 @@ import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.constants.IMiningConstants;
+import com.soyatec.sword.mining.domain.MiningSymbol;
+import com.soyatec.sword.mining.service.IMiningSymbolService;
 import com.soyatec.sword.mining.utils.SwordMiningUtils;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 import com.soyatec.sword.order.service.IUserWithdrawalOrderService;
@@ -52,6 +55,9 @@ public class UserWalletController extends BaseController {
 
 	@Autowired
 	private ISysConfigService configService;
+
+	@Autowired
+	private IMiningSymbolService symbolService;
 
 	@ApiOperation("查询钱包信息")
 	@GetMapping("/records")
@@ -175,8 +181,14 @@ public class UserWalletController extends BaseController {
 		if (!withdrawal.isSuccess(true)) {
 			return withdrawal;
 		}
-		UserWithdrawalOrder order = withdrawal.getData();
-		return withdrawalOrderService.confirmWithdrawal(userId, order.getOrderNo());
+		MiningSymbol miningSymbol = symbolService.selectMiningSymbolById(symbol);
+		// 如果不需要人工审核，直接确认
+		if (miningSymbol != null && !miningSymbol.needWithdrawalManualAudit()) {
+			UserWithdrawalOrder order = withdrawal.getData();
+			return withdrawalOrderService.confirmWithdrawal(userId, order.getOrderNo());
+		} else {
+			return withdrawal;
+		}
 	}
 
 	@ApiOperation(value = "提现取消", notes = "取消提现")
@@ -206,6 +218,14 @@ public class UserWalletController extends BaseController {
 			return CommonResult.fail("参数错误");
 		}
 		Long userId = SwordUtils.getUserId();
+		UserWithdrawalOrder order = withdrawalOrderService.selectUserWithdrawalOrderByOrderNo(orderNo);
+		if (order == null || !Objects.equals(userId, order.getUserId())) {
+			return CommonResult.fail("订单错误");
+		}
+		MiningSymbol miningSymbol = symbolService.selectMiningSymbolById(order.getSymbol());
+		if (miningSymbol != null && miningSymbol.needWithdrawalManualAudit()) {
+			return CommonResult.success("等待人工审核");
+		}
 		return withdrawalOrderService.confirmWithdrawal(userId, orderNo);
 	}
 }

@@ -93,6 +93,14 @@
                     }
                 },
                 {
+                    field: 'withdrawalManualAudit',
+                    title: '提币人工审核',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return statusManualAuditTools(row);
+                    }
+                },
+                {
                     field: 'remark',
                     title: '备注'
                 },
@@ -109,7 +117,6 @@
             $.table.init(options);
         });
         
-        /* 用户状态显示 */
     	function statusTools(row) {
     		if (editFlag == 'hidden') {
     			if (row.withdrawalEnabled == 0) {
@@ -125,7 +132,6 @@
     		}
     	}
     	
-    	/* 用户管理-停用 */
     	function disable(symbol) {
     		$.modal.confirm("确认要停用用户提币吗？", function() {
     			$.operate.post(prefix + "/changeStatus", { "symbol": symbol, "withdrawalEnabled": 1 }, function(){
@@ -133,10 +139,37 @@
     	    })
     	}
 
-    	/* 用户管理启用 */
     	function enable(symbol) {
     		$.modal.confirm("确认要开启提币吗？", function() {
     			$.operate.post(prefix + "/changeStatus", { "symbol": symbol, "withdrawalEnabled": 0 }, function(){
+    			});
+    	    })
+    	}
+    	function statusManualAuditTools(row) {
+    		if (editFlag == 'hidden') {
+    			if (row.withdrawalManualAudit == 0) {
+        			return '开启';
+        		} else {
+        			return '关闭';
+        		}
+    		} else
+    	    if (row.withdrawalManualAudit == 1) {
+    			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enableManualAudit(\'' + row.symbol + '\')"></i> ';
+    		} else {
+    			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disableManualAudit(\'' + row.symbol + '\')"></i> ';
+    		}
+    	}
+    	
+    	function disableManualAudit(symbol) {
+    		$.modal.confirm("确认要停用提币人工审核吗？", function() {
+    			$.operate.post(prefix + "/changeManualAudit", { "symbol": symbol, "withdrawalManualAudit": 1 }, function(){
+    			});
+    	    })
+    	}
+
+    	function enableManualAudit(symbol) {
+    		$.modal.confirm("确认要开启提币人工审核吗？", function() {
+    			$.operate.post(prefix + "/changeManualAudit", { "symbol": symbol, "withdrawalManualAudit": 0 }, function(){
     			});
     	    })
     	}

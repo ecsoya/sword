@@ -104,7 +104,7 @@ public class SwordUtils {
 	}
 
 	private static boolean isDev() {
-		return SpringUtils.testProfile("dev");
+		return SpringUtils.testProfile("dev") || SpringUtils.testProfile("local");
 	}
 
 	private static boolean isProd() {

@@ -56,6 +56,9 @@ public class MiningSymbol extends BaseEntity {
 	@Excel(name = "提币总合计")
 	private BigDecimal withdrawalTotally;
 
+	// 提币人工审核
+	private Integer withdrawalManualAudit;
+
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
 	}
@@ -140,5 +143,17 @@ public class MiningSymbol extends BaseEntity {
 
 	public void setWithdrawalFeeSymbol(String withdrawalFeeSymbol) {
 		this.withdrawalFeeSymbol = withdrawalFeeSymbol;
+	}
+
+	public Integer getWithdrawalManualAudit() {
+		return withdrawalManualAudit;
+	}
+
+	public void setWithdrawalManualAudit(Integer withdrawalManualAudit) {
+		this.withdrawalManualAudit = withdrawalManualAudit;
+	}
+
+	public boolean needWithdrawalManualAudit() {
+		return ENABLED.equals(withdrawalManualAudit);
 	}
 }

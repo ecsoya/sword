@@ -9,6 +9,7 @@ import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.system.domain.SysOperLog;
 import com.soyatec.sword.system.mapper.SysOperLogMapper;
 import com.soyatec.sword.system.service.ISysOperLogService;
+import com.soyatec.sword.system.service.ISysOperNotifyService;
 
 /**
  * 操作日志 服务层处理
@@ -20,6 +21,9 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 	@Autowired
 	private SysOperLogMapper operLogMapper;
 
+	@Autowired
+	private ISysOperNotifyService operNotifyService;
+
 	/**
 	 * 新增操作日志
 	 * 
@@ -28,6 +32,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 	@Override
 	public void insertOperlog(SysOperLog operLog) {
 		operLogMapper.insertOperlog(operLog);
+		operNotifyService.notifyByOperLog(operLog);
 	}
 
 	/**

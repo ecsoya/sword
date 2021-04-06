@@ -6,14 +6,21 @@ import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.soyatec.sword.common.annotation.Log;
 import com.soyatec.sword.common.core.controller.BaseController;
+import com.soyatec.sword.common.core.domain.AjaxResult;
+import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
+import com.soyatec.sword.common.enums.BusinessType;
 import com.soyatec.sword.common.utils.DateUtils;
+import com.soyatec.sword.mining.domain.MiningSymbol;
+import com.soyatec.sword.mining.service.IMiningSymbolService;
 import com.soyatec.sword.order.domain.UserDepositOrder;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 import com.soyatec.sword.order.service.IUserDepositOrderService;
@@ -31,9 +38,13 @@ public class MiningWalletController extends BaseController {
 	@Autowired
 	private IUserWithdrawalOrderService userWithdrawalOrderService;
 
+	@Autowired
+	private IMiningSymbolService symbolService;
+
 	@RequiresPermissions("mining:wallet:withdrawal:view")
 	@GetMapping("/withdrawal")
-	public String withdrawal() {
+	public String withdrawal(ModelMap mmap) {
+		mmap.put("symbols", symbolService.selectMiningSymbolList(new MiningSymbol()));
 		return prefix + "/withdrawal";
 	}
 
@@ -86,5 +97,29 @@ public class MiningWalletController extends BaseController {
 		userDepositOrder.setTimeParams(null, null);
 		table.addParam("累积充值", userDepositOrderService.selectUserDepositAmount(userDepositOrder));
 		return table;
+	}
+
+	@RequiresPermissions("mining:wallet:withdrawal:edit")
+	@Log(title = "审核通过提现订单", businessType = BusinessType.UPDATE)
+	@PostMapping("/withdrawal/checkPassed")
+	@ResponseBody
+	public AjaxResult checkPassed(String ids) {
+		CommonResult<?> result = userWithdrawalOrderService.confirmWithdrawal(ids);
+		if (result.isSuccess()) {
+			return AjaxResult.success();
+		}
+		return AjaxResult.error(result.getInfo());
+	}
+
+	@RequiresPermissions("mining:wallet:withdrawal:edit")
+	@Log(title = "审核拒绝提现订单", businessType = BusinessType.UPDATE)
+	@PostMapping("/withdrawal/checkDenied")
+	@ResponseBody
+	public AjaxResult checkDenied(String ids, String remark) {
+		CommonResult<?> result = userWithdrawalOrderService.cancelWithdrawal(ids, remark);
+		if (result.isSuccess()) {
+			return AjaxResult.success();
+		}
+		return AjaxResult.error(result.getInfo());
 	}
 }

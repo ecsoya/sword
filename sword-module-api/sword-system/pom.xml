@@ -24,6 +24,12 @@
             <artifactId>sword-common</artifactId>
         </dependency>
 
+        <!-- 通知-->
+        <dependency>
+            <groupId>com.soyatec.sword</groupId>
+            <artifactId>sword-code</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
