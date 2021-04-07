@@ -7,7 +7,7 @@
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
 # Database: sword
-# Generation Time: 2021-03-17 07:30:08 +0000
+# Generation Time: 2021-04-07 02:24:02 +0000
 # ************************************************************
 
 
@@ -138,6 +138,16 @@ CREATE TABLE `t_token_secret` (
   UNIQUE KEY `access_key_UNIQUE` (`access_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='开放接口API';
 
+LOCK TABLES `t_token_secret` WRITE;
+/*!40000 ALTER TABLE `t_token_secret` DISABLE KEYS */;
+
+INSERT INTO `t_token_secret` (`id`, `access_key`, `secret_key`, `create_time`, `update_time`, `remark`)
+VALUES
+	(4,'7ccb9193-c551-4b67-b013-8064da683f9a','415787feb2cc02ab77b08d625e21877a','2020-10-13 09:39:06','2020-10-13 09:39:27','ZBX回调'),
+	(5,'test','admin','2021-03-17 09:06:02','2021-03-17 09:06:26',NULL);
+
+/*!40000 ALTER TABLE `t_token_secret` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table t_user_advise

@@ -29,9 +29,14 @@ public class GlobalConfig {
 	/** 获取地址开关 */
 	private static boolean addressEnabled;
 
+	/** 使用邮箱验证码 */
 	private static boolean emailCode = true;
 
+	/** 后台首页配置 */
 	private static String mainPage;
+
+	/** 后台邮箱验证码开关 */
+	private static boolean notifyEnabled;
 
 	public static String getName() {
 		return name;
@@ -116,6 +121,14 @@ public class GlobalConfig {
 
 	public void setMainPage(String mainPage) {
 		GlobalConfig.mainPage = mainPage;
+	}
+
+	public static boolean isNotifyEnabled() {
+		return notifyEnabled;
+	}
+
+	public void setNotifyEnabled(boolean notifyEnabled) {
+		GlobalConfig.notifyEnabled = notifyEnabled;
 	}
 
 }

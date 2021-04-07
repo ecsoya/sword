@@ -19,4 +19,6 @@ public interface IMobileCodeService {
 	public CommonResult<?> verifyCodeByUserId(Long userId, String code);
 
 	public CommonResult<?> verifyCodeByUsername(String username, String code);
+
+	public CommonResult<?> sendCodeByUsername(String username);
 }

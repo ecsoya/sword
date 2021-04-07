@@ -16,6 +16,8 @@ public interface IMailCodeService {
 
 	public CommonResult<?> sendCodeByUserId(Long userId);
 
+	public CommonResult<?> sendCodeByUsername(String username);
+
 	public CommonResult<?> verifyCodeByUserId(Long userId, String code);
 
 	public CommonResult<?> verifyCodeByUsername(String username, String code);

@@ -8,6 +8,52 @@ $(function() {
 	});
 });
 
+var wait=60; 
+function notifyTimer() {  
+	var btn = $('#notifyCodeButton');
+   if (wait == 0) {  
+      btn.attr('disabled',false);       
+      btn.text("发送验证码");  
+      wait = 60;  
+   } else {  
+      btn.attr('disabled',true);         
+      btn.text('重新发送(' + wait + ')'); 
+      wait--;  
+      setTimeout(function() {  
+          notifyTimer()  
+      },  1000)  
+   }  
+}  
+     
+
+function sendNotifyCode() {
+	
+	var username = $.common.trim($("input[name='username']").val());
+    var password = $.common.trim($("input[name='password']").val());
+    
+    if (username==null || username=='') {
+    	$.modal.msg("请输入用户名");
+    	return;
+    }
+    if (password==null || password=='') {
+    	$.modal.msg("请输入密码");
+    	return;
+    }
+    
+    $.ajax({
+        type: "post",
+        url: ctx + "open/code/deliveryByUsername?username=" + username,
+        success: function(r) {
+            if (r.code == 0) {
+                $.modal.msg('发送成功');
+            } else {
+            	$.modal.msg(r.msg);
+            }
+        }
+    });
+    notifyTimer()  
+}
+
 $.validator.setDefaults({
     submitHandler: function() {
 		login();
@@ -19,6 +65,7 @@ function login() {
 	var username = $.common.trim($("input[name='username']").val());
     var password = $.common.trim($("input[name='password']").val());
     var validateCode = $("input[name='validateCode']").val();
+    var notifyCode = $.common.trim($("input[name='notifyCode']").val());
     var rememberMe = $("input[name='rememberme']").is(':checked');
     $.ajax({
         type: "post",
@@ -27,6 +74,7 @@ function login() {
             "username": username,
             "password": password,
             "validateCode": validateCode,
+            "notifyCode": notifyCode,
             "rememberMe": rememberMe
         },
         success: function(r) {

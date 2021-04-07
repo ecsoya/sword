@@ -17,6 +17,7 @@ import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.page.PageMethod;
 import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.domain.AjaxResult.Type;
+import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.page.PageDomain;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.core.page.TableSupport;
@@ -157,6 +158,15 @@ public class BaseController {
 	 */
 	protected AjaxResult toAjax(boolean result) {
 		return result ? success() : error();
+	}
+
+	protected AjaxResult toAjax(CommonResult<?> result) {
+		if (result != null && result.isSuccess()) {
+			return success();
+		} else if (result != null) {
+			return error(result.getInfo());
+		}
+		return error();
 	}
 
 	/**

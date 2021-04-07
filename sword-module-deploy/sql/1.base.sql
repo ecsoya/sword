@@ -6,8 +6,8 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
-# Database: sword-filminer
-# Generation Time: 2021-03-25 01:22:53 +0000
+# Database: sword
+# Generation Time: 2021-04-07 02:33:32 +0000
 # ************************************************************
 
 
@@ -98,7 +98,7 @@ CREATE TABLE `sys_config` (
   `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`config_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='参数配置表';
@@ -117,15 +117,15 @@ VALUES
 	(7,'用户管理-账号密码更新周期','sys.account.passwordValidateDays','0','Y','admin','2021-01-05 10:29:53','',NULL,'密码更新周期（填写数字，数据初始化值为0不限制，若修改必须为大于0小于365的正整数），如果超过这个周期登录系统时，则在登录时就会提醒修改密码对话框'),
 	(8,'主框架页-菜单导航显示风格','sys.index.menuStyle','default','Y','admin','2021-01-05 10:29:53','',NULL,'菜单导航显示风格（default为左侧导航菜单，topnav为顶部导航菜单）'),
 	(9,'主框架页-是否开启页脚','sys.index.ignoreFooter','true','Y','admin','2021-01-05 10:29:53','',NULL,'是否开启底部页脚显示（true显示，false隐藏）'),
-	(100,'注册需要推荐码','sword.registerNeedReferrerCode','true','Y','',NULL,'','2020-10-12 15:49:17',NULL),
-	(101,'顶层用户ID','sword.rootUserId','3','N','',NULL,'',NULL,NULL),
-	(102,'钱包默认支付密码','wallet.defaultPassword','111111','N','',NULL,'','2020-09-28 09:44:12',NULL),
-	(103,'分享二维码前缀','sword.referralLinkUrl','http://62.234.130.187/bga/register/index.html?referrerCode=','N','',NULL,'develop','2021-03-19 12:03:30',''),
-	(104,'注册手机号唯一','sword.registerMobileUnique','true','N','',NULL,'',NULL,NULL),
-	(105,'注册邮箱唯一','sword.registerEmailUnique','true','N','',NULL,'',NULL,NULL),
+	(100,'注册需要推荐码','sword.registerNeedReferrerCode','true','Y','',NULL,'','2020-10-12 15:49:17','注册时是否需要推荐码'),
+	(101,'顶层用户ID','sword.rootUserId','3','N','',NULL,'',NULL,'顶层用户ID'),
+	(102,'钱包默认支付密码','wallet.defaultPassword','111111','N','',NULL,'','2020-09-28 09:44:12','默认钱包支付密码'),
+	(103,'分享二维码前缀','sword.referralLinkUrl','https://62.234.130.187/app/register.html?referrerCode=','N','',NULL,'','2021-01-19 12:00:22','推荐码中的注册页面地址'),
+	(104,'注册手机号唯一','sword.registerMobileUnique','true','N','',NULL,'',NULL,'注册手机唯一'),
+	(105,'注册邮箱唯一','sword.registerEmailUnique','false','N','',NULL,'',NULL,'注册邮箱唯一'),
 	(106,'实名认证功能','sword.enableUserCertificate','0','N','',NULL,'',NULL,'0-关闭，1-钱包，2-提币，3=钱包和提币，4=购买，5=钱包和购买，6=提币和购买，7=钱包、提币和购买'),
-	(107,'收益全局开关','sword.userProfitEnabled','true','N','',NULL,'',NULL,NULL),
-	(108,'双区树','sword.userBinaryTreeEnabled','false','N','',NULL,'',NULL,NULL);
+	(107,'收益全局开关','sword.userProfitEnabled','true','N','',NULL,'',NULL,'用户收益总开关'),
+	(108,'双区树','sword.userBinaryTreeEnabled','false','N','',NULL,'',NULL,'使用双区树');
 
 /*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -159,8 +159,8 @@ LOCK TABLES `sys_dept` WRITE;
 
 INSERT INTO `sys_dept` (`dept_id`, `parent_id`, `ancestors`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`)
 VALUES
-	(100,0,'0','soyatec',0,'若依','15888888888','ry@qq.com','0','0','admin','2021-01-05 15:07:03','',NULL),
-	(101,0,'0','sword',1,'若依','15888888888','ry@qq.com','0','0','admin','2021-01-05 15:07:03','',NULL);
+	(100,0,'0','开发',0,'AngryRED','15888888888','angryred@qq.com','0','0','admin','2021-01-05 15:07:03','',NULL),
+	(101,0,'0','产品',1,'AngryRED','15888888888','angryred@qq.com','0','0','admin','2021-01-05 15:07:03','',NULL);
 
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -332,6 +332,16 @@ CREATE TABLE `sys_logininfor` (
   PRIMARY KEY (`info_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
 
+LOCK TABLES `sys_logininfor` WRITE;
+/*!40000 ALTER TABLE `sys_logininfor` DISABLE KEYS */;
+
+INSERT INTO `sys_logininfor` (`info_id`, `login_name`, `ipaddr`, `login_location`, `browser`, `os`, `status`, `msg`, `login_time`)
+VALUES
+	(1,'develop','127.0.0.1','内网IP','Chrome 8','Mac OS X','0','登录成功','2021-04-07 10:16:53'),
+	(2,'develop','127.0.0.1','内网IP','Chrome 8','Mac OS X','0','登录成功','2021-04-07 10:29:46');
+
+/*!40000 ALTER TABLE `sys_logininfor` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table sys_menu
@@ -367,21 +377,21 @@ VALUES
 	(1,'系统管理（开发）',0,1,'#','','M','0','1','','fa fa-gear','admin','2021-01-05 15:07:04','',NULL,'系统管理目录'),
 	(2,'系统监控（开发）',0,2,'#','','M','0','1','','fa fa-video-camera','admin','2021-01-05 15:07:04','',NULL,'系统监控目录'),
 	(3,'系统工具（开发）',0,3,'#','','M','0','1','','fa fa-bars','admin','2021-01-05 15:07:04','',NULL,'系统工具目录'),
-	(100,'用户管理',1,1,'/system/user','menuItem','C','1','1','system:user:view','fa fa-user-o','admin','2021-01-05 15:07:04','develop','2021-03-19 12:11:59','用户管理菜单'),
+	(100,'用户管理',1,1,'/system/user','','C','0','1','system:user:view','fa fa-user-o','admin','2021-01-05 15:07:04','',NULL,'用户管理菜单'),
 	(101,'角色管理',1,2,'/system/role','','C','0','1','system:role:view','fa fa-user-secret','admin','2021-01-05 15:07:04','',NULL,'角色管理菜单'),
 	(102,'菜单管理',1,3,'/system/menu','','C','0','1','system:menu:view','fa fa-th-list','admin','2021-01-05 15:07:04','',NULL,'菜单管理菜单'),
-	(103,'部门管理',1,4,'/system/dept','menuItem','C','1','1','system:dept:view','fa fa-outdent','admin','2021-01-05 15:07:04','develop','2021-03-19 12:12:14','部门管理菜单'),
-	(104,'岗位管理',1,5,'/system/post','menuItem','C','1','1','system:post:view','fa fa-address-card-o','admin','2021-01-05 15:07:04','develop','2021-03-19 12:12:20','岗位管理菜单'),
+	(103,'部门管理',1,4,'/system/dept','','C','0','1','system:dept:view','fa fa-outdent','admin','2021-01-05 15:07:04','',NULL,'部门管理菜单'),
+	(104,'岗位管理',1,5,'/system/post','','C','0','1','system:post:view','fa fa-address-card-o','admin','2021-01-05 15:07:04','',NULL,'岗位管理菜单'),
 	(105,'字典管理',1,6,'/system/dict','','C','0','1','system:dict:view','fa fa-bookmark-o','admin','2021-01-05 15:07:04','',NULL,'字典管理菜单'),
 	(106,'参数设置',1,7,'/system/config','','C','0','1','system:config:view','fa fa-sun-o','admin','2021-01-05 15:07:04','',NULL,'参数设置菜单'),
-	(107,'通知公告',1,8,'/system/notice','menuItem','C','1','1','system:notice:view','fa fa-bullhorn','admin','2021-01-05 15:07:04','develop','2021-03-19 12:12:29','通知公告菜单'),
+	(107,'通知公告',1,8,'/system/notice','','C','0','1','system:notice:view','fa fa-bullhorn','admin','2021-01-05 15:07:04','',NULL,'通知公告菜单'),
 	(108,'日志管理',1,9,'#','','M','0','1','','fa fa-pencil-square-o','admin','2021-01-05 15:07:04','',NULL,'日志管理菜单'),
-	(109,'在线用户',2,1,'/monitor/online','menuItem','C','1','1','monitor:online:view','fa fa-user-circle','admin','2021-01-05 15:07:04','develop','2021-03-19 12:12:42','在线用户菜单'),
+	(109,'在线用户',2,1,'/monitor/online','','C','0','1','monitor:online:view','fa fa-user-circle','admin','2021-01-05 15:07:04','',NULL,'在线用户菜单'),
 	(110,'定时任务',2,2,'/monitor/job','','C','0','1','monitor:job:view','fa fa-tasks','admin','2021-01-05 15:07:04','',NULL,'定时任务菜单'),
 	(111,'数据监控',2,3,'/monitor/data','','C','0','1','monitor:data:view','fa fa-bug','admin','2021-01-05 15:07:04','',NULL,'数据监控菜单'),
 	(112,'服务监控',2,4,'/monitor/server','','C','0','1','monitor:server:view','fa fa-server','admin','2021-01-05 15:07:04','',NULL,'服务监控菜单'),
 	(113,'缓存监控',2,5,'/monitor/cache','','C','0','1','monitor:cache:view','fa fa-cube','admin','2021-01-05 15:07:04','',NULL,'缓存监控菜单'),
-	(115,'版本管理',3,1,'/tool/version','menuItem','C','0','1','tool:version:view','fa fa-code','admin','2021-01-05 15:07:04','develop','2021-03-18 08:13:34','版本管理'),
+	(115,'版本管理',3,2,'/tool/version','','C','0','1','tool:version:view','fa fa-code','admin','2021-01-05 15:07:04','',NULL,'版本管理'),
 	(500,'操作日志',108,1,'/monitor/operlog','','C','0','1','monitor:operlog:view','fa fa-address-book','admin','2021-01-05 15:07:04','',NULL,'操作日志菜单'),
 	(501,'登录日志',108,2,'/monitor/logininfor','','C','0','1','monitor:logininfor:view','fa fa-file-image-o','admin','2021-01-05 15:07:04','',NULL,'登录日志菜单'),
 	(1000,'用户查询',100,1,'#','','F','0','1','system:user:list','#','admin','2021-01-05 15:07:04','',NULL,''),
@@ -444,16 +454,19 @@ VALUES
 	(1057,'版本查询',115,1,'#','','F','0','1','tool:version:list','#','admin','2021-01-05 15:07:06','',NULL,''),
 	(1058,'版本修改',115,2,'#','','F','0','1','tool:version:edit','#','admin','2021-01-05 15:07:06','',NULL,''),
 	(1059,'版本删除',115,3,'#','','F','0','1','tool:version:remove','#','admin','2021-01-05 15:07:06','',NULL,''),
-	(1126, '密钥管理', 3, 3, '/admin/token', 'menuItem', 'C', '0', '1', 'admin:token:view', 'fa fa-bomb', 'develop', '2021-03-18 08:13:11', 'develop', '2021-03-18 08:13:59', ''),
-	(1127, '添加', 1126, 1, '#', 'menuItem', 'F', '0', '1', 'admin:token:add', '#', 'develop', '2021-03-18 08:13:11', '', NULL, ''),
-	(1128, '删除', 1126, 2, '#', 'menuItem', 'F', '0', '1', 'admin:token:remove', '#', 'develop', '2021-03-18 08:13:11', '', NULL, ''),
-	(1129, '修改', 1126, 3, '#', 'menuItem', 'F', '0', '1', 'admin:token:edit', '#', 'develop', '2021-03-18 08:13:11', '', NULL, ''),
-	(1130, '查询', 1126, 4, '#', 'menuItem', 'F', '0', '1', 'admin:token:list', '#', 'develop', '2021-03-18 08:13:11', '', NULL, ''),
-	(1131, '验证码', 3, 5, '/admin/code', 'menuItem', 'C', '0', '1', 'admin:code:view', 'fa fa-envelope', 'develop', '2021-03-18 08:41:12', '', NULL, ''),
-	(1132, '查询', 1131, 4, '#', 'menuItem', 'F', '0', '1', 'admin:code:list', '#', 'develop', '2021-03-18 08:41:12', '', NULL, ''),
-	(1133, '二维码', 3, 3, '/tool/resource', 'menuItem', 'C', '0', '1', 'tool:resource:view', 'fa fa-file-image-o', 'develop', '2021-03-26 17:16:46', '', NULL, '');
-
-
+	(1126,'密钥管理',3,3,'/admin/token','menuItem','C','0','1','admin:token:view','fa fa-bomb','develop','2021-03-18 08:13:11','develop','2021-03-18 08:13:59',''),
+	(1127,'添加',1126,1,'#','menuItem','F','0','1','admin:token:add','#','develop','2021-03-18 08:13:11','',NULL,''),
+	(1128,'删除',1126,2,'#','menuItem','F','0','1','admin:token:remove','#','develop','2021-03-18 08:13:11','',NULL,''),
+	(1129,'修改',1126,3,'#','menuItem','F','0','1','admin:token:edit','#','develop','2021-03-18 08:13:11','',NULL,''),
+	(1130,'查询',1126,4,'#','menuItem','F','0','1','admin:token:list','#','develop','2021-03-18 08:13:11','',NULL,''),
+	(1131,'验证码',3,5,'/admin/code','menuItem','C','0','1','admin:code:view','fa fa-envelope','develop','2021-03-18 08:41:12','',NULL,''),
+	(1132,'查询',1131,4,'#','menuItem','F','0','1','admin:code:list','#','develop','2021-03-18 08:41:12','',NULL,''),
+	(1133,'二维码',3,3,'/tool/resource','menuItem','C','0','1','tool:resource:view','fa fa-file-image-o','develop','2021-03-26 17:16:46','',NULL,''),
+	(1177,'操作通知',3,1,'/system/notify','menuItem','C','0','1','system:notify:view','fa fa-bell','develop','2021-04-07 10:17:45','',NULL,''),
+	(1178,'添加',1177,1,'#','menuItem','F','0','1','system:notify:add','#','develop','2021-04-07 10:17:45','',NULL,''),
+	(1179,'删除',1177,2,'#','menuItem','F','0','1','system:notify:remove','#','develop','2021-04-07 10:17:45','',NULL,''),
+	(1180,'修改',1177,3,'#','menuItem','F','0','1','system:notify:edit','#','develop','2021-04-07 10:17:45','',NULL,''),
+	(1181,'查询',1177,4,'#','menuItem','F','0','1','system:notify:list','#','develop','2021-04-07 10:17:45','',NULL,'');
 
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -473,7 +486,7 @@ CREATE TABLE `sys_notice` (
   `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`notice_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='通知公告表';
@@ -483,8 +496,8 @@ LOCK TABLES `sys_notice` WRITE;
 
 INSERT INTO `sys_notice` (`notice_id`, `notice_title`, `notice_type`, `notice_content`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
 VALUES
-	(1,'亲爱的朋友们，新版BGA将于3月底上线，尽情期待','2',NULL,'0','admin','2021-03-16 17:11:02','',NULL,NULL),
-	(2,'BGA轻量级APP上线了','1','<p>BGA独立APP将于3月底上线，欢迎大家体验</p>','0','admin','2021-03-16 17:11:48','',NULL,NULL);
+	(1,'温馨提醒：2018-07-01 新版本发布啦','2','新版本内容，这是一个公告','0','admin','2021-01-05 10:29:53','develop','2021-04-07 10:30:26','管理员'),
+	(2,'维护通知：2018-07-01 系统凌晨维护','1','维护内容，这是一则通知','0','admin','2021-01-05 10:29:54','develop','2021-04-07 10:30:43','管理员');
 
 /*!40000 ALTER TABLE `sys_notice` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -515,6 +528,53 @@ CREATE TABLE `sys_oper_log` (
   PRIMARY KEY (`oper_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志记录';
 
+LOCK TABLES `sys_oper_log` WRITE;
+/*!40000 ALTER TABLE `sys_oper_log` DISABLE KEYS */;
+
+INSERT INTO `sys_oper_log` (`oper_id`, `title`, `business_type`, `method`, `request_method`, `operator_type`, `oper_name`, `dept_name`, `oper_url`, `oper_ip`, `oper_location`, `oper_param`, `json_result`, `status`, `error_msg`, `oper_time`)
+VALUES
+	(1,'后台登录',4,'com.soyatec.sword.controller.system.SysLoginController.ajaxLogin()','POST',1,'develop','soyatec','/admin/login','127.0.0.1','内网IP','{\"username\":[\"develop\"],\"notifyCode\":[\"\"],\"rememberMe\":[\"false\"]}','{\n  \"msg\" : \"操作成功\",\n  \"code\" : 0\n}',0,NULL,'2021-04-07 10:16:53'),
+	(2,'菜单管理',1,'com.soyatec.sword.controller.system.SysMenuController.addSave()','POST',1,'develop','soyatec','/admin/system/menu/add','127.0.0.1','内网IP','{\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"操作通知\"],\"url\":[\"/system/notify\"],\"target\":[\"menuItem\"],\"perms\":[\"system:notify:view\"],\"orderNum\":[\"1\"],\"icon\":[\"fa fa-bell\"],\"visible\":[\"0\"],\"isRefresh\":[\"1\"],\"buttons\":[\"1\",\"2\",\"3\",\"4\"]}','{\n  \"msg\" : \"操作成功\",\n  \"code\" : 0\n}',0,NULL,'2021-04-07 10:17:45'),
+	(3,'后台登录',4,'com.soyatec.sword.controller.system.SysLoginController.ajaxLogin()','POST',1,'develop','开发','/admin/login','127.0.0.1','内网IP','{\"username\":[\"develop\"],\"notifyCode\":[\"\"],\"rememberMe\":[\"false\"]}','{\n  \"msg\" : \"操作成功\",\n  \"code\" : 0\n}',0,NULL,'2021-04-07 10:29:45'),
+	(4,'通知公告',3,'com.soyatec.sword.controller.system.SysNoticeController.remove()','POST',1,'develop','开发','/admin/system/notice/remove','127.0.0.1','内网IP','{\"ids\":[\"10\"]}','{\n  \"msg\" : \"操作成功\",\n  \"code\" : 0\n}',0,NULL,'2021-04-07 10:29:54'),
+	(5,'通知公告',3,'com.soyatec.sword.controller.system.SysNoticeController.remove()','POST',1,'develop','开发','/admin/system/notice/remove','127.0.0.1','内网IP','{\"ids\":[\"11\"]}','{\n  \"msg\" : \"操作成功\",\n  \"code\" : 0\n}',0,NULL,'2021-04-07 10:29:56'),
+	(6,'通知公告',2,'com.soyatec.sword.controller.system.SysNoticeController.editSave()','POST',1,'develop','开发','/admin/system/notice/edit','127.0.0.1','内网IP','{\"noticeId\":[\"1\"],\"noticeTitle\":[\"温馨提醒：2018-07-01 新版本发布啦\"],\"noticeType\":[\"2\"],\"noticeContent\":[\"新版本内容，这是一个公告\"],\"status\":[\"0\"]}','{\n  \"msg\" : \"操作成功\",\n  \"code\" : 0\n}',0,NULL,'2021-04-07 10:30:26'),
+	(7,'通知公告',2,'com.soyatec.sword.controller.system.SysNoticeController.editSave()','POST',1,'develop','开发','/admin/system/notice/edit','127.0.0.1','内网IP','{\"noticeId\":[\"2\"],\"noticeTitle\":[\"维护通知：2018-07-01 系统凌晨维护\"],\"noticeType\":[\"1\"],\"noticeContent\":[\"维护内容，这是一则通知\"],\"status\":[\"0\"]}','{\n  \"msg\" : \"操作成功\",\n  \"code\" : 0\n}',0,NULL,'2021-04-07 10:30:43'),
+	(8,'角色管理',2,'com.soyatec.sword.controller.system.SysRoleController.editSave()','POST',1,'develop','开发','/admin/system/role/edit','127.0.0.1','内网IP','{\"roleId\":[\"1\"],\"roleName\":[\"超级管理员\"],\"roleKey\":[\"develop\"],\"roleSort\":[\"1\"],\"status\":[\"0\"],\"remark\":[\"超级管理员\"],\"menuIds\":[\"\"]}','null',1,'不允许操作超级管理员角色','2021-04-07 10:31:18'),
+	(9,'角色管理',2,'com.soyatec.sword.controller.system.SysRoleController.editSave()','POST',1,'develop','开发','/admin/system/role/edit','127.0.0.1','内网IP','{\"roleId\":[\"1\"],\"roleName\":[\"超级管理员\"],\"roleKey\":[\"develop\"],\"roleSort\":[\"1\"],\"status\":[\"0\"],\"remark\":[\"超级管理员\"],\"menuIds\":[\"\"]}','null',1,'不允许操作超级管理员角色','2021-04-07 10:32:07'),
+	(10,'角色管理',2,'com.soyatec.sword.controller.system.SysRoleController.editSave()','POST',1,'develop','开发','/admin/system/role/edit','127.0.0.1','内网IP','{\"roleId\":[\"2\"],\"roleName\":[\"后台管理员\"],\"roleKey\":[\"admin\"],\"roleSort\":[\"2\"],\"status\":[\"0\"],\"remark\":[\"后台管理员\"],\"menuIds\":[\"\"]}','{\n  \"msg\" : \"操作成功\",\n  \"code\" : 0\n}',0,NULL,'2021-04-07 10:32:39'),
+	(11,'角色管理',2,'com.soyatec.sword.controller.system.SysRoleController.editSave()','POST',1,'develop','开发','/admin/system/role/edit','127.0.0.1','内网IP','{\"roleId\":[\"1\"],\"roleName\":[\"开发者账号\"],\"roleKey\":[\"develop\"],\"roleSort\":[\"1\"],\"status\":[\"0\"],\"remark\":[\"开发者账号\"],\"menuIds\":[\"1,100,1000,1001,1002,1003,1004,1005,1006,101,1007,1008,1009,1010,1011,102,1012,1013,1014,1015,103,1016,1017,1018,1019,104,1020,1021,1022,1023,1024,105,1025,1026,1027,1028,1029,106,1030,1031,1032,1033,1034,107,1035,1036,1037,1038,108,500,1039,1040,1041,1042,501,1043,1044,1045,1046,2,109,1047,1048,1049,110,1050,1051,1052,1053,1054,1055,1056,111,112,113,3,1177,1178,1179,1180,1181,115,1057,1058,1059,1126,1127,1128,1129,1130,1133,1131,1132\"]}','null',1,'不允许操作超级管理员角色','2021-04-07 10:32:45');
+
+/*!40000 ALTER TABLE `sys_oper_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table sys_oper_notify
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sys_oper_notify`;
+
+CREATE TABLE `sys_oper_notify` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `type` int(1) NOT NULL DEFAULT '0' COMMENT '类型：0-邮件 1-短信',
+  `operate_url` varchar(256) DEFAULT NULL COMMENT 'URL',
+  `subject` varchar(256) DEFAULT NULL COMMENT '主题',
+  `template` text COMMENT '模板',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remark` varchar(256) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='敏感操作通知';
+
+LOCK TABLES `sys_oper_notify` WRITE;
+/*!40000 ALTER TABLE `sys_oper_notify` DISABLE KEYS */;
+
+INSERT INTO `sys_oper_notify` (`id`, `type`, `operate_url`, `subject`, `template`, `create_time`, `update_time`, `remark`)
+VALUES
+	(1,0,'/login','后台成功登录','温馨提示:\r\n\r\n您的账号{operName}成功登录了后台管理系统\r\n登录时间：{operTime}\r\n登录IP为：{operIp}\r\n登录地点为：{operLocation}\r\n\r\n如果是您本人操作，请忽略此邮件!\r\n否则请尽快联系开发人员，或登录后台重置密码。\r\n\r\n请妥善管理好您的账号与密码！','2021-04-07 08:53:07','2021-04-07 09:55:41','');
+
+/*!40000 ALTER TABLE `sys_oper_notify` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table sys_post
@@ -536,6 +596,16 @@ CREATE TABLE `sys_post` (
   PRIMARY KEY (`post_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='岗位信息表';
 
+LOCK TABLES `sys_post` WRITE;
+/*!40000 ALTER TABLE `sys_post` DISABLE KEYS */;
+
+INSERT INTO `sys_post` (`post_id`, `post_code`, `post_name`, `post_sort`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
+VALUES
+	(1,'ceo','董事长',1,'0','admin','2021-01-05 15:07:03','',NULL,''),
+	(2,'se','项目经理',2,'0','admin','2021-01-05 15:07:03','',NULL,'');
+
+/*!40000 ALTER TABLE `sys_post` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table sys_role
@@ -564,9 +634,8 @@ LOCK TABLES `sys_role` WRITE;
 
 INSERT INTO `sys_role` (`role_id`, `role_name`, `role_key`, `role_sort`, `data_scope`, `status`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
 VALUES
-	(1,'超级管理员','admin',1,'1','0','0','admin','2021-01-05 10:29:45','',NULL,'超级管理员'),
-	(2,'BGA','bga',2,'2','0','0','admin','2021-01-05 10:29:45','develop','2021-03-22 12:07:30','BeePlus'),
-	(3,'查询','4ISGZD',1,'5','0','0','admin','2021-03-16 17:23:18','',NULL,NULL);
+	(1,'开发者账号','develop',1,'1','0','0','admin','2021-01-05 10:29:45','',NULL,'开发者账号'),
+	(2,'后台管理员','admin',2,'2','0','0','admin','2021-01-05 10:29:45','develop','2021-04-07 10:32:39','后台管理员');
 
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -588,7 +657,9 @@ LOCK TABLES `sys_role_dept` WRITE;
 
 INSERT INTO `sys_role_dept` (`role_id`, `dept_id`)
 VALUES
-	(3,101);
+	(2,100),
+	(2,101),
+	(2,105);
 
 /*!40000 ALTER TABLE `sys_role_dept` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -610,121 +681,13 @@ LOCK TABLES `sys_role_menu` WRITE;
 
 INSERT INTO `sys_role_menu` (`role_id`, `menu_id`)
 VALUES
-	(2,1062),
-	(2,1063),
-	(2,1064),
-	(2,1065),
-	(2,1066),
-	(2,1067),
-	(2,1068),
-	(2,1069),
-	(2,1070),
-	(2,1071),
-	(2,1072),
-	(2,1073),
-	(2,1074),
-	(2,1075),
-	(2,1076),
-	(2,1077),
-	(2,1078),
-	(2,1079),
-	(2,1080),
-	(2,1081),
-	(2,1082),
-	(2,1083),
-	(2,1084),
-	(2,1085),
-	(2,1086),
-	(2,1087),
-	(2,1088),
-	(2,1089),
-	(2,1090),
-	(2,1091),
-	(2,1092),
-	(2,1093),
-	(2,1094),
-	(2,1095),
-	(2,1096),
-	(2,1097),
-	(2,1098),
-	(2,1099),
-	(2,1100),
-	(2,1101),
-	(2,1102),
-	(2,1103),
-	(2,1104),
-	(2,1105),
-	(2,1106),
-	(2,1107),
-	(2,1108),
-	(2,1109),
-	(2,1110),
-	(2,1111),
-	(2,1112),
-	(2,1113),
-	(2,1114),
-	(2,1115),
-	(2,1116),
-	(2,1117),
-	(2,1118),
-	(2,1119),
-	(2,1120),
-	(2,1121),
-	(2,1122),
-	(2,1123),
-	(2,1124),
-	(2,1125),
-	(2,1133),
-	(2,1134),
-	(2,1135),
-	(2,1136),
-	(2,1137),
-	(2,1138),
-	(2,1139),
-	(2,1140),
-	(2,1141),
-	(2,1142),
-	(2,1143),
-	(2,1144),
-	(2,1145),
-	(2,1146),
-	(2,1147),
-	(2,1148),
-	(2,1149),
-	(2,1150),
-	(2,1151),
-	(2,1152),
-	(2,1153),
-	(2,1154),
-	(3,1062),
-	(3,1063),
-	(3,1064),
-	(3,1065),
-	(3,1066),
-	(3,1067),
-	(3,1071),
-	(3,1073),
-	(3,1077),
-	(3,1079),
-	(3,1083),
-	(3,1084),
-	(3,1085),
-	(3,1086),
-	(3,1087),
-	(3,1089),
-	(3,1093),
-	(3,1095),
-	(3,1096),
-	(3,1097),
-	(3,1098),
-	(3,1099),
-	(3,1103),
-	(3,1104),
-	(3,1108),
-	(3,1109),
-	(3,1113),
-	(3,1115),
-	(3,1119);
+	(101,1063),
+	(101,1067),
+	(101,1069),
+	(101,1107),
+	(101,1108),
+	(101,1109),
+	(101,1114);
 
 /*!40000 ALTER TABLE `sys_role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -744,7 +707,7 @@ CREATE TABLE `sys_user` (
   `email` varchar(50) DEFAULT '' COMMENT '用户邮箱',
   `phonenumber` varchar(20) DEFAULT '' COMMENT '手机号码',
   `sex` char(1) DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
-  `avatar` varchar(512) DEFAULT '' COMMENT '头像路径',
+  `avatar` varchar(1024) DEFAULT '' COMMENT '头像路径',
   `password` varchar(50) DEFAULT '' COMMENT '密码',
   `salt` varchar(20) DEFAULT '' COMMENT '盐加密',
   `status` char(1) DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
@@ -766,9 +729,9 @@ LOCK TABLES `sys_user` WRITE;
 
 INSERT INTO `sys_user` (`user_id`, `dept_id`, `login_name`, `user_name`, `user_type`, `email`, `phonenumber`, `sex`, `avatar`, `password`, `salt`, `status`, `del_flag`, `login_ip`, `login_date`, `pwd_update_date`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
 VALUES
-	(1,100,'develop','Developer','10','develop@soyatec.sword','13140000001','1','https://bga-1301683227.file.myqcloud.com/2021/03/19/blob.image/jpeg','af1bd4a1901a6748861befe40ffbcb2b','111111','0','0','127.0.0.1','2021-03-25 09:06:16','2021-01-05 10:29:45','admin','2021-01-05 10:29:45','','2021-03-25 09:06:18','开发'),
-	(2,101,'admin','Admin','00','admin@soyatec.com','13140000002','0','https://bga-1301683227.cos.ap-shanghai.myqcloud.com/2021/03/18/blob.image/jpeg','e9c2459220e8af8a4debb5a65b97d635','222222','0','0','127.0.0.1','2021-03-25 08:55:33','2021-01-05 10:29:45','admin','2021-01-05 10:29:45','develop','2021-03-25 08:55:34','管理员'),
-	(3,101,'sword','Sword','01','root-user@soyatec.sword','13140000003','0','','','','0','0','',NULL,NULL,'',NULL,'',NULL,NULL);
+	(1,100,'develop','Developer','10','angryred@qq.com','13140000001','1','','af1bd4a1901a6748861befe40ffbcb2b','111111','0','0','127.0.0.1','2021-04-07 10:29:45','2021-01-05 10:29:45','admin','2021-01-05 10:29:45','','2021-04-07 10:29:45','开发'),
+	(2,101,'admin','Admin','00','angryred@qq.com','13140000002','1','https://beecluster-1301683227.cos.ap-chongqing.myqcloud.com/2021/01/05/blob.image/jpeg','e9c2459220e8af8a4debb5a65b97d635','222222','0','0','127.0.0.1','2021-03-11 10:40:25','2021-01-05 10:29:45','admin','2021-01-05 10:29:45','develop','2021-03-11 10:40:25','管理员'),
+	(3,101,'root','Root','01','angryred@qq.com','13140000003','0','','','','0','0','',NULL,NULL,'',NULL,'',NULL,NULL);
 
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -807,6 +770,16 @@ CREATE TABLE `sys_user_post` (
   PRIMARY KEY (`user_id`,`post_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户与岗位关联表';
 
+LOCK TABLES `sys_user_post` WRITE;
+/*!40000 ALTER TABLE `sys_user_post` DISABLE KEYS */;
+
+INSERT INTO `sys_user_post` (`user_id`, `post_id`)
+VALUES
+	(1,1),
+	(2,2);
+
+/*!40000 ALTER TABLE `sys_user_post` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table sys_user_role
@@ -827,8 +800,7 @@ INSERT INTO `sys_user_role` (`user_id`, `role_id`)
 VALUES
 	(1,1),
 	(2,2),
-	(337585,3),
-	(337586,3);
+	(1119,101);
 
 /*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
 UNLOCK TABLES;

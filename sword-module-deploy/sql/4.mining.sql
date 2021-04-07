@@ -7,7 +7,7 @@
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
 # Database: sword
-# Generation Time: 2021-03-17 07:33:49 +0000
+# Generation Time: 2021-04-07 02:24:26 +0000
 # ************************************************************
 
 
@@ -60,6 +60,7 @@ CREATE TABLE `t_mining_symbol` (
   `withdrawal_maximum` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币最多',
   `withdrawal_daily` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币日合计',
   `withdrawal_totally` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币总合计',
+  `withdrawal_manual_audit` int(1) NOT NULL DEFAULT '0' COMMENT '提币人工审核',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `remark` varchar(256) DEFAULT NULL COMMENT '备注',
@@ -300,7 +301,9 @@ CREATE TABLE `t_user_wallet_account` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_symbol` (`user_id`,`symbol`),
   UNIQUE KEY `address_UNIQUE` (`address`),
-  KEY `address_INDEX` (`address`)
+  KEY `address_INDEX` (`address`),
+  KEY `user_id_amount_INDEX` (`user_id`,`amount`),
+  KEY `user_id_symbol_amount_INDEX` (`user_id`,`symbol`,`amount`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户钱包账号';
 
 

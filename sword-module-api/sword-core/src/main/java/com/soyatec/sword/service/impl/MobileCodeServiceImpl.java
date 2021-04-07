@@ -42,6 +42,12 @@ public class MobileCodeServiceImpl implements IMobileCodeService {
 	}
 
 	@Override
+	public CommonResult<?> sendCodeByUsername(String username) {
+		String mobile = userService.selectUserMobileByUsername(username);
+		return sendCode(mobile);
+	}
+
+	@Override
 	public CommonResult<?> verifyCodeByUserId(Long userId, String code) {
 		String mobile = userService.selectUserMobileById(userId);
 		return verifyCode(mobile, code);

@@ -20,6 +20,7 @@ import com.soyatec.sword.common.annotation.Log;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
 import com.soyatec.sword.common.enums.BusinessStatus;
 import com.soyatec.sword.common.json.JSON;
+import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.ServletUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
@@ -80,6 +81,7 @@ public class LogAspect {
 			// *========数据库日志=========*//
 			SysOperLog operLog = new SysOperLog();
 			operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
+			operLog.setOperTime(DateUtils.getNowDate());
 			// 请求的地址
 			String ip = ShiroUtils.getIp();
 			operLog.setOperIp(ip);

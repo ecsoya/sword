@@ -14,11 +14,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.soyatec.sword.common.annotation.Log;
 import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.AjaxResult;
+import com.soyatec.sword.common.core.domain.CommonResult;
+import com.soyatec.sword.common.enums.BusinessType;
+import com.soyatec.sword.common.enums.OperatorType;
 import com.soyatec.sword.common.utils.ServletUtils;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.service.IMailCodeService;
+import com.soyatec.sword.service.IMobileCodeService;
 
 /**
  * 登录验证
@@ -30,6 +36,12 @@ public class SysLoginController extends BaseController {
 
 	@Autowired
 	private GlobalConfig config;
+
+	@Autowired(required = false)
+	private IMailCodeService mailCodeService;
+
+	@Autowired(required = false)
+	private IMobileCodeService mobileCodeService;
 
 	@GetMapping("/login")
 	public String login(HttpServletRequest request, HttpServletResponse response, ModelMap mmap) {
@@ -43,7 +55,21 @@ public class SysLoginController extends BaseController {
 
 	@PostMapping("/login")
 	@ResponseBody
-	public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe) {
+	@Log(isSaveRequestData = true, title = "后台登录", businessType = BusinessType.GRANT, operatorType = OperatorType.MANAGE)
+	public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe, String notifyCode) {
+		if (GlobalConfig.isNotifyEnabled()) {
+			if (GlobalConfig.getEmailCode()) {
+				CommonResult<?> verifyCodeByUsername = mailCodeService.verifyCodeByUsername(username, notifyCode);
+				if (!verifyCodeByUsername.isSuccess()) {
+					return error("邮箱验证码错误");
+				}
+			} else {
+				CommonResult<?> verifyCodeByUsername = mobileCodeService.verifyCodeByUsername(username, notifyCode);
+				if (!verifyCodeByUsername.isSuccess()) {
+					return error("短信验证码错误");
+				}
+			}
+		}
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
 		Subject subject = SecurityUtils.getSubject();
 		try {
