@@ -168,4 +168,15 @@ public class MathUtils {
 		}
 		return true;
 	}
+
+	public static Integer parseInteger(String value) {
+		if (StringUtils.isEmpty(value)) {
+			return null;
+		}
+		try {
+			return Integer.parseInt(value.trim());
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }
