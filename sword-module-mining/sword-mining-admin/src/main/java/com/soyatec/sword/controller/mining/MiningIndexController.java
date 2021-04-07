@@ -95,7 +95,6 @@ public class MiningIndexController extends BaseController {
 		return samples;
 	}
 
-
 	@GetMapping("/regusers")
 	@ResponseBody
 	public AjaxResult regusers() {
