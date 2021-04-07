@@ -57,7 +57,13 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	@Override
 	public UserReferrer selectUserReferrerById(Long userId) {
 		UserReferrer userReferrer = userReferrerMapper.selectUserReferrerById(userId);
-		if (userReferrer != null && StringUtils.isEmpty(userReferrer.getLeftCodeUrl())
+		if (userReferrer == null) {
+			userReferrer = new UserReferrer();
+			userReferrer.generateLeftCode();
+			userReferrer.generateRightCode();
+			userReferrer.setUserId(userId);
+			insertUserReferrer(userReferrer);
+		} else if (StringUtils.isEmpty(userReferrer.getLeftCodeUrl())
 				|| StringUtils.isEmpty(userReferrer.getRightCodeUrl())
 				|| !Objects.equals(userReferrer.getBaseUrl(), baseUrl)) {
 			return refreshQrcode(userReferrer, null);

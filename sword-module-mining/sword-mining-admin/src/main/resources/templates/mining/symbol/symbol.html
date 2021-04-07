@@ -53,7 +53,7 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                     	var symbol = row.symbol;
-                    	if (!row.withdrawalFeeSymbol) {
+                    	if (row.withdrawalFeeSymbol) {
                     		symbol = row.withdrawalFeeSymbol;
                     	}
                     	return $.common.formatNumber(value) + " " + symbol.toUpperCase();
