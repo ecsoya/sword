@@ -128,4 +128,5 @@ public interface ISysMenuService {
 	 * @return 结果
 	 */
 	public String checkMenuNameUnique(SysMenu menu);
+
 }

@@ -176,4 +176,5 @@ public class SysMenuController extends BaseController {
 		mmap.put("menu", menuService.selectMenuById(menuId));
 		return prefix + "/tree";
 	}
+
 }
