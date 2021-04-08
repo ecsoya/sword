@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="renderer" content="webkit">
-<title>[[${config.name}]]后台管理</title>
+<title>[[${config.name}]] - 后台管理</title>
 <!-- 避免IE使用兼容模式 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link th:href="@{favicon.ico}" rel="shortcut icon" />
@@ -20,17 +20,14 @@
 .navbar, .skin-primary .navbar {
 	background-color: rgb([[${@config.global('adminColor')}]])
 }
-
 .skin-primary .navbar-default .nav>li.selected>a,
 .skin-primary .navbar-default .nav>li.selected>a:focus {
 	background-color: rgb([[${@config.global('adminColor')}]]);
     color: rgba(255,255,255,1);
 }
-
 .skin-primary .navbar .nav>li>a {
 	color: #fff
 }
-
 .skin-primary .navbar .nav>li>a:hover,
 .skin-primary .navbar .nav>li>a:active,
 .skin-primary .navbar .nav>li>a:focus,
@@ -41,24 +38,19 @@
 	background: rgba(0, 0, 0, 0.1);
 	color: #f6f6f6
 }
-
 .skin-primary .navbar .sidebar-toggle {
 	color: #fff
 }
-
 .skin-primary .navbar .sidebar-toggle:hover {
 	color: #f6f6f6;
 	background: rgba(0, 0, 0, 0.1)
 }
-
 .skin-primary .navbar .sidebar-toggle {
 	color: #fff
 }
-
 .skin-primary .navbar .sidebar-toggle:hover {
 	background-color: rgb([[${@config.global('adminColor')}]])
 }
-
 @media ( max-width :767px) {
 	.skin-primary .navbar .dropdown-menu li.divider {
 		background-color: rgba(255, 255, 255, 0.1)
@@ -70,58 +62,47 @@
 		background: rgb([[${@config.global('adminColor')}]])
 	}
 }
-
 .skin-primary .logo {
 	background-color: rgb([[${@config.global('adminColor')}]]);
 	color: #fff;
 	border-bottom: 0 solid transparent
 }
-
 .skin-primary .logo:hover {
 	background-color: #357ca5
 }
-
 .skin-primary li.user-header {
 	background-color: rgb([[${@config.global('adminColor')}]])
 }
-
 .skin-primary .content-header {
 	background: transparent
 }
-
 .skin-primary .wrapper,
 .skin-primary .main-sidebar,
 .skin-primary .left-side {
 	background-color: #222d32
 }
-
 .skin-primary .user-panel>.info,
 .skin-primary .user-panel>.info>a {
 	color: #fff
 }
-
 .skin-primary .nav>li.header {
 	color: #4b646f;
 	background: #1a2226
 }
-
 .skin-primary .nav:not(.navbar-toolbar)>li.active {
 	color: #fff;
 	background: #293846;
 	border-left: 3px solid rgb([[${@config.global('adminColor')}]]);
 }
-
 .skin-primary .nav>li.active>ul li.active {
 	border-left: none;
 }
-
 .skin-primary .dropdown-menu > .active > a, .skin-primary .dropdown-menu > .active > a:hover, .skin-primary .dropdown-menu > .active > a:focus {
     color: #fff !important;
     text-decoration: none;
     outline: 0;
     background-color: rgb([[${@config.global('adminColor')}]]);
 }
-
 .skin-primary .sidebar a {
 	color: #b8c7ce
 }
@@ -129,13 +110,11 @@
 .skin-primary .sidebar a:hover {
 	text-decoration: none
 }
-
 .skin-primary .sidebar-form {
 	border-radius: 3px;
 	border: 1px solid #374850;
 	margin: 10px 10px
 }
-
 .skin-primary .sidebar-form input[type="text"],
 .skin-primary .sidebar-form .btn {
 	box-shadow: none;
@@ -143,7 +122,6 @@
 	border: 1px solid transparent;
 	height: 35px
 }
-
 .skin-primary .sidebar-form input[type="text"] {
 	color: #666;
 	border-top-left-radius: 2px;
