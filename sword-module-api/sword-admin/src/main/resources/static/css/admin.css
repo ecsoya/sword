@@ -17,8 +17,10 @@ body.signin {
 .signinpanel .logopanel {
 	float:none;
 	width:auto;
-	padding:0;
-	background:0 0
+	background:0 0;
+	align-content: center;
+	text-align: center;
+	margin-top: -60px;
 }
 .signinpanel .signin-info ul {
 	list-style:none;

@@ -23,15 +23,65 @@
 label.error {
 	position: inherit;
 }
+
 .sword-text {
-	color: rgb([[${@config.global('adminColor')}]]);
+	color: rgb([[${@ config.global ( 'adminColor')
+}
+
+]]
+)
+
+
+
+
+;
 }
 .sword-bg {
-	background-color: rgb([[${@config.global('adminColor')}]]);
-	color: white;
+	background-color: rgb([[${@ config.global ( 'adminColor')
+}
+
+]]
+)
+
+
+
+
+;
+color
+
+
+
+
+:
+
+
+ 
+
+
+white
+
+
+
+
+;
 }
 body.signin {
-	color: rgb([[${@config.global('adminColor')}]]) !important;
+	color: rgb([[${@ config.global ( 'adminColor')
+}
+]]
+)
+
+
+ 
+
+
+!
+important
+
+
+
+
+;
 }
 </style>
 <script>
@@ -45,6 +95,11 @@ body.signin {
 		<div class="row">
 			<div class="col-sm-6 col-md-offset-3">
 				<form id="signupForm">
+					<div class="logopanel pull-center">
+						<img align="center" src="img/logo.png" width="64"
+							style="background-color: white;" height="64" class="img-circle"
+							alt="Logo">
+					</div>
 					<h1 class="no-margins sword-text" align="center">[[${config.name}]]</h1>
 					<p class="m-t-md sword-text" align="center">后台管理登录</p>
 					<input type="text" name="username" class="form-control uname"
@@ -62,8 +117,7 @@ body.signin {
 							</a>
 						</div>
 					</div>
-					<div class="row m-t"
-						th:if="${@config.global('notifyEnabled')}">
+					<div class="row m-t" th:if="${@config.global('notifyEnabled')}">
 						<div class="col-xs-8">
 							<input type="text" name="notifyCode" class="form-control"
 								style="margin-top: 0px" placeholder="验证码" maxlength="6"
@@ -72,7 +126,7 @@ body.signin {
 						<div class="col-xs-4">
 							<button type="button" id="notifyCodeButton" title="发送验证码"
 								class="btn btn-default sword-text" onclick="sendNotifyCode()"
-								style="margin-top: 0px; margin-left: -20px; ">发送验证码</button>
+								style="margin-top: 0px; margin-left: -20px;">发送验证码</button>
 						</div>
 					</div>
 					<div class="checkbox-custom"
@@ -80,8 +134,8 @@ body.signin {
 						<input type="checkbox" id="rememberme" name="rememberme">
 						<label for="rememberme">记住我</label>
 					</div>
-					<button class="btn btn-block sword-bg"
-						id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
+					<button class="btn btn-block sword-bg" id="btnSubmit"
+						data-loading="正在验证登录，请稍后...">登录</button>
 				</form>
 			</div>
 		</div>
