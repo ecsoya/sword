@@ -435,4 +435,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		}
 	}
 
+	public static void main(String[] args) {
+		System.out.println(encryptPassword("soyatec", "Soyatec120307", "333333"));
+	}
 }
