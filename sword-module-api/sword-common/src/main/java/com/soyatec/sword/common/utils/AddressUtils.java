@@ -45,4 +45,8 @@ public class AddressUtils {
 		}
 		return address;
 	}
+
+	public static void main(String[] args) {
+		System.out.println(HttpUtils.sendGet(IP_URL, "ip=42.91.172.170&json=true", Constants.GBK));
+	}
 }

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('用户发行收益列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label style="width: 80px;">用户ID：</label> <input
+								type="number" name="userId" /></li>
+							<li><label style="width: 80px;">用户名：</label> <input
+								type="text" name="loginName" /></li>
+							<li><label style="width: 80px;">手机：</label> <input
+								type="text" name="mobile" /></li>
+							<li><label style="width: 80px;">邮箱：</label> <input
+								type="text" name="email" /></li>
+							<li><label style="width: 80px;">推荐人：</label> <input
+								type="text" name="referralName" /></li>
+							<li><label style="width: 80px;">推荐人手机：</label> <input
+								type="text" name="referralMobile" /></li>
+							<li><label style="width: 80px;">推荐人邮箱：</label> <input
+								type="text" name="referralEmail" /></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-info" shiro:hasPermission="mining:user:referrer:import"
+					onclick="$.table.importExcel('importTpl', '400', '230', false)">
+					<i class="fa fa-upload"></i> 导入
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-bordered">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: bootstrap-table-export-js" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('mining:user:referrer:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('mining:user:referrer:remove')}]];
+        var showExport = 'hidden' != [[${@permission.hasPermi('mining:user:referrer:export')}]];
+        var prefix = ctx + "mining/user/referrer";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                importUrl: prefix + "/importData",
+                modalName: "用户推荐",
+                sortName: "createTime",
+                sortOrder: "desc",
+                showExport: showExport,
+		        exportOptions: {
+		        	ignoreColumn: [0]  //忽略第一列和最后一列
+		        },
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'userId',
+                    title: 'ID',
+                    visible: true
+                },
+                {
+                    field: 'loginName',
+                    title: '用户名'
+                },
+                {
+                    field: 'mobile',
+                    title: '手机',
+                    align: 'center',
+                },
+                {
+                    field: 'email',
+                    title: '邮箱',
+                    align: 'center',
+                },
+                {
+                    field: 'referralCount',
+                    title: '直推人数',
+                    align: 'center',
+                },
+                {
+                    field: 'referralName',
+                    title: '推荐人',
+                    align: 'center',
+                },
+                {
+                    field: 'referralMobile',
+                    title: '推荐人手机',
+                    align: 'center',
+                },
+                {
+                    field: 'referralEmail',
+                    title: '推荐人邮箱',
+                    align: 'center',
+                },
+                {
+                    field: 'createTime',
+                    title: '注册时间',
+                    align: 'center',
+                },
+                ],
+                responseHandler: function(res) {
+                	if (res.code == web_status.SUCCESS && res.params) {
+                		$("#tableParams").html('');
+                		$.each(res.params, function(name, value) {
+                			$('#tableParams').append('<li><label style="width: 80px;">'+name+'：</label> <label class="text-danger" style="text-align: center">'+value+'</label></li>');
+                		});
+                	}
+                }
+            };
+            $.table.init(options);
+        });
+    </script>
+	<!-- 导入区域 -->
+	<script id="importTpl" type="text/template">
+    <form enctype="multipart/form-data" class="mt20 mb10">
+        <div class="col-xs-offset-1">
+            <input type="file" id="file" name="file"/>
+            <div class="mt10 pt5" >
+                <a href="https://bga-1301683227.file.myqcloud.com/templates/user.txt" download="user.txt" target="_blank" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 查看模板</a>
+            </div>
+            <font color="red" class="pull-left mt10">
+                提示：请先查看模板文件，然后导入
+            </font>
+        </div>
+    </form>
+	</script>
+</body>
+</html>
