@@ -20,8 +20,10 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import com.soyatec.sword.common.config.GlobalConfig;
 
 /**
  * 验证码配置
@@ -36,9 +38,9 @@ public class CaptchaConfig {
 		Properties properties = new Properties();
 		// 是否有边框 默认为true 我们可以自己设置yes，no
 		properties.setProperty(KAPTCHA_BORDER, "yes");
-		properties.setProperty(KAPTCHA_BORDER_COLOR, "40,130,135");
+		properties.setProperty(KAPTCHA_BORDER_COLOR, GlobalConfig.getAdminColor());
 		// 验证码文本字符颜色 默认为Color.BLACK
-		properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_COLOR, "40,130,135");
+		properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_COLOR, GlobalConfig.getAdminColor());
 		// 验证码图片宽度 默认为200
 		properties.setProperty(KAPTCHA_IMAGE_WIDTH, "190");
 		// 验证码图片高度 默认为50
@@ -71,9 +73,9 @@ public class CaptchaConfig {
 		// 是否有边框 默认为true 我们可以自己设置yes，no
 		properties.setProperty(KAPTCHA_BORDER, "yes");
 		// 边框颜色 默认为Color.BLACK
-		properties.setProperty(KAPTCHA_BORDER_COLOR, "40,130,135");
+		properties.setProperty(KAPTCHA_BORDER_COLOR, GlobalConfig.getAdminColor());
 		// 验证码文本字符颜色 默认为Color.BLACK
-		properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_COLOR, "40,130,135");
+		properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_COLOR, GlobalConfig.getAdminColor());
 		// 验证码图片宽度 默认为200
 		properties.setProperty(KAPTCHA_IMAGE_WIDTH, "230");
 		// 验证码图片高度 默认为50
@@ -103,5 +105,19 @@ public class CaptchaConfig {
 		Config config = new Config(properties);
 		defaultKaptcha.setConfig(config);
 		return defaultKaptcha;
+	}
+
+	/**
+	 * 使用后台配置的颜色
+	 */
+	public static Producer applyColor(Producer producer) {
+		if (producer instanceof DefaultKaptcha) {
+			Config config = ((DefaultKaptcha) producer).getConfig();
+			if (config != null) {
+				config.getProperties().put(KAPTCHA_BORDER_COLOR, GlobalConfig.getAdminColor());
+				config.getProperties().put(KAPTCHA_TEXTPRODUCER_FONT_COLOR, GlobalConfig.getAdminColor());
+			}
+		}
+		return producer;
 	}
 }

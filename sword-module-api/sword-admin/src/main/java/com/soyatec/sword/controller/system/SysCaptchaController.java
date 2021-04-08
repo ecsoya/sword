@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.soyatec.sword.common.core.controller.BaseController;
+import com.soyatec.sword.framework.config.CaptchaConfig;
 
 /**
  * 图片验证码（支持算术形式）
@@ -55,10 +56,10 @@ public class SysCaptchaController extends BaseController {
 				String capText = captchaProducerMath.createText();
 				capStr = capText.substring(0, capText.lastIndexOf("@"));
 				code = capText.substring(capText.lastIndexOf("@") + 1);
-				bi = captchaProducerMath.createImage(capStr);
+				bi = CaptchaConfig.applyColor(captchaProducerMath).createImage(capStr);
 			} else if ("char".equals(type)) {
 				capStr = code = captchaProducer.createText();
-				bi = captchaProducer.createImage(capStr);
+				bi = CaptchaConfig.applyColor(captchaProducer).createImage(capStr);
 			}
 			session.setAttribute(Constants.KAPTCHA_SESSION_KEY, code);
 			out = response.getOutputStream();

@@ -20,7 +20,7 @@ public class CaptchaValidateFilter extends AccessControlFilter {
 	/**
 	 * 是否开启验证码
 	 */
-	private boolean captchaEnabled = true;
+	private boolean captchaEnabled = false;
 
 	/**
 	 * 验证码类型

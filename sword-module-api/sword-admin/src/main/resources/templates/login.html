@@ -23,6 +23,16 @@
 label.error {
 	position: inherit;
 }
+.sword-text {
+	color: rgb([[${@config.global('adminColor')}]]);
+}
+.sword-bg {
+	background-color: rgb([[${@config.global('adminColor')}]]);
+	color: white;
+}
+body.signin {
+	color: rgb([[${@config.global('adminColor')}]]) !important;
+}
 </style>
 <script>
         if(window.top!==window.self){alert('未登录或登录超时。请重新登录');window.top.location=window.location};
@@ -35,8 +45,8 @@ label.error {
 		<div class="row">
 			<div class="col-sm-6 col-md-offset-3">
 				<form id="signupForm">
-					<h1 class="no-margins" align="center">[[${config.name}]]</h1>
-					<p class="m-t-md" align="center">后台管理登录</p>
+					<h1 class="no-margins sword-text" align="center">[[${config.name}]]</h1>
+					<p class="m-t-md sword-text" align="center">后台管理登录</p>
 					<input type="text" name="username" class="form-control uname"
 						placeholder="用户名" /> <input type="password" name="password"
 						class="form-control pword" placeholder="密码" />
@@ -61,8 +71,8 @@ label.error {
 						</div>
 						<div class="col-xs-4">
 							<button type="button" id="notifyCodeButton" title="发送验证码"
-								class="btn btn-default " onclick="sendNotifyCode()"
-								style="margin-top: 0px; margin-left: -20px; color: rgb(40, 130, 135);">发送验证码</button>
+								class="btn btn-default sword-text" onclick="sendNotifyCode()"
+								style="margin-top: 0px; margin-left: -20px; ">发送验证码</button>
 						</div>
 					</div>
 					<div class="checkbox-custom"
@@ -70,8 +80,7 @@ label.error {
 						<input type="checkbox" id="rememberme" name="rememberme">
 						<label for="rememberme">记住我</label>
 					</div>
-					<button class="btn btn-block"
-						style="background-color: rgb(40, 130, 135); color: white"
+					<button class="btn btn-block sword-bg"
 						id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
 				</form>
 			</div>

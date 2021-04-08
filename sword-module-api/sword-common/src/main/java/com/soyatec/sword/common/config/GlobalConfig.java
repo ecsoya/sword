@@ -34,7 +34,8 @@ public class GlobalConfig {
 
 	/** 后台首页配置 */
 	private static String mainPage;
-
+	/** 后台登录页主色 */
+	private static String adminColor = "40,130,135";
 	/** 后台邮箱验证码开关 */
 	private static boolean notifyEnabled;
 
@@ -129,6 +130,14 @@ public class GlobalConfig {
 
 	public void setNotifyEnabled(boolean notifyEnabled) {
 		GlobalConfig.notifyEnabled = notifyEnabled;
+	}
+
+	public static String getAdminColor() {
+		return adminColor;
+	}
+
+	public void setAdminColor(String adminColor) {
+		GlobalConfig.adminColor = adminColor;
 	}
 
 }
