@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.page.PageMethod;
 import com.soyatec.sword.common.core.domain.AjaxResult;
@@ -51,14 +52,21 @@ public class BaseController {
 	/**
 	 * 设置请求分页数据
 	 */
-	protected void startPage() {
-		PageDomain pageDomain = TableSupport.buildPageRequest();
+	protected Page<?> startPage() {
+		return startPage(TableSupport.buildPageRequest());
+	}
+
+	protected Page<?> startPage(PageDomain pageDomain) {
 		Integer pageNum = pageDomain.getPageNum();
 		Integer pageSize = pageDomain.getPageSize();
 		if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
 			String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
-			PageMethod.startPage(pageNum, pageSize, orderBy);
+			return PageMethod.startPage(pageNum, pageSize, orderBy);
+		} else if (StringUtils.isNotEmpty(pageDomain.getOrderBy())) {
+			String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
+			PageMethod.orderBy(orderBy);
 		}
+		return null;
 	}
 
 	protected void startPage(boolean force) {

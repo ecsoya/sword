@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('页面访问')" />
+<th:block th:include="include :: bootstrap-select-css" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row" style="background-color: white;">
+			<div class="col-sm-8 ">
+				<form class="form-horizontal m" id="formId">
+					<div class="form-group">
+						<label class="col-sm-3 control-label is-required">Datasource：</label>
+						<div class="col-sm-8">
+							<select name="dsType" class="form-control">
+								<option value="ADMIN">ADMIN</option>
+								<option value="CLIENT">CLIENT</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label ">SQL：</label>
+						<div class="col-sm-8">
+							<textarea class="form-control" id="sql" name="sql"
+								style="height: 200px"></textarea>
+						</div>
+					</div>
+				</form>
+				<div class="col-sm-offset-5 col-sm-10">
+					<button type="button" class="btn btn-sm btn-primary"
+						onclick="execute()">
+						<i class="fa fa-check"></i>执 行
+					</button>
+
+					<select id="tables" style="height: 30px;" onchange="quickQuery()"></select>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<h3>错误提示</h3>
+				<textarea id="faliure" style="width: 100%; height: 200px"></textarea>
+			</div>
+			<div class="col-sm-12 select-table table-bordered">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+		var prefix = ctx + "database";
+
+		$(function() {
+			var options = {
+				url : prefix + "/query",
+				columns : []
+			};
+			$.table.init(options);
+			$.get(prefix + '/tables', {}, function(res) {
+				if (res) {
+					$('#tables').empty();
+					$('#tables').append('<option>---选表查询---</option>');
+					for (var i = 0; i < res.length; i++) {
+						$('#tables').append(
+								'<option value="'+res[i]+'">' + res[i]
+										+ '</option>');
+					}
+				}
+			});
+		});
+
+		function quickQuery() {
+			var table = $('#tables').val();
+			if (table == null || table == '') {
+				return;
+			}
+			var sql = 'select * from ' + table;
+			$('#sql').val(sql);
+			execute();
+		}
+
+		function execute() {
+			var search = $.common.formToJSON("formId");
+			var params = $("#bootstrap-table").bootstrapTable('getOptions');
+			search.pageSize = params.limit ? params.limit : 10;
+			search.pageNum = params.offset ? params.offset / params.limit + 1
+					: 1;
+			search.isAsc = params.order;
+			$.post(prefix + '/query', search, function(res) {
+				if (res.code == 0) {
+					$("#faliure").val('');
+					rebuildTable(res);
+				} else {
+					$("#faliure").val(res.msg);
+				}
+			});
+		}
+
+		function rebuildTable(tableInfo) {
+			if (!tableInfo) {
+				return;
+			}
+			$.table.destroy();
+			var msg = tableInfo.msg;
+			var names = msg.split(',');
+			var columns = [];
+			for (var i = 0; i < names.length; i++) {
+				var col = {};
+				col.field = names[i];
+				col.title = names[i];
+				columns.push(col);
+			}
+			var options = {
+				url : prefix + "/query",
+			};
+			options.columns = columns;
+			//options.data = tableInfo.rows;
+			$.table.init(options);
+		}
+	</script>
+</body>
+</html>
