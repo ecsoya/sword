@@ -60,9 +60,15 @@
 			<groupId>com.soyatec.sword</groupId>
 			<artifactId>sword-quartz</artifactId>
 		</dependency>
+		<!-- 二维码 -->
 		<dependency>
 			<groupId>com.soyatec.sword</groupId>
 			<artifactId>sword-qrcode</artifactId>
+		</dependency>
+		<!-- 邮件验证码 -->
+		<dependency>
+			<groupId>com.soyatec.sword</groupId>
+			<artifactId>sword-code-javamail</artifactId>
 		</dependency>
 
 	</dependencies>

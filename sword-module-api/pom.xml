@@ -20,12 +20,22 @@
   	<module>sword-app</module>
   	<module>sword-core</module>
   	
+  	<!-- 验证码服务 -->
   	<module>sword-code</module>
+  	<!-- 美联短信验证码服务 -->
   	<module>sword-code-m5c</module>
+  	<!-- SendCloud邮件验证码服务 -->
   	<module>sword-code-sendcloud</module>
+  	<!-- 腾讯云邮件验证码服务 -->
+  	<module>sword-code-tencent</module>
+  	<!-- Java邮件验证码服务 -->
+  	<module>sword-code-javamail</module>
+  	
   	<module>sword-upload</module>
   	<module>sword-upload-tencent</module>
   	<module>sword-upload-aliyun</module>
+  	
+  	
   	<module>sword-qrcode</module>
   	<module>sword-upload-local</module>
   </modules>

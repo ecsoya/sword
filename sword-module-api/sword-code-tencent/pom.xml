@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.soyatec.sword</groupId>
+		<artifactId>sword-module-api</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>sword-code-tencent</artifactId>
+	<name>sword-code-tencent</name>
+	<description>对接腾讯云邮件服务器</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.soyatec.sword</groupId>
+			<artifactId>sword-code</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.tencentcloudapi</groupId>
+			<artifactId>tencentcloud-sdk-java</artifactId>
+			<version>3.1.201</version>
+		</dependency>
+	</dependencies>
+</project>

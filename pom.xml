@@ -201,6 +201,18 @@
 				<artifactId>sword-code-sendcloud</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
+			<!-- Tencent发送邮件 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-code-tencent</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<!-- JavaMail发送邮件 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-code-javamail</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
 			<!-- 文件上传 -->
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>

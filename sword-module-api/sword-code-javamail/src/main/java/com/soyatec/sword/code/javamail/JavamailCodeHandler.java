@@ -1,37 +1,31 @@
-package com.soyatec.sword.code.sendcloud;
+package com.soyatec.sword.code.javamail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sendcloud.sdk.util.ResponseData;
 import com.soyatec.sword.code.config.CodeProperties;
 import com.soyatec.sword.code.handler.SendMailCodeHandler;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.StringUtils;
 
 @Service
-public class SendCloudEmailCodeHandler implements SendMailCodeHandler {
+public class JavamailCodeHandler implements SendMailCodeHandler {
 
 	@Autowired
-	private SendCloudProperties properties;
+	private JavamailCodeProperties config;
 
 	@Autowired
-	private SendCloudService sendCloudService;
+	private JavamailService service;
 
 	@Override
 	public CommonResult<?> sendEmail(String email, String subject, String content) {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(content)) {
 			return CommonResult.fail("参数错误");
 		}
-		try {
-			ResponseData sent = sendCloudService.sendCommon(email, subject, content);
-			if (sent.statusCode == 200) {
-				return CommonResult.success();
-			}
-			return CommonResult.fail(sent.getInfo());
-		} catch (Throwable e) {
-			return CommonResult.fail(e.getLocalizedMessage());
+		if (StringUtils.isEmpty(subject)) {
+			subject = config.getSubject();
 		}
+		return service.sendEmail(email, subject, content);
 	}
 
 	@Override
@@ -39,8 +33,8 @@ public class SendCloudEmailCodeHandler implements SendMailCodeHandler {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(code)) {
 			return CommonResult.fail("参数错误");
 		}
-		String subject = properties.getSubject();
-		String template = properties.getTemplate();
+		String subject = config.getSubject();
+		String template = config.getTemplate();
 		if (StringUtils.isEmpty(template)) {
 			template = CodeProperties.DEFAULT_TEMPLATE;
 		}
