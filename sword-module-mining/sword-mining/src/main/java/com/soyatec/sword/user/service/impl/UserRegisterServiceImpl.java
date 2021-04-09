@@ -130,8 +130,9 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 			return CommonResult.fail();
 		}
 		// 1. 更新推荐关系
-		if (referralId != null) {
-			UserReferrer userReferrer = new UserReferrer();
+		UserReferrer userReferrer = referrerService.selectUserReferrerById(userId);
+		if (userReferrer == null) {
+			userReferrer = new UserReferrer();
 			userReferrer.setUserId(userId);
 			userReferrer.setReferralId(referralId);
 			userReferrer.setReferralCode(referralCode);
