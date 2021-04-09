@@ -1,22 +1,36 @@
 package com.soyatec.sword.code.sendcloud;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import com.google.auto.service.AutoService;
 import com.sendcloud.sdk.util.ResponseData;
 import com.soyatec.sword.code.config.CodeProperties;
 import com.soyatec.sword.code.handler.SendMailCodeHandler;
+import com.soyatec.sword.code.registry.IMailCodeHandlerRegistry;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.common.utils.spring.SpringUtils;
 
-@Service
-public class SendCloudEmailCodeHandler implements SendMailCodeHandler {
+@Component
+@AutoService(IMailCodeHandlerRegistry.class)
+public class SendCloudEmailCodeHandler implements SendMailCodeHandler, IMailCodeHandlerRegistry {
 
 	@Autowired
 	private SendCloudProperties properties;
 
 	@Autowired
 	private SendCloudService sendCloudService;
+
+	@Override
+	public SendMailCodeHandler get() {
+		return SpringUtils.getBean(SendCloudEmailCodeHandler.class);
+	}
+
+	@Override
+	public int getPriority() {
+		return properties.getPriority();
+	}
 
 	@Override
 	public CommonResult<?> sendEmail(String email, String subject, String content) {

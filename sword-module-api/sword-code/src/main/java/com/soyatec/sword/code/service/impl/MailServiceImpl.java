@@ -1,7 +1,12 @@
 package com.soyatec.sword.code.service.impl;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
+import java.util.ServiceLoader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.soyatec.sword.code.handler.SendMailCodeHandler;
+import com.soyatec.sword.code.registry.IMailCodeHandlerRegistry;
 import com.soyatec.sword.code.service.IMailService;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.MessageUtils;
@@ -23,20 +29,59 @@ public class MailServiceImpl implements IMailService {
 	@Autowired
 	private RedisTemplate<String, Object> redis;
 
-	@Autowired(required = false)
-	private SendMailCodeHandler sendMailHandler;
+	private static final ServiceLoader<IMailCodeHandlerRegistry> loader = ServiceLoader
+			.load(IMailCodeHandlerRegistry.class);
+
+	private List<SendMailCodeHandler> handlers;
+
+	private List<SendMailCodeHandler> getHandlers() {
+		if (handlers == null) {
+			handlers = new ArrayList<SendMailCodeHandler>();
+			Iterator<IMailCodeHandlerRegistry> iterator = loader.iterator();
+			while (iterator.hasNext()) {
+				IMailCodeHandlerRegistry registry = iterator.next();
+				SendMailCodeHandler handler = registry.get();
+				if (handler != null) {
+					handlers.add(handler);
+				}
+			}
+			handlers.sort(new Comparator<SendMailCodeHandler>() {
+
+				@Override
+				public int compare(SendMailCodeHandler o1, SendMailCodeHandler o2) {
+					return -Integer.compare(o1.getPriority(), o2.getPriority());
+				}
+			});
+		}
+		return handlers;
+	}
+
+	private boolean withoutHandlers() {
+		return getHandlers().isEmpty();
+	}
 
 	@Override
 	public CommonResult<?> sendEmail(String email, String subject, String content) {
-		if (sendMailHandler != null) {
-			return sendMailHandler.sendEmail(email, subject, content);
+		if (withoutHandlers()) {
+			return CommonResult.fail("暂不支持");
 		}
-		return CommonResult.fail("暂不支持");
+		boolean success = false;
+		for (SendMailCodeHandler handler : handlers) {
+			CommonResult<?> sent = handler.sendEmail(email, subject, content);
+			if (sent != null && sent.isSuccess()) {
+				success = true;
+				break;
+			}
+		}
+		if (success) {
+			return CommonResult.success("发送成功");
+		}
+		return CommonResult.fail("发送失败");
 	}
 
 	@Override
 	public CommonResult<?> sendCode(String email) {
-		if (sendMailHandler == null) {
+		if (withoutHandlers()) {
 			return CommonResult.fail("暂不支持");
 		}
 		if (!StringUtils.isValidEmail(email)) {
@@ -49,8 +94,18 @@ public class MailServiceImpl implements IMailService {
 			log.debug("cacheCode: " + redis.opsForValue().get(email));
 		}
 		log.debug("sendCode: {} = {}", email, code);
-
-		return sendMailHandler.sendCode(email, code.toString());
+		boolean success = false;
+		for (SendMailCodeHandler handler : handlers) {
+			CommonResult<?> sent = handler.sendCode(email, code.toString());
+			if (sent != null && sent.isSuccess()) {
+				success = true;
+				break;
+			}
+		}
+		if (success) {
+			return CommonResult.success("发送成功");
+		}
+		return CommonResult.fail("发送失败");
 
 	}
 

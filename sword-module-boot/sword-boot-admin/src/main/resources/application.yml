@@ -15,10 +15,20 @@ sword:
     addDatePath: true
   code:
     javamail:
+      priority: 1
       host: smtp.qq.com
       from: angryred@qq.com
       fromName: SWORD
       password: gwhqgywbcftvbefc
+    sendcloud: 
+      priority: 2
+      api-user: ubg_user 
+      api-key: 969f94332ee41793940f2681ddbb1aae
+      region: CN
+      from-name: BGA
+      from: contract@support.bga.world
+      subject: '验证码（Verification Code）'
+      template: '<html><body><h3>亲爱的用户，</h3><p>你的验证码是： <strong>{}</strong>，请在5分钟之内使用！</p><h3>Dear user</h3><p>Your verification code is <strong>{}</strong>, Please use within 5 minutes!</p></body></html>'
 
 server:
   port: 8080

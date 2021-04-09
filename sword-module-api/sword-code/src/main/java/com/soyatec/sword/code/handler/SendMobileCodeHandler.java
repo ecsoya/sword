@@ -2,7 +2,7 @@ package com.soyatec.sword.code.handler;
 
 import com.soyatec.sword.common.core.domain.CommonResult;
 
-public interface SendMobileCodeHandler {
+public interface SendMobileCodeHandler extends SendCodeHandler {
 
 	CommonResult<?> sendCode(String mobile, String code);
 

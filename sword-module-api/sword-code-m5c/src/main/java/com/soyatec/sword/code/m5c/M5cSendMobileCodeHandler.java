@@ -5,14 +5,18 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import com.google.auto.service.AutoService;
 import com.soyatec.sword.code.handler.SendMobileCodeHandler;
+import com.soyatec.sword.code.registry.IMobileCodeHandlerRegistry;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.common.utils.spring.SpringUtils;
 
-@Service
-public class M5cSendMobileCodeHandler implements SendMobileCodeHandler {
+@Component
+@AutoService(IMobileCodeHandlerRegistry.class)
+public class M5cSendMobileCodeHandler implements SendMobileCodeHandler, IMobileCodeHandlerRegistry {
 
 	private static final Logger log = LoggerFactory.getLogger(SendMobileCodeHandler.class);
 
@@ -24,6 +28,16 @@ public class M5cSendMobileCodeHandler implements SendMobileCodeHandler {
 
 	@Autowired
 	private M5cMobileService mobileService;
+
+	@Override
+	public SendMobileCodeHandler get() {
+		return SpringUtils.getBean(M5cSendMobileCodeHandler.class);
+	}
+
+	@Override
+	public int getPriority() {
+		return properties.getPriority();
+	}
 
 	@Override
 	public CommonResult<?> sendCode(String mobile, String code) {

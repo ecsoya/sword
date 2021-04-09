@@ -6,11 +6,21 @@ public class CodeProperties {
 
 	private String template = DEFAULT_TEMPLATE;
 
+	private int priority;
+
 	public String getTemplate() {
 		return template;
 	}
 
 	public void setTemplate(String template) {
 		this.template = template;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 }

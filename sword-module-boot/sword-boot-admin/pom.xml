@@ -24,6 +24,11 @@
 			<groupId>com.soyatec.sword</groupId>
 			<artifactId>sword-code-javamail</artifactId>
 		</dependency>
+		<!-- SendCloud邮件验证码 -->
+		<dependency>
+			<groupId>com.soyatec.sword</groupId>
+			<artifactId>sword-code-sendcloud</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

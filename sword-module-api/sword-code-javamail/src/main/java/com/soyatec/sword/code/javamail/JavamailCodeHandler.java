@@ -1,21 +1,35 @@
 package com.soyatec.sword.code.javamail;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import com.google.auto.service.AutoService;
 import com.soyatec.sword.code.config.CodeProperties;
 import com.soyatec.sword.code.handler.SendMailCodeHandler;
+import com.soyatec.sword.code.registry.IMailCodeHandlerRegistry;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.common.utils.spring.SpringUtils;
 
-@Service
-public class JavamailCodeHandler implements SendMailCodeHandler {
+@Component
+@AutoService(IMailCodeHandlerRegistry.class)
+public class JavamailCodeHandler implements SendMailCodeHandler, IMailCodeHandlerRegistry {
 
 	@Autowired
 	private JavamailCodeProperties config;
 
 	@Autowired
 	private JavamailService service;
+
+	@Override
+	public SendMailCodeHandler get() {
+		return SpringUtils.getBean(JavamailCodeHandler.class);
+	}
+
+	@Override
+	public int getPriority() {
+		return config.getPriority();
+	}
 
 	@Override
 	public CommonResult<?> sendEmail(String email, String subject, String content) {
