@@ -2,6 +2,8 @@ package com.soyatec.sword.system.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.soyatec.sword.common.core.domain.entity.SysUser;
 
 /**
@@ -110,15 +112,17 @@ public interface SysUserMapper {
 	 * 校验手机号码是否唯一
 	 *
 	 * @param phonenumber 手机号码
+	 * @param string
 	 * @return 结果
 	 */
-	public SysUser checkPhoneUnique(String phonenumber);
+	public SysUser checkPhoneUnique(@Param("phonenumber") String phonenumber, @Param("userType") String userType);
 
 	/**
 	 * 校验email是否唯一
 	 *
-	 * @param email 用户邮箱
+	 * @param email  用户邮箱
+	 * @param string
 	 * @return 结果
 	 */
-	public SysUser checkEmailUnique(String email);
+	public SysUser checkEmailUnique(@Param("email") String email, @Param("userType") String userType);
 }

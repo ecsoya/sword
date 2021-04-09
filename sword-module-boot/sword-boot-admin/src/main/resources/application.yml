@@ -15,13 +15,13 @@ sword:
     addDatePath: true
   code:
     javamail:
-      priority: 1
+      priority: 2 
       host: smtp.qq.com
       from: angryred@qq.com
       fromName: SWORD
       password: gwhqgywbcftvbefc
     sendcloud: 
-      priority: 2
+      priority: 1
       api-user: ubg_user 
       api-key: 969f94332ee41793940f2681ddbb1aae
       region: CN

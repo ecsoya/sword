@@ -115,6 +115,7 @@ public class AdminManagerController extends BaseController {
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(@Validated SysUser manager) {
+		manager.setUserType(UserConstants.SYSTEM_USER_TYPE);
 		if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(manager.getLoginName()))) {
 			return error("新增用户'" + manager.getLoginName() + "'失败，登录账号已存在");
 		} else if (UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(manager))) {
@@ -122,7 +123,6 @@ public class AdminManagerController extends BaseController {
 		} else if (UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(manager))) {
 			return error("新增用户'" + manager.getLoginName() + "'失败，邮箱账号已存在");
 		}
-		manager.setUserType(UserConstants.SYSTEM_USER_TYPE);
 		manager.setDeptId(MANAGER_DEPT_ID);
 		manager.setSalt(ShiroUtils.randomSalt());
 		manager.setPassword(
