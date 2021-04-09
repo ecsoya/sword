@@ -151,6 +151,7 @@ public class AdminManagerController extends BaseController {
 	@ResponseBody
 	public AjaxResult editSave(@Validated SysUser manager) {
 		userService.checkUserAllowed(manager);
+		manager.setUserType(UserConstants.SYSTEM_USER_TYPE);
 		if (UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(manager))) {
 			return error("修改用户'" + manager.getLoginName() + "'失败，手机号码已存在");
 		} else if (UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(manager))) {
