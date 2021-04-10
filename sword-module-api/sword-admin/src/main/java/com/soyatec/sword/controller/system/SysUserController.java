@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.base.Objects;
 import com.soyatec.sword.common.annotation.Log;
 import com.soyatec.sword.common.constant.UserConstants;
 import com.soyatec.sword.common.core.controller.BaseController;
@@ -63,6 +64,12 @@ public class SysUserController extends BaseController {
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(SysUser user) {
+		if (user.getDeptId() == null) {
+			user.setDeptId(101l);
+		}
+		if (Objects.equal(user.getDeptId(), 101l)) {
+			user.setUserType(UserConstants.SYSTEM_USER_TYPE);
+		}
 		startPage();
 		List<SysUser> list = userService.selectUserList(user);
 		return getDataTable(list);
@@ -73,6 +80,12 @@ public class SysUserController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysUser user) {
+		if (user.getDeptId() == null) {
+			user.setDeptId(101l);
+		}
+		if (Objects.equal(user.getDeptId(), 101l)) {
+			user.setUserType(UserConstants.SYSTEM_USER_TYPE);
+		}
 		List<SysUser> list = userService.selectUserList(user);
 		ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
 		return util.exportExcel(list, "用户数据");
@@ -83,19 +96,21 @@ public class SysUserController extends BaseController {
 	@PostMapping("/importData")
 	@ResponseBody
 	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
-		ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
-		List<SysUser> userList = util.importExcel(file.getInputStream());
-		String operName = ShiroUtils.getSysUser().getLoginName();
-		String message = userService.importUser(userList, updateSupport, operName);
-		return AjaxResult.success(message);
+//		ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+//		List<SysUser> userList = util.importExcel(file.getInputStream());
+//		String operName = ShiroUtils.getSysUser().getLoginName();
+//		String message = userService.importUser(userList, updateSupport, operName);
+//		return AjaxResult.success(message);
+		return AjaxResult.error("Unsupported");
 	}
 
 	@RequiresPermissions("system:user:view")
 	@GetMapping("/importTemplate")
 	@ResponseBody
 	public AjaxResult importTemplate() {
-		ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
-		return util.importTemplateExcel("用户数据");
+//		ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+//		return util.importTemplateExcel("用户数据");
+		return AjaxResult.error("Unsupported");
 	}
 
 	/**
@@ -116,19 +131,20 @@ public class SysUserController extends BaseController {
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(@Validated SysUser user) {
-		if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(user.getLoginName()))) {
-			return error("新增用户'" + user.getLoginName() + "'失败，登录账号已存在");
-		} else if (StringUtils.isNotEmpty(user.getPhonenumber())
-				&& UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
-			return error("新增用户'" + user.getLoginName() + "'失败，手机号码已存在");
-		} else if (StringUtils.isNotEmpty(user.getEmail())
-				&& UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
-			return error("新增用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
-		}
-		user.setSalt(ShiroUtils.randomSalt());
-		user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
-		user.setCreateBy(ShiroUtils.getLoginName());
-		return toAjax(userService.insertUser(user));
+		return AjaxResult.error("Unsupported");
+//		if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(user.getLoginName()))) {
+//			return error("新增用户'" + user.getLoginName() + "'失败，登录账号已存在");
+//		} else if (StringUtils.isNotEmpty(user.getPhonenumber())
+//				&& UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
+//			return error("新增用户'" + user.getLoginName() + "'失败，手机号码已存在");
+//		} else if (StringUtils.isNotEmpty(user.getEmail())
+//				&& UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
+//			return error("新增用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
+//		}
+//		user.setSalt(ShiroUtils.randomSalt());
+//		user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
+//		user.setCreateBy(ShiroUtils.getLoginName());
+//		return toAjax(userService.insertUser(user));
 	}
 
 	/**
@@ -219,7 +235,8 @@ public class SysUserController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids) {
-		return toAjax(userService.deleteUserByIds(ids));
+		return AjaxResult.error("Unsupported");
+//		return toAjax(userService.deleteUserByIds(ids));
 	}
 
 	/**
