@@ -18,7 +18,6 @@ import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.reflect.ReflectUtils;
-import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.mining.service.IMiningUserService;
 import com.soyatec.sword.report.domain.DateCount;
 import com.soyatec.sword.wallet.domain.Ticker;
@@ -55,11 +54,14 @@ public class MiningIndexController extends BaseController {
 		return map;
 	}
 
-	@GetMapping("/samples")
+	@GetMapping("/price")
 	@ResponseBody
-	public AjaxResult todaySellAmount() {
+	public AjaxResult price(String symbol) {
+		if (StringUtils.isEmpty(symbol)) {
+			return AjaxResult.error("Symbol");
+		}
 		AjaxResult samples = AjaxResult.success();
-		CommonResult<Ticker> ticker = walletService.getTicker(IMiningConstants.SYMBOL_BGA);
+		CommonResult<Ticker> ticker = walletService.getTicker(symbol);
 		if (ticker.isSuccess(true)) {
 			Ticker data = ticker.getData();
 			if (data != null) {
