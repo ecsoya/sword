@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.soyatec.sword.common.annotation.Excel;
 import com.soyatec.sword.common.core.domain.BaseEntity;
+import com.soyatec.sword.utils.MathUtils;
 
 /**
  * 币种对象 t_sword_symbol
@@ -58,6 +59,9 @@ public class MiningSymbol extends BaseEntity {
 
 	// 提币人工审核
 	private Integer withdrawalManualAudit;
+
+	// 提币免审额度
+	private BigDecimal withdrawalAuditLimation;
 
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
@@ -153,7 +157,21 @@ public class MiningSymbol extends BaseEntity {
 		this.withdrawalManualAudit = withdrawalManualAudit;
 	}
 
-	public boolean needWithdrawalManualAudit() {
-		return ENABLED.equals(withdrawalManualAudit);
+	public boolean needWithdrawalManualAudit(BigDecimal amount) {
+		if (!ENABLED.equals(withdrawalManualAudit)) {
+			return false;
+		}
+		if (MathUtils.isValid(withdrawalAuditLimation) && MathUtils.lt(amount, withdrawalAuditLimation)) {
+			return false;
+		}
+		return true;
+	}
+
+	public BigDecimal getWithdrawalAuditLimation() {
+		return withdrawalAuditLimation;
+	}
+
+	public void setWithdrawalAuditLimation(BigDecimal withdrawalAuditLimation) {
+		this.withdrawalAuditLimation = withdrawalAuditLimation;
 	}
 }

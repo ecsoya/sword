@@ -139,9 +139,12 @@ public class ZbxService implements IWalletDelegateService {
 		log.debug("发送请求：url=" + url + "?" + paramToUrl);
 		try {
 			String json = HttpUtils.sendSSLPost(url, paramToUrl);
+			if (StringUtils.isEmpty(json)) {
+				return CommonResult.fail("提币接口错误");
+			}
 			return parse(type, json);
 		} catch (Exception e) {
-			return CommonResult.fail(e.getLocalizedMessage());
+			return CommonResult.fail("提币接口异常");
 		}
 	}
 

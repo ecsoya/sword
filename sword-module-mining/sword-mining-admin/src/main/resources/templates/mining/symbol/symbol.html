@@ -101,6 +101,14 @@
                     }
                 },
                 {
+                    field: 'withdrawalAuditLimation',
+                    title: '提币免审额度',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatNumber(value);
+                    }
+                },
+                {
                     field: 'remark',
                     title: '备注'
                 },

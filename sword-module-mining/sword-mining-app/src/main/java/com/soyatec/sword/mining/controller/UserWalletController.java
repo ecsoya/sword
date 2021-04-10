@@ -183,7 +183,7 @@ public class UserWalletController extends BaseController {
 		}
 		MiningSymbol miningSymbol = symbolService.selectMiningSymbolById(symbol);
 		// 如果不需要人工审核，直接确认
-		if (miningSymbol != null && !miningSymbol.needWithdrawalManualAudit()) {
+		if (miningSymbol != null && !miningSymbol.needWithdrawalManualAudit(amount)) {
 			UserWithdrawalOrder order = withdrawal.getData();
 			return withdrawalOrderService.confirmWithdrawal(userId, order.getOrderNo());
 		} else {
@@ -223,7 +223,7 @@ public class UserWalletController extends BaseController {
 			return CommonResult.fail("订单错误");
 		}
 		MiningSymbol miningSymbol = symbolService.selectMiningSymbolById(order.getSymbol());
-		if (miningSymbol != null && miningSymbol.needWithdrawalManualAudit()) {
+		if (miningSymbol != null && miningSymbol.needWithdrawalManualAudit(order.getAmount())) {
 			return CommonResult.success("等待人工审核");
 		}
 		return withdrawalOrderService.confirmWithdrawal(userId, orderNo);
