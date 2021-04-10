@@ -59,7 +59,7 @@ public class MiningWalletController extends BaseController {
 		startPage();
 		List<UserWithdrawalOrder> list = userWithdrawalOrderService.selectUserWithdrawalOrderList(userWithdrawalOrder);
 		TableDataInfo table = getDataTable(list);
-		userWithdrawalOrder.setStatus(UserWithdrawalOrder.STATUS_SUCCESS);
+//		userWithdrawalOrder.setStatus(UserWithdrawalOrder.STATUS_SUCCESS);
 		userWithdrawalOrder.setTimeParams(DateUtils.getLastDayStart(), DateUtils.getLastDayEnd());
 		table.addParam("昨日提币", userWithdrawalOrderService.selectUserWithdrawalAmount(userWithdrawalOrder));
 		userWithdrawalOrder.setTimeParams(DateUtils.getTodayStart(), null);
