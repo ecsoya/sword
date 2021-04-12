@@ -113,9 +113,7 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 				return postRegisterUser(user.getUserId(), referralId, referrerCode, walletPassword, async);
 			}
 			return CommonResult.fail(msg);
-		} else
-
-		{
+		} else {
 			user.setUserType(User.TYPE_USER);
 			if (userService.updateUser(user) <= 0) {
 				return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.17")); //$NON-NLS-1$
@@ -142,6 +140,12 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 			userReferrer.setRightCodeEnabled(UserReferrer.DISABLED);
 			userReferrer.setBtree(UserReferrer.BTREE_UNFINISHED);
 			referrerService.insertUserReferrer(userReferrer);
+		} else if (referralId != null) {
+			UserReferrer update = new UserReferrer();
+			update.setUserId(userId);
+			update.setReferralCode(referralCode);
+			update.setReferralId(referralId);
+			referrerService.updateUserReferrer(update);
 		}
 		// 2. 更新钱包
 		CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WALLET);
