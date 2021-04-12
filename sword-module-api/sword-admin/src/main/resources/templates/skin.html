@@ -16,9 +16,26 @@
 		.full-opacity-hover{opacity:1;filter:alpha(opacity=1);border:1px solid #fff}
 		.full-opacity-hover:hover{border:1px solid #f00;}
 	</style>
+	<style type="text/css">
+		.primarya {
+			background: rgba([[${@config.global('adminColor')}]],0.8);
+		}
+		.primaryb {
+			background: rgb([[${@config.global('adminColor')}]]);
+		}
+	</style>
 </head>
 <body class="gray-bg">
 <ul class="list-unstyled clearfix">
+	<li style="float:left; width: 33.33333%; padding: 5px;">
+		<a href="javascript:" data-skin="skin-primary|theme-dark" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+			<span style="width: 20%; float: left; height: 13px;" class="primarya"></span>
+			<span style="width: 80%; float: left; height: 13px;" class="primaryb"></span>
+			<span style="width: 20%; float: left; height: 30px; background: #2f4050"></span>
+			<span style="width: 80%; float: left; height: 30px; background: #f4f5f7"></span>
+		</a>
+		<p class="text-center">默认</p>
+	</li>
 	<li style="float:left; width: 33.33333%; padding: 5px;">
 		<a href="javascript:" data-skin="skin-blue|theme-dark" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
 			<span style="width: 20%; float: left; height: 13px; background: #367fa9"></span>
@@ -143,7 +160,7 @@
 <script th:src="@{/sword/js/common.js?v=4.6.0}"></script>
 <script type="text/javascript">
 //皮肤样式列表
-var skins = ["skin-blue", "skin-green", "skin-purple", "skin-red", "skin-yellow"];
+var skins = ["skin-primary", "skin-blue", "skin-green", "skin-purple", "skin-red", "skin-yellow"];
 
 // 主题样式列表
 var themes = ["theme-dark", "theme-light", "theme-blue"];
