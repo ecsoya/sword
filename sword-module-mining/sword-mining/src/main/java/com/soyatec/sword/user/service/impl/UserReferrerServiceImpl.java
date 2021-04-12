@@ -177,6 +177,7 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		}
 
 		update.setBaseUrl(baseUrl);
+		referrer.setBaseUrl(baseUrl);
 
 		AsyncManager.me().execute(new Runnable() {
 
