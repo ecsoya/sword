@@ -471,4 +471,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		LocalDateTime localDateTime = localDateTime(date);
 		return toDate(localDateTime.withHour(12).withMinute(0).withSecond(0).withNano(0));
 	}
+
+	public static Date fixHourOfDate(Date date, int hour) {
+		LocalDateTime localDateTime = localDateTime(date);
+		return toDate(localDateTime.withHour(hour).withMinute(0).withSecond(0).withNano(0));
+	}
 }
