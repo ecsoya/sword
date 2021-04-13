@@ -55,7 +55,7 @@
 						shiro:hasPermission="mining:user:edit"> <i class="fa fa-edit"></i>
 						重置密码
 					</a> <a class="btn btn-danger" shiro:hasPermission="mining:user:edit"
-						onclick="enableEdit()" id="enableEditBtn"> <i class="fa fa-gear"></i> 启用编辑
+						onclick="enableEdit()" id="userEditableBtn"> <i class="fa fa-gear"></i> 启用编辑
 					</a>
 				</div>
 				<table id="bootstrap-table">
@@ -727,57 +727,16 @@
     		$.operate.save(prefix + '/clean');
     	})
     }
-    
-    var _EXPIRE_TIME = 5*60*1000;//5分钟没有操作，则关闭
-    var _interval_handler=-1;
-    
     function enableEdit() {
-    	console.log(getEditFlag());
-    	if (getEditFlag() === '') {
-    		return;
-    	}
-    	$.modal.confirm('你确定要启用用户编辑功能吗？此功能需输入验证码确认！(<small>验证码会在点击确认后发出，5分钟之内有效</small>)', function(){
-    		verifyCode(function(){
-    			if (window.sessionStorage) {
-    				$('#enableEditBtn').hide();
-					window.sessionStorage.setItem("user.editable", true);
-					window.sessionStorage.setItem("user.editable_expireTime", new Date().getTime());
-					_interval_handler=setInterval(checkExpired, 10*1000);
-				  	refreshUserList();
-				}
-    		});
+    	enablePermissionFlag('你确定要启用用户的编辑功能吗？', 'userEditableBtn', function(){
+    		refreshUserList();
     	})
     }
     
     function getEditFlag() {
-    	if (window.sessionStorage) {
-			 var storage = window.sessionStorage.getItem("user.editable");
-			 var storeLastTime= window.sessionStorage.getItem("user.editable_expireTime")?window.sessionStorage.getItem("user.editable_expireTime"):-1;
-			 if (storeLastTime == -1 || (new Date()).getTime()-storeLastTime>_EXPIRE_TIME){
-				 return 'hidden'; //过期
-			 }
-			 if ('true' == storage) {
-				 return _editFlag;
-			 }
-		}
-    	return 'hidden';
+    	return getPermissionFlag('userEditableBtn', _editFlag);
     }
     
-    function checkExpired() {
-    	if (!window.sessionStorage) {
-    		return;
-   		}
-   	    var storeLastTime= window.sessionStorage.getItem("user.editable_expireTime")?window.sessionStorage.getItem("user.editable_expireTime"):-1;
-    	if (storeLastTime==-1) {
-    		clearInterval(_interval_handler);
-    	} else if ((new Date()).getTime()-storeLastTime>_EXPIRE_TIME) {  //过期了
-    		$('#enableEditBtn').show();
-    	    window.sessionStorage.setItem("user.editable", false);
-    	    window.sessionStorage.removeItem("user.editable_expireTime");
-    	    refreshUserList();
-    	    clearInterval(_interval_handler);
-    	}
-	}
 </script>
 </body>
 </html>
