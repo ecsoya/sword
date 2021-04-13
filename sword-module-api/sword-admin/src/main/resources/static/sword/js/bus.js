@@ -59,6 +59,13 @@ function verifyCode(callback) {
     		return;
     	}
     	if (getPermissionFlag(key, value) === '') {
+	    	var storage = window.sessionStorage.getItem(key);
+			$('#' + key).hide();
+			if (_interval_handler == -1) {
+				_interval_handler = setInterval(function(){
+					checkExpired(key, expireCallback);
+				}, 10*1000);
+			}
     		return;
     	}
     	if (notifyEnabled){
