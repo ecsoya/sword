@@ -8,6 +8,8 @@
 <link
 	th:href="@{/ajax/libs/treetable/css/jquery.treetable.theme.default.css}"
 	rel="stylesheet" />
+<style type="text/css">
+</style>
 </head>
 <body class="gray-bg">
 	<div class="container-div">
@@ -31,7 +33,8 @@
 							<li class="select-time"><label>注册时间： </label> <input
 								type="text" class="time-input" id="startTime" placeholder="开始时间"
 								name="params[startTime]" /> <span>-</span> <input type="text"
-								class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]" /></li>
+								class="time-input" id="endTime" placeholder="结束时间"
+								name="params[endTime]" /></li>
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="refreshUserList()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"
@@ -46,27 +49,25 @@
 				<div class="btn-group-sm" role="group" style="padding-bottom: 10px;"
 					id="toolbar">
 					<a class="btn btn-success" onclick="toAddUser()"
-						shiro:hasPermission="mining:user:add"> <i
-						class="fa fa-plus"></i> 新增用户
+						shiro:hasPermission="mining:user:add"> <i class="fa fa-plus"></i>
+						新增用户
 					</a> <a class="btn btn-primary single disabled" onclick="toEditUser()"
-						shiro:hasPermission="mining:user:edit"> <i
-						class="fa fa-edit"></i> 重置密码
+						shiro:hasPermission="mining:user:edit"> <i class="fa fa-edit"></i>
+						重置密码
+					</a> <a class="btn btn-danger" shiro:hasPermission="mining:user:edit"
+						onclick="enableEdit()" id="enableEditBtn"> <i class="fa fa-gear"></i> 启用编辑
 					</a>
-
-					<!-- <a class="btn btn-danger" onclick="clean()"
-						shiro:hasPermission="mining:user:edit" th:style="'display:' + ${reset ? 'inline' : 'none'}" > <i
-						class="fa fa-remove"></i> 系统重置
-					</a> -->
 				</div>
 				<table id="bootstrap-table">
-					<thead >
+					<thead>
 						<tr>
 							<th colspan="4" align="center"><label
 								style="text-align: center; width: 100%;">基本信息</label></th>
 							<th colspan="3" align="center"><label
 								style="text-align: center; width: 100%;">等级状态</label></th>
-							<th colspan="4" align="center" th:each="a : ${accounts}" ><label
-								style="text-align: center; width: 100%;">[[${a.toUpperCase() + '资产'} ]]</label></th>
+							<th colspan="4" align="center" th:each="a : ${accounts}"><label
+								style="text-align: center; width: 100%;">[[${a.toUpperCase()
+									+ '资产'} ]]</label></th>
 						</tr>
 						<tr>
 							<th>#</th>
@@ -77,11 +78,11 @@
 							<th><label style="text-align: center; width: 100%;">等级</label></th>
 							<th><label style="text-align: center; width: 100%;">状态</label></th>
 							<th><label style="text-align: center; width: 100%;">注册时间</label></th>
-							<div  th:each="a : ${accounts}" >
-							<th><label style="text-align: center; width: 100%;">可用额度</label></th>
-							<th><label style="text-align: center; width: 100%;">锁定额度</label></th>
-							<th><label style="text-align: center; width: 100%;">冻结额度</label></th>
-							<th><label style="text-align: center; width: 100%;">提币开关</label></th>
+							<div th:each="a : ${accounts}">
+								<th><label style="text-align: center; width: 100%;">可用额度</label></th>
+								<th><label style="text-align: center; width: 100%;">锁定额度</label></th>
+								<th><label style="text-align: center; width: 100%;">冻结额度</label></th>
+								<th><label style="text-align: center; width: 100%;">提币开关</label></th>
 							</div>
 							<!-- <th><label style="text-align: center; width: 100%;">可用额度</label></th>
 							<th><label style="text-align: center; width: 100%;">锁定额度</label></th>
@@ -111,7 +112,8 @@
     const buttonStyles = ['btn-primary',
         'btn-success', 'btn-info', 'btn-warning', 'btn-danger']
     var viewFlag = [[${@permission.hasPermi('mining:user:view')}]];
-    var editFlag = [[${@permission.hasPermi('mining:user:edit')}]];
+    var _editFlag = [[${@permission.hasPermi('mining:user:edit')}]];
+    //var editFlag = getEditFlag();
     var prefix = ctx + "mining/user";
     
     var vipLevels = [[${levels}]];
@@ -303,7 +305,7 @@
     		return '';
     	}
     	var mobile = getDisplayString(user.mobile, '');
-    	if (editFlag == 'hidden') {
+    	if (getEditFlag() == 'hidden') {
     		return mobile;
     	} else if (mobile == ''){
             return "<a class='btn btn-danger btn-xs ' href='javascript:void(0)' onclick='editUserMobile(" + user.userId + ", \"\")'><i class='fa fa-edit'></i> 修改</a> ";
@@ -333,7 +335,7 @@
     		return '';
     	}
     	var email = getDisplayString(user.email, '');
-    	if (editFlag == 'hidden') {
+    	if (getEditFlag() == 'hidden') {
     		return email;
     	} else if (email == ''){
             return "<a class='btn btn-danger btn-xs ' href='javascript:void(0)' onclick='editUserEmail(" + user.userId + ")'><i class='fa fa-edit'></i> 修改</a> ";
@@ -370,7 +372,7 @@
     	}
     	var kind = kindArray[kindIndex];
     	var amount = account[kind];
-    	if (editFlag == 'hidden') {
+    	if (getEditFlag() == 'hidden') {
     		return amount;
     	}
     	else {
@@ -409,7 +411,7 @@
     	if (!account) {
     		return '';
     	}
-    	if (editFlag == 'hidden') {
+    	if (getEditFlag() == 'hidden') {
 			if (account.withdrawalEnabled == 0) {
     			return '开启';
     		} else {
@@ -447,7 +449,7 @@
     	if (userId == null) {
     		return '';
     	}
-    	if (editFlag == 'hidden') {
+    	if (getEditFlag() == 'hidden') {
     		return getFlatLevelSpan(id, name);
     	}
     	if (id == null) {
@@ -639,7 +641,7 @@
 
     /* 用户状态显示 */
 	function statusTools(row) {
-		if (editFlag == 'hidden') {
+		if (getEditFlag() == 'hidden') {
 			if (row.status == 1) {
     			return '关闭';
     		} else {
@@ -725,6 +727,57 @@
     		$.operate.save(prefix + '/clean');
     	})
     }
+    
+    var _EXPIRE_TIME = 5*60*1000;//5分钟没有操作，则关闭
+    var _interval_handler=-1;
+    
+    function enableEdit() {
+    	console.log(getEditFlag());
+    	if (getEditFlag() === '') {
+    		return;
+    	}
+    	$.modal.confirm('你确定要启用用户编辑功能吗？此功能需输入验证码确认！(<small>验证码会在点击确认后发出，5分钟之内有效</small>)', function(){
+    		verifyCode(function(){
+    			if (window.sessionStorage) {
+    				$('#enableEditBtn').hide();
+					window.sessionStorage.setItem("user.editable", true);
+					window.sessionStorage.setItem("user.editable_expireTime", new Date().getTime());
+					_interval_handler=setInterval(checkExpired, 10*1000);
+				  	refreshUserList();
+				}
+    		});
+    	})
+    }
+    
+    function getEditFlag() {
+    	if (window.sessionStorage) {
+			 var storage = window.sessionStorage.getItem("user.editable");
+			 var storeLastTime= window.sessionStorage.getItem("user.editable_expireTime")?window.sessionStorage.getItem("user.editable_expireTime"):-1;
+			 if (storeLastTime == -1 || (new Date()).getTime()-storeLastTime>_EXPIRE_TIME){
+				 return 'hidden'; //过期
+			 }
+			 if ('true' == storage) {
+				 return _editFlag;
+			 }
+		}
+    	return 'hidden';
+    }
+    
+    function checkExpired() {
+    	if (!window.sessionStorage) {
+    		return;
+   		}
+   	    var storeLastTime= window.sessionStorage.getItem("user.editable_expireTime")?window.sessionStorage.getItem("user.editable_expireTime"):-1;
+    	if (storeLastTime==-1) {
+    		clearInterval(_interval_handler);
+    	} else if ((new Date()).getTime()-storeLastTime>_EXPIRE_TIME) {  //过期了
+    		$('#enableEditBtn').show();
+    	    window.sessionStorage.setItem("user.editable", false);
+    	    window.sessionStorage.removeItem("user.editable_expireTime");
+    	    refreshUserList();
+    	    clearInterval(_interval_handler);
+    	}
+	}
 </script>
 </body>
 </html>
