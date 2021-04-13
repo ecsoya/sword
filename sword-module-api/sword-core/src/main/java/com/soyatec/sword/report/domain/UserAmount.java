@@ -27,4 +27,11 @@ public class UserAmount {
 	public boolean isEmpty() {
 		return amount == null || amount.doubleValue() <= 0;
 	}
+
+	public static UserAmount empty(Long userId) {
+		UserAmount userAmount = new UserAmount();
+		userAmount.setUserId(userId);
+		userAmount.setAmount(BigDecimal.ZERO);
+		return userAmount;
+	}
 }

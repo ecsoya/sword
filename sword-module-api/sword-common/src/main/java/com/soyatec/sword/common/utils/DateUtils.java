@@ -463,4 +463,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		DayOfWeek dayOfWeek = time.getDayOfWeek();
 		return DayOfWeek.SATURDAY.equals(dayOfWeek) || DayOfWeek.SUNDAY.equals(dayOfWeek);
 	}
+
+	public static Date getMidOfDate(Date date) {
+		if (date == null) {
+			return null;
+		}
+		LocalDateTime localDateTime = localDateTime(date);
+		return toDate(localDateTime.withHour(12).withMinute(0).withSecond(0).withNano(0));
+	}
 }
