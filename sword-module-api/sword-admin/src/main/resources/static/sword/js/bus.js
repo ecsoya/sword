@@ -53,31 +53,35 @@ function verifyCode(callback) {
 	var _EXPIRE_TIME = 5*60*1000;//5分钟没有操作，则关闭
     var _interval_handler=-1;
     
-    function enablePermissionFlag(title, key, callback) {
-    	if (getPermissionFlag(key) === '') {
+    function enablePermissionFlag(title, key, value, successCallback, expireCallback) {
+    	if ('hidden' == value) {
+    		$.modal.msgError('你无此权限，请联系管理员');
+    		return;
+    	}
+    	if (getPermissionFlag(key, value) === '') {
     		return;
     	}
     	if (notifyEnabled){
-	    	var label = title + '此功能需输入验证码验证后使用！(<small>验证码会在点击确认后发出，5分钟之内有效</small>)'
+	    	var label = title + '此功能需输入<strong>验证码</strong>后使用！<br><small>验证码会在点击<strong>确认</strong>后发出，5分钟之内有效！</small></br>'
 	    	$.modal.confirm(label, function(){
 	    		verifyCode(function(){
-	    			doEnablePermissionFlag(key, callback);
+	    			doEnablePermissionFlag(key, successCallback, expireCallback);
 	    		});
 	    	})
     	} else {
-			doEnablePermissionFlag(key, callback);
+			doEnablePermissionFlag(key, successCallback, expireCallback);
 		}
     }
-function doEnablePermissionFlag(key, callback){
+function doEnablePermissionFlag(key, successCallback, expireCallback){
 	if (window.sessionStorage) {
 	    				$('#' + key).hide();
 						window.sessionStorage.setItem(key, true);
 						window.sessionStorage.setItem(key + "_expireTime", new Date().getTime());
 						_interval_handler=setInterval(function(){
-							checkExpired(key, callback);
+							checkExpired(key, expireCallback);
 						}, 10*1000);
-					  	if (callback) {
-							callback();
+					  	if (successCallback) {
+							successCallback();
 						}
 					}
 }
@@ -95,7 +99,7 @@ function getPermissionFlag(key, value) {
    	return 'hidden';
 }
 
-function checkExpired(key, callback) {
+function checkExpired(key, expireCallback) {
     	if (!key || !window.sessionStorage) {
     		return;
    		}
@@ -107,8 +111,8 @@ function checkExpired(key, callback) {
     	    window.sessionStorage.setItem(key, false);
     	    window.sessionStorage.removeItem(key + "_expireTime");
     	    clearInterval(_interval_handler);
-    	    if (callback) {
-				callback();
+    	    if (expireCallback) {
+				expireCallback();
 			}
     	}
 	}

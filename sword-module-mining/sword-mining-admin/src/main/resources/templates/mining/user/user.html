@@ -728,9 +728,7 @@
     	})
     }
     function enableEdit() {
-    	enablePermissionFlag('你确定要启用用户的编辑功能吗？', 'userEditableBtn', function(){
-    		refreshUserList();
-    	})
+    	enablePermissionFlag('你确定要启用用户的编辑功能吗？', 'userEditableBtn', _editFlag, refreshUserList, refreshUserList)
     }
     
     function getEditFlag() {
