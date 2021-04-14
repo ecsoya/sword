@@ -63,7 +63,7 @@ public class ShiroConfig {
 	@Value("${spring.redis.timeout:60000}")
 	private int timeout;
 	@Value("${spring.redis.password:}")
-	private final String password = "";
+	private String password;
 
 	/**
 	 * Session超时时间，单位为毫秒（默认30分钟）
