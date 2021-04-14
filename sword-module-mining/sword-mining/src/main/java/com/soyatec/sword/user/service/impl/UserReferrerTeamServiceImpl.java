@@ -1,8 +1,6 @@
 package com.soyatec.sword.user.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +31,7 @@ public class UserReferrerTeamServiceImpl implements IUserReferrerTeamService {
 		List<UserReferrer> myReferrals = referrerList.stream().filter(r -> userId.equals(r.getReferralId()))
 				.collect(Collectors.toList());
 		List<Long> myReferralIds = myReferrals.stream().map(r -> r.getUserId()).collect(Collectors.toList());
-		Set<Long> myUmbrellaIds = new HashSet<>(myReferralIds);
-		myUmbrellaIds.addAll(referrerList.stream().filter(r -> myReferralIds.contains(r.getReferralId()))
-				.map(r -> r.getUserId()).collect(Collectors.toList()));
+		List<Long> myUmbrellaIds = userReferrerService.selectUmbrellaUserIds(userId, referrerList);
 
 		// 今日人数
 		UserTeamCount today = new UserTeamCount();
