@@ -1,5 +1,6 @@
 package com.soyatec.sword.common.utils;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
@@ -259,6 +260,19 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 			return template;
 		}
 		return StrFormatter.format(template, params);
+	}
+
+	public static String formatAll(String template, Object param) {
+		if (isEmpty(template)) {
+			return template;
+		}
+		if (param == null) {
+			return format(template);
+		}
+		int count = StringUtils.countMatches(template, "{}");
+		Object[] params = new Object[count];
+		Arrays.fill(params, param);
+		return format(template, params);
 	}
 
 	/**

@@ -52,7 +52,7 @@ public class JavamailCodeHandler implements SendMailCodeHandler, IMailCodeHandle
 		if (StringUtils.isEmpty(template)) {
 			template = CodeProperties.DEFAULT_TEMPLATE;
 		}
-		final String content = StringUtils.format(template, code, code);
+		final String content = StringUtils.formatAll(template, code);
 		return sendEmail(email, subject, content);
 	}
 

@@ -48,7 +48,7 @@ public class M5cSendMobileCodeHandler implements SendMobileCodeHandler, IMobileC
 		if (StringUtils.isEmpty(template)) {
 			template = DEFAULT_TEMPLATE;
 		}
-		final String message = StringUtils.format(template, code, code);
+		final String message = StringUtils.formatAll(template, code);
 		return sendMessage(mobile, message);
 	}
 
