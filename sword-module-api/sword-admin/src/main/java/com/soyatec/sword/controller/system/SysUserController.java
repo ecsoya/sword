@@ -34,13 +34,13 @@ import com.soyatec.sword.system.service.ISysUserService;
 
 /**
  * 用户信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController {
-	private String prefix = "system/user";
+	private final String prefix = "system/user";
 
 	@Autowired
 	private ISysUserService userService;
@@ -71,7 +71,7 @@ public class SysUserController extends BaseController {
 			user.setUserType(UserConstants.SYSTEM_USER_TYPE);
 		}
 		startPage();
-		List<SysUser> list = userService.selectUserList(user);
+		final List<SysUser> list = userService.selectUserList(user);
 		return getDataTable(list);
 	}
 
@@ -86,8 +86,8 @@ public class SysUserController extends BaseController {
 		if (Objects.equal(user.getDeptId(), 101l)) {
 			user.setUserType(UserConstants.SYSTEM_USER_TYPE);
 		}
-		List<SysUser> list = userService.selectUserList(user);
-		ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+		final List<SysUser> list = userService.selectUserList(user);
+		final ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
 		return util.exportExcel(list, "用户数据");
 	}
 
@@ -152,7 +152,7 @@ public class SysUserController extends BaseController {
 	 */
 	@GetMapping("/edit/{userId}")
 	public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
-		List<SysRole> roles = roleService.selectRolesByUserId(userId);
+		final List<SysRole> roles = roleService.selectRolesByUserId(userId);
 		mmap.put("user", userService.selectUserById(userId));
 		mmap.put("roles", SysUser.isAdmin(userId) ? roles
 				: roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
@@ -209,9 +209,9 @@ public class SysUserController extends BaseController {
 	 */
 	@GetMapping("/authRole/{userId}")
 	public String authRole(@PathVariable("userId") Long userId, ModelMap mmap) {
-		SysUser user = userService.selectUserById(userId);
+		final SysUser user = userService.selectUserById(userId);
 		// 获取用户所属的角色列表
-		List<SysRole> roles = roleService.selectRolesByUserId(userId);
+		final List<SysRole> roles = roleService.selectRolesByUserId(userId);
 		mmap.put("user", user);
 		mmap.put("roles", SysUser.isAdmin(userId) ? roles
 				: roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));

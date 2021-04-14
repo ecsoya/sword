@@ -11,7 +11,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 定时任务执行结果对象 t_sword_task_example
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-18
  */

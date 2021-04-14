@@ -8,14 +8,14 @@ import com.soyatec.sword.user.domain.UserBinaryTree;
 
 /**
  * 用户双区树Mapper接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
 public interface UserBinaryTreeMapper {
 	/**
 	 * 查询用户双区树
-	 * 
+	 *
 	 * @param userId 用户双区树ID
 	 * @return 用户双区树
 	 */
@@ -23,7 +23,7 @@ public interface UserBinaryTreeMapper {
 
 	/**
 	 * 查询用户双区树列表
-	 * 
+	 *
 	 * @param userBinaryTree 用户双区树
 	 * @return 用户双区树集合
 	 */
@@ -31,7 +31,7 @@ public interface UserBinaryTreeMapper {
 
 	/**
 	 * 新增用户双区树
-	 * 
+	 *
 	 * @param userBinaryTree 用户双区树
 	 * @return 结果
 	 */
@@ -39,7 +39,7 @@ public interface UserBinaryTreeMapper {
 
 	/**
 	 * 修改用户双区树
-	 * 
+	 *
 	 * @param userBinaryTree 用户双区树
 	 * @return 结果
 	 */
@@ -47,7 +47,7 @@ public interface UserBinaryTreeMapper {
 
 	/**
 	 * 删除用户双区树
-	 * 
+	 *
 	 * @param userId 用户双区树ID
 	 * @return 结果
 	 */
@@ -55,7 +55,7 @@ public interface UserBinaryTreeMapper {
 
 	/**
 	 * 批量删除用户双区树
-	 * 
+	 *
 	 * @param userIds 需要删除的数据ID
 	 * @return 结果
 	 */

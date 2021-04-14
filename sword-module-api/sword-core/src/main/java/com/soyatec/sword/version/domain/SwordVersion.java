@@ -9,7 +9,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 版本对象 t_sword_version
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-22
  */

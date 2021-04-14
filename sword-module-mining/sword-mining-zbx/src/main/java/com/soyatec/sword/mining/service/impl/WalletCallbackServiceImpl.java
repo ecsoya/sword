@@ -11,6 +11,7 @@ import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.MessageUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
+import com.soyatec.sword.constants.IConstants;
 import com.soyatec.sword.exceptions.TransactionException;
 import com.soyatec.sword.mining.service.IWalletCallbackService;
 import com.soyatec.sword.order.domain.UserDepositOrder;
@@ -62,11 +63,11 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 		if (rawData == null || !rawData.isWithdrawal()) {
 			return CommonResult.fail("无效的提币订单"); //$NON-NLS-1$
 		}
-		String orderNo = rawData.getOrderNo();
+		final String orderNo = rawData.getOrderNo();
 		if (StringUtils.isEmpty(orderNo)) {
 			return CommonResult.fail("无效的提币订单号");
 		}
-		UserWithdrawalOrder order = userWithdrawalOrderService.selectUserWithdrawalOrderByOrderNo(orderNo);
+		final UserWithdrawalOrder order = userWithdrawalOrderService.selectUserWithdrawalOrderByOrderNo(orderNo);
 		if (order == null) {
 			return CommonResult.fail("无效的提币订单");
 		}
@@ -80,12 +81,12 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 			}
 			return CommonResult.success(MessageUtils.message("WithdrawalOrderServiceImpl.4")); //$NON-NLS-1$
 		} else {
-			String status = rawData.getStatus();
-			String symbol = rawData.getSymbol();
-			Long orderId = order.getId();
-			Long userId = order.getUserId();
-			BigDecimal amount = order.getAmount();
-			BigDecimal fee = order.getFee();
+			final String status = rawData.getStatus();
+			final String symbol = rawData.getSymbol();
+			final Long orderId = order.getId();
+			final Long userId = order.getUserId();
+			final BigDecimal amount = order.getAmount();
+			final BigDecimal fee = order.getFee();
 
 			if (ZbxOrderRawData.WITHDRAWAL_FAILURE.equals(status)) {
 				// 关闭订单
@@ -117,19 +118,19 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 	private boolean addWithdrawalRecord(Long userId, BigDecimal amount, BigDecimal fee, String orderNo, String symbol,
 			boolean success, String remark) {
 		// 1. 扣款
-		boolean unfreezed = userWalletAccountService.unfreezeAmount(userId, symbol, amount, orderNo, !success);
+		final boolean unfreezed = userWalletAccountService.unfreezeAmount(userId, symbol, amount, orderNo, !success);
 		if (!unfreezed) {
 			throw new TransactionException("钱包错误");
 		}
 		// 2. 生成记录
-		UserWithdrawalRecord record = new UserWithdrawalRecord();
+		final UserWithdrawalRecord record = new UserWithdrawalRecord();
 		record.setUserId(userId);
 		record.setFee(fee);
 		record.setOrderNo(orderNo);
 		record.setType(UserWithdrawalRecord.TYPE_WALLET);
 		record.setSymbol(symbol);
 		record.setAmount(amount);
-		record.setStatus(UserWithdrawalRecord.STATUS_FINISHED);
+		record.setStatus(IConstants.STATUS_FINISHED);
 		record.setRemark(remark);
 		if (userWithdrawalRecordService.insertUserWithdrawalRecord(record) <= 0) {
 			throw new TransactionException("内部错误");
@@ -138,11 +139,11 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 	}
 
 	private int setWithdrawalOrderFeedback(String orderNo, Integer feedback) {
-		UserWithdrawalOrder order = userWithdrawalOrderService.selectUserWithdrawalOrderByOrderNo(orderNo);
+		final UserWithdrawalOrder order = userWithdrawalOrderService.selectUserWithdrawalOrderByOrderNo(orderNo);
 		if (order == null) {
 			return 0;
 		}
-		UserWithdrawalOrder update = new UserWithdrawalOrder();
+		final UserWithdrawalOrder update = new UserWithdrawalOrder();
 		update.setId(order.getId());
 		update.setFeedback(feedback);
 		update.setStatus(UserWithdrawalOrder.STATUS_NOTIFIED);
@@ -150,7 +151,7 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 	}
 
 	private CommonResult<?> result(Long orderId, Integer status, Integer feedback, String remark, boolean success) {
-		UserWithdrawalOrder update = new UserWithdrawalOrder();
+		final UserWithdrawalOrder update = new UserWithdrawalOrder();
 		update.setId(orderId);
 		update.setStatus(status);
 		update.setFeedback(feedback);
@@ -166,25 +167,25 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 		if (rawData == null || !rawData.isDeposit()) {
 			return CommonResult.fail("无效的充值订单"); //$NON-NLS-1$
 		}
-		String status = rawData.getStatus();
+		final String status = rawData.getStatus();
 		if (!ZbxOrderRawData.DEPOSIT_SUCCESS.equals(status)) {
 			return CommonResult.success("非充值成功订单");
 		}
 		// 此为充值交易ID，可唯一识别充值订单
-		String txId = rawData.getTxId();
+		final String txId = rawData.getTxId();
 		UserDepositRecord record = userDepositeRecordService.selectUserDepositRecordByTxId(txId);
 		if (record != null) {
 			return CommonResult.success("重复订单");
 		}
 
-		String symbol = rawData.getSymbol();
-		String address = rawData.getAddress();
-		UserWalletAccount account = userWalletAccountService.selectUserWalletAccountByAddress(address, symbol);
+		final String symbol = rawData.getSymbol();
+		final String address = rawData.getAddress();
+		final UserWalletAccount account = userWalletAccountService.selectUserWalletAccountByAddress(address, symbol);
 		if (account == null) {
 			return CommonResult.fail("无效的充值地址"); //$NON-NLS-1$
 		}
-		Long userId = account.getUserId();
-		BigDecimal amount = MathUtils.parse(rawData.getAmount());
+		final Long userId = account.getUserId();
+		final BigDecimal amount = MathUtils.parse(rawData.getAmount());
 		if (MathUtils.isInvalid(amount)) {
 			return CommonResult.fail("充值金额错误"); //$NON-NLS-1$
 		}
@@ -194,23 +195,23 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 			return CommonResult.success("充值金额小于0.001");
 		}
 
-		String orderNo = IdWorker.get32UUID();
+		final String orderNo = IdWorker.get32UUID();
 		// 1. 生成订单
-		UserDepositOrder order = new UserDepositOrder();
+		final UserDepositOrder order = new UserDepositOrder();
 		order.setOrderNo(orderNo);
 		order.setUserId(userId);
 		order.setAddress(address);
 		order.setAmount(amount);
 		order.setSymbol(symbol);
 		order.setTxId(txId);
-		order.setStatus(UserDepositOrder.STATUS_FINISHED);
+		order.setStatus(IConstants.STATUS_FINISHED);
 		int rows = userDepositeOrderService.insertUserDepositOrder(order);
 		if (rows <= 0) {
 			throw new TransactionException("内部错误【订单】");
 		}
 
 		// 2.更新钱包
-		boolean deposited = userWalletAccountService.increaseAmount(account, amount, orderNo, "充值");
+		final boolean deposited = userWalletAccountService.increaseAmount(account, amount, orderNo, "充值");
 		if (!deposited) {
 			throw new TransactionException("内部错误【钱包】");
 		}
@@ -223,7 +224,7 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 		record.setType(UserDepositRecord.TYPE_WALLET);
 		record.setSymbol(symbol);
 		record.setAmount(amount);
-		record.setStatus(UserDepositRecord.STATUS_FINISHED);
+		record.setStatus(IConstants.STATUS_FINISHED);
 		record.setRemark("充值成功");
 		rows = userDepositeRecordService.insertUserDepositRecord(record);
 		if (rows <= 0) {

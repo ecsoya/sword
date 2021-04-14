@@ -38,12 +38,12 @@ public class SendCloudEmailCodeHandler implements SendMailCodeHandler, IMailCode
 			return CommonResult.fail("参数错误");
 		}
 		try {
-			ResponseData sent = sendCloudService.sendCommon(email, subject, content);
+			final ResponseData sent = sendCloudService.sendCommon(email, subject, content);
 			if (sent.statusCode == 200) {
 				return CommonResult.success();
 			}
 			return CommonResult.fail(sent.getInfo());
-		} catch (Throwable e) {
+		} catch (final Throwable e) {
 			return CommonResult.fail(e.getLocalizedMessage());
 		}
 	}
@@ -53,12 +53,12 @@ public class SendCloudEmailCodeHandler implements SendMailCodeHandler, IMailCode
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(code)) {
 			return CommonResult.fail("参数错误");
 		}
-		String subject = properties.getSubject();
+		final String subject = properties.getSubject();
 		String template = properties.getTemplate();
 		if (StringUtils.isEmpty(template)) {
 			template = CodeProperties.DEFAULT_TEMPLATE;
 		}
-		String content = StringUtils.format(template, code, code);
+		final String content = StringUtils.format(template, code, code);
 		return sendEmail(email, subject, content);
 	}
 

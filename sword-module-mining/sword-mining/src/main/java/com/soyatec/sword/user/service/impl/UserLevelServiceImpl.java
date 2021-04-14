@@ -13,7 +13,7 @@ import com.soyatec.sword.user.service.IUserLevelService;
 
 /**
  * 用户级别Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-06
  */
@@ -24,7 +24,7 @@ public class UserLevelServiceImpl implements IUserLevelService {
 
 	/**
 	 * 查询用户级别
-	 * 
+	 *
 	 * @param userId 用户级别ID
 	 * @return 用户级别
 	 */
@@ -35,7 +35,7 @@ public class UserLevelServiceImpl implements IUserLevelService {
 
 	/**
 	 * 查询用户级别列表
-	 * 
+	 *
 	 * @param userLevel 用户级别
 	 * @return 用户级别
 	 */
@@ -46,7 +46,7 @@ public class UserLevelServiceImpl implements IUserLevelService {
 
 	/**
 	 * 新增用户级别
-	 * 
+	 *
 	 * @param userLevel 用户级别
 	 * @return 结果
 	 */
@@ -60,7 +60,7 @@ public class UserLevelServiceImpl implements IUserLevelService {
 
 	/**
 	 * 修改用户级别
-	 * 
+	 *
 	 * @param userLevel 用户级别
 	 * @return 结果
 	 */
@@ -72,7 +72,7 @@ public class UserLevelServiceImpl implements IUserLevelService {
 
 	/**
 	 * 删除用户级别对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -83,7 +83,7 @@ public class UserLevelServiceImpl implements IUserLevelService {
 
 	/**
 	 * 删除用户级别信息
-	 * 
+	 *
 	 * @param userId 用户级别ID
 	 * @return 结果
 	 */

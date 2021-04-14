@@ -10,7 +10,7 @@ import com.soyatec.sword.common.enums.OnlineStatus;
 
 /**
  * 当前在线会话 sys_user_online
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysUserOnline extends BaseEntity {

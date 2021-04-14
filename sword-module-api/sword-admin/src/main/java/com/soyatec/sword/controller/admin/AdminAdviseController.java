@@ -24,7 +24,7 @@ import com.soyatec.sword.common.utils.poi.ExcelUtil;
 @Controller
 @RequestMapping("/admin/advise")
 public class AdminAdviseController extends BaseController {
-	private String prefix = "admin/advise";
+	private final String prefix = "admin/advise";
 
 	@Autowired
 	private IUserAdviseService userAdviseService;
@@ -44,7 +44,7 @@ public class AdminAdviseController extends BaseController {
 	public TableDataInfo list(UserAdvise userAdvise) {
 		startPage();
 		userAdvise.setType(UserAdvise.TYPE_FEEDBACK);
-		List<UserAdvise> list = userAdviseService.selectUserAdviseList(userAdvise);
+		final List<UserAdvise> list = userAdviseService.selectUserAdviseList(userAdvise);
 		return getDataTable(list);
 	}
 
@@ -57,7 +57,7 @@ public class AdminAdviseController extends BaseController {
 	public TableDataInfo replyList(UserAdvise userAdvise) {
 		startPage();
 		userAdvise.setType(UserAdvise.TYPE_REPLY);
-		List<UserAdvise> list = userAdviseService.selectUserAdviseList(userAdvise);
+		final List<UserAdvise> list = userAdviseService.selectUserAdviseList(userAdvise);
 		return getDataTable(list);
 	}
 
@@ -69,8 +69,8 @@ public class AdminAdviseController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(UserAdvise userAdvise) {
-		List<UserAdvise> list = userAdviseService.selectUserAdviseList(userAdvise);
-		ExcelUtil<UserAdvise> util = new ExcelUtil<UserAdvise>(UserAdvise.class);
+		final List<UserAdvise> list = userAdviseService.selectUserAdviseList(userAdvise);
+		final ExcelUtil<UserAdvise> util = new ExcelUtil<UserAdvise>(UserAdvise.class);
 		return util.exportExcel(list, "advise");
 	}
 
@@ -100,7 +100,7 @@ public class AdminAdviseController extends BaseController {
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
-		UserAdvise userAdvise = userAdviseService.selectUserAdviseById(id);
+		final UserAdvise userAdvise = userAdviseService.selectUserAdviseById(id);
 		mmap.put("userAdvise", userAdvise);
 		return prefix + "/edit";
 	}

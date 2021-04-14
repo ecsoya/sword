@@ -6,14 +6,14 @@ import com.soyatec.sword.article.domain.SwordArticle;
 
 /**
  * 文章Service接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-02-04
  */
 public interface ISwordArticleService {
 	/**
 	 * 查询文章
-	 * 
+	 *
 	 * @param id 文章ID
 	 * @return 文章
 	 */
@@ -21,7 +21,7 @@ public interface ISwordArticleService {
 
 	/**
 	 * 查询文章列表
-	 * 
+	 *
 	 * @param swordArticle 文章
 	 * @return 文章集合
 	 */
@@ -29,7 +29,7 @@ public interface ISwordArticleService {
 
 	/**
 	 * 新增文章
-	 * 
+	 *
 	 * @param swordArticle 文章
 	 * @return 结果
 	 */
@@ -37,7 +37,7 @@ public interface ISwordArticleService {
 
 	/**
 	 * 修改文章
-	 * 
+	 *
 	 * @param swordArticle 文章
 	 * @return 结果
 	 */
@@ -45,7 +45,7 @@ public interface ISwordArticleService {
 
 	/**
 	 * 批量删除文章
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -53,7 +53,7 @@ public interface ISwordArticleService {
 
 	/**
 	 * 删除文章信息
-	 * 
+	 *
 	 * @param id 文章ID
 	 * @return 结果
 	 */

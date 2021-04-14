@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 线程相关工具类.
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class Threads {
@@ -23,7 +23,7 @@ public class Threads {
 	public static void sleep(long milliseconds) {
 		try {
 			Thread.sleep(milliseconds);
-		} catch (InterruptedException e) {
+		} catch (final InterruptedException e) {
 			return;
 		}
 	}
@@ -42,7 +42,7 @@ public class Threads {
 						logger.info("Pool did not terminate");
 					}
 				}
-			} catch (InterruptedException ie) {
+			} catch (final InterruptedException ie) {
 				pool.shutdownNow();
 				Thread.currentThread().interrupt();
 			}
@@ -55,15 +55,15 @@ public class Threads {
 	public static void printException(Runnable r, Throwable t) {
 		if (t == null && r instanceof Future<?>) {
 			try {
-				Future<?> future = (Future<?>) r;
+				final Future<?> future = (Future<?>) r;
 				if (future.isDone()) {
 					future.get();
 				}
-			} catch (CancellationException ce) {
+			} catch (final CancellationException ce) {
 				t = ce;
-			} catch (ExecutionException ee) {
+			} catch (final ExecutionException ee) {
 				t = ee.getCause();
-			} catch (InterruptedException ie) {
+			} catch (final InterruptedException ie) {
 				Thread.currentThread().interrupt();
 			}
 		}

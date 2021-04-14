@@ -26,13 +26,13 @@ import com.soyatec.sword.system.service.ISysPostService;
 
 /**
  * 岗位信息操作处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/system/post")
 public class SysPostController extends BaseController {
-	private String prefix = "system/post";
+	private final String prefix = "system/post";
 
 	@Autowired
 	private ISysPostService postService;
@@ -48,7 +48,7 @@ public class SysPostController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysPost post) {
 		startPage();
-		List<SysPost> list = postService.selectPostList(post);
+		final List<SysPost> list = postService.selectPostList(post);
 		return getDataTable(list);
 	}
 
@@ -57,8 +57,8 @@ public class SysPostController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysPost post) {
-		List<SysPost> list = postService.selectPostList(post);
-		ExcelUtil<SysPost> util = new ExcelUtil<SysPost>(SysPost.class);
+		final List<SysPost> list = postService.selectPostList(post);
+		final ExcelUtil<SysPost> util = new ExcelUtil<SysPost>(SysPost.class);
 		return util.exportExcel(list, "岗位数据");
 	}
 
@@ -69,7 +69,7 @@ public class SysPostController extends BaseController {
 	public AjaxResult remove(String ids) {
 		try {
 			return toAjax(postService.deletePostByIds(ids));
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return error(e.getMessage());
 		}
 	}

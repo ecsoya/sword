@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.soyatec.sword.code.service.IMobileService;
 import com.soyatec.sword.common.core.domain.CommonResult;
-import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.service.IMobileCodeService;
 import com.soyatec.sword.user.service.IUserProfileService;
 
@@ -37,26 +36,26 @@ public class MobileCodeServiceImpl implements IMobileCodeService {
 
 	@Override
 	public CommonResult<?> sendCodeByUserId(Long userId) {
-		String mobile = userService.selectUserMobileById(userId);
+		final String mobile = userService.selectUserMobileById(userId);
 		return sendCode(mobile);
 	}
 
 	@Override
 	public CommonResult<?> sendCodeByUsername(String username) {
-		String mobile = userService.selectUserMobileByUsername(username);
+		final String mobile = userService.selectUserMobileByUsername(username);
 		return sendCode(mobile);
 	}
 
 	@Override
 	public CommonResult<?> verifyCodeByUserId(Long userId, String code) {
-		String mobile = userService.selectUserMobileById(userId);
+		final String mobile = userService.selectUserMobileById(userId);
 		return verifyCode(mobile, code);
 	}
 
 	@Override
 	public CommonResult<?> verifyCodeByUsername(String username, String code) {
 		String mobile = userService.selectUserMobileByUsername(username);
-		if (StringUtils.isBlank(mobile)) {
+		if (org.apache.commons.lang3.StringUtils.isBlank(mobile)) {
 			mobile = username;
 		}
 		return verifyCode(mobile, code);

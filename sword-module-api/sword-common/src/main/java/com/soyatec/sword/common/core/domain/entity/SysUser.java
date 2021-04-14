@@ -19,7 +19,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 用户对象 sys_user
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysUser extends BaseEntity {

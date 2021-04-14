@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import com.soyatec.sword.common.annotation.Log;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
@@ -30,7 +29,7 @@ import com.soyatec.sword.system.domain.SysOperLog;
 
 /**
  * 操作日志记录处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Aspect
@@ -58,7 +57,7 @@ public class LogAspect {
 
 	/**
 	 * 拦截异常操作
-	 * 
+	 *
 	 * @param joinPoint 切点
 	 * @param e         异常
 	 */
@@ -70,20 +69,20 @@ public class LogAspect {
 	protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult) {
 		try {
 			// 获得注解
-			Log controllerLog = getAnnotationLog(joinPoint);
+			final Log controllerLog = getAnnotationLog(joinPoint);
 			if (controllerLog == null) {
 				return;
 			}
 
 			// 获取当前的用户
-			SysUser currentUser = ShiroUtils.getSysUser();
+			final SysUser currentUser = ShiroUtils.getSysUser();
 
 			// *========数据库日志=========*//
-			SysOperLog operLog = new SysOperLog();
+			final SysOperLog operLog = new SysOperLog();
 			operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
 			operLog.setOperTime(DateUtils.getNowDate());
 			// 请求的地址
-			String ip = ShiroUtils.getIp();
+			final String ip = ShiroUtils.getIp();
 			operLog.setOperIp(ip);
 			// 返回参数
 			operLog.setJsonResult(StringUtils.substring(JSON.marshal(jsonResult), 0, 2000));
@@ -102,8 +101,8 @@ public class LogAspect {
 				operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
 			}
 			// 设置方法名称
-			String className = joinPoint.getTarget().getClass().getName();
-			String methodName = joinPoint.getSignature().getName();
+			final String className = joinPoint.getTarget().getClass().getName();
+			final String methodName = joinPoint.getSignature().getName();
 			operLog.setMethod(className + "." + methodName + "()");
 			// 设置请求方式
 			operLog.setRequestMethod(ServletUtils.getRequest().getMethod());
@@ -111,7 +110,7 @@ public class LogAspect {
 			getControllerMethodDescription(controllerLog, operLog);
 			// 保存数据库
 			AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
-		} catch (Exception exp) {
+		} catch (final Exception exp) {
 			// 记录本地异常日志
 			log.error("==前置通知异常==");
 			log.error("异常信息:{}", exp.getMessage());
@@ -121,7 +120,7 @@ public class LogAspect {
 
 	/**
 	 * 获取注解中对方法的描述信息 用于Controller层注解
-	 * 
+	 *
 	 * @param log     日志
 	 * @param operLog 操作日志
 	 * @throws Exception
@@ -142,16 +141,16 @@ public class LogAspect {
 
 	/**
 	 * 获取请求的参数，放到log中
-	 * 
+	 *
 	 * @param operLog 操作日志
 	 * @throws Exception 异常
 	 */
 	private void setRequestValue(SysOperLog operLog) throws Exception {
-		Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
+		final Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
 		if (StringUtils.isNotEmpty(map)) {
-			PropertyPreFilters.MySimplePropertyPreFilter excludefilter = new PropertyPreFilters().addFilter();
+			final PropertyPreFilters.MySimplePropertyPreFilter excludefilter = new PropertyPreFilters().addFilter();
 			excludefilter.addExcludes(EXCLUDE_PROPERTIES);
-			String params = JSONObject.toJSONString(map, excludefilter);
+			final String params = com.alibaba.fastjson.JSON.toJSONString(map, excludefilter);
 			operLog.setOperParam(StringUtils.substring(params, 0, 2000));
 		}
 	}
@@ -160,9 +159,9 @@ public class LogAspect {
 	 * 是否存在注解，如果存在就获取
 	 */
 	private Log getAnnotationLog(JoinPoint joinPoint) throws Exception {
-		Signature signature = joinPoint.getSignature();
-		MethodSignature methodSignature = (MethodSignature) signature;
-		Method method = methodSignature.getMethod();
+		final Signature signature = joinPoint.getSignature();
+		final MethodSignature methodSignature = (MethodSignature) signature;
+		final Method method = methodSignature.getMethod();
 
 		if (method != null) {
 			return method.getAnnotation(Log.class);

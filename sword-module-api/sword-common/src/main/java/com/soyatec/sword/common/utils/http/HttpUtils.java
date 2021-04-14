@@ -25,7 +25,7 @@ import com.soyatec.sword.common.constant.Constants;
 
 /**
  * 通用http发送方法
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class HttpUtils {
@@ -51,13 +51,13 @@ public class HttpUtils {
 	 * @return 所代表远程资源的响应结果
 	 */
 	public static String sendGet(String url, String param, String contentType) {
-		StringBuilder result = new StringBuilder();
+		final StringBuilder result = new StringBuilder();
 		BufferedReader in = null;
 		try {
-			String urlNameString = url + "?" + param;
+			final String urlNameString = url + "?" + param;
 			log.info("sendGet - {}", urlNameString);
-			URL realUrl = new URL(urlNameString);
-			URLConnection connection = realUrl.openConnection();
+			final URL realUrl = new URL(urlNameString);
+			final URLConnection connection = realUrl.openConnection();
 			connection.setRequestProperty("accept", "*/*");
 			connection.setRequestProperty("connection", "Keep-Alive");
 			connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
@@ -68,20 +68,20 @@ public class HttpUtils {
 				result.append(line);
 			}
 			log.info("recv - {}", result);
-		} catch (ConnectException e) {
+		} catch (final ConnectException e) {
 			log.error("调用HttpUtils.sendGet ConnectException, url=" + url + ",param=" + param, e);
-		} catch (SocketTimeoutException e) {
+		} catch (final SocketTimeoutException e) {
 			log.error("调用HttpUtils.sendGet SocketTimeoutException, url=" + url + ",param=" + param, e);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			log.error("调用HttpUtils.sendGet IOException, url=" + url + ",param=" + param, e);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("调用HttpsUtil.sendGet Exception, url=" + url + ",param=" + param, e);
 		} finally {
 			try {
 				if (in != null) {
 					in.close();
 				}
-			} catch (Exception ex) {
+			} catch (final Exception ex) {
 				log.error("调用in.close Exception, url=" + url + ",param=" + param, ex);
 			}
 		}
@@ -98,12 +98,12 @@ public class HttpUtils {
 	public static String sendPost(String url, String param) {
 		PrintWriter out = null;
 		BufferedReader in = null;
-		StringBuilder result = new StringBuilder();
+		final StringBuilder result = new StringBuilder();
 		try {
-			String urlNameString = url;
+			final String urlNameString = url;
 			log.info("sendPost - {}", urlNameString);
-			URL realUrl = new URL(urlNameString);
-			URLConnection conn = realUrl.openConnection();
+			final URL realUrl = new URL(urlNameString);
+			final URLConnection conn = realUrl.openConnection();
 			conn.setRequestProperty("accept", "*/*");
 			conn.setRequestProperty("connection", "Keep-Alive");
 			conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
@@ -120,13 +120,13 @@ public class HttpUtils {
 				result.append(line);
 			}
 			log.info("recv - {}", result);
-		} catch (ConnectException e) {
+		} catch (final ConnectException e) {
 			log.error("调用HttpUtils.sendPost ConnectException, url=" + url + ",param=" + param, e);
-		} catch (SocketTimeoutException e) {
+		} catch (final SocketTimeoutException e) {
 			log.error("调用HttpUtils.sendPost SocketTimeoutException, url=" + url + ",param=" + param, e);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			log.error("调用HttpUtils.sendPost IOException, url=" + url + ",param=" + param, e);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("调用HttpsUtil.sendPost Exception, url=" + url + ",param=" + param, e);
 		} finally {
 			try {
@@ -136,7 +136,7 @@ public class HttpUtils {
 				if (in != null) {
 					in.close();
 				}
-			} catch (IOException ex) {
+			} catch (final IOException ex) {
 				log.error("调用in.close Exception, url=" + url + ",param=" + param, ex);
 			}
 		}
@@ -144,14 +144,14 @@ public class HttpUtils {
 	}
 
 	public static String sendSSLPost(String url, String param) {
-		StringBuilder result = new StringBuilder();
-		String urlNameString = url + "?" + param;
+		final StringBuilder result = new StringBuilder();
+		final String urlNameString = url + "?" + param;
 		try {
 			log.info("sendSSLPost - {}", urlNameString);
-			SSLContext sc = SSLContext.getInstance("SSL");
+			final SSLContext sc = SSLContext.getInstance("SSL");
 			sc.init(null, new TrustManager[] { new TrustAnyTrustManager() }, new java.security.SecureRandom());
-			URL console = new URL(urlNameString);
-			HttpsURLConnection conn = (HttpsURLConnection) console.openConnection();
+			final URL console = new URL(urlNameString);
+			final HttpsURLConnection conn = (HttpsURLConnection) console.openConnection();
 			conn.setRequestProperty("accept", "*/*");
 			conn.setRequestProperty("connection", "Keep-Alive");
 			conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
@@ -163,8 +163,8 @@ public class HttpUtils {
 			conn.setSSLSocketFactory(sc.getSocketFactory());
 			conn.setHostnameVerifier(new TrustAnyHostnameVerifier());
 			conn.connect();
-			InputStream is = conn.getInputStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			final InputStream is = conn.getInputStream();
+			final BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			String ret = "";
 			while ((ret = br.readLine()) != null) {
 				if (ret != null && !ret.trim().equals("")) {
@@ -174,13 +174,13 @@ public class HttpUtils {
 			log.info("recv - {}", result);
 			conn.disconnect();
 			br.close();
-		} catch (ConnectException e) {
+		} catch (final ConnectException e) {
 			log.error("调用HttpUtils.sendSSLPost ConnectException, url=" + url + ",param=" + param, e);
-		} catch (SocketTimeoutException e) {
+		} catch (final SocketTimeoutException e) {
 			log.error("调用HttpUtils.sendSSLPost SocketTimeoutException, url=" + url + ",param=" + param, e);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			log.error("调用HttpUtils.sendSSLPost IOException, url=" + url + ",param=" + param, e);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("调用HttpsUtil.sendSSLPost Exception, url=" + url + ",param=" + param, e);
 		}
 		return result.toString();

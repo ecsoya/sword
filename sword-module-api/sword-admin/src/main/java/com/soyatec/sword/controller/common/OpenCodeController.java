@@ -35,7 +35,7 @@ public class OpenCodeController extends BaseController {
 		if (StringUtils.isEmpty(username)) {
 			return error("请输入用户名");
 		}
-		SysUser admin = userService.selectUserByLoginName(username);
+		final SysUser admin = userService.selectUserByLoginName(username);
 		if (admin == null || UserConstants.REGISTER_USER_TYPE.equals(admin.getUserType())) {
 			return error("用户不存在");
 		}
@@ -52,7 +52,7 @@ public class OpenCodeController extends BaseController {
 	}
 
 	/**
-	 * 
+	 *
 	 * 验证邮箱、短信验证码
 	 */
 	@GetMapping("/verifyByUsername")
@@ -64,7 +64,7 @@ public class OpenCodeController extends BaseController {
 		if (StringUtils.isEmpty(code)) {
 			return error("请输入验证码");
 		}
-		SysUser admin = userService.selectUserByLoginName(username);
+		final SysUser admin = userService.selectUserByLoginName(username);
 		if (admin == null || UserConstants.REGISTER_USER_TYPE.equals(admin.getUserType())) {
 			return error("验证码错误");
 		}

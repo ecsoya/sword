@@ -8,7 +8,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 用户文章对象 t_user_article
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-02-04
  */

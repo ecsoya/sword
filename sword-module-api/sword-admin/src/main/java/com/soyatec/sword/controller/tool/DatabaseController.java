@@ -42,11 +42,11 @@ public class DatabaseController extends BaseController {
 		if (page == null) {
 			page = new Page<>(1, 10);
 		}
-		PageBean<Map<String, Object>> br = jdbcTemplate.queryForPage(sql, page);
-		List<Map<String, Object>> list = br.getList();
-		TableDataInfo table = new TableDataInfo(list, (int) br.getTotal());
+		final PageBean<Map<String, Object>> br = jdbcTemplate.queryForPage(sql, page);
+		final List<Map<String, Object>> list = br.getList();
+		final TableDataInfo table = new TableDataInfo(list, (int) br.getTotal());
 		if (!list.isEmpty()) {
-			table.setMsg(StringUtils.join(list.get(0).keySet().toArray(), ','));
+			table.setMsg(org.apache.commons.lang3.StringUtils.join(list.get(0).keySet().toArray(), ','));
 		}
 
 		return table;
@@ -58,7 +58,7 @@ public class DatabaseController extends BaseController {
 		if (StringUtils.isNotEmpty(dsType)) {
 			DynamicDataSourceContextHolder.setDataSourceType(dsType);
 		}
-		String sql = "select table_name from\n" + "		information_schema.tables"
+		final String sql = "select table_name from\n" + "		information_schema.tables"
 				+ "		where table_schema = (select database())\n" + "	AND"
 				+ "		table_name NOT LIKE 'qrtz_%' AND table_name NOT LIKE 'gen_%'";
 		return jdbcTemplate.queryForList(sql, String.class);

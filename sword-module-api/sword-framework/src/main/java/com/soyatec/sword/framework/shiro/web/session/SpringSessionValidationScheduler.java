@@ -18,7 +18,7 @@ import com.soyatec.sword.common.utils.Threads;
 
 /**
  * 自定义任务调度器完成
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Component
@@ -97,7 +97,7 @@ public class SpringSessionValidationScheduler implements SessionValidationSchedu
 				log.debug("Session validation job successfully scheduled with Spring Scheduler.");
 			}
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(
 						"Error starting the Spring Scheduler session validation job.  Session validation may not occur.",

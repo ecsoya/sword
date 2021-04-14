@@ -37,10 +37,10 @@ public class MailServiceImpl implements IMailService {
 	private List<SendMailCodeHandler> getHandlers() {
 		if (handlers == null) {
 			handlers = new ArrayList<SendMailCodeHandler>();
-			Iterator<IMailCodeHandlerRegistry> iterator = loader.iterator();
+			final Iterator<IMailCodeHandlerRegistry> iterator = loader.iterator();
 			while (iterator.hasNext()) {
-				IMailCodeHandlerRegistry registry = iterator.next();
-				SendMailCodeHandler handler = registry.get();
+				final IMailCodeHandlerRegistry registry = iterator.next();
+				final SendMailCodeHandler handler = registry.get();
 				if (handler != null) {
 					handlers.add(handler);
 				}
@@ -66,8 +66,8 @@ public class MailServiceImpl implements IMailService {
 			return CommonResult.fail("暂不支持");
 		}
 		boolean success = false;
-		for (SendMailCodeHandler handler : handlers) {
-			CommonResult<?> sent = handler.sendEmail(email, subject, content);
+		for (final SendMailCodeHandler handler : handlers) {
+			final CommonResult<?> sent = handler.sendEmail(email, subject, content);
 			if (sent != null && sent.isSuccess()) {
 				success = true;
 				break;
@@ -95,8 +95,8 @@ public class MailServiceImpl implements IMailService {
 		}
 		log.debug("sendCode: {} = {}", email, code);
 		boolean success = false;
-		for (SendMailCodeHandler handler : handlers) {
-			CommonResult<?> sent = handler.sendCode(email, code.toString());
+		for (final SendMailCodeHandler handler : handlers) {
+			final CommonResult<?> sent = handler.sendCode(email, code.toString());
 			if (sent != null && sent.isSuccess()) {
 				success = true;
 				break;
@@ -117,7 +117,7 @@ public class MailServiceImpl implements IMailService {
 		if (StringUtils.isEmpty(code)) {
 			return CommonResult.fail(MessageUtils.message("mail.service.error.invalidEmail2")); //$NON-NLS-1$
 		}
-		Object cache = redis.opsForValue().get(email);
+		final Object cache = redis.opsForValue().get(email);
 		if (Objects.equals(cache, code)) {
 			return CommonResult.success(code);
 		}

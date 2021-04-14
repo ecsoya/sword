@@ -14,7 +14,7 @@ import com.soyatec.sword.common.core.text.Convert;
 
 /**
  * 客户端工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class ServletUtils {
@@ -73,13 +73,13 @@ public class ServletUtils {
 	}
 
 	public static ServletRequestAttributes getRequestAttributes() {
-		RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+		final RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
 		return (ServletRequestAttributes) attributes;
 	}
 
 	/**
 	 * 将字符串渲染到客户端
-	 * 
+	 *
 	 * @param response 渲染对象
 	 * @param string   待渲染的字符串
 	 * @return null
@@ -89,7 +89,7 @@ public class ServletUtils {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(string);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -97,26 +97,26 @@ public class ServletUtils {
 
 	/**
 	 * 是否是Ajax异步请求
-	 * 
+	 *
 	 * @param request
 	 */
 	public static boolean isAjaxRequest(HttpServletRequest request) {
-		String accept = request.getHeader("accept");
+		final String accept = request.getHeader("accept");
 		if (accept != null && accept.indexOf("application/json") != -1) {
 			return true;
 		}
 
-		String xRequestedWith = request.getHeader("X-Requested-With");
+		final String xRequestedWith = request.getHeader("X-Requested-With");
 		if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1) {
 			return true;
 		}
 
-		String uri = request.getRequestURI();
+		final String uri = request.getRequestURI();
 		if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
 			return true;
 		}
 
-		String ajax = request.getParameter("__ajax");
+		final String ajax = request.getParameter("__ajax");
 		if (StringUtils.inStringIgnoreCase(ajax, "json", "xml")) {
 			return true;
 		}
@@ -131,7 +131,7 @@ public class ServletUtils {
 		if (!ua.contains("Windows NT") || (ua.contains("Windows NT") && ua.contains("compatible; MSIE 9.0;"))) {
 			// 排除 苹果桌面系统
 			if (!ua.contains("Windows NT") && !ua.contains("Macintosh")) {
-				for (String item : agent) {
+				for (final String item : agent) {
 					if (ua.contains(item)) {
 						flag = true;
 						break;

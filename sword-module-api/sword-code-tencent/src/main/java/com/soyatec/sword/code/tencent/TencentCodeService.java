@@ -21,19 +21,19 @@ public class TencentCodeService {
 		if (StringUtils.isEmpty(email)) {
 			return null;
 		}
-		Credential cred = new Credential(config.getSecretId(), config.getSecretKey());
-		SesClient client = new SesClient(cred, config.getRegion());
-		SendEmailRequest request = new SendEmailRequest();
+		final Credential cred = new Credential(config.getSecretId(), config.getSecretKey());
+		final SesClient client = new SesClient(cred, config.getRegion());
+		final SendEmailRequest request = new SendEmailRequest();
 		request.setFromEmailAddress(config.getFrom());
 		request.setDestination(new String[] { email });
 		request.setSubject(subject);
-		Template template = new Template();
+		final Template template = new Template();
 		template.setTemplateID(templateId);
 		template.setTemplateData(templateData);
 		request.setTemplate(template);
 		try {
 			return client.SendEmail(request);
-		} catch (TencentCloudSDKException e) {
+		} catch (final TencentCloudSDKException e) {
 			return null;
 		}
 	}
@@ -42,13 +42,13 @@ public class TencentCodeService {
 		if (StringUtils.isEmpty(email)) {
 			return null;
 		}
-		Credential cred = new Credential(config.getSecretId(), config.getSecretKey());
-		SesClient client = new SesClient(cred, config.getRegion());
-		SendEmailRequest request = new SendEmailRequest();
+		final Credential cred = new Credential(config.getSecretId(), config.getSecretKey());
+		final SesClient client = new SesClient(cred, config.getRegion());
+		final SendEmailRequest request = new SendEmailRequest();
 		request.setFromEmailAddress(config.getFrom());
 		request.setDestination(new String[] { email });
 		request.setSubject(subject);
-		Template template = new Template();
+		final Template template = new Template();
 		if (html) {
 			template.setTemplateID(config.getHtmlTemplateId());
 		} else {
@@ -58,7 +58,7 @@ public class TencentCodeService {
 		request.setTemplate(template);
 		try {
 			return client.SendEmail(request);
-		} catch (TencentCloudSDKException e) {
+		} catch (final TencentCloudSDKException e) {
 			return null;
 		}
 	}

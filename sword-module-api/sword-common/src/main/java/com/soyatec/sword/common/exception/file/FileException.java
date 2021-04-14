@@ -4,7 +4,7 @@ import com.soyatec.sword.common.exception.base.BaseException;
 
 /**
  * 文件信息异常类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class FileException extends BaseException {

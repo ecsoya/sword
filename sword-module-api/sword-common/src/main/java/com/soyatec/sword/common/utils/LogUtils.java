@@ -14,7 +14,7 @@ import com.soyatec.sword.common.json.JSON;
 
 /**
  * 处理并记录日志文件
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class LogUtils {
@@ -28,15 +28,15 @@ public class LogUtils {
 	 * @throws Exception
 	 */
 	public static void logAccess(HttpServletRequest request) throws Exception {
-		String username = getUsername();
-		String jsessionId = request.getRequestedSessionId();
-		String ip = IpUtils.getIpAddr(request);
-		String accept = request.getHeader("accept");
-		String userAgent = request.getHeader("User-Agent");
-		String url = request.getRequestURI();
-		String params = getParams(request);
+		final String username = getUsername();
+		final String jsessionId = request.getRequestedSessionId();
+		final String ip = IpUtils.getIpAddr(request);
+		final String accept = request.getHeader("accept");
+		final String userAgent = request.getHeader("User-Agent");
+		final String url = request.getRequestURI();
+		final String params = getParams(request);
 
-		StringBuilder s = new StringBuilder();
+		final StringBuilder s = new StringBuilder();
 		s.append(getBlock(username));
 		s.append(getBlock(jsessionId));
 		s.append(getBlock(ip));
@@ -55,8 +55,8 @@ public class LogUtils {
 	 * @param e
 	 */
 	public static void logError(String message, Throwable e) {
-		String username = getUsername();
-		StringBuilder s = new StringBuilder();
+		final String username = getUsername();
+		final StringBuilder s = new StringBuilder();
 		s.append(getBlock("exception"));
 		s.append(getBlock(username));
 		s.append(getBlock(message));
@@ -70,18 +70,18 @@ public class LogUtils {
 	 * @param request
 	 */
 	public static void logPageError(HttpServletRequest request) {
-		String username = getUsername();
+		final String username = getUsername();
 
 		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-		String message = (String) request.getAttribute("javax.servlet.error.message");
-		String uri = (String) request.getAttribute("javax.servlet.error.request_uri");
+		final String message = (String) request.getAttribute("javax.servlet.error.message");
+		final String uri = (String) request.getAttribute("javax.servlet.error.request_uri");
 		Throwable t = (Throwable) request.getAttribute("javax.servlet.error.exception");
 
 		if (statusCode == null) {
 			statusCode = 0;
 		}
 
-		StringBuilder s = new StringBuilder();
+		final StringBuilder s = new StringBuilder();
 		s.append(getBlock(t == null ? "page" : "exception"));
 		s.append(getBlock(username));
 		s.append(getBlock(statusCode));
@@ -90,7 +90,7 @@ public class LogUtils {
 
 		s.append(getBlock(uri));
 		s.append(getBlock(request.getHeader("Referer")));
-		StringWriter sw = new StringWriter();
+		final StringWriter sw = new StringWriter();
 
 		while (t != null) {
 			t.printStackTrace(new PrintWriter(sw));
@@ -109,7 +109,7 @@ public class LogUtils {
 	}
 
 	protected static String getParams(HttpServletRequest request) throws Exception {
-		Map<String, String[]> params = request.getParameterMap();
+		final Map<String, String[]> params = request.getParameterMap();
 		return JSON.marshal(params);
 	}
 

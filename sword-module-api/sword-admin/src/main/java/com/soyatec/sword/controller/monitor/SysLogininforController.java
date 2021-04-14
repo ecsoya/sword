@@ -23,13 +23,13 @@ import com.soyatec.sword.system.service.ISysLogininforService;
 
 /**
  * 系统访问记录
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/monitor/logininfor")
 public class SysLogininforController extends BaseController {
-	private String prefix = "monitor/logininfor";
+	private final String prefix = "monitor/logininfor";
 
 	@Autowired
 	private ISysLogininforService logininforService;
@@ -49,7 +49,7 @@ public class SysLogininforController extends BaseController {
 	public TableDataInfo list(SysLogininfor logininfor) {
 		startPage();
 		logininfor.getParams().put("admin", ShiroUtils.getLoginName());
-		List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
+		final List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
 		return getDataTable(list);
 	}
 
@@ -59,8 +59,8 @@ public class SysLogininforController extends BaseController {
 	@ResponseBody
 	public AjaxResult export(SysLogininfor logininfor) {
 		logininfor.getParams().put("admin", ShiroUtils.getLoginName());
-		List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
-		ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
+		final List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
+		final ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
 		return util.exportExcel(list, "登录日志");
 	}
 

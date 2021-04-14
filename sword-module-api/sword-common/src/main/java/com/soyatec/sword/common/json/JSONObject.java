@@ -14,7 +14,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 通用消息对象，基于Map实现的可嵌套数据结构。 支持JSON数据结构。
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class JSONObject extends LinkedHashMap<String, Object> {
@@ -40,7 +40,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 		public String toString() {
 			try {
 				return JSON.marshal(this);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				throw new RuntimeException(e);
 			}
 		}
@@ -73,27 +73,27 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 	public String toString() {
 		try {
 			return JSON.marshal(this);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	/**
 	 * 转换为紧凑格式的字符串。
-	 * 
+	 *
 	 * @return 返回本对象紧凑格式字符串。
 	 */
 	public String toCompactString() {
 		try {
 			return objectMapper.writeValueAsString(this);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	/**
 	 * 获取指定字段的整数值。如果字段不存在，或者无法转换为整数，返回null。
-	 * 
+	 *
 	 * @param name 字段名，支持多级。
 	 * @return 返回指定的整数值，或者null。
 	 */
@@ -103,7 +103,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取指定字段的整数值。如果字段不存在，或者无法转换为整数，返回defaultValue。
-	 * 
+	 *
 	 * @param name         字段名，支持多级。
 	 * @param defaultValue 查询失败时，返回的值。
 	 * @return 返回指定的整数值，或者defaultValue。
@@ -114,7 +114,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取指定字段的长整数值。如果字段不存在，或者无法转换为长整数，返回null。
-	 * 
+	 *
 	 * @param name 字段名，支持多级。
 	 * @return 返回指定的长整数值，或者null。
 	 */
@@ -124,7 +124,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取指定字段的长整数值。如果字段不存在，或者无法转换为长整数，返回defaultValue。
-	 * 
+	 *
 	 * @param name         字段名，支持多级。
 	 * @param defaultValue 查询失败时，返回的值。
 	 * @return 返回指定的长整数值，或者defaultValue。
@@ -135,7 +135,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取指定字段的布尔值。如果字段不存在，或者无法转换为布尔型，返回null。
-	 * 
+	 *
 	 * @param name 字段名，支持多级。
 	 * @return 返回指定的布尔值，或者null。
 	 */
@@ -145,7 +145,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取指定字段的布尔值。如果字段不存在，或者无法转换为布尔型，返回defaultValue。
-	 * 
+	 *
 	 * @param name         字段名，支持多级。
 	 * @param defaultValue 查询失败时，返回的值。
 	 * @return 返回指定的布尔值，或者defaultValue。
@@ -156,7 +156,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取指定字段的字符串值。如果字段不存在，返回null。
-	 * 
+	 *
 	 * @param name 字段名，支持多级。
 	 * @return 返回指定的字符串值，或者null。
 	 */
@@ -166,7 +166,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取指定字段的字符串值。如果字段不存在，返回defaultValue。
-	 * 
+	 *
 	 * @param name         字段名，支持多级。
 	 * @param defaultValue 查询失败时，返回的值。
 	 * @return 返回指定的字符串值，或者defaultValue。
@@ -177,7 +177,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取指定字段的值。
-	 * 
+	 *
 	 * @param name 字段名，支持多级，支持数组下标。
 	 * @return 返回指定字段的值。
 	 */
@@ -202,7 +202,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 设置指定字段的值。
-	 * 
+	 *
 	 * @param name  字段名，支持多级，支持数组下标。
 	 * @param value 字段值。
 	 * @return 返回本对象。
@@ -230,7 +230,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取对象（非标量类型）字段。返回的数据是一个结构体。当不存在指定对象时，则为指定的名字创建一个空的MessageObject对象。
-	 * 
+	 *
 	 * @param name 字段名。不支持多级名字，支持数组下标。
 	 * @return 返回指定的对象。如果对象不存在，则为指定的名字创建一个空的MessageObject对象。
 	 */
@@ -255,7 +255,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取数组字段。将名字对应的对象以数组对象返回，当指定的字段不存在时，创建一个空的数组。
-	 * 
+	 *
 	 * @param name 字段名。不支持多级名字，不支持下标。
 	 * @return 返回一个数组（List）。
 	 */
@@ -270,7 +270,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取对象（非标量类型）字段。返回的数据是一个结构体。
-	 * 
+	 *
 	 * @param name 字段名。
 	 * @return 返回指定的对象字段。
 	 */
@@ -280,7 +280,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取数组类型字段。
-	 * 
+	 *
 	 * @param name 字段名。
 	 * @return 返回数组类型字段。
 	 */
@@ -290,7 +290,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 返回字段整数值。如果不存在，返回null。
-	 * 
+	 *
 	 * @param name 字段名。
 	 * @return 返回指定字段整数值。
 	 */
@@ -300,7 +300,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 返回字段整数值。如果不存在，返回defaultValue。
-	 * 
+	 *
 	 * @param name         字段名。
 	 * @param defaultValue 字段不存在时，返回的值。
 	 * @return 返回指定字段整数值。
@@ -311,7 +311,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 返回字段长整数值。如果不存在，返回null。
-	 * 
+	 *
 	 * @param name 字段名。
 	 * @return 返回指定字段长整数值。
 	 */
@@ -321,7 +321,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 返回字段长整数值。如果不存在，返回defaultValue。
-	 * 
+	 *
 	 * @param name         字段名。
 	 * @param defaultValue 字段不存在时，返回的值。
 	 * @return 返回指定字段长整数值。
@@ -332,7 +332,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 返回字段字符串值。如果不存在，返回null。
-	 * 
+	 *
 	 * @param name 字段名。
 	 * @return 返回指定字段字符串值。
 	 */
@@ -342,7 +342,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 返回字段字符串值。如果不存在，返回defaultValue。
-	 * 
+	 *
 	 * @param name         字段名。
 	 * @param defaultValue 字段不存在时，返回的值。
 	 * @return 返回指定字段字符串值。
@@ -353,7 +353,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 字段值按照布尔类型返回。如果不存在，返回null。
-	 * 
+	 *
 	 * @param name 字段名。
 	 * @return 字段值。
 	 */
@@ -363,7 +363,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 字段值按照布尔类型返回。如果不存在，返回defaultValue。
-	 * 
+	 *
 	 * @param name         字段名。
 	 * @param defaultValue 字段不存在时，返回的值。
 	 * @return 字段值。
@@ -374,7 +374,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 设置字段值
-	 * 
+	 *
 	 * @param name  字段名
 	 * @param value 字段值（标量：数字、字符串、布尔型；结构体：MessageObject）。
 	 *              如果是Map类型同时非MessageObject类型，则自动转换为MessageObject类型再存入
@@ -388,14 +388,14 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 将本对象转换为Java Bean。
-	 * 
+	 *
 	 * @param beanClass Java Bean的类对象。
 	 * @return 返回转换后的Java Bean。
 	 */
 	public <T> T asBean(Class<T> beanClass) {
 		try {
 			return JSON.unmarshal(JSON.marshal(this), beanClass);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -463,7 +463,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 将所有层次中凡是Map类型同时又不是MessageObject的类型，转换为MessageObject类型。
-	 * 
+	 *
 	 * @param value 值。
 	 * @return 返回转换后的值。
 	 */
@@ -496,7 +496,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 将指定下标元素作为数组返回，如果不存在，则在该位置创建一个空的数组。
-	 * 
+	 *
 	 * @param arr   当前数组。
 	 * @param index 下标。
 	 * @return 返回当前数组指定下标的元素，该元素应该是一个数组。
@@ -511,7 +511,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 将指定下标元素作为结构体返回，如果不存在，则在该位置创建一个空的结构体。
-	 * 
+	 *
 	 * @param arr   当前数组。
 	 * @param index 下标。
 	 * @return 返回当前数组指定下标元素，该元素是一个结构体。
@@ -526,7 +526,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 设置数组指定下标位置的值。
-	 * 
+	 *
 	 * @param arr   数组。
 	 * @param index 下标。
 	 * @param value 值。
@@ -537,7 +537,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 获取数组指定下标元素的值。
-	 * 
+	 *
 	 * @param arr   数组。
 	 * @param index 下标。
 	 * @return 值。
@@ -548,7 +548,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 扩展数组到指定下标，以防止访问时下标越界。
-	 * 
+	 *
 	 * @param arr   数组
 	 * @param index 下标
 	 * @return 返回传入的数组
@@ -562,7 +562,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	/**
 	 * 最后数组回调。
-	 * 
+	 *
 	 * @author Mike
 	 *
 	 * @param <T> 回调返回数据类型。
@@ -570,7 +570,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 	private interface EndArrayCallback<T> {
 		/**
 		 * 当定位到最后一级数组，将调用本方法。
-		 * 
+		 *
 		 * @param arr   最后一级数组对象。
 		 * @param index 最后一级索引。
 		 * @return 返回回调的返回值。
@@ -581,7 +581,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 	/**
 	 * 处理多维数组的工具函数（包括一维数组）。多维数组的名字如：arrary[1][2][3]，
 	 * 则name=array，indexStr=[1][2][3]，在callback中，endArr将是 array[1][2]指定的对象，indexe=3。
-	 * 
+	 *
 	 * @param name       不带下标的名字，不支持多级名字。
 	 * @param indexesStr 索引部分的字符串，如：[1][2][3]
 	 * @param callback   回调函数。
@@ -599,7 +599,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 	private static int[] parseIndexes(final String s) {
 		int[] indexes = null;
-		List<Integer> list = new ArrayList<Integer>();
+		final List<Integer> list = new ArrayList<Integer>();
 
 		final StringTokenizer st = new StringTokenizer(s, "[]");
 		while (st.hasMoreTokens()) {
@@ -613,7 +613,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
 
 		indexes = new int[list.size()];
 		int i = 0;
-		for (Integer tmp : list.toArray(new Integer[list.size()])) {
+		for (final Integer tmp : list.toArray(new Integer[list.size()])) {
 			indexes[i++] = tmp;
 		}
 

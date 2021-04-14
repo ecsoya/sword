@@ -2,7 +2,7 @@ package com.soyatec.sword.zbx.domain;
 
 /**
  * ZbxResponse
- * 
+ *
  * @author ecsoya
  *
  */

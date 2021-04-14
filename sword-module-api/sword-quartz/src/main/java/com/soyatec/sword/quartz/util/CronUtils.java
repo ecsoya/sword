@@ -7,7 +7,7 @@ import org.quartz.CronExpression;
 
 /**
  * cron表达式工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  *
  */
@@ -32,7 +32,7 @@ public class CronUtils {
 		try {
 			new CronExpression(cronExpression);
 			return null;
-		} catch (ParseException pe) {
+		} catch (final ParseException pe) {
 			return pe.getMessage();
 		}
 	}
@@ -45,9 +45,9 @@ public class CronUtils {
 	 */
 	public static Date getNextExecution(String cronExpression) {
 		try {
-			CronExpression cron = new CronExpression(cronExpression);
+			final CronExpression cron = new CronExpression(cronExpression);
 			return cron.getNextValidTimeAfter(new Date(System.currentTimeMillis()));
-		} catch (ParseException e) {
+		} catch (final ParseException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 	}

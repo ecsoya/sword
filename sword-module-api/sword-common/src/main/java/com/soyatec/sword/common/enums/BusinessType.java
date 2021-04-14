@@ -2,7 +2,7 @@ package com.soyatec.sword.common.enums;
 
 /**
  * 业务操作类型
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public enum BusinessType {

@@ -3,7 +3,7 @@ package com.soyatec.sword.exceptions;
 public class TransactionException extends RuntimeException {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 2446756072177623738L;
 

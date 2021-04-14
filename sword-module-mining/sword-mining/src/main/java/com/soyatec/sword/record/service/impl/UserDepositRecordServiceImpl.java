@@ -15,7 +15,7 @@ import com.soyatec.sword.record.service.IUserDepositRecordService;
 
 /**
  * 用户充值Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-06
  */
@@ -26,7 +26,7 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 
 	/**
 	 * 查询用户充值
-	 * 
+	 *
 	 * @param id 用户充值ID
 	 * @return 用户充值
 	 */
@@ -37,7 +37,7 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 
 	/**
 	 * 查询用户充值列表
-	 * 
+	 *
 	 * @param userDepositRecord 用户充值
 	 * @return 用户充值
 	 */
@@ -48,7 +48,7 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 
 	/**
 	 * 新增用户充值
-	 * 
+	 *
 	 * @param userDepositRecord 用户充值
 	 * @return 结果
 	 */
@@ -65,7 +65,7 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 
 	/**
 	 * 修改用户充值
-	 * 
+	 *
 	 * @param userDepositRecord 用户充值
 	 * @return 结果
 	 */
@@ -77,7 +77,7 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 
 	/**
 	 * 删除用户充值对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -88,7 +88,7 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 
 	/**
 	 * 删除用户充值信息
-	 * 
+	 *
 	 * @param id 用户充值ID
 	 * @return 结果
 	 */

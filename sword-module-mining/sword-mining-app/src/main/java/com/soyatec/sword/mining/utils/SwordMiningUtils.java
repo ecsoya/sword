@@ -12,7 +12,7 @@ public class SwordMiningUtils extends SwordUtils {
 		if (StringUtils.isEmpty(password)) {
 			return CommonResult.fail("密码错误");
 		}
-		IUserWalletService walletService = SpringUtils.getBean(IUserWalletService.class);
+		final IUserWalletService walletService = SpringUtils.getBean(IUserWalletService.class);
 		return walletService.verifyUserWalletPassword(getUserId(), password);
 	}
 

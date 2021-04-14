@@ -12,7 +12,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 岗位表 sys_post
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysPost extends BaseEntity {

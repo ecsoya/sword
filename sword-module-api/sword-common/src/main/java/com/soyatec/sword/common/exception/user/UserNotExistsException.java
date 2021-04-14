@@ -2,7 +2,7 @@ package com.soyatec.sword.common.exception.user;
 
 /**
  * 用户不存在异常类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class UserNotExistsException extends UserException {

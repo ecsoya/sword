@@ -15,7 +15,7 @@ public class JavamailService {
 
 	public CommonResult<?> sendEmail(String address, String subject, String content) {
 		try {
-			HtmlEmail email = new HtmlEmail();
+			final HtmlEmail email = new HtmlEmail();
 
 			email.setHostName(config.getHost());
 			email.setSSLOnConnect(config.isSsl());
@@ -28,7 +28,7 @@ public class JavamailService {
 			email.setHtmlMsg(content);
 
 			email.send();
-		} catch (EmailException e) {
+		} catch (final EmailException e) {
 			return CommonResult.fail(e.getLocalizedMessage());
 		}
 

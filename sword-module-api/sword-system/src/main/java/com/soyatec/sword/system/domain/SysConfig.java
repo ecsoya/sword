@@ -12,7 +12,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 参数配置表 sys_config
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysConfig extends BaseEntity {

@@ -10,18 +10,18 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 /**
  * 定时任务配置
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Configuration
 public class ScheduleConfig {
 	@Bean
 	public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) {
-		SchedulerFactoryBean factory = new SchedulerFactoryBean();
+		final SchedulerFactoryBean factory = new SchedulerFactoryBean();
 		factory.setDataSource(dataSource);
 
 		// quartz参数
-		Properties prop = new Properties();
+		final Properties prop = new Properties();
 		prop.put("org.quartz.scheduler.instanceName", "SwordScheduler");
 		prop.put("org.quartz.scheduler.instanceId", "AUTO");
 		// 线程池配置

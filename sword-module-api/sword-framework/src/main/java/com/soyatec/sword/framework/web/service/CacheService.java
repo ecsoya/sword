@@ -15,7 +15,7 @@ import com.soyatec.sword.common.utils.spring.SpringUtils;
 
 /**
  * 缓存操作处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Service
@@ -25,13 +25,13 @@ public class CacheService {
 
 	/**
 	 * 获取所有缓存名称
-	 * 
+	 *
 	 * @return 缓存列表
 	 */
 	public String[] getCacheNames() {
 		String[] cacheNames = new String[0];
 		if (cacheManager instanceof RedisCacheManager) {
-			RedisCacheManager redis = (RedisCacheManager) cacheManager;
+			final RedisCacheManager redis = (RedisCacheManager) cacheManager;
 			cacheNames = getCacheNames(redis);
 		}
 		return ArrayUtils.removeElement(cacheNames, Constants.SYS_AUTH_CACHE);
@@ -42,21 +42,21 @@ public class CacheService {
 			return new String[0];
 		}
 		try {
-			Field f = RedisCacheManager.class.getDeclaredField("caches");
+			final Field f = RedisCacheManager.class.getDeclaredField("caches");
 			f.setAccessible(true);
 			@SuppressWarnings("unchecked")
-			Map<String, Object> map = (Map<String, Object>) f.get(redis);
+			final Map<String, Object> map = (Map<String, Object>) f.get(redis);
 			if (map != null) {
 				return map.keySet().toArray(new String[0]);
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 		}
 		return new String[0];
 	}
 
 	/**
 	 * 根据缓存名称获取所有键名
-	 * 
+	 *
 	 * @param cacheName 缓存名称
 	 * @return 键名列表
 	 */
@@ -66,20 +66,20 @@ public class CacheService {
 
 	/**
 	 * 根据缓存名称和键名获取内容值
-	 * 
+	 *
 	 * @param cacheName 缓存名称
 	 * @param cacheKey  键名
 	 * @return 键值
 	 */
 	public Object getCacheValue(String cacheName, String cacheKey) {
-		String simpleKey = cacheKey.replaceAll("shiro:cache:" + cacheName + ":", "");
-		Object object = CacheUtils.get(cacheName, simpleKey);
+		final String simpleKey = cacheKey.replaceAll("shiro:cache:" + cacheName + ":", "");
+		final Object object = CacheUtils.get(cacheName, simpleKey);
 		return object;
 	}
 
 	/**
 	 * 根据名称删除缓存信息
-	 * 
+	 *
 	 * @param cacheName 缓存名称
 	 */
 	public void clearCacheName(String cacheName) {
@@ -88,12 +88,12 @@ public class CacheService {
 
 	/**
 	 * 根据名称和键名删除缓存信息
-	 * 
+	 *
 	 * @param cacheName 缓存名称
 	 * @param cacheKey  键名
 	 */
 	public void clearCacheKey(String cacheName, String cacheKey) {
-		String simpleKey = cacheKey.replaceAll("shiro:cache:" + cacheName + ":", "");
+		final String simpleKey = cacheKey.replaceAll("shiro:cache:" + cacheName + ":", "");
 		CacheUtils.remove(cacheName, simpleKey);
 	}
 
@@ -101,8 +101,8 @@ public class CacheService {
 	 * 清理所有缓存
 	 */
 	public void clearAll() {
-		String[] cacheNames = getCacheNames();
-		for (String cacheName : cacheNames) {
+		final String[] cacheNames = getCacheNames();
+		for (final String cacheName : cacheNames) {
 			CacheUtils.removeAll(cacheName);
 		}
 	}

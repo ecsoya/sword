@@ -57,8 +57,9 @@ public class MiningWalletController extends BaseController {
 	public TableDataInfo list(UserWithdrawalOrder userWithdrawalOrder, Date start, Date end) {
 		userWithdrawalOrder.setTimeParams(start, end);
 		startPage();
-		List<UserWithdrawalOrder> list = userWithdrawalOrderService.selectUserWithdrawalOrderList(userWithdrawalOrder);
-		TableDataInfo table = getDataTable(list);
+		final List<UserWithdrawalOrder> list = userWithdrawalOrderService
+				.selectUserWithdrawalOrderList(userWithdrawalOrder);
+		final TableDataInfo table = getDataTable(list);
 //		userWithdrawalOrder.setStatus(UserWithdrawalOrder.STATUS_SUCCESS);
 		userWithdrawalOrder.setTimeParams(DateUtils.getLastDayStart(), DateUtils.getLastDayEnd());
 		table.addParam("昨日提币", userWithdrawalOrderService.selectUserWithdrawalAmount(userWithdrawalOrder));
@@ -86,8 +87,8 @@ public class MiningWalletController extends BaseController {
 	public TableDataInfo list(UserDepositOrder userDepositOrder, Date start, Date end) {
 		userDepositOrder.setTimeParams(start, end);
 		startPage();
-		List<UserDepositOrder> list = userDepositOrderService.selectUserDepositOrderList(userDepositOrder);
-		TableDataInfo table = getDataTable(list);
+		final List<UserDepositOrder> list = userDepositOrderService.selectUserDepositOrderList(userDepositOrder);
+		final TableDataInfo table = getDataTable(list);
 		userDepositOrder.setTimeParams(DateUtils.getLastDayStart(), DateUtils.getLastDayEnd());
 		table.addParam("昨日充值", userDepositOrderService.selectUserDepositAmount(userDepositOrder));
 		userDepositOrder.setTimeParams(DateUtils.getTodayStart(), null);
@@ -104,7 +105,7 @@ public class MiningWalletController extends BaseController {
 	@PostMapping("/withdrawal/checkPassed")
 	@ResponseBody
 	public AjaxResult checkPassed(String ids) {
-		CommonResult<?> result = userWithdrawalOrderService.confirmWithdrawal(ids);
+		final CommonResult<?> result = userWithdrawalOrderService.confirmWithdrawal(ids);
 		if (result.isSuccess()) {
 			return AjaxResult.success();
 		}
@@ -116,7 +117,7 @@ public class MiningWalletController extends BaseController {
 	@PostMapping("/withdrawal/checkDenied")
 	@ResponseBody
 	public AjaxResult checkDenied(String ids, String remark) {
-		CommonResult<?> result = userWithdrawalOrderService.cancelWithdrawal(ids, remark);
+		final CommonResult<?> result = userWithdrawalOrderService.cancelWithdrawal(ids, remark);
 		if (result.isSuccess()) {
 			return AjaxResult.success();
 		}

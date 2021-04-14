@@ -1,5 +1,6 @@
 package com.soyatec.sword.user.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,11 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		if (profile == null || profile.getUserId() == null) {
 			return CommonResult.fail();
 		}
-		SysUser user = new SysUser();
+		final SysUser user = new SysUser();
 		user.setUserId(profile.getUserId());
 		user.setAvatar(profile.getAvatar());
 		user.setUserName(profile.getUserName());
-		int rows = userService.updateUserInfo(user);
+		final int rows = userService.updateUserInfo(user);
 		return rows > 0 ? CommonResult.success(rows) : CommonResult.fail(MessageUtils.message("UserServiceImpl.16")); //$NON-NLS-1$
 	}
 
@@ -73,7 +74,7 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		if (userId == null || status == null) {
 			return 0;
 		}
-		SysUser user = new SysUser();
+		final SysUser user = new SysUser();
 		user.setUserId(userId);
 		user.setStatus(status.toString());
 		return userService.changeStatus(user);
@@ -117,12 +118,12 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		if (newPassword.length() < 6) {
 			return CommonResult.fail(MessageUtils.message("UserServiceImpl.18")); //$NON-NLS-1$
 		}
-		SysUser user = userService.selectUserById(userId);
-		if (!StringUtils.equals(user.getPassword(),
+		final SysUser user = userService.selectUserById(userId);
+		if (!org.apache.commons.lang3.StringUtils.equals(user.getPassword(),
 				StringUtils.encryptPassword(user.getLoginName(), oldPassword, user.getSalt()))) {
 			return CommonResult.fail(MessageUtils.message("UserServiceImpl.19")); //$NON-NLS-1$
 		}
-		SysUser resetPwd = new SysUser();
+		final SysUser resetPwd = new SysUser();
 		resetPwd.setUserId(user.getUserId());
 		resetPwd.setSalt(StringUtils.randomNum(6));
 		resetPwd.setPassword(StringUtils.encryptPassword(user.getLoginName(), newPassword, resetPwd.getSalt()));
@@ -176,7 +177,7 @@ public class UserProfileServiceImpl implements IUserProfileService {
 
 	@Override
 	public CommonResult<?> resetUserPassword(Long userId, String password) {
-		String loginName = selectUserLoginNameByUserId(userId);
+		final String loginName = selectUserLoginNameByUserId(userId);
 		String msg = "";
 		if (StringUtils.isEmpty(loginName)) {
 			msg = MessageUtils.message("UserServiceImpl.9"); //$NON-NLS-1$
@@ -189,7 +190,7 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		if (!StringUtils.isEmpty(msg)) {
 			return CommonResult.fail(msg);
 		}
-		SysUser resetPwd = new SysUser();
+		final SysUser resetPwd = new SysUser();
 		resetPwd.setUserId(userId);
 		resetPwd.setSalt(StringUtils.randomNum(6));
 		resetPwd.setPassword(StringUtils.encryptPassword(loginName, password, resetPwd.getSalt()));
@@ -209,10 +210,10 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		if (userId == null || StringUtils.isEmpty(mobile)) {
 			return AjaxResult.error("参数错误");
 		}
-		SysUser user = new SysUser();
+		final SysUser user = new SysUser();
 		user.setUserId(userId);
 		user.setPhonenumber(mobile);
-		int rows = userService.updateUserInfo(user);
+		final int rows = userService.updateUserInfo(user);
 		if (rows > 0) {
 			return AjaxResult.success("修改成功");
 		} else {
@@ -225,10 +226,10 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		if (userId == null || StringUtils.isEmpty(email)) {
 			return AjaxResult.error("参数错误");
 		}
-		SysUser user = new SysUser();
+		final SysUser user = new SysUser();
 		user.setUserId(userId);
 		user.setEmail(email);
-		int rows = userService.updateUserInfo(user);
+		final int rows = userService.updateUserInfo(user);
 		if (rows > 0) {
 			CacheUtils.put(USER_ID_2_EMAIL_CACHE, userId.toString(), email);
 			CacheUtils.put(USER_LOGIN_NAME_2_EMAIL_CACHE, selectUserLoginNameByUserId(userId), email);
@@ -246,5 +247,13 @@ public class UserProfileServiceImpl implements IUserProfileService {
 	@Override
 	public List<UserProfile> fuzzySearchUserList(String loginName) {
 		return userProfileMapper.fuzzySearchUserList(loginName);
+	}
+
+	@Override
+	public List<UserProfile> selectUserProfileList(List<Long> userIds) {
+		if (userIds == null || userIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+		return userProfileMapper.selectUserProfileList(userIds);
 	}
 }

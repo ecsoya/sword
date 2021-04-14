@@ -6,14 +6,14 @@ import com.soyatec.sword.user.domain.UserCertificate;
 
 /**
  * 用户实名Mapper接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-23
  */
 public interface UserCertificateMapper {
 	/**
 	 * 查询用户实名
-	 * 
+	 *
 	 * @param userId 用户实名ID
 	 * @return 用户实名
 	 */
@@ -21,7 +21,7 @@ public interface UserCertificateMapper {
 
 	/**
 	 * 查询用户实名列表
-	 * 
+	 *
 	 * @param userCertificate 用户实名
 	 * @return 用户实名集合
 	 */
@@ -29,7 +29,7 @@ public interface UserCertificateMapper {
 
 	/**
 	 * 新增用户实名
-	 * 
+	 *
 	 * @param userCertificate 用户实名
 	 * @return 结果
 	 */
@@ -37,7 +37,7 @@ public interface UserCertificateMapper {
 
 	/**
 	 * 修改用户实名
-	 * 
+	 *
 	 * @param userCertificate 用户实名
 	 * @return 结果
 	 */
@@ -45,7 +45,7 @@ public interface UserCertificateMapper {
 
 	/**
 	 * 删除用户实名
-	 * 
+	 *
 	 * @param userId 用户实名ID
 	 * @return 结果
 	 */
@@ -53,7 +53,7 @@ public interface UserCertificateMapper {
 
 	/**
 	 * 批量删除用户实名
-	 * 
+	 *
 	 * @param userIds 需要删除的数据ID
 	 * @return 结果
 	 */

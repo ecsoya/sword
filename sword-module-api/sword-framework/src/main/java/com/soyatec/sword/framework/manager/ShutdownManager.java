@@ -36,7 +36,7 @@ public class ShutdownManager {
 			try {
 				logger.info("====关闭会话验证任务====");
 				springSessionValidationScheduler.disableSessionValidation();
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				logger.error(e.getMessage(), e);
 			}
 		}
@@ -49,7 +49,7 @@ public class ShutdownManager {
 		try {
 			logger.info("====关闭后台任务任务线程池====");
 			AsyncManager.me().shutdown();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 	}

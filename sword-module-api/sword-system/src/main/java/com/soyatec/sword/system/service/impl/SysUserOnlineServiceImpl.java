@@ -19,7 +19,7 @@ import com.soyatec.sword.system.service.ISysUserOnlineService;
 
 /**
  * 在线用户 服务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Service
@@ -32,7 +32,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 
 	/**
 	 * 通过会话序号查询信息
-	 * 
+	 *
 	 * @param sessionId 会话ID
 	 * @return 在线用户信息
 	 */
@@ -43,13 +43,13 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 
 	/**
 	 * 通过会话序号删除信息
-	 * 
+	 *
 	 * @param sessionId 会话ID
 	 * @return 在线用户信息
 	 */
 	@Override
 	public void deleteOnlineById(String sessionId) {
-		SysUserOnline userOnline = selectOnlineById(sessionId);
+		final SysUserOnline userOnline = selectOnlineById(sessionId);
 		if (StringUtils.isNotNull(userOnline)) {
 			userOnlineDao.deleteOnlineById(sessionId);
 		}
@@ -57,14 +57,14 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 
 	/**
 	 * 通过会话序号删除信息
-	 * 
+	 *
 	 * @param sessions 会话ID集合
 	 * @return 在线用户信息
 	 */
 	@Override
 	public void batchDeleteOnline(List<String> sessions) {
-		for (String sessionId : sessions) {
-			SysUserOnline userOnline = selectOnlineById(sessionId);
+		for (final String sessionId : sessions) {
+			final SysUserOnline userOnline = selectOnlineById(sessionId);
 			if (StringUtils.isNotNull(userOnline)) {
 				userOnlineDao.deleteOnlineById(sessionId);
 			}
@@ -73,7 +73,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 
 	/**
 	 * 保存会话信息
-	 * 
+	 *
 	 * @param online 会话信息
 	 */
 	@Override
@@ -83,7 +83,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 
 	/**
 	 * 查询会话集合
-	 * 
+	 *
 	 * @param userOnline 在线用户
 	 */
 	@Override
@@ -93,7 +93,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 
 	/**
 	 * 强退用户
-	 * 
+	 *
 	 * @param sessionId 会话ID
 	 */
 	@Override
@@ -103,14 +103,14 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 
 	/**
 	 * 清理用户缓存
-	 * 
+	 *
 	 * @param loginName 登录名称
 	 * @param sessionId 会话ID
 	 */
 	@Override
 	public void removeUserCache(String loginName, String sessionId) {
-		Cache<String, Deque<Serializable>> cache = cacheManager.getCache(ShiroConstants.SYS_USERCACHE);
-		Deque<Serializable> deque = cache.get(loginName);
+		final Cache<String, Deque<Serializable>> cache = cacheManager.getCache(ShiroConstants.SYS_USERCACHE);
+		final Deque<Serializable> deque = cache.get(loginName);
 		if (StringUtils.isEmpty(deque) || deque.size() == 0) {
 			return;
 		}
@@ -119,12 +119,12 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 
 	/**
 	 * 查询会话集合
-	 * 
+	 *
 	 * @param expiredDate 失效日期
 	 */
 	@Override
 	public List<SysUserOnline> selectOnlineByExpired(Date expiredDate) {
-		String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);
+		final String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);
 		return userOnlineDao.selectOnlineByExpired(lastAccessTime);
 	}
 }

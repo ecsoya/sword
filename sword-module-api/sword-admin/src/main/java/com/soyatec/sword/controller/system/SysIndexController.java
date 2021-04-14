@@ -32,7 +32,7 @@ import com.soyatec.sword.system.service.ISysMenuService;
 
 /**
  * 首页 业务处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
@@ -53,9 +53,9 @@ public class SysIndexController extends BaseController {
 	@GetMapping("/index")
 	public String index(ModelMap mmap) {
 		// 取身份信息
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		// 根据用户id取出菜单
-		List<SysMenu> menus = menuService.selectMenusByUser(user);
+		final List<SysMenu> menus = menuService.selectMenusByUser(user);
 		mmap.put("menus", menus);
 		mmap.put("user", user);
 		mmap.put("config", config);
@@ -68,20 +68,20 @@ public class SysIndexController extends BaseController {
 		mmap.put("isPasswordExpired", passwordIsExpiration(user.getPwdUpdateDate()));
 
 		// 菜单导航显示风格
-		String menuStyle = configService.selectConfigValueByKey("sys.index.menuStyle");
+		final String menuStyle = configService.selectConfigValueByKey("sys.index.menuStyle");
 		// 移动端，默认使左侧导航菜单，否则取默认配置
 		String indexStyle = ServletUtils.checkAgentIsMobile(ServletUtils.getRequest().getHeader("User-Agent")) ? "index"
 				: menuStyle;
 
 		// 优先Cookie配置导航菜单
-		Cookie[] cookies = ServletUtils.getRequest().getCookies();
-		for (Cookie cookie : cookies) {
+		final Cookie[] cookies = ServletUtils.getRequest().getCookies();
+		for (final Cookie cookie : cookies) {
 			if (StringUtils.isNotEmpty(cookie.getName()) && "nav-style".equalsIgnoreCase(cookie.getName())) {
 				indexStyle = cookie.getValue();
 				break;
 			}
 		}
-		String webIndex = "topnav".equalsIgnoreCase(indexStyle) ? "index-topnav" : "index";
+		final String webIndex = "topnav".equalsIgnoreCase(indexStyle) ? "index-topnav" : "index";
 		return webIndex;
 	}
 
@@ -98,7 +98,7 @@ public class SysIndexController extends BaseController {
 	@PostMapping("/unlockscreen")
 	@ResponseBody
 	public AjaxResult unlockscreen(String password) {
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		if (StringUtils.isNull(user)) {
 			return AjaxResult.error("服务器超时，请重新登陆");
 		}
@@ -126,7 +126,7 @@ public class SysIndexController extends BaseController {
 	public String main(ModelMap mmap) {
 		mmap.put("version", GlobalConfig.getVersion());
 		// 取身份信息
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		if (!"develop".equals(user.getLoginName()) && StringUtils.isNotEmpty(GlobalConfig.getMainPage())) {
 			return GlobalConfig.getMainPage();
 		}
@@ -135,21 +135,21 @@ public class SysIndexController extends BaseController {
 
 	// 检查初始密码是否提醒修改
 	public boolean initPasswordIsModify(Date pwdUpdateDate) {
-		Integer initPasswordModify = Convert
+		final Integer initPasswordModify = Convert
 				.toInt(configService.selectConfigValueByKey("sys.account.initPasswordModify"));
 		return initPasswordModify != null && initPasswordModify == 1 && pwdUpdateDate == null;
 	}
 
 	// 检查密码是否过期
 	public boolean passwordIsExpiration(Date pwdUpdateDate) {
-		Integer passwordValidateDays = Convert
+		final Integer passwordValidateDays = Convert
 				.toInt(configService.selectConfigValueByKey("sys.account.passwordValidateDays"));
 		if (passwordValidateDays != null && passwordValidateDays > 0) {
 			if (StringUtils.isNull(pwdUpdateDate)) {
 				// 如果从未修改过初始密码，直接提醒过期
 				return true;
 			}
-			Date nowDate = DateUtils.getNowDate();
+			final Date nowDate = DateUtils.getNowDate();
 			return DateUtils.differentDaysByMillisecond(nowDate, pwdUpdateDate) > passwordValidateDays;
 		}
 		return false;

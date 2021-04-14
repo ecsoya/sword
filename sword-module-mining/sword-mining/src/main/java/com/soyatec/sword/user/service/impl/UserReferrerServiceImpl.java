@@ -28,7 +28,7 @@ import com.soyatec.sword.user.service.IUserReferrerService;
 
 /**
  * 用户直推Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
@@ -50,7 +50,7 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 
 	/**
 	 * 查询用户直推
-	 * 
+	 *
 	 * @param userId 用户直推ID
 	 * @return 用户直推
 	 */
@@ -73,7 +73,7 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 
 	/**
 	 * 查询用户直推列表
-	 * 
+	 *
 	 * @param userReferrer 用户直推
 	 * @return 用户直推
 	 */
@@ -84,7 +84,7 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 
 	/**
 	 * 新增用户直推
-	 * 
+	 *
 	 * @param userReferrer 用户直推
 	 * @return 结果
 	 */
@@ -96,7 +96,7 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 
 	/**
 	 * 修改用户直推
-	 * 
+	 *
 	 * @param userReferrer 用户直推
 	 * @return 结果
 	 */
@@ -111,7 +111,7 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 
 	/**
 	 * 删除用户直推对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -122,7 +122,7 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 
 	/**
 	 * 删除用户直推信息
-	 * 
+	 *
 	 * @param userId 用户直推ID
 	 * @return 结果
 	 */
@@ -138,7 +138,7 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 
 	@Override
 	public List<UserReferrer> selectUnfinishedUserReferrers() {
-		UserReferrer query = new UserReferrer();
+		final UserReferrer query = new UserReferrer();
 		query.setBtree(UserReferrer.BTREE_UNFINISHED);
 		return selectUserReferrerList(query);
 	}
@@ -152,16 +152,16 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		if (referrer == null) {
 			return null;
 		}
-		Long userId = referrer.getUserId();
-		String baseUrl = configService.selectConfigValueByKey(IMiningConstants.USER_REFERRAL_LINK_URL);
+		final Long userId = referrer.getUserId();
+		final String baseUrl = configService.selectConfigValueByKey(IMiningConstants.USER_REFERRAL_LINK_URL);
 
-		UserReferrer update = new UserReferrer();
+		final UserReferrer update = new UserReferrer();
 		update.setUserId(userId);
 
 		// 刷新左区
 		String leftCodeUrl = referrer.getLeftCodeUrl();
-		String leftCode = referrer.getLeftCode();
-		String leftUrl = StringUtils.isEmpty(baseUrl) ? leftCode : baseUrl + leftCode;
+		final String leftCode = referrer.getLeftCode();
+		final String leftUrl = StringUtils.isEmpty(baseUrl) ? leftCode : baseUrl + leftCode;
 		leftCodeUrl = QrcodeUtils.generate(leftUrl);
 		referrer.setLeftCodeUrl(leftCodeUrl);
 		update.setLeftCodeUrl(leftCodeUrl);
@@ -169,8 +169,8 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		if (leftOnly == null || Boolean.FALSE.equals(leftOnly)) {
 			// 刷新右区
 			String rightCodeUrl = referrer.getRightCodeUrl();
-			String rightCode = referrer.getRightCode();
-			String rightUrl = StringUtils.isEmpty(baseUrl) ? rightCode : baseUrl + rightCode;
+			final String rightCode = referrer.getRightCode();
+			final String rightUrl = StringUtils.isEmpty(baseUrl) ? rightCode : baseUrl + rightCode;
 			rightCodeUrl = QrcodeUtils.generate(rightUrl);
 			referrer.setRightCodeUrl(rightCodeUrl);
 			update.setRightCodeUrl(rightCodeUrl);
@@ -224,18 +224,18 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		if (userId == null) {
 			return 0;
 		}
-		String baseUrl = configService.selectConfigValueByKey(IMiningConstants.USER_REFERRAL_LINK_URL);
-		UserReferrer referrer = new UserReferrer();
+		final String baseUrl = configService.selectConfigValueByKey(IMiningConstants.USER_REFERRAL_LINK_URL);
+		final UserReferrer referrer = new UserReferrer();
 		referrer.setUserId(userId);
 		if (left) {
 			referrer.generateLeftCode();
-			String leftCode = referrer.getLeftCode();
-			String leftUrl = StringUtils.isEmpty(baseUrl) ? leftCode : baseUrl + leftCode;
+			final String leftCode = referrer.getLeftCode();
+			final String leftUrl = StringUtils.isEmpty(baseUrl) ? leftCode : baseUrl + leftCode;
 			referrer.setLeftCodeUrl(QrcodeUtils.generate(leftUrl));
 		} else {
 			referrer.generateRightCode();
-			String rightCode = referrer.getRightCode();
-			String rightUrl = StringUtils.isEmpty(baseUrl) ? rightCode : baseUrl + rightCode;
+			final String rightCode = referrer.getRightCode();
+			final String rightUrl = StringUtils.isEmpty(baseUrl) ? rightCode : baseUrl + rightCode;
 			referrer.setRightCodeUrl(QrcodeUtils.generate(rightUrl));
 		}
 
@@ -244,22 +244,22 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 
 	@Override
 	public void updateAllQrcodeCode() {
-		String baseUrl = configService.selectConfigValueByKey(IMiningConstants.USER_REFERRAL_LINK_URL);
-		List<UserReferrer> list = selectUserReferrerList(new UserReferrer());
+		final String baseUrl = configService.selectConfigValueByKey(IMiningConstants.USER_REFERRAL_LINK_URL);
+		final List<UserReferrer> list = selectUserReferrerList(new UserReferrer());
 		list.parallelStream().forEach(user -> {
-			UserReferrer referrer = new UserReferrer();
+			final UserReferrer referrer = new UserReferrer();
 			referrer.setUserId(user.getUserId());
 			if (StringUtils.isEmpty(user.getLeftCode())) {
 				referrer.generateLeftCode();
 			}
-			String leftCode = referrer.getLeftCode();
-			String leftUrl = StringUtils.isEmpty(baseUrl) ? leftCode : baseUrl + leftCode;
+			final String leftCode = referrer.getLeftCode();
+			final String leftUrl = StringUtils.isEmpty(baseUrl) ? leftCode : baseUrl + leftCode;
 			referrer.setLeftCodeUrl(QrcodeUtils.generate(leftUrl));
 			if (StringUtils.isEmpty(user.getRightCode())) {
 				referrer.generateRightCode();
 			}
-			String rightCode = referrer.getRightCode();
-			String rightUrl = StringUtils.isEmpty(baseUrl) ? rightCode : baseUrl + rightCode;
+			final String rightCode = referrer.getRightCode();
+			final String rightUrl = StringUtils.isEmpty(baseUrl) ? rightCode : baseUrl + rightCode;
 			referrer.setRightCodeUrl(QrcodeUtils.generate(rightUrl));
 
 			referrer.setBaseUrl(baseUrl);
@@ -273,14 +273,14 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		if (userId == null) {
 			return UserReferrer.DISABLED;
 		}
-		UserReferrer referrer = selectUserReferrerById(userId);
+		final UserReferrer referrer = selectUserReferrerById(userId);
 		if (referrer == null || UserReferrer.DISABLED.equals(referrer.getLeftCodeEnabled())) {
 			return UserReferrer.DISABLED;
 		}
-		String leftCode = referrer.getLeftCode();
-		UserReferrer query = new UserReferrer();
+		final String leftCode = referrer.getLeftCode();
+		final UserReferrer query = new UserReferrer();
 		query.setReferralCode(leftCode);
-		List<UserReferrer> list = selectUserReferrerList(query);
+		final List<UserReferrer> list = selectUserReferrerList(query);
 		if (!list.isEmpty()) {
 			return UserReferrer.ENABLED;
 		}
@@ -300,11 +300,11 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		if (userId == null) {
 			return 0;
 		}
-		UserReferrer referrer = selectUserReferrerById(userId);
+		final UserReferrer referrer = selectUserReferrerById(userId);
 		if (referrer == null) {
 			return 0;
 		}
-		UserReferrer update = new UserReferrer();
+		final UserReferrer update = new UserReferrer();
 		if (UserReferrer.DISABLED.equals(referrer.getLeftCodeEnabled())) {
 			update.setUserId(userId);
 			update.setLeftCodeEnabled(computeLeftCodeEnabled(userId));
@@ -327,20 +327,20 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		if (userId == null || allUsers == null || allUsers.isEmpty()) {
 			return Collections.emptyList();
 		}
-		Vector<Long> results = new Vector<>();
-		UserReferrer root = findUserReferrer(userId, allUsers);
+		final Vector<Long> results = new Vector<>();
+		final UserReferrer root = findUserReferrer(userId, allUsers);
 		if (root == null) {
 			return Collections.emptyList();
 		}
-		Stack<UserReferrer> stack = new Stack<UserReferrer>();
+		final Stack<UserReferrer> stack = new Stack<UserReferrer>();
 		stack.add(root);
 		UserReferrer tree;
 		while (!stack.isEmpty()) {
 			tree = stack.pop();
-			List<UserReferrer> list = findReferralList(tree.getUserId(), allUsers);
+			final List<UserReferrer> list = findReferralList(tree.getUserId(), allUsers);
 			list.forEach(user -> {
 				stack.add(user);
-				Long id = user.getUserId();
+				final Long id = user.getUserId();
 				if (!results.contains(id)) {
 					results.add(id);
 				}
@@ -361,10 +361,10 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		if (userId == null || allUsers == null || allUsers.isEmpty()) {
 			return Collections.emptyList();
 		}
-		Vector<Long> results = new Vector<>();
-		List<UserReferrer> referrers = findReferralList(userId, allUsers);
-		for (UserReferrer userReferrer : referrers) {
-			Long id = userReferrer.getUserId();
+		final Vector<Long> results = new Vector<>();
+		final List<UserReferrer> referrers = findReferralList(userId, allUsers);
+		for (final UserReferrer userReferrer : referrers) {
+			final Long id = userReferrer.getUserId();
 			results.add(id);
 			results.addAll(selectUmbrellaUserIds(id, allUsers));
 		}

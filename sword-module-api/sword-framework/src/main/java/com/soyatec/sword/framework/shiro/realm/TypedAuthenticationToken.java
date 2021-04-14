@@ -5,7 +5,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 public class TypedAuthenticationToken extends UsernamePasswordToken {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -3358571335507074241L;
 

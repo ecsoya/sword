@@ -9,7 +9,7 @@ import com.soyatec.sword.common.utils.spring.SpringUtils;
 
 /**
  * 获取i18n资源文件
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class MessageUtils {
@@ -21,7 +21,7 @@ public class MessageUtils {
 	 * @return 获取国际化翻译值
 	 */
 	public static String message(String code, Object... args) {
-		MessageSource messageSource = SpringUtils.getBean(MessageSource.class);
+		final MessageSource messageSource = SpringUtils.getBean(MessageSource.class);
 		return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
 	}
 
@@ -33,7 +33,7 @@ public class MessageUtils {
 	 * @return 获取国际化翻译值
 	 */
 	public static String message(Locale locale, String code, Object... args) {
-		MessageSource messageSource = SpringUtils.getBean(MessageSource.class);
+		final MessageSource messageSource = SpringUtils.getBean(MessageSource.class);
 		return messageSource.getMessage(code, args, locale);
 	}
 }

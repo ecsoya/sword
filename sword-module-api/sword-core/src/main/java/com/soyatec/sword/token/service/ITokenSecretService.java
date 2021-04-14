@@ -6,14 +6,14 @@ import com.soyatec.sword.token.domain.TokenSecret;
 
 /**
  * 开放接口APIService接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-07
  */
 public interface ITokenSecretService {
 	/**
 	 * 查询开放接口API
-	 * 
+	 *
 	 * @param id 开放接口APIID
 	 * @return 开放接口API
 	 */
@@ -21,7 +21,7 @@ public interface ITokenSecretService {
 
 	/**
 	 * 查询开放接口API列表
-	 * 
+	 *
 	 * @param tokenSecret 开放接口API
 	 * @return 开放接口API集合
 	 */
@@ -29,7 +29,7 @@ public interface ITokenSecretService {
 
 	/**
 	 * 新增开放接口API
-	 * 
+	 *
 	 * @param tokenSecret 开放接口API
 	 * @return 结果
 	 */
@@ -37,7 +37,7 @@ public interface ITokenSecretService {
 
 	/**
 	 * 修改开放接口API
-	 * 
+	 *
 	 * @param tokenSecret 开放接口API
 	 * @return 结果
 	 */
@@ -45,7 +45,7 @@ public interface ITokenSecretService {
 
 	/**
 	 * 批量删除开放接口API
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -53,7 +53,7 @@ public interface ITokenSecretService {
 
 	/**
 	 * 删除开放接口API信息
-	 * 
+	 *
 	 * @param id 开放接口APIID
 	 * @return 结果
 	 */

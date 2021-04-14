@@ -13,7 +13,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 用户双区树对象 t_user_binary_tree
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
@@ -94,7 +94,7 @@ public class UserBinaryTree extends BaseEntity {
 	}
 
 	public List<Long> listIds() {
-		Vector<Long> ids = new Vector<Long>();
+		final Vector<Long> ids = new Vector<Long>();
 		if (!isLeftEmpty()) {
 			ids.add(leftId);
 		}

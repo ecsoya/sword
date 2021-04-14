@@ -5,7 +5,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 public class UserReferrerInfo extends BaseEntity {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1611746763866825941L;
 

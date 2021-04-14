@@ -24,7 +24,7 @@ public class ShiroAccessControllerFilter extends AccessControlFilter {
 		if (isLoginRequest(request, response)) {
 			return true;
 		} else {
-			Subject subject = getSubject(request, response);
+			final Subject subject = getSubject(request, response);
 			// If principal is not null, then the user is known and should be allowed
 			// access.
 			return subject.getPrincipal() != null;
@@ -33,7 +33,7 @@ public class ShiroAccessControllerFilter extends AccessControlFilter {
 
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-		HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
+		final HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
 
 		// 前端http请求中code为403的时候跳转到登陆页，R.fail()为你返回给前端的json对象
 		renderJson(httpServletResponse, CommonResult.fail(HttpStatus.UNAUTHORIZED.value(), "未登陆")); //$NON-NLS-1$
@@ -45,9 +45,9 @@ public class ShiroAccessControllerFilter extends AccessControlFilter {
 		try {
 			response.setContentType("application/json"); //$NON-NLS-1$
 			response.setCharacterEncoding("UTF-8"); //$NON-NLS-1$
-			PrintWriter writer = response.getWriter();
+			final PrintWriter writer = response.getWriter();
 			writer.write(JSON.toJSONString(jsonObject));
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new UserNotLoginException();
 		}
 	}

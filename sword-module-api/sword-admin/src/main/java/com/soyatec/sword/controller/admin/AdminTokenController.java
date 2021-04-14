@@ -23,7 +23,7 @@ import com.soyatec.sword.token.service.ITokenSecretService;
 @RequestMapping("/admin/token")
 public class AdminTokenController extends BaseController {
 
-	private String prefix = "admin/token";
+	private final String prefix = "admin/token";
 
 	@Autowired
 	private ITokenSecretService tokenSecretService;
@@ -42,7 +42,7 @@ public class AdminTokenController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(TokenSecret tokenSecret) {
 		startPage();
-		List<TokenSecret> list = tokenSecretService.selectTokenSecretList(tokenSecret);
+		final List<TokenSecret> list = tokenSecretService.selectTokenSecretList(tokenSecret);
 		return getDataTable(list);
 	}
 
@@ -54,8 +54,8 @@ public class AdminTokenController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(TokenSecret tokenSecret) {
-		List<TokenSecret> list = tokenSecretService.selectTokenSecretList(tokenSecret);
-		ExcelUtil<TokenSecret> util = new ExcelUtil<TokenSecret>(TokenSecret.class);
+		final List<TokenSecret> list = tokenSecretService.selectTokenSecretList(tokenSecret);
+		final ExcelUtil<TokenSecret> util = new ExcelUtil<TokenSecret>(TokenSecret.class);
 		return util.exportExcel(list, "token");
 	}
 

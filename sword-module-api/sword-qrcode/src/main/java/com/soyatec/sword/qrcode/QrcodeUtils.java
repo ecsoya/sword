@@ -28,13 +28,14 @@ public class QrcodeUtils {
 		if (content == null) {
 			return null;
 		}
-		QRCodeWriter qrCodeWriter = new QRCodeWriter();
+		final QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
 		try {
-			BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, DEFAULT_WDITH, DEFAULT_HEIGHT);
+			final BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, DEFAULT_WDITH,
+					DEFAULT_HEIGHT);
 
 			return MatrixToImageWriter.toBufferedImage(bitMatrix);
-		} catch (WriterException e) {
+		} catch (final WriterException e) {
 			return null;
 		}
 	}
@@ -64,21 +65,21 @@ public class QrcodeUtils {
 //	}
 //
 	public static String generate(String content) {
-		BufferedImage image = generateQrcode(content);
+		final BufferedImage image = generateQrcode(content);
 		if (image != null) {
 			InputStream is = null;
 			try {
-				String fileName = "qrcode/" + IdWorker.getIdStr() + ".png";
-				ByteArrayOutputStream os = new ByteArrayOutputStream();
+				final String fileName = "qrcode/" + IdWorker.getIdStr() + ".png";
+				final ByteArrayOutputStream os = new ByteArrayOutputStream();
 				ImageIO.write(image, "PNG", os);
 				is = new ByteArrayInputStream(os.toByteArray());
 				return FileUploadUtils.upload(fileName, is);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 			} finally {
 				if (is != null) {
 					try {
 						is.close();
-					} catch (IOException e) {
+					} catch (final IOException e) {
 					}
 				}
 			}

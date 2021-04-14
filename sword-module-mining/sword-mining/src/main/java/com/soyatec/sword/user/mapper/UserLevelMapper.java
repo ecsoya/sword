@@ -6,14 +6,14 @@ import com.soyatec.sword.user.domain.UserLevel;
 
 /**
  * 用户级别Mapper接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
 public interface UserLevelMapper {
 	/**
 	 * 查询用户级别
-	 * 
+	 *
 	 * @param userId 用户级别ID
 	 * @return 用户级别
 	 */
@@ -21,7 +21,7 @@ public interface UserLevelMapper {
 
 	/**
 	 * 查询用户级别列表
-	 * 
+	 *
 	 * @param userLevel 用户级别
 	 * @return 用户级别集合
 	 */
@@ -29,7 +29,7 @@ public interface UserLevelMapper {
 
 	/**
 	 * 新增用户级别
-	 * 
+	 *
 	 * @param userLevel 用户级别
 	 * @return 结果
 	 */
@@ -37,7 +37,7 @@ public interface UserLevelMapper {
 
 	/**
 	 * 修改用户级别
-	 * 
+	 *
 	 * @param userLevel 用户级别
 	 * @return 结果
 	 */
@@ -45,7 +45,7 @@ public interface UserLevelMapper {
 
 	/**
 	 * 删除用户级别
-	 * 
+	 *
 	 * @param userId 用户级别ID
 	 * @return 结果
 	 */
@@ -53,7 +53,7 @@ public interface UserLevelMapper {
 
 	/**
 	 * 批量删除用户级别
-	 * 
+	 *
 	 * @param userIds 需要删除的数据ID
 	 * @return 结果
 	 */

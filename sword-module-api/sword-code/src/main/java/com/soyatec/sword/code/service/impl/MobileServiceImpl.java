@@ -61,7 +61,7 @@ public class MobileServiceImpl implements IMobileService {
 		if (StringUtils.isEmpty(code)) {
 			return CommonResult.fail(MessageUtils.message("mail.service.error.invalidEmail2")); //$NON-NLS-1$
 		}
-		Object cache = redis.opsForValue().get(mobile);
+		final Object cache = redis.opsForValue().get(mobile);
 		if (Objects.equals(cache, code)) {
 			return CommonResult.success(code);
 		}

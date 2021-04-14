@@ -6,14 +6,14 @@ import com.soyatec.sword.mining.domain.MiningSymbol;
 
 /**
  * 币种Mapper接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-08
  */
 public interface MiningSymbolMapper {
 	/**
 	 * 查询币种
-	 * 
+	 *
 	 * @param symbol 币种ID
 	 * @return 币种
 	 */
@@ -21,7 +21,7 @@ public interface MiningSymbolMapper {
 
 	/**
 	 * 查询币种列表
-	 * 
+	 *
 	 * @param miningSymbol 币种
 	 * @return 币种集合
 	 */
@@ -29,7 +29,7 @@ public interface MiningSymbolMapper {
 
 	/**
 	 * 新增币种
-	 * 
+	 *
 	 * @param miningSymbol 币种
 	 * @return 结果
 	 */
@@ -37,7 +37,7 @@ public interface MiningSymbolMapper {
 
 	/**
 	 * 修改币种
-	 * 
+	 *
 	 * @param miningSymbol 币种
 	 * @return 结果
 	 */
@@ -45,7 +45,7 @@ public interface MiningSymbolMapper {
 
 	/**
 	 * 删除币种
-	 * 
+	 *
 	 * @param symbol 币种ID
 	 * @return 结果
 	 */
@@ -53,7 +53,7 @@ public interface MiningSymbolMapper {
 
 	/**
 	 * 批量删除币种
-	 * 
+	 *
 	 * @param symbols 需要删除的数据ID
 	 * @return 结果
 	 */

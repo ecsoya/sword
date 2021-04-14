@@ -9,25 +9,25 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Map通用处理方法
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class MapDataUtil {
 	public static Map<String, Object> convertDataMap(HttpServletRequest request) {
-		Map<String, String[]> properties = request.getParameterMap();
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		Iterator<?> entries = properties.entrySet().iterator();
+		final Map<String, String[]> properties = request.getParameterMap();
+		final Map<String, Object> returnMap = new HashMap<String, Object>();
+		final Iterator<?> entries = properties.entrySet().iterator();
 		Map.Entry<?, ?> entry;
 		String name = "";
 		String value = "";
 		while (entries.hasNext()) {
 			entry = (Entry<?, ?>) entries.next();
 			name = (String) entry.getKey();
-			Object valueObj = entry.getValue();
+			final Object valueObj = entry.getValue();
 			if (null == valueObj) {
 				value = "";
 			} else if (valueObj instanceof String[]) {
-				String[] values = (String[]) valueObj;
+				final String[] values = (String[]) valueObj;
 				for (int i = 0; i < values.length; i++) {
 					value = values[i] + ",";
 				}

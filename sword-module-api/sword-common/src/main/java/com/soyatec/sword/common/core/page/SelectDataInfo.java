@@ -8,11 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
-import com.soyatec.sword.common.utils.bean.BeanUtils;
 
 /**
  * 表格分页数据对象
- * 
+ *
  * @author iptv
  */
 public class SelectDataInfo implements Serializable {
@@ -40,7 +39,7 @@ public class SelectDataInfo implements Serializable {
 
 	/**
 	 * 分页
-	 * 
+	 *
 	 * @param list  列表数据
 	 * @param total 总记录数
 	 */
@@ -115,16 +114,16 @@ public class SelectDataInfo implements Serializable {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> SelectDataInfo build(List<T> list, int page, String idFieldName, String textFiledName,
 			Class<T> type) {
-		PageInfo pageInfo = new PageInfo(list);
-		boolean more = pageInfo.getPageNum() < pageInfo.getPages();
-		List<SelectItem> items = new ArrayList<>();
-		for (T object : list) {
-			SelectItem item = new SelectItem();
-			Object id = getFieldValue(object, idFieldName);
+		final PageInfo pageInfo = new PageInfo(list);
+		final boolean more = pageInfo.getPageNum() < pageInfo.getPages();
+		final List<SelectItem> items = new ArrayList<>();
+		for (final T object : list) {
+			final SelectItem item = new SelectItem();
+			final Object id = getFieldValue(object, idFieldName);
 			if (id != null) {
 				item.setId(id.toString());
 			}
-			Object text = getFieldValue(object, textFiledName);
+			final Object text = getFieldValue(object, textFiledName);
 			if (text != null) {
 				item.setText(text.toString());
 			}
@@ -137,21 +136,22 @@ public class SelectDataInfo implements Serializable {
 		if (object == null || fieldName == null) {
 			return null;
 		}
-		PropertyDescriptor descriptor = BeanUtils.getPropertyDescriptor(object.getClass(), fieldName);
+		final PropertyDescriptor descriptor = org.springframework.beans.BeanUtils
+				.getPropertyDescriptor(object.getClass(), fieldName);
 		if (descriptor != null) {
-			Method readMethod = descriptor.getReadMethod();
+			final Method readMethod = descriptor.getReadMethod();
 			if (readMethod != null) {
 				try {
 					return readMethod.invoke(object);
-				} catch (Exception e) {
+				} catch (final Exception e) {
 				}
 			}
 		}
 		try {
-			Field field = object.getClass().getDeclaredField(fieldName);
+			final Field field = object.getClass().getDeclaredField(fieldName);
 			field.setAccessible(true);
 			return field.get(object);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}

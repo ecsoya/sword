@@ -7,14 +7,14 @@ import com.soyatec.sword.order.domain.UserDepositOrder;
 
 /**
  * 充值订单Service接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
 public interface IUserDepositOrderService {
 	/**
 	 * 查询充值订单
-	 * 
+	 *
 	 * @param id 充值订单ID
 	 * @return 充值订单
 	 */
@@ -22,7 +22,7 @@ public interface IUserDepositOrderService {
 
 	/**
 	 * 查询充值订单列表
-	 * 
+	 *
 	 * @param userDepositOrder 充值订单
 	 * @return 充值订单集合
 	 */
@@ -30,7 +30,7 @@ public interface IUserDepositOrderService {
 
 	/**
 	 * 新增充值订单
-	 * 
+	 *
 	 * @param userDepositOrder 充值订单
 	 * @return 结果
 	 */
@@ -38,7 +38,7 @@ public interface IUserDepositOrderService {
 
 	/**
 	 * 修改充值订单
-	 * 
+	 *
 	 * @param userDepositOrder 充值订单
 	 * @return 结果
 	 */
@@ -46,7 +46,7 @@ public interface IUserDepositOrderService {
 
 	/**
 	 * 批量删除充值订单
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -54,7 +54,7 @@ public interface IUserDepositOrderService {
 
 	/**
 	 * 删除充值订单信息
-	 * 
+	 *
 	 * @param id 充值订单ID
 	 * @return 结果
 	 */

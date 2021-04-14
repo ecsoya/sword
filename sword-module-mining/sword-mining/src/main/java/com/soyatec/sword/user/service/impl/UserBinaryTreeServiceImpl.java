@@ -21,7 +21,7 @@ import com.soyatec.sword.user.service.IUserReferrerService;
 
 /**
  * 用户双区树Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
@@ -43,7 +43,7 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 
 	/**
 	 * 查询用户双区树
-	 * 
+	 *
 	 * @param userId 用户双区树ID
 	 * @return 用户双区树
 	 */
@@ -54,7 +54,7 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 
 	/**
 	 * 查询用户双区树列表
-	 * 
+	 *
 	 * @param userBinaryTree 用户双区树
 	 * @return 用户双区树
 	 */
@@ -65,7 +65,7 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 
 	/**
 	 * 新增用户双区树
-	 * 
+	 *
 	 * @param userBinaryTree 用户双区树
 	 * @return 结果
 	 */
@@ -77,7 +77,7 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 
 	/**
 	 * 修改用户双区树
-	 * 
+	 *
 	 * @param userBinaryTree 用户双区树
 	 * @return 结果
 	 */
@@ -89,7 +89,7 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 
 	/**
 	 * 删除用户双区树对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -100,7 +100,7 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 
 	/**
 	 * 删除用户双区树信息
-	 * 
+	 *
 	 * @param userId 用户双区树ID
 	 * @return 结果
 	 */
@@ -115,11 +115,11 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		try {
 			isLocked = lockService.tryLock(LOCK_KEY);
 
-			List<UserReferrer> list = referrerService.selectUnfinishedUserReferrers();
+			final List<UserReferrer> list = referrerService.selectUnfinishedUserReferrers();
 			list.forEach(user -> {
-				UserReferrer update = new UserReferrer();
+				final UserReferrer update = new UserReferrer();
 				update.setUserId(user.getUserId());
-				int btree = addBinaryTree(user.getReferralId(), user.getUserId(), user.isInLeftZone());
+				final int btree = addBinaryTree(user.getReferralId(), user.getUserId(), user.isInLeftZone());
 				update.setBtree(btree);
 				if (btree > 0) {
 					// 只要推荐了一个，说明右区开放
@@ -129,7 +129,7 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 				referrerService.updateUserReferrer(update);
 			});
 			return list.size();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return 0;
 		} finally {
 			if (isLocked) {
@@ -171,7 +171,7 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		if (referrerId == null || leftId == null) {
 			return 0;
 		}
-		List<UserBinaryTree> treeList = selectAll();
+		final List<UserBinaryTree> treeList = selectAll();
 		Long userId = referrerId;
 		UserBinaryTree binary = findBinaryTree(userId, treeList);
 		while (binary != null && !binary.isLeftEmpty()) {
@@ -204,14 +204,15 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		return binary;
 	}
 
+	@Override
 	public List<UserBinaryTree> selectAll() {
-		int count = userBinaryTreeMapper.queryUserBinaryTreeCount();
+		final int count = userBinaryTreeMapper.queryUserBinaryTreeCount();
 		if (count <= 0) {
 			return Collections.emptyList();
 		}
-		List<UserBinaryTree> result = Collections.synchronizedList(new ArrayList<UserBinaryTree>());
+		final List<UserBinaryTree> result = Collections.synchronizedList(new ArrayList<UserBinaryTree>());
 		synchronized (result) {
-			long maxPage = Math.max(1, count / PAGE_SIZE);
+			final long maxPage = Math.max(1, count / PAGE_SIZE);
 			for (int currentPage = 0; currentPage < maxPage; currentPage++) {
 				result.addAll(userBinaryTreeMapper.selectUserBinaryTrees(currentPage, PAGE_SIZE));
 			}
@@ -231,17 +232,17 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		if (userId == null || treeList == null || treeList.isEmpty()) {
 			return Collections.emptyList();
 		}
-		Vector<UserBinaryTree> results = new Vector<UserBinaryTree>();
-		UserBinaryTree root = findBinaryTree(userId, treeList);
+		final Vector<UserBinaryTree> results = new Vector<UserBinaryTree>();
+		final UserBinaryTree root = findBinaryTree(userId, treeList);
 		if (root == null) {
 			return Collections.emptyList();
 		}
-		Stack<UserBinaryTree> stack = new Stack<UserBinaryTree>();
+		final Stack<UserBinaryTree> stack = new Stack<UserBinaryTree>();
 		UserBinaryTree tree = root;
 		while (tree != null || !stack.isEmpty()) {
 			while (tree != null) {
 				stack.push(tree);
-				Long leftId = tree.getLeftId();
+				final Long leftId = tree.getLeftId();
 				if (leftId != null) {
 					tree = findBinaryTree(leftId, treeList);
 					if (tree == null) {
@@ -255,8 +256,8 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 
 			}
 			if (!stack.isEmpty()) {
-				UserBinaryTree pop = stack.pop();
-				Long rightId = pop.getRightId();
+				final UserBinaryTree pop = stack.pop();
+				final Long rightId = pop.getRightId();
 				if (rightId != null) {
 					tree = findBinaryTree(rightId, treeList);
 					if (tree == null) {

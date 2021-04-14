@@ -59,7 +59,7 @@ public class M5cResult {
 		} else if (res.startsWith("success:")) {
 			return new M5cResult(true, res.substring("success:".length()), null);
 		} else if (res.startsWith("error:")) {
-			String rawError = res.substring("error:".length());
+			final String rawError = res.substring("error:".length());
 			String error = null;
 			String msgid = null;
 			if (rawError.contains("Missing username")) {

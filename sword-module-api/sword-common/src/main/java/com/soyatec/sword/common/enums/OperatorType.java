@@ -2,7 +2,7 @@ package com.soyatec.sword.common.enums;
 
 /**
  * 操作人类别
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public enum OperatorType {

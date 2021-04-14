@@ -11,7 +11,7 @@ import com.soyatec.sword.constants.IConstants;
 
 /**
  * 用户充值对象 t_user_record_deposit
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */

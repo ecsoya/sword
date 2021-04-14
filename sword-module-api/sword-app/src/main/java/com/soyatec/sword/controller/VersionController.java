@@ -23,7 +23,7 @@ public class VersionController extends BaseController {
 	@ApiOperation("APP版本查询")
 	@GetMapping("/latest")
 	public CommonResult<SwordVersion> latestVersion(HttpServletRequest request, Long current) {
-		SwordVersion version = SwordUtils.getVersion();
+		final SwordVersion version = SwordUtils.getVersion();
 		if (version != null && current != null && current.longValue() < version.getVersion()) {
 			ShiroUtils.logout();
 		}

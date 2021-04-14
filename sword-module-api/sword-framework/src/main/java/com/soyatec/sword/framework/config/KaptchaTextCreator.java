@@ -7,7 +7,7 @@ import com.google.code.kaptcha.text.impl.DefaultTextCreator;
 
 /**
  * 验证码文本生成器
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class KaptchaTextCreator extends DefaultTextCreator {
@@ -16,11 +16,11 @@ public class KaptchaTextCreator extends DefaultTextCreator {
 	@Override
 	public String getText() {
 		Integer result = 0;
-		Random random = new SecureRandom();
-		int x = random.nextInt(10);
-		int y = random.nextInt(10);
-		StringBuilder suChinese = new StringBuilder();
-		int randomoperands = (int) Math.round(Math.random() * 2);
+		final Random random = new SecureRandom();
+		final int x = random.nextInt(10);
+		final int y = random.nextInt(10);
+		final StringBuilder suChinese = new StringBuilder();
+		final int randomoperands = (int) Math.round(Math.random() * 2);
 		if (randomoperands == 0) {
 			result = x * y;
 			suChinese.append(CNUMBERS[x]);

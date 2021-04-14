@@ -9,39 +9,43 @@ import org.springframework.stereotype.Service;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.user.domain.UserProfile;
 import com.soyatec.sword.user.domain.UserReferrer;
-import com.soyatec.sword.user.domain.UserReferrerTeam;
+import com.soyatec.sword.user.domain.UserReferrerTeamCount;
 import com.soyatec.sword.user.domain.UserTeamCount;
+import com.soyatec.sword.user.service.IUserProfileService;
 import com.soyatec.sword.user.service.IUserReferrerService;
-import com.soyatec.sword.user.service.IUserReferrerTeamService;
+import com.soyatec.sword.user.service.IUserReferrerTeamCountService;
 
 @Service
-public class UserReferrerTeamServiceImpl implements IUserReferrerTeamService {
+public class UserReferrerTeamCountServiceImpl implements IUserReferrerTeamCountService {
 
 	@Autowired
 	private IUserReferrerService userReferrerService;
 
+	@Autowired
+	private IUserProfileService userProfileService;
+
 	@Override
-	public UserReferrerTeam selectUserReferrerTeamByUserId(Long userId) {
+	public UserReferrerTeamCount selectUserReferrerTeamCountByUserId(Long userId) {
 		if (userId == null) {
 			return null;
 		}
-		List<UserReferrer> referrerList = userReferrerService.selectAll();
-		UserReferrerTeam team = new UserReferrerTeam();
+		final List<UserReferrer> referrerList = userReferrerService.selectAll();
+		final UserReferrerTeamCount team = new UserReferrerTeamCount();
 		team.setUserId(userId);
-		List<UserReferrer> myReferrals = referrerList.stream().filter(r -> userId.equals(r.getReferralId()))
+		final List<UserReferrer> myReferrals = referrerList.stream().filter(r -> userId.equals(r.getReferralId()))
 				.collect(Collectors.toList());
-		List<Long> myReferralIds = myReferrals.stream().map(r -> r.getUserId()).collect(Collectors.toList());
-		List<Long> myUmbrellaIds = userReferrerService.selectUmbrellaUserIds(userId, referrerList);
+		final List<Long> myReferralIds = myReferrals.stream().map(r -> r.getUserId()).collect(Collectors.toList());
+		final List<Long> myUmbrellaIds = userReferrerService.selectUmbrellaUserIds(userId, referrerList);
 
 		// 今日人数
-		UserTeamCount today = new UserTeamCount();
+		final UserTeamCount today = new UserTeamCount();
 		today.setUserId(userId);
 		today.setReferrerCount(myReferrals.stream().filter(r -> DateUtils.isDuringToday(r.getCreateTime())).count());
 		today.setUmbrellaCount(referrerList.stream().filter(r -> myUmbrellaIds.contains(r.getUserId()))
 				.filter(r -> DateUtils.isDuringToday(r.getCreateTime())).count());
 		team.setToday(today);
 		// 昨日人数
-		UserTeamCount yesterday = new UserTeamCount();
+		final UserTeamCount yesterday = new UserTeamCount();
 		yesterday.setUserId(userId);
 		yesterday.setReferrerCount(
 				myReferrals.stream().filter(r -> DateUtils.isDuringYesterday(r.getCreateTime())).count());
@@ -49,7 +53,7 @@ public class UserReferrerTeamServiceImpl implements IUserReferrerTeamService {
 				.filter(r -> DateUtils.isDuringYesterday(r.getCreateTime())).count());
 		team.setYesterday(yesterday);
 		// 全部人数
-		UserTeamCount total = new UserTeamCount();
+		final UserTeamCount total = new UserTeamCount();
 		total.setUserId(userId);
 		total.setReferrerCount(Long.valueOf(myReferralIds.size()));
 		total.setUmbrellaCount(Long.valueOf(myUmbrellaIds.size()));
@@ -60,6 +64,13 @@ public class UserReferrerTeamServiceImpl implements IUserReferrerTeamService {
 	@Override
 	public List<UserProfile> selectUserReferrerTeamListByUserId(Long userId) {
 		return userReferrerService.selectUserReferrerListByUserId(userId);
+	}
+
+	@Override
+	public List<UserProfile> selectUserUmbrellaTeamListByUserId(Long userId) {
+		final List<UserReferrer> referrerList = userReferrerService.selectAll();
+		final List<Long> myUmbrellaIds = userReferrerService.selectUmbrellaUserIds(userId, referrerList);
+		return userProfileService.selectUserProfileList(myUmbrellaIds);
 	}
 
 }

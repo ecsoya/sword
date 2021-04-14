@@ -11,7 +11,7 @@ import com.soyatec.sword.constants.IConstants;
 
 /**
  * 用户钱包记录对象 t_user_wallet_record
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */

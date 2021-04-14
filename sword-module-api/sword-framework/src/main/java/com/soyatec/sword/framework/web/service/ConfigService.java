@@ -11,7 +11,7 @@ import com.soyatec.sword.system.service.ISysConfigService;
 
 /**
  * RuoYi首创 html调用 thymeleaf 实现参数管理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Service("config")
@@ -21,7 +21,7 @@ public class ConfigService {
 
 	/**
 	 * 根据键名查询参数配置信息
-	 * 
+	 *
 	 * @param configKey 参数键名
 	 * @return 参数键值
 	 */
@@ -31,7 +31,7 @@ public class ConfigService {
 
 	/**
 	 * 查询全局变量 {@link GlobalConfig}
-	 * 
+	 *
 	 * @param key
 	 * @return
 	 */
@@ -40,10 +40,10 @@ public class ConfigService {
 			return null;
 		}
 		try {
-			Field f = GlobalConfig.class.getDeclaredField(key);
+			final Field f = GlobalConfig.class.getDeclaredField(key);
 			f.setAccessible(true);
 			return f.get(null);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 
 		}

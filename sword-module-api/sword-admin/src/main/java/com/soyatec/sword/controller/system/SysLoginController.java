@@ -28,7 +28,7 @@ import com.soyatec.sword.service.IMobileCodeService;
 
 /**
  * 登录验证
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
@@ -59,23 +59,24 @@ public class SysLoginController extends BaseController {
 	public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe, String notifyCode) {
 		if (GlobalConfig.isNotifyEnabled()) {
 			if (GlobalConfig.getEmailCode()) {
-				CommonResult<?> verifyCodeByUsername = mailCodeService.verifyCodeByUsername(username, notifyCode);
+				final CommonResult<?> verifyCodeByUsername = mailCodeService.verifyCodeByUsername(username, notifyCode);
 				if (!verifyCodeByUsername.isSuccess()) {
 					return error("邮箱验证码错误");
 				}
 			} else {
-				CommonResult<?> verifyCodeByUsername = mobileCodeService.verifyCodeByUsername(username, notifyCode);
+				final CommonResult<?> verifyCodeByUsername = mobileCodeService.verifyCodeByUsername(username,
+						notifyCode);
 				if (!verifyCodeByUsername.isSuccess()) {
 					return error("短信验证码错误");
 				}
 			}
 		}
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
-		Subject subject = SecurityUtils.getSubject();
+		final UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+		final Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(token);
 			return success();
-		} catch (AuthenticationException e) {
+		} catch (final AuthenticationException e) {
 			String msg = "用户或密码错误";
 			if (StringUtils.isNotEmpty(e.getMessage())) {
 				msg = e.getMessage();

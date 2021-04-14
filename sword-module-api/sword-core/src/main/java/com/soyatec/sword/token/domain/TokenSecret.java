@@ -8,7 +8,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 开放接口API对象 t_token_secret
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-07
  */

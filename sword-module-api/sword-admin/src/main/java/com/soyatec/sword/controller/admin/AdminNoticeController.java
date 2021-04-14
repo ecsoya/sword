@@ -24,7 +24,7 @@ import com.soyatec.sword.system.service.ISysNoticeService;
 @Controller
 @RequestMapping("/admin/notice")
 public class AdminNoticeController extends BaseController {
-	private String prefix = "admin/notice";
+	private final String prefix = "admin/notice";
 
 	@Autowired
 	private ISysNoticeService noticeService;
@@ -44,7 +44,7 @@ public class AdminNoticeController extends BaseController {
 	public TableDataInfo list(SysNotice notice) {
 		notice.setNoticeType(SysNotice.NOTICE_TYPE_NOTICE);
 		startPage();
-		List<SysNotice> list = noticeService.selectNoticeList(notice);
+		final List<SysNotice> list = noticeService.selectNoticeList(notice);
 		return getDataTable(list);
 	}
 

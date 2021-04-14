@@ -26,7 +26,7 @@ import com.soyatec.sword.upload.utils.FileUploadUtils;
 
 /**
  * 个人信息 业务处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
@@ -34,7 +34,7 @@ import com.soyatec.sword.upload.utils.FileUploadUtils;
 public class SysProfileController extends BaseController {
 	private static final Logger log = LoggerFactory.getLogger(SysProfileController.class);
 
-	private String prefix = "system/user/profile";
+	private final String prefix = "system/user/profile";
 
 	@Autowired
 	private ISysUserService userService;
@@ -47,7 +47,7 @@ public class SysProfileController extends BaseController {
 	 */
 	@GetMapping()
 	public String profile(ModelMap mmap) {
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		mmap.put("user", user);
 		mmap.put("roleGroup", userService.selectUserRoleGroup(user.getUserId()));
 		mmap.put("postGroup", userService.selectUserPostGroup(user.getUserId()));
@@ -57,7 +57,7 @@ public class SysProfileController extends BaseController {
 	@GetMapping("/checkPassword")
 	@ResponseBody
 	public boolean checkPassword(String password) {
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		if (passwordService.matches(user, password)) {
 			return true;
 		}
@@ -66,7 +66,7 @@ public class SysProfileController extends BaseController {
 
 	@GetMapping("/resetPwd")
 	public String resetPwd(ModelMap mmap) {
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		mmap.put("user", userService.selectUserById(user.getUserId()));
 		return prefix + "/resetPwd";
 	}
@@ -75,7 +75,7 @@ public class SysProfileController extends BaseController {
 	@PostMapping("/resetPwd")
 	@ResponseBody
 	public AjaxResult resetPwd(String oldPassword, String newPassword) {
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		if (!passwordService.matches(user, oldPassword)) {
 			return error("修改密码失败，旧密码错误");
 		}
@@ -97,7 +97,7 @@ public class SysProfileController extends BaseController {
 	 */
 	@GetMapping("/edit")
 	public String edit(ModelMap mmap) {
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		mmap.put("user", userService.selectUserById(user.getUserId()));
 		return prefix + "/edit";
 	}
@@ -107,7 +107,7 @@ public class SysProfileController extends BaseController {
 	 */
 	@GetMapping("/avatar")
 	public String avatar(ModelMap mmap) {
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		mmap.put("user", userService.selectUserById(user.getUserId()));
 		return prefix + "/avatar";
 	}
@@ -119,7 +119,7 @@ public class SysProfileController extends BaseController {
 	@PostMapping("/update")
 	@ResponseBody
 	public AjaxResult update(SysUser user) {
-		SysUser currentUser = ShiroUtils.getSysUser();
+		final SysUser currentUser = ShiroUtils.getSysUser();
 		currentUser.setUserName(user.getUserName());
 		currentUser.setEmail(user.getEmail());
 		currentUser.setPhonenumber(user.getPhonenumber());
@@ -138,10 +138,10 @@ public class SysProfileController extends BaseController {
 	@PostMapping("/updateAvatar")
 	@ResponseBody
 	public AjaxResult updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
-		SysUser currentUser = ShiroUtils.getSysUser();
+		final SysUser currentUser = ShiroUtils.getSysUser();
 		try {
 			if (!file.isEmpty()) {
-				String avatar = FileUploadUtils.upload(file);
+				final String avatar = FileUploadUtils.upload(file);
 				currentUser.setAvatar(avatar);
 				if (userService.updateUserInfo(currentUser) > 0) {
 					ShiroUtils.setSysUser(userService.selectUserById(currentUser.getUserId()));
@@ -149,7 +149,7 @@ public class SysProfileController extends BaseController {
 				}
 			}
 			return error();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("修改头像失败！", e);
 			return error(e.getMessage());
 		}

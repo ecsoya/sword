@@ -28,7 +28,7 @@ import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 
 /**
  * 登录帐号控制过滤器
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class KickoutSessionFilter extends AccessControlFilter {
@@ -60,17 +60,17 @@ public class KickoutSessionFilter extends AccessControlFilter {
 
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-		Subject subject = getSubject(request, response);
+		final Subject subject = getSubject(request, response);
 		if (!subject.isAuthenticated() && !subject.isRemembered() || maxSession == -1) {
 			// 如果没有登录或用户最大会话数为-1，直接进行之后的流程
 			return true;
 		}
 		try {
-			Session session = subject.getSession();
+			final Session session = subject.getSession();
 			// 当前登录用户
-			SysUser user = ShiroUtils.getSysUser();
-			String loginName = user.getLoginName();
-			Serializable sessionId = session.getId();
+			final SysUser user = ShiroUtils.getSysUser();
+			final String loginName = user.getLoginName();
+			final Serializable sessionId = session.getId();
 
 			// 读取缓存用户 没有就存入
 			Deque<Serializable> deque = cache.get(loginName);
@@ -103,12 +103,12 @@ public class KickoutSessionFilter extends AccessControlFilter {
 
 				try {
 					// 获取被踢出的sessionId的session对象
-					Session kickoutSession = sessionManager.getSession(new DefaultSessionKey(kickoutSessionId));
+					final Session kickoutSession = sessionManager.getSession(new DefaultSessionKey(kickoutSessionId));
 					if (null != kickoutSession) {
 						// 设置会话的kickout属性表示踢出了
 						kickoutSession.setAttribute("kickout", true);
 					}
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					// 面对异常，我们选择忽略
 				}
 			}
@@ -122,16 +122,16 @@ public class KickoutSessionFilter extends AccessControlFilter {
 				return isAjaxResponse(request, response);
 			}
 			return true;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return isAjaxResponse(request, response);
 		}
 	}
 
 	private boolean isAjaxResponse(ServletRequest request, ServletResponse response) throws IOException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
+		final HttpServletRequest req = (HttpServletRequest) request;
+		final HttpServletResponse res = (HttpServletResponse) response;
 		if (ServletUtils.isAjaxRequest(req)) {
-			AjaxResult ajaxResult = AjaxResult.error("您已在别处登录，请您修改密码或重新登录");
+			final AjaxResult ajaxResult = AjaxResult.error("您已在别处登录，请您修改密码或重新登录");
 			ServletUtils.renderString(res, objectMapper.writeValueAsString(ajaxResult));
 		} else {
 			WebUtils.issueRedirect(request, response, kickoutUrl);

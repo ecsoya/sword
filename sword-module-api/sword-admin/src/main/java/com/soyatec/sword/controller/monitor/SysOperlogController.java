@@ -24,13 +24,13 @@ import com.soyatec.sword.system.service.ISysOperLogService;
 
 /**
  * 操作日志记录
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/monitor/operlog")
 public class SysOperlogController extends BaseController {
-	private String prefix = "monitor/operlog";
+	private final String prefix = "monitor/operlog";
 
 	@Autowired
 	private ISysOperLogService operLogService;
@@ -47,7 +47,7 @@ public class SysOperlogController extends BaseController {
 	public TableDataInfo list(SysOperLog operLog) {
 		startPage();
 		operLog.getParams().put("admin", ShiroUtils.getLoginName());
-		List<SysOperLog> list = operLogService.selectOperLogList(operLog);
+		final List<SysOperLog> list = operLogService.selectOperLogList(operLog);
 		return getDataTable(list);
 	}
 
@@ -57,8 +57,8 @@ public class SysOperlogController extends BaseController {
 	@ResponseBody
 	public AjaxResult export(SysOperLog operLog) {
 		operLog.getParams().put("admin", ShiroUtils.getLoginName());
-		List<SysOperLog> list = operLogService.selectOperLogList(operLog);
-		ExcelUtil<SysOperLog> util = new ExcelUtil<SysOperLog>(SysOperLog.class);
+		final List<SysOperLog> list = operLogService.selectOperLogList(operLog);
+		final ExcelUtil<SysOperLog> util = new ExcelUtil<SysOperLog>(SysOperLog.class);
 		return util.exportExcel(list, "操作日志");
 	}
 

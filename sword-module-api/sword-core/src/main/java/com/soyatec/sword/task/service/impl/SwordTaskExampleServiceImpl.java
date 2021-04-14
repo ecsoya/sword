@@ -14,7 +14,7 @@ import com.soyatec.sword.task.service.ISwordTaskExampleService;
 
 /**
  * 定时任务执行结果Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-18
  */
@@ -25,7 +25,7 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 
 	/**
 	 * 查询定时任务执行结果
-	 * 
+	 *
 	 * @param id 定时任务执行结果ID
 	 * @return 定时任务执行结果
 	 */
@@ -36,7 +36,7 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 
 	/**
 	 * 查询定时任务执行结果列表
-	 * 
+	 *
 	 * @param swordTaskExample 定时任务执行结果
 	 * @return 定时任务执行结果
 	 */
@@ -47,7 +47,7 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 
 	/**
 	 * 新增定时任务执行结果
-	 * 
+	 *
 	 * @param swordTaskExample 定时任务执行结果
 	 * @return 结果
 	 */
@@ -64,7 +64,7 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 
 	/**
 	 * 修改定时任务执行结果
-	 * 
+	 *
 	 * @param swordTaskExample 定时任务执行结果
 	 * @return 结果
 	 */
@@ -76,7 +76,7 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 
 	/**
 	 * 删除定时任务执行结果对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -87,7 +87,7 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 
 	/**
 	 * 删除定时任务执行结果信息
-	 * 
+	 *
 	 * @param id 定时任务执行结果ID
 	 * @return 结果
 	 */

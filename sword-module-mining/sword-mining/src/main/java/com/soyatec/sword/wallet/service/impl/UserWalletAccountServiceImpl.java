@@ -16,6 +16,7 @@ import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.constants.IConstants;
 import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.exceptions.LockableException;
 import com.soyatec.sword.exceptions.TransactionException;
@@ -35,7 +36,7 @@ import com.soyatec.sword.wallet.service.IWalletService;
 
 /**
  * 用户钱包账号Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
@@ -61,7 +62,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	/**
 	 * 查询用户钱包账号
-	 * 
+	 *
 	 * @param id 用户钱包账号ID
 	 * @return 用户钱包账号
 	 */
@@ -72,14 +73,14 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	/**
 	 * 查询用户钱包账号列表
-	 * 
+	 *
 	 * @param userWalletAccount 用户钱包账号
 	 * @return 用户钱包账号
 	 */
 	@Override
 	public List<UserWalletAccount> selectUserWalletAccountList(UserWalletAccount userWalletAccount) {
-		List<UserWalletAccount> list = userWalletAccountMapper.selectUserWalletAccountList(userWalletAccount);
-		List<MiningSymbol> symbols = symbolService.selectMiningSymbolList(new MiningSymbol());
+		final List<UserWalletAccount> list = userWalletAccountMapper.selectUserWalletAccountList(userWalletAccount);
+		final List<MiningSymbol> symbols = symbolService.selectMiningSymbolList(new MiningSymbol());
 		list.forEach(account -> {
 			account.setWithdrawal(symbols.stream().filter(s -> Objects.equals(s.getSymbol(), account.getSymbol()))
 					.findFirst().orElse(null));
@@ -89,7 +90,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	/**
 	 * 新增用户钱包账号
-	 * 
+	 *
 	 * @param userWalletAccount 用户钱包账号
 	 * @return 结果
 	 */
@@ -107,7 +108,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	/**
 	 * 修改用户钱包账号
-	 * 
+	 *
 	 * @param userWalletAccount 用户钱包账号
 	 * @return 结果
 	 */
@@ -119,7 +120,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	/**
 	 * 删除用户钱包账号对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -130,7 +131,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	/**
 	 * 删除用户钱包账号信息
-	 * 
+	 *
 	 * @param id 用户钱包账号ID
 	 * @return 结果
 	 */
@@ -151,8 +152,9 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return account;
 	}
 
+	@Override
 	public UserWalletAccount updateUserWalletAccountAddress(Long userId, String symbol) {
-		CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WALLET);
+		final CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WALLET);
 		if (!checked.isSuccess()) {
 			return null;
 		}
@@ -166,7 +168,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			account.setAddressUrl(generateQrcodeUrl(account.getAddress()));
 			insertUserWalletAccount(account);
 		} else if (StringUtils.isEmpty(account.getAddress())) {
-			String address = walletService.getDepositAddressValue(symbol, IMiningConstants.CHAIN);
+			final String address = walletService.getDepositAddressValue(symbol, IMiningConstants.CHAIN);
 			if (StringUtils.isNotEmpty(address)) {
 				account.setAddress(address);
 				account.setAddressUrl(generateQrcodeUrl(account.getAddress()));
@@ -178,8 +180,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	@Override
 	public int updateUserWalletAccountByUserId(Long userId) {
-		List<String> symbols = symbolService.selectMiningSymbols();
-		for (String symbol : symbols) {
+		final List<String> symbols = symbolService.selectMiningSymbols();
+		for (final String symbol : symbols) {
 			updateUserWalletAccountAddress(userId, symbol);
 		}
 		return 1;
@@ -225,7 +227,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (userId == null) {
 			return Collections.emptyList();
 		}
-		UserWalletAccount query = new UserWalletAccount();
+		final UserWalletAccount query = new UserWalletAccount();
 		query.setUserId(userId);
 		return selectUserWalletAccountList(query);
 	}
@@ -236,7 +238,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (walletAccount == null || MathUtils.isEmpty(amount) || StringUtils.isEmpty(orderNo)) {
 			return false;
 		}
-		BigDecimal walletAmount = walletAccount.getAmount();
+		final BigDecimal walletAmount = walletAccount.getAmount();
 		if (MathUtils.isEmpty(walletAmount) || MathUtils.lt(walletAmount, amount)) {
 			return false;
 		}
@@ -244,31 +246,31 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		try {
 			locked = tryLock(walletAccount);
 
-			Long id = walletAccount.getId();
-			Long userId = walletAccount.getUserId();
-			String symbol = walletAccount.getSymbol();
-			UserWalletRecord record = new UserWalletRecord();
+			final Long id = walletAccount.getId();
+			final Long userId = walletAccount.getUserId();
+			final String symbol = walletAccount.getSymbol();
+			final UserWalletRecord record = new UserWalletRecord();
 			record.setAmount(amount);
 			record.setSymbol(symbol);
 			record.setType(UserWalletRecord.TYPE_OUT);
 			record.setKind(UserWalletRecord.KIND_FROZEN);
 			record.setUserId(userId);
-			record.setStatus(UserWalletRecord.STATUS_NONE);
+			record.setStatus(IConstants.STATUS_NONE);
 			if (freezeDays != null) {
 				record.setDays(freezeDays);
 			} else {
 				record.setDays(-1);
 			}
 			record.setOrderNo(orderNo);
-			int rows = userWalletRecordService.insertUserWalletRecord(record);
+			final int rows = userWalletRecordService.insertUserWalletRecord(record);
 			if (rows <= 0) {
 				return false;
 			}
-			UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(id);
+			final UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(id);
 			if (lockAccount == null) {
 				return false;
 			}
-			UserWalletAccount update = new UserWalletAccount();
+			final UserWalletAccount update = new UserWalletAccount();
 			update.setId(id);
 			update.setAmount(walletAmount.subtract(amount));
 			update.setFrozenAmount(MathUtils.plus(amount, walletAccount.getFrozenAmount()));
@@ -288,7 +290,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 				|| StringUtils.isEmpty(orderNo)) {
 			return false;
 		}
-		UserWalletAccount account = selectUserWalletAccount(userId, symbol);
+		final UserWalletAccount account = selectUserWalletAccount(userId, symbol);
 		if (account == null) {
 			return false;
 		}
@@ -296,37 +298,37 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		try {
 			isLocked = tryLock(userId);
 
-			UserWalletRecord query = new UserWalletRecord();
+			final UserWalletRecord query = new UserWalletRecord();
 			query.setUserId(userId);
 			query.setOrderNo(orderNo);
 			// query.setAmount(amount);
 			query.setType(UserWalletRecord.TYPE_OUT);
 			query.setKind(UserWalletRecord.KIND_FROZEN);
-			query.setStatus(UserWalletRecord.STATUS_NONE);
-			List<UserWalletRecord> list = userWalletRecordService.selectUserWalletRecordList(query).stream()
+			query.setStatus(IConstants.STATUS_NONE);
+			final List<UserWalletRecord> list = userWalletRecordService.selectUserWalletRecordList(query).stream()
 					.filter(r -> MathUtils.equals(amount, r.getAmount())).collect(Collectors.toList());
 			if (list.isEmpty()) {
 				return false;
 			}
 
-			UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
+			final UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
 			if (lockAccount == null || MathUtils.lt(lockAccount.getFrozenAmount(), amount)) {
 				return false;
 			}
 
-			UserWalletAccount update = new UserWalletAccount();
+			final UserWalletAccount update = new UserWalletAccount();
 			update.setId(account.getId());
 			// 返还余额
 			if (payBack) {
 				update.setAmount(MathUtils.plus(lockAccount.getAmount(), amount));
 			}
 			update.setFrozenAmount(lockAccount.getFrozenAmount().subtract(amount));
-			int rows = userWalletAccountMapper.updateUserWalletAccount(update);
+			final int rows = userWalletAccountMapper.updateUserWalletAccount(update);
 			if (rows > 0) {
 				list.forEach(r -> {
-					UserWalletRecord record = new UserWalletRecord();
+					final UserWalletRecord record = new UserWalletRecord();
 					record.setId(r.getId());
-					record.setStatus(UserWalletRecord.STATUS_FINISHED);
+					record.setStatus(IConstants.STATUS_FINISHED);
 					record.setRemark("已解冻【" + payBack + "】");
 					userWalletRecordService.updateUserWalletRecord(record);
 				});
@@ -341,34 +343,34 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	@Override
 	public boolean unfreezeAmount(UserWalletRecord record) {
-		if (record == null || !UserWalletRecord.STATUS_NONE.equals(record.getStatus())) {
+		if (record == null || !IConstants.STATUS_NONE.equals(record.getStatus())) {
 			return false;
 		}
-		Long userId = record.getUserId();
-		String symbol = record.getSymbol();
-		UserWalletAccount account = selectUserWalletAccount(userId, symbol);
+		final Long userId = record.getUserId();
+		final String symbol = record.getSymbol();
+		final UserWalletAccount account = selectUserWalletAccount(userId, symbol);
 		if (account == null) {
 			return false;
 		}
-		BigDecimal amount = record.getAmount();
+		final BigDecimal amount = record.getAmount();
 		boolean isLocked = false;
 		try {
 			isLocked = tryLock(userId);
 
-			UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
+			final UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
 			if (lockAccount == null || MathUtils.lt(lockAccount.getFrozenAmount(), amount)) {
 				return false;
 			}
 
-			UserWalletAccount update = new UserWalletAccount();
+			final UserWalletAccount update = new UserWalletAccount();
 			update.setId(account.getId());
 			update.setAmount(MathUtils.plus(lockAccount.getAmount(), amount));
 			update.setFrozenAmount(lockAccount.getFrozenAmount().subtract(amount));
-			int rows = userWalletAccountMapper.updateUserWalletAccount(update);
+			final int rows = userWalletAccountMapper.updateUserWalletAccount(update);
 			if (rows > 0) {
-				UserWalletRecord finish = new UserWalletRecord();
+				final UserWalletRecord finish = new UserWalletRecord();
 				finish.setId(record.getId());
-				finish.setStatus(UserWalletRecord.STATUS_FINISHED);
+				finish.setStatus(IConstants.STATUS_FINISHED);
 				finish.setRemark("已解冻");
 				userWalletRecordService.updateUserWalletRecord(finish);
 			}
@@ -385,7 +387,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (walletAccount == null || MathUtils.isEmpty(amount) || StringUtils.isEmpty(orderNo)) {
 			return false;
 		}
-		BigDecimal walletAmount = walletAccount.getAmount();
+		final BigDecimal walletAmount = walletAccount.getAmount();
 		if (MathUtils.isEmpty(walletAmount) || MathUtils.lt(walletAmount, amount)) {
 			return false;
 		}
@@ -393,25 +395,25 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		try {
 			isLocked = tryLock(walletAccount);
 
-			Long id = walletAccount.getId();
-			Long userId = walletAccount.getUserId();
-			String symbol = walletAccount.getSymbol();
-			UserWalletRecord record = new UserWalletRecord();
+			final Long id = walletAccount.getId();
+			final Long userId = walletAccount.getUserId();
+			final String symbol = walletAccount.getSymbol();
+			final UserWalletRecord record = new UserWalletRecord();
 			record.setAmount(amount);
 			record.setSymbol(symbol);
 			record.setType(UserWalletRecord.TYPE_OUT);
 			record.setKind(UserWalletRecord.KIND_AMOUNT);
 			record.setUserId(userId);
 			record.setOrderNo(orderNo);
-			int rows = userWalletRecordService.insertUserWalletRecord(record);
+			final int rows = userWalletRecordService.insertUserWalletRecord(record);
 			if (rows <= 0) {
 				return false;
 			}
-			UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(id);
+			final UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(id);
 			if (lockAccount == null) {
 				return false;
 			}
-			UserWalletAccount update = new UserWalletAccount();
+			final UserWalletAccount update = new UserWalletAccount();
 			update.setId(id);
 			update.setAmount(walletAmount.subtract(amount));
 			userWalletAccountMapper.updateUserWalletAccount(update);
@@ -432,10 +434,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		try {
 			isLocked = tryLock(walletAccount);
 
-			Long id = walletAccount.getId();
-			Long userId = walletAccount.getUserId();
-			String symbol = walletAccount.getSymbol();
-			UserWalletRecord record = new UserWalletRecord();
+			final Long id = walletAccount.getId();
+			final Long userId = walletAccount.getUserId();
+			final String symbol = walletAccount.getSymbol();
+			final UserWalletRecord record = new UserWalletRecord();
 			record.setAmount(amount);
 			record.setSymbol(symbol);
 			record.setType(UserWalletRecord.TYPE_IN);
@@ -447,15 +449,15 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			} else {
 				record.setRemark(remark);
 			}
-			int rows = userWalletRecordService.insertUserWalletRecord(record);
+			final int rows = userWalletRecordService.insertUserWalletRecord(record);
 			if (rows <= 0) {
 				return false;
 			}
-			UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(id);
+			final UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(id);
 			if (lockAccount == null) {
 				return false;
 			}
-			UserWalletAccount update = new UserWalletAccount();
+			final UserWalletAccount update = new UserWalletAccount();
 			update.setId(id);
 			update.setAmount(MathUtils.plus(lockAccount.getAmount(), amount));
 			userWalletAccountMapper.updateUserWalletAccount(update);
@@ -488,10 +490,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		try {
 			isLocked = tryLock(account);
 
-			Long id = account.getId();
-			Long userId = account.getUserId();
-			String symbol = account.getSymbol();
-			UserWalletRecord record = new UserWalletRecord();
+			final Long id = account.getId();
+			final Long userId = account.getUserId();
+			final String symbol = account.getSymbol();
+			final UserWalletRecord record = new UserWalletRecord();
 			record.setAmount(amount);
 			record.setSymbol(symbol);
 			record.setType(type);
@@ -500,15 +502,15 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			record.setOrderNo(orderNo);
 			record.setRemark(remark);
 			record.setDays(days);
-			int rows = userWalletRecordService.insertUserWalletRecord(record);
+			final int rows = userWalletRecordService.insertUserWalletRecord(record);
 			if (rows <= 0) {
 				return false;
 			}
-			UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(id);
+			final UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(id);
 			if (lockAccount == null) {
 				return false;
 			}
-			UserWalletAccount update = new UserWalletAccount();
+			final UserWalletAccount update = new UserWalletAccount();
 			update.setId(id);
 			if (UserWalletRecord.TYPE_IN.equals(type)) {
 				if (UserWalletRecord.KIND_AMOUNT.equals(kind)) {
@@ -538,7 +540,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	@Override
 	public UserWalletAccount selectUserAccountWithBalance(Long userId, String symbol, BigDecimal balance) {
-		UserWalletAccount account = selectUserWalletAccount(userId, symbol);
+		final UserWalletAccount account = selectUserWalletAccount(userId, symbol);
 		if (account == null || !account.hasBalance(balance)) {
 			return null;
 		}
@@ -550,10 +552,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (StringUtils.isEmpty(address)) {
 			return null;
 		}
-		UserWalletAccount query = new UserWalletAccount();
+		final UserWalletAccount query = new UserWalletAccount();
 		query.setAddress(address);
 		query.setSymbol(symbol);
-		List<UserWalletAccount> list = selectUserWalletAccountList(query);
+		final List<UserWalletAccount> list = selectUserWalletAccountList(query);
 		return list.isEmpty() ? null : list.get(0);
 	}
 
@@ -563,29 +565,29 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (record == null) {
 			return 0;
 		}
-		Long userId = record.getUserId();
-		BigDecimal amount = record.getAmount();
-		String symbol = record.getSymbol();
-		Integer type = record.getType();
-		Integer kind = record.getKind();
+		final Long userId = record.getUserId();
+		final BigDecimal amount = record.getAmount();
+		final String symbol = record.getSymbol();
+		final Integer type = record.getType();
+		final Integer kind = record.getKind();
 		if (userId == null || MathUtils.isInvalid(amount) || StringUtils.isEmpty(symbol)
 				|| !UserWalletRecord.TYPE_IN.equals(type) || !UserWalletRecord.KIND_LOCKED.equals(kind)
-				|| !UserWalletRecord.STATUS_NONE.equals(record.getStatus())) {
+				|| !IConstants.STATUS_NONE.equals(record.getStatus())) {
 			return 0;
 		}
-		UserWalletAccount account = selectUserWalletAccount(userId, symbol);
+		final UserWalletAccount account = selectUserWalletAccount(userId, symbol);
 		if (account == null || MathUtils.lt(account.getLockedAmount(), amount)) {
 			return 0;
 		}
 		boolean isLocked = false;
 		try {
 			isLocked = tryLock(account);
-			UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
+			final UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
 			if (lockAccount == null) {
 				return 0;
 			}
 			// 1. 扣除锁定余额
-			UserWalletAccount update = new UserWalletAccount();
+			final UserWalletAccount update = new UserWalletAccount();
 			update.setId(account.getId());
 			update.setLockedAmount(account.getLockedAmount().subtract(amount));
 			int rows = updateUserWalletAccount(update);
@@ -594,9 +596,9 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			}
 
 			// 2. 更新钱包记录
-			UserWalletRecord finish = new UserWalletRecord();
+			final UserWalletRecord finish = new UserWalletRecord();
 			finish.setId(record.getId());
-			finish.setStatus(UserWalletRecord.STATUS_FINISHED);
+			finish.setStatus(IConstants.STATUS_FINISHED);
 			rows = userWalletRecordService.updateUserWalletRecord(finish);
 			if (rows <= 0) {
 				throw new TransactionException("finishRecord");
@@ -621,42 +623,41 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (StringUtils.isEmpty(orderNo) || lockedAmount == null || releaseAmount == null) {
 			return false;
 		}
-		UserWalletAccount account = selectUserWalletAccount(userId, symbol);
+		final UserWalletAccount account = selectUserWalletAccount(userId, symbol);
 		if (account == null || MathUtils.lt(account.getLockedAmount(), releaseAmount)) {
 			return false;
 		}
 
-		UserWalletRecord query = new UserWalletRecord();
+		final UserWalletRecord query = new UserWalletRecord();
 		query.setUserId(userId);
 		query.setType(UserWalletRecord.TYPE_IN);
 		query.setKind(UserWalletRecord.KIND_LOCKED);
 		query.setOrderNo(orderNo);
-		List<UserWalletRecord> list = userWalletRecordService.selectUserWalletRecordList(query);
+		final List<UserWalletRecord> list = userWalletRecordService.selectUserWalletRecordList(query);
 		if (list.isEmpty()) {
 			return false;
 		}
-		UserWalletRecord record = list.get(0);
-		if (!UserWalletRecord.STATUS_NONE.equals(record.getStatus())
-				|| !MathUtils.equals(lockedAmount, record.getAmount())) {
+		final UserWalletRecord record = list.get(0);
+		if (!IConstants.STATUS_NONE.equals(record.getStatus()) || !MathUtils.equals(lockedAmount, record.getAmount())) {
 			return false;
 		}
 		// 释放次数已购
-		Integer days = record.getDays();
+		final Integer days = record.getDays();
 		if (days == null || days <= 0) {
-			UserWalletRecord finish = new UserWalletRecord();
+			final UserWalletRecord finish = new UserWalletRecord();
 			finish.setId(record.getId());
-			finish.setStatus(UserWalletRecord.STATUS_FINISHED);
+			finish.setStatus(IConstants.STATUS_FINISHED);
 			return userWalletRecordService.updateUserWalletRecord(finish) > 0;
 		}
 		boolean isLocked = false;
 		try {
 			isLocked = tryLock(account);
-			UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
+			final UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
 			if (lockAccount == null) {
 				return false;
 			}
 			// 1. 扣除锁定余额
-			UserWalletAccount update = new UserWalletAccount();
+			final UserWalletAccount update = new UserWalletAccount();
 			update.setId(account.getId());
 			update.setLockedAmount(account.getLockedAmount().subtract(releaseAmount));
 			int rows = updateUserWalletAccount(update);
@@ -665,11 +666,11 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			}
 
 			// 2. 更新钱包记录
-			UserWalletRecord finish = new UserWalletRecord();
+			final UserWalletRecord finish = new UserWalletRecord();
 			finish.setId(record.getId());
 			finish.setDays(days - 1);
 			if (days == 1) {
-				finish.setStatus(UserWalletRecord.STATUS_FINISHED);
+				finish.setStatus(IConstants.STATUS_FINISHED);
 			}
 			rows = userWalletRecordService.updateUserWalletRecord(finish);
 			if (rows <= 0) {
@@ -695,7 +696,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			return 0;
 		}
 
-		UserWalletAccount account = selectUserWalletAccount(userId, symbol);
+		final UserWalletAccount account = selectUserWalletAccount(userId, symbol);
 		if (account == null) {
 			return 0;
 		}
@@ -703,24 +704,24 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		boolean isLocked = false;
 		try {
 			isLocked = tryLock(userId);
-			UserWalletRecord record = new UserWalletRecord();
+			final UserWalletRecord record = new UserWalletRecord();
 			record.setUserId(userId);
 			record.setAmount(value);
 			record.setType(UserWalletRecord.TYPE_ADMIN);
 			record.setKind(kind);
 			record.setSymbol(symbol);
-			record.setStatus(UserWalletRecord.STATUS_FINISHED);
+			record.setStatus(IConstants.STATUS_FINISHED);
 			record.setRemark("后台设置");
 			int rows = userWalletRecordService.insertUserWalletRecord(record);
 			if (rows <= 0) {
 				return 0;
 			}
 
-			UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
+			final UserWalletAccount lockAccount = userWalletAccountMapper.lockUserWalletAccountById(account.getId());
 			if (lockAccount == null) {
 				return 0;
 			}
-			UserWalletAccount update = new UserWalletAccount();
+			final UserWalletAccount update = new UserWalletAccount();
 			update.setId(account.getId());
 			if (UserWalletRecord.KIND_AMOUNT.equals(kind)) {
 				update.setAmount(value);
@@ -748,11 +749,11 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (enabled == null) {
 			return 0;
 		}
-		UserWalletAccount account = selectUserWalletAccount(userId, symbol);
+		final UserWalletAccount account = selectUserWalletAccount(userId, symbol);
 		if (account == null) {
 			return 0;
 		}
-		UserWalletAccount update = new UserWalletAccount();
+		final UserWalletAccount update = new UserWalletAccount();
 		update.setId(account.getId());
 		update.setWithdrawalEnabled(enabled);
 		return updateUserWalletAccount(update);
@@ -765,7 +766,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (userId == null || StringUtils.isEmpty(fromSymbol) || StringUtils.isEmpty(toSymbol)) {
 			return CommonResult.fail("兑换失败");
 		}
-		if (StringUtils.equals(fromSymbol, toSymbol)) {
+		if (org.apache.commons.lang3.StringUtils.equals(fromSymbol, toSymbol)) {
 			return CommonResult.success();
 		}
 		if (MathUtils.isEmpty(price)) {
@@ -776,18 +777,18 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			return CommonResult.fail("兑换量无效");
 		}
 
-		UserWalletAccount fromAccount = selectUserAccountWithBalance(userId, fromSymbol, amount);
+		final UserWalletAccount fromAccount = selectUserAccountWithBalance(userId, fromSymbol, amount);
 		if (fromAccount == null) {
 			return CommonResult.fail("余额不足");
 		}
-		String timeId = IdWorker.getTimeId();
+		final String timeId = IdWorker.getTimeId();
 		if (!updateAccount(fromAccount, UserWalletAccount.TYPE_OUT, UserWalletAccount.KIND_AMOUNT, amount, timeId,
 				"币种兑换", null)) {
 			return CommonResult.fail("兑换失败");
 		}
-		UserWalletAccount toAccount = selectUserWalletAccount(userId, toSymbol);
+		final UserWalletAccount toAccount = selectUserWalletAccount(userId, toSymbol);
 
-		BigDecimal toAmount = positivePrice ? amount.multiply(price).setScale(6, RoundingMode.HALF_UP)
+		final BigDecimal toAmount = positivePrice ? amount.multiply(price).setScale(6, RoundingMode.HALF_UP)
 				: amount.divide(price, 6, RoundingMode.HALF_UP);
 
 		if (!updateAccount(toAccount, UserWalletAccount.TYPE_IN, UserWalletAccount.KIND_AMOUNT, toAmount, timeId,

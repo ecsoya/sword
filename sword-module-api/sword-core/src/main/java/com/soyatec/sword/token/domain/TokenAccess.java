@@ -11,7 +11,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 操作日志记录对象 t_token_access
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-07
  */

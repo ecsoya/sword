@@ -48,7 +48,7 @@ public class M5cSendMobileCodeHandler implements SendMobileCodeHandler, IMobileC
 		if (StringUtils.isEmpty(template)) {
 			template = DEFAULT_TEMPLATE;
 		}
-		String message = StringUtils.format(template, code, code);
+		final String message = StringUtils.format(template, code, code);
 		return sendMessage(mobile, message);
 	}
 
@@ -60,7 +60,7 @@ public class M5cSendMobileCodeHandler implements SendMobileCodeHandler, IMobileC
 		if (isChineseMobile(mobile)) {
 			mobile = "86" + mobile;
 		}
-		M5cResult result = mobileService.sendMessage(mobile, message);
+		final M5cResult result = mobileService.sendMessage(mobile, message);
 		log.info("m5c send sms to mobile {} with message {}, and result is: {}", mobile, message, result);
 		if (result != null && result.isSuccess()) {
 			return CommonResult.success(message);
@@ -73,8 +73,8 @@ public class M5cSendMobileCodeHandler implements SendMobileCodeHandler, IMobileC
 			return false;
 		}
 		if (mobile.length() == 11) {
-			Pattern p = Pattern.compile(CHINESE_MOBILE_REGEX);
-			java.util.regex.Matcher m = p.matcher(mobile);
+			final Pattern p = Pattern.compile(CHINESE_MOBILE_REGEX);
+			final java.util.regex.Matcher m = p.matcher(mobile);
 			return m.matches();
 		}
 		return false;

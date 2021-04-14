@@ -2,7 +2,7 @@ package com.soyatec.sword.common.core.domain;
 
 /**
  * Tree基类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class TreeEntity extends BaseEntity {

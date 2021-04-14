@@ -2,7 +2,7 @@ package com.soyatec.sword.framework.web.domain.server;
 
 /**
  * 系统相关信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class Sys {

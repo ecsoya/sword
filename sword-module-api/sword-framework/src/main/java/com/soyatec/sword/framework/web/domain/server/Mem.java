@@ -4,7 +4,7 @@ import com.soyatec.sword.common.utils.Arith;
 
 /**
  * 內存相关信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class Mem {

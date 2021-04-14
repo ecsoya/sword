@@ -260,7 +260,7 @@ public final class HTMLFilter {
 	}
 
 	private String checkTags(String s) {
-		Matcher m = P_TAGS.matcher(s);
+		final Matcher m = P_TAGS.matcher(s);
 
 		final StringBuffer buf = new StringBuffer();
 		while (m.find()) {
@@ -273,7 +273,7 @@ public final class HTMLFilter {
 		// these get tallied in processTag
 		// (remember to reset before subsequent calls to filter method)
 		final StringBuilder sBuilder = new StringBuilder(buf.toString());
-		for (String key : vTagCounts.keySet()) {
+		for (final String key : vTagCounts.keySet()) {
 			for (int ii = 0; ii < vTagCounts.get(key); ii++) {
 				sBuilder.append("</").append(key).append(">");
 			}
@@ -285,7 +285,7 @@ public final class HTMLFilter {
 
 	private String processRemoveBlanks(final String s) {
 		String result = s;
-		for (String tag : vRemoveBlanks) {
+		for (final String tag : vRemoveBlanks) {
 			if (!P_REMOVE_PAIR_BLANKS.containsKey(tag)) {
 				P_REMOVE_PAIR_BLANKS.putIfAbsent(tag, Pattern.compile("<" + tag + "(\\s[^>]*)?></" + tag + ">"));
 			}
@@ -300,7 +300,7 @@ public final class HTMLFilter {
 	}
 
 	private static String regexReplace(final Pattern regex_pattern, final String replacement, final String s) {
-		Matcher m = regex_pattern.matcher(s);
+		final Matcher m = regex_pattern.matcher(s);
 		return m.replaceAll(replacement);
 	}
 
@@ -447,10 +447,10 @@ public final class HTMLFilter {
 	}
 
 	private String validateEntities(final String s) {
-		StringBuffer buf = new StringBuffer();
+		final StringBuffer buf = new StringBuffer();
 
 		// validate entities throughout the string
-		Matcher m = P_VALID_ENTITIES.matcher(s);
+		final Matcher m = P_VALID_ENTITIES.matcher(s);
 		while (m.find()) {
 			final String one = m.group(1); // ([^&;]*)
 			final String two = m.group(2); // (?=(;|&|$))
@@ -463,8 +463,8 @@ public final class HTMLFilter {
 
 	private String encodeQuotes(final String s) {
 		if (encodeQuotes) {
-			StringBuffer buf = new StringBuffer();
-			Matcher m = P_VALID_QUOTES.matcher(s);
+			final StringBuffer buf = new StringBuffer();
+			final Matcher m = P_VALID_QUOTES.matcher(s);
 			while (m.find()) {
 				final String one = m.group(1); // (>|^)
 				final String two = m.group(2); // ([^<]+?)
@@ -489,7 +489,7 @@ public final class HTMLFilter {
 	}
 
 	private static boolean inArray(final String s, final String[] array) {
-		for (String item : array) {
+		for (final String item : array) {
 			if (item != null && item.equals(s)) {
 				return true;
 			}

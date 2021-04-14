@@ -26,7 +26,6 @@ import com.soyatec.sword.common.core.domain.CxSelect;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.enums.BusinessType;
-import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.generator.domain.GenTable;
 import com.soyatec.sword.generator.domain.GenTableColumn;
 import com.soyatec.sword.generator.service.IGenTableColumnService;
@@ -34,13 +33,13 @@ import com.soyatec.sword.generator.service.IGenTableService;
 
 /**
  * 代码生成 操作处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/tool/gen")
 public class GenController extends BaseController {
-	private String prefix = "tool/gen";
+	private final String prefix = "tool/gen";
 
 	@Autowired
 	private IGenTableService genTableService;
@@ -60,7 +59,7 @@ public class GenController extends BaseController {
 	@ResponseBody
 	public TableDataInfo genList(GenTable genTable) {
 		startPage();
-		List<GenTable> list = genTableService.selectGenTableList(genTable);
+		final List<GenTable> list = genTableService.selectGenTableList(genTable);
 		return getDataTable(list);
 	}
 
@@ -71,7 +70,7 @@ public class GenController extends BaseController {
 	@ResponseBody
 	public TableDataInfo dataList(GenTable genTable) {
 		startPage();
-		List<GenTable> list = genTableService.selectDbTableList(genTable);
+		final List<GenTable> list = genTableService.selectDbTableList(genTable);
 		return getDataTable(list);
 	}
 
@@ -81,8 +80,8 @@ public class GenController extends BaseController {
 	@PostMapping("/column/list")
 	@ResponseBody
 	public TableDataInfo columnList(GenTableColumn genTableColumn) {
-		TableDataInfo dataInfo = new TableDataInfo();
-		List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(genTableColumn);
+		final TableDataInfo dataInfo = new TableDataInfo();
+		final List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(genTableColumn);
 		dataInfo.setRows(list);
 		dataInfo.setTotal(list.size());
 		return dataInfo;
@@ -103,9 +102,9 @@ public class GenController extends BaseController {
 	@PostMapping("/importTable")
 	@ResponseBody
 	public AjaxResult importTableSave(String tables) {
-		String[] tableNames = Convert.toStrArray(tables);
+		final String[] tableNames = Convert.toStrArray(tables);
 		// 查询表信息
-		List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
+		final List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
 		genTableService.importGenTable(tableList, "Developer");
 		return AjaxResult.success();
 	}
@@ -115,15 +114,15 @@ public class GenController extends BaseController {
 	 */
 	@GetMapping("/edit/{tableId}")
 	public String edit(@PathVariable("tableId") Long tableId, ModelMap mmap) {
-		GenTable table = genTableService.selectGenTableById(tableId);
-		List<GenTable> genTables = genTableService.selectGenTableAll();
-		List<CxSelect> cxSelect = new ArrayList<CxSelect>();
-		for (GenTable genTable : genTables) {
-			if (!StringUtils.equals(table.getTableName(), genTable.getTableName())) {
-				CxSelect cxTable = new CxSelect(genTable.getTableName(),
+		final GenTable table = genTableService.selectGenTableById(tableId);
+		final List<GenTable> genTables = genTableService.selectGenTableAll();
+		final List<CxSelect> cxSelect = new ArrayList<CxSelect>();
+		for (final GenTable genTable : genTables) {
+			if (!org.apache.commons.lang3.StringUtils.equals(table.getTableName(), genTable.getTableName())) {
+				final CxSelect cxTable = new CxSelect(genTable.getTableName(),
 						genTable.getTableName() + '：' + genTable.getTableComment());
-				List<CxSelect> cxColumns = new ArrayList<CxSelect>();
-				for (GenTableColumn tableColumn : genTable.getColumns()) {
+				final List<CxSelect> cxColumns = new ArrayList<CxSelect>();
+				for (final GenTableColumn tableColumn : genTable.getColumns()) {
 					cxColumns.add(new CxSelect(tableColumn.getColumnName(),
 							tableColumn.getColumnName() + '：' + tableColumn.getColumnComment()));
 				}
@@ -162,7 +161,7 @@ public class GenController extends BaseController {
 	@GetMapping("/preview/{tableId}")
 	@ResponseBody
 	public AjaxResult preview(@PathVariable("tableId") Long tableId) throws IOException {
-		Map<String, String> dataMap = genTableService.previewCode(tableId);
+		final Map<String, String> dataMap = genTableService.previewCode(tableId);
 		return AjaxResult.success(dataMap);
 	}
 
@@ -172,7 +171,7 @@ public class GenController extends BaseController {
 	@Log(title = "代码生成", businessType = BusinessType.GENCODE)
 	@GetMapping("/download/{tableName}")
 	public void download(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException {
-		byte[] data = genTableService.downloadCode(tableName);
+		final byte[] data = genTableService.downloadCode(tableName);
 		genCode(response, data);
 	}
 
@@ -205,8 +204,8 @@ public class GenController extends BaseController {
 	@GetMapping("/batchGenCode")
 	@ResponseBody
 	public void batchGenCode(HttpServletResponse response, String tables) throws IOException {
-		String[] tableNames = Convert.toStrArray(tables);
-		byte[] data = genTableService.downloadCode(tableNames);
+		final String[] tableNames = Convert.toStrArray(tables);
+		final byte[] data = genTableService.downloadCode(tableNames);
 		genCode(response, data);
 	}
 

@@ -22,14 +22,14 @@ import com.soyatec.sword.mining.service.IMiningSymbolService;
 
 /**
  * 币种Controller
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-18
  */
 @Controller
 @RequestMapping("/mining/symbol")
 public class MiningSymbolController extends BaseController {
-	private String prefix = "mining/symbol";
+	private final String prefix = "mining/symbol";
 
 	@Autowired
 	private IMiningSymbolService miningSymbolService;
@@ -48,7 +48,7 @@ public class MiningSymbolController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(MiningSymbol miningSymbol) {
 		startPage();
-		List<MiningSymbol> list = miningSymbolService.selectMiningSymbolList(miningSymbol);
+		final List<MiningSymbol> list = miningSymbolService.selectMiningSymbolList(miningSymbol);
 		return getDataTable(list);
 	}
 
@@ -57,7 +57,7 @@ public class MiningSymbolController extends BaseController {
 	 */
 	@GetMapping("/edit/{symbol}")
 	public String edit(@PathVariable("symbol") String symbol, ModelMap mmap) {
-		MiningSymbol miningSymbol = miningSymbolService.selectMiningSymbolById(symbol);
+		final MiningSymbol miningSymbol = miningSymbolService.selectMiningSymbolById(symbol);
 		mmap.put("miningSymbol", miningSymbol);
 		return prefix + "/edit";
 	}
@@ -81,7 +81,7 @@ public class MiningSymbolController extends BaseController {
 	@PostMapping("/changeStatus")
 	@ResponseBody
 	public AjaxResult changeStatus(String symbol, Integer withdrawalEnabled) {
-		MiningSymbol miningSymbol = new MiningSymbol();
+		final MiningSymbol miningSymbol = new MiningSymbol();
 		miningSymbol.setSymbol(symbol);
 		miningSymbol.setWithdrawalEnabled(withdrawalEnabled);
 		return toAjax(miningSymbolService.updateMiningSymbol(miningSymbol));
@@ -95,7 +95,7 @@ public class MiningSymbolController extends BaseController {
 	@PostMapping("/changeManualAudit")
 	@ResponseBody
 	public AjaxResult changeManualAudit(String symbol, Integer withdrawalManualAudit) {
-		MiningSymbol miningSymbol = new MiningSymbol();
+		final MiningSymbol miningSymbol = new MiningSymbol();
 		miningSymbol.setSymbol(symbol);
 		miningSymbol.setWithdrawalManualAudit(withdrawalManualAudit);
 		return toAjax(miningSymbolService.updateMiningSymbol(miningSymbol));

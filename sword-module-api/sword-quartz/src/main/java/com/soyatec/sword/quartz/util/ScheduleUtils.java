@@ -18,7 +18,7 @@ import com.soyatec.sword.quartz.domain.SysJob;
 
 /**
  * 定时任务工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  *
  */
@@ -30,7 +30,7 @@ public class ScheduleUtils {
 	 * @return 具体执行任务类
 	 */
 	private static Class<? extends Job> getQuartzJobClass(SysJob sysJob) {
-		boolean isConcurrent = "0".equals(sysJob.getConcurrent());
+		final boolean isConcurrent = "0".equals(sysJob.getConcurrent());
 		return isConcurrent ? QuartzJobExecution.class : QuartzDisallowConcurrentExecution.class;
 	}
 
@@ -52,18 +52,18 @@ public class ScheduleUtils {
 	 * 创建定时任务
 	 */
 	public static void createScheduleJob(Scheduler scheduler, SysJob job) throws SchedulerException, TaskException {
-		Class<? extends Job> jobClass = getQuartzJobClass(job);
+		final Class<? extends Job> jobClass = getQuartzJobClass(job);
 		// 构建job信息
-		Long jobId = job.getJobId();
-		String jobGroup = job.getJobGroup();
-		JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(jobId, jobGroup)).build();
+		final Long jobId = job.getJobId();
+		final String jobGroup = job.getJobGroup();
+		final JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(jobId, jobGroup)).build();
 
 		// 表达式调度构建器
 		CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
 		cronScheduleBuilder = handleCronScheduleMisfirePolicy(job, cronScheduleBuilder);
 
 		// 按新的cronExpression表达式构建一个新的trigger
-		CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(jobId, jobGroup))
+		final CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(jobId, jobGroup))
 				.withSchedule(cronScheduleBuilder).build();
 
 		// 放入参数，运行时的方法可以获取

@@ -14,7 +14,7 @@ import com.soyatec.sword.system.service.ISysNoticeService;
 
 /**
  * 公告 服务层实现
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2018-06-25
  */
@@ -25,7 +25,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 
 	/**
 	 * 查询公告信息
-	 * 
+	 *
 	 * @param noticeId 公告ID
 	 * @return 公告信息
 	 */
@@ -36,7 +36,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 
 	/**
 	 * 查询公告列表
-	 * 
+	 *
 	 * @param notice 公告信息
 	 * @return 公告集合
 	 */
@@ -47,7 +47,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 
 	/**
 	 * 新增公告
-	 * 
+	 *
 	 * @param notice 公告信息
 	 * @return 结果
 	 */
@@ -58,7 +58,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 
 	/**
 	 * 修改公告
-	 * 
+	 *
 	 * @param notice 公告信息
 	 * @return 结果
 	 */
@@ -69,7 +69,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 
 	/**
 	 * 删除公告对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -80,12 +80,12 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 
 	@Override
 	public String getLatestNoticeTitle() {
-		List<SysNotice> list = selectNoticeListByType(SysNotice.NOTICE_TYPE_NOTICE);
+		final List<SysNotice> list = selectNoticeListByType(SysNotice.NOTICE_TYPE_NOTICE);
 		if (list.isEmpty()) {
 			return "";
 		}
-		StringBuffer buf = new StringBuffer();
-		for (SysNotice notice : list) {
+		final StringBuffer buf = new StringBuffer();
+		for (final SysNotice notice : list) {
 			if (buf.length() != 0) {
 				buf.append("；");
 			}
@@ -99,7 +99,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 		if (StringUtils.isEmpty(noticeType)) {
 			return Collections.emptyList();
 		}
-		SysNotice query = new SysNotice();
+		final SysNotice query = new SysNotice();
 		query.setNoticeType(noticeType);
 		query.setStatus(SysNotice.STATUS_NORMAL);
 		return selectNoticeList(query);

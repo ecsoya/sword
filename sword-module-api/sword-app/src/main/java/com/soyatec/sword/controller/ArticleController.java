@@ -50,10 +50,10 @@ public class ArticleController extends BaseController {
 	public TableDataInfo list(@ApiParam("每页显示多少条") Integer pageSize, @ApiParam("当前页数，第几页") Integer pageNum,
 			String category) {
 		startPage("create_time desc");
-		SwordArticle query = new SwordArticle();
+		final SwordArticle query = new SwordArticle();
 		query.setStatus(SwordArticle.STATUS_PUBLISH);
 		query.setCategory(category);
-		List<SwordArticle> list = articleService.selectSwordArticleList(query);
+		final List<SwordArticle> list = articleService.selectSwordArticleList(query);
 		return getDataTable(list);
 	}
 
@@ -66,14 +66,14 @@ public class ArticleController extends BaseController {
 	@ApiOperation(value = "查询消息详情", notes = "id: 文章Id，\ncontent：为富文本内容")
 	@GetMapping("/detail")
 	public CommonResult<SwordArticle> detail(Long id) {
-		CommonResult<SwordArticle> build = CommonResult.build(articleService.selectSwordArticleById(id));
+		final CommonResult<SwordArticle> build = CommonResult.build(articleService.selectSwordArticleById(id));
 		if (build.isSuccess()) {
-			Long userId = SwordUtils.getUserId();
+			final Long userId = SwordUtils.getUserId();
 			AsyncManager.me().execute(new Runnable() {
 
 				@Override
 				public void run() {
-					UserArticle article = userArticleService.selectUserArticleByArticleId(id, userId);
+					final UserArticle article = userArticleService.selectUserArticleByArticleId(id, userId);
 					article.setRead(UserArticle.READ_YES);
 					userArticleService.updateUserArticle(article);
 				}
@@ -95,7 +95,7 @@ public class ArticleController extends BaseController {
 		if (id == null) {
 			return CommonResult.fail("参数错误");
 		}
-		UserArticle userArticle = userArticleService.selectUserArticleByArticleId(id, SwordUtils.getUserId());
+		final UserArticle userArticle = userArticleService.selectUserArticleByArticleId(id, SwordUtils.getUserId());
 		userArticle.setLike(UserArticle.LIKE_YES);
 		return CommonResult.ajax(userArticleService.updateUserArticle(userArticle));
 	}
@@ -107,7 +107,7 @@ public class ArticleController extends BaseController {
 		if (id == null) {
 			return CommonResult.fail("参数错误");
 		}
-		UserArticle userArticle = userArticleService.selectUserArticleByArticleId(id, SwordUtils.getUserId());
+		final UserArticle userArticle = userArticleService.selectUserArticleByArticleId(id, SwordUtils.getUserId());
 		userArticle.setLike(UserArticle.LIKE_NO);
 		return CommonResult.ajax(userArticleService.updateUserArticle(userArticle));
 	}
@@ -122,7 +122,7 @@ public class ArticleController extends BaseController {
 		if (StringUtils.isEmpty(comment)) {
 			return CommonResult.fail("回复为空");
 		}
-		UserArticle userArticle = userArticleService.selectUserArticleByArticleId(id, SwordUtils.getUserId());
+		final UserArticle userArticle = userArticleService.selectUserArticleByArticleId(id, SwordUtils.getUserId());
 		userArticle.setComment(comment);
 		return CommonResult.ajax(userArticleService.updateUserArticle(userArticle));
 	}

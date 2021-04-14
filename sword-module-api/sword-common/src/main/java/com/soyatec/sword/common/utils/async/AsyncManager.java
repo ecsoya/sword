@@ -9,7 +9,7 @@ import com.soyatec.sword.common.utils.spring.SpringUtils;
 
 /**
  * 异步任务管理器
- * 
+ *
  * @author liuhulu
  */
 public class AsyncManager {
@@ -21,7 +21,7 @@ public class AsyncManager {
 	/**
 	 * 异步操作任务调度线程池
 	 */
-	private ScheduledExecutorService executor = SpringUtils.getBean("scheduledExecutorService");
+	private final ScheduledExecutorService executor = SpringUtils.getBean("scheduledExecutorService");
 
 	/**
 	 * 单例模式
@@ -37,7 +37,7 @@ public class AsyncManager {
 
 	/**
 	 * 执行任务
-	 * 
+	 *
 	 * @param task 任务
 	 */
 	public void execute(TimerTask task) {

@@ -15,23 +15,24 @@ import eu.bitwalker.useragentutils.UserAgent;
 
 /**
  * 自定义sessionFactory会话
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Component
 public class OnlineSessionFactory implements SessionFactory {
 	@Override
 	public Session createSession(SessionContext initData) {
-		OnlineSession session = new OnlineSession();
+		final OnlineSession session = new OnlineSession();
 		if (initData != null && initData instanceof WebSessionContext) {
-			WebSessionContext sessionContext = (WebSessionContext) initData;
-			HttpServletRequest request = (HttpServletRequest) sessionContext.getServletRequest();
+			final WebSessionContext sessionContext = (WebSessionContext) initData;
+			final HttpServletRequest request = (HttpServletRequest) sessionContext.getServletRequest();
 			if (request != null) {
-				UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+				final UserAgent userAgent = UserAgent
+						.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
 				// 获取客户端操作系统
-				String os = userAgent.getOperatingSystem().getName();
+				final String os = userAgent.getOperatingSystem().getName();
 				// 获取客户端浏览器
-				String browser = userAgent.getBrowser().getName();
+				final String browser = userAgent.getBrowser().getName();
 				session.setHost(IpUtils.getIpAddr(request));
 				session.setBrowser(browser);
 				session.setOs(os);

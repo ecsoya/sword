@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * CxSelect树结构实体类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class CxSelect implements Serializable {

@@ -7,7 +7,7 @@ import com.soyatec.sword.common.utils.html.EscapeUtil;
 
 /**
  * XSS过滤处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
@@ -20,10 +20,10 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	@Override
 	public String[] getParameterValues(String name) {
-		String[] values = super.getParameterValues(name);
+		final String[] values = super.getParameterValues(name);
 		if (values != null) {
-			int length = values.length;
-			String[] escapseValues = new String[length];
+			final int length = values.length;
+			final String[] escapseValues = new String[length];
 			for (int i = 0; i < length; i++) {
 				// 防xss攻击和过滤前后空格
 				escapseValues[i] = EscapeUtil.clean(values[i]).trim();

@@ -18,7 +18,7 @@ import com.soyatec.sword.system.service.ISysUserService;
 
 /**
  * 注册校验方法
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Component
@@ -33,7 +33,8 @@ public class SysRegisterService {
 	 * 注册
 	 */
 	public String register(SysUser user) {
-		String msg = "", loginName = user.getLoginName(), password = user.getPassword();
+		String msg = "";
+		final String loginName = user.getLoginName(), password = user.getPassword();
 
 		if (!StringUtils.isEmpty(ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA))) {
 			msg = "验证码错误";
@@ -54,7 +55,7 @@ public class SysRegisterService {
 			user.setUserName(loginName);
 			user.setSalt(ShiroUtils.randomSalt());
 			user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
-			boolean regFlag = userService.registerUser(user);
+			final boolean regFlag = userService.registerUser(user);
 			if (!regFlag) {
 				msg = "注册失败,请联系系统管理人员";
 			} else {

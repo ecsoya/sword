@@ -16,7 +16,7 @@ import com.soyatec.sword.framework.shiro.service.SysShiroService;
 
 /**
  * 针对自定义的ShiroSession的db操作
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
@@ -62,16 +62,16 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
 	 * 更新会话；如更新会话最后访问时间/停止会话/设置超时时间/设置移除属性等会调用
 	 */
 	public void syncToDb(OnlineSession onlineSession) {
-		Date lastSyncTimestamp = (Date) onlineSession.getAttribute(LAST_SYNC_DB_TIMESTAMP);
+		final Date lastSyncTimestamp = (Date) onlineSession.getAttribute(LAST_SYNC_DB_TIMESTAMP);
 		if (lastSyncTimestamp != null) {
 			boolean needSync = true;
-			long deltaTime = onlineSession.getLastAccessTime().getTime() - lastSyncTimestamp.getTime();
+			final long deltaTime = onlineSession.getLastAccessTime().getTime() - lastSyncTimestamp.getTime();
 			if (deltaTime < dbSyncPeriod * 60 * 1000) {
 				// 时间差不足 无需同步
 				needSync = false;
 			}
 			// isGuest = true 访客
-			boolean isGuest = onlineSession.getUserId() == null || onlineSession.getUserId() == 0L;
+			final boolean isGuest = onlineSession.getUserId() == null || onlineSession.getUserId() == 0L;
 
 			// session 数据变更了 同步
 			if (!isGuest && onlineSession.isAttributeChanged()) {
@@ -96,7 +96,7 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
 	 */
 	@Override
 	protected void doDelete(Session session) {
-		OnlineSession onlineSession = (OnlineSession) session;
+		final OnlineSession onlineSession = (OnlineSession) session;
 		if (null == onlineSession) {
 			return;
 		}

@@ -13,7 +13,7 @@ import com.soyatec.sword.system.service.ISysOperNotifyService;
 
 /**
  * 操作日志 服务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Service
@@ -26,7 +26,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 
 	/**
 	 * 新增操作日志
-	 * 
+	 *
 	 * @param operLog 操作日志对象
 	 */
 	@Override
@@ -37,7 +37,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 
 	/**
 	 * 查询系统操作日志集合
-	 * 
+	 *
 	 * @param operLog 操作日志对象
 	 * @return 操作日志集合
 	 */
@@ -48,7 +48,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 
 	/**
 	 * 批量删除系统操作日志
-	 * 
+	 *
 	 * @param ids 需要删除的数据
 	 * @return
 	 */
@@ -59,7 +59,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 
 	/**
 	 * 查询操作日志详细
-	 * 
+	 *
 	 * @param operId 操作ID
 	 * @return 操作日志对象
 	 */

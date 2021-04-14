@@ -15,7 +15,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * spring工具类 方便在非spring管理环境中获取bean
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Component
@@ -57,7 +57,7 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
 	 *
 	 */
 	public static <T> T getBean(Class<T> clz) throws BeansException {
-		T result = (T) beanFactory.getBean(clz);
+		final T result = beanFactory.getBean(clz);
 		return result;
 	}
 
@@ -108,7 +108,7 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
 
 	/**
 	 * 获取aop代理对象
-	 * 
+	 *
 	 * @param invoker
 	 * @return
 	 */

@@ -23,14 +23,14 @@ import com.soyatec.sword.common.utils.poi.ExcelUtil;
 
 /**
  * 文章Controller
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-02-04
  */
 @Controller
 @RequestMapping("/admin/article")
 public class AdminArticleController extends BaseController {
-	private String prefix = "admin/article";
+	private final String prefix = "admin/article";
 
 	@Autowired
 	private ISwordArticleService swordArticleService;
@@ -49,7 +49,7 @@ public class AdminArticleController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SwordArticle swordArticle) {
 		startPage();
-		List<SwordArticle> list = swordArticleService.selectSwordArticleList(swordArticle);
+		final List<SwordArticle> list = swordArticleService.selectSwordArticleList(swordArticle);
 		return getDataTable(list);
 	}
 
@@ -61,8 +61,8 @@ public class AdminArticleController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SwordArticle swordArticle) {
-		List<SwordArticle> list = swordArticleService.selectSwordArticleList(swordArticle);
-		ExcelUtil<SwordArticle> util = new ExcelUtil<SwordArticle>(SwordArticle.class);
+		final List<SwordArticle> list = swordArticleService.selectSwordArticleList(swordArticle);
+		final ExcelUtil<SwordArticle> util = new ExcelUtil<SwordArticle>(SwordArticle.class);
 		return util.exportExcel(list, "article");
 	}
 
@@ -89,7 +89,7 @@ public class AdminArticleController extends BaseController {
 	@GetMapping("/content")
 	@ResponseBody
 	public AjaxResult preview(Long id) {
-		SwordArticle article = swordArticleService.selectSwordArticleById(id);
+		final SwordArticle article = swordArticleService.selectSwordArticleById(id);
 		if (article == null) {
 			return AjaxResult.error("错误");
 		}
@@ -112,7 +112,7 @@ public class AdminArticleController extends BaseController {
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
-		SwordArticle swordArticle = swordArticleService.selectSwordArticleById(id);
+		final SwordArticle swordArticle = swordArticleService.selectSwordArticleById(id);
 		mmap.put("swordArticle", swordArticle);
 		return prefix + "/edit";
 	}

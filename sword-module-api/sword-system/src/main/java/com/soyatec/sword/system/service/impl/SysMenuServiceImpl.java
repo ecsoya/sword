@@ -27,7 +27,7 @@ import com.soyatec.sword.system.service.ISysMenuService;
 
 /**
  * 菜单 业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Service
@@ -42,7 +42,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 根据用户查询菜单
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 菜单列表
 	 */
@@ -60,7 +60,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 查询菜单集合
-	 * 
+	 *
 	 * @return 所有菜单信息
 	 */
 	@Override
@@ -77,7 +77,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 查询菜单集合
-	 * 
+	 *
 	 * @return 所有菜单信息
 	 */
 	@Override
@@ -93,15 +93,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 根据用户ID查询权限
-	 * 
+	 *
 	 * @param userId 用户ID
 	 * @return 权限列表
 	 */
 	@Override
 	public Set<String> selectPermsByUserId(Long userId) {
-		List<String> perms = menuMapper.selectPermsByUserId(userId);
-		Set<String> permsSet = new HashSet<>();
-		for (String perm : perms) {
+		final List<String> perms = menuMapper.selectPermsByUserId(userId);
+		final Set<String> permsSet = new HashSet<>();
+		for (final String perm : perms) {
 			if (StringUtils.isNotEmpty(perm)) {
 				permsSet.addAll(Arrays.asList(perm.trim().split(",")));
 			}
@@ -111,17 +111,17 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 根据角色ID查询菜单
-	 * 
+	 *
 	 * @param role 角色对象
 	 * @return 菜单列表
 	 */
 	@Override
 	public List<Ztree> roleMenuTreeData(SysRole role, Long userId) {
-		Long roleId = role.getRoleId();
+		final Long roleId = role.getRoleId();
 		List<Ztree> ztrees = new ArrayList<Ztree>();
-		List<SysMenu> menuList = selectMenuAll(userId);
+		final List<SysMenu> menuList = selectMenuAll(userId);
 		if (StringUtils.isNotNull(roleId)) {
-			List<String> roleMenuList = menuMapper.selectMenuTree(roleId);
+			final List<String> roleMenuList = menuMapper.selectMenuTree(roleId);
 			ztrees = initZtree(menuList, roleMenuList, false);
 		} else {
 			ztrees = initZtree(menuList, null, false);
@@ -131,27 +131,27 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 查询所有菜单
-	 * 
+	 *
 	 * @return 菜单列表
 	 */
 	@Override
 	public List<Ztree> menuTreeData(Long userId) {
-		List<SysMenu> menuList = selectMenuAll(userId);
-		List<Ztree> ztrees = initZtree(menuList);
+		final List<SysMenu> menuList = selectMenuAll(userId);
+		final List<Ztree> ztrees = initZtree(menuList);
 		return ztrees;
 	}
 
 	/**
 	 * 查询系统所有权限
-	 * 
+	 *
 	 * @return 权限列表
 	 */
 	@Override
 	public LinkedHashMap<String, String> selectPermsAll(Long userId) {
-		LinkedHashMap<String, String> section = new LinkedHashMap<>();
-		List<SysMenu> permissions = selectMenuAll(userId);
+		final LinkedHashMap<String, String> section = new LinkedHashMap<>();
+		final List<SysMenu> permissions = selectMenuAll(userId);
 		if (StringUtils.isNotEmpty(permissions)) {
-			for (SysMenu menu : permissions) {
+			for (final SysMenu menu : permissions) {
 				section.put(menu.getUrl(), MessageFormat.format(PREMISSION_STRING, menu.getPerms()));
 			}
 		}
@@ -160,7 +160,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 对象转菜单树
-	 * 
+	 *
 	 * @param menuList 菜单列表
 	 * @return 树结构列表
 	 */
@@ -170,17 +170,17 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 对象转菜单树
-	 * 
+	 *
 	 * @param menuList     菜单列表
 	 * @param roleMenuList 角色已存在菜单列表
 	 * @param permsFlag    是否需要显示权限标识
 	 * @return 树结构列表
 	 */
 	public List<Ztree> initZtree(List<SysMenu> menuList, List<String> roleMenuList, boolean permsFlag) {
-		List<Ztree> ztrees = new ArrayList<Ztree>();
-		boolean isCheck = StringUtils.isNotNull(roleMenuList);
-		for (SysMenu menu : menuList) {
-			Ztree ztree = new Ztree();
+		final List<Ztree> ztrees = new ArrayList<Ztree>();
+		final boolean isCheck = StringUtils.isNotNull(roleMenuList);
+		for (final SysMenu menu : menuList) {
+			final Ztree ztree = new Ztree();
 			ztree.setId(menu.getMenuId());
 			ztree.setpId(menu.getParentId());
 			ztree.setName(transMenuName(menu, permsFlag));
@@ -194,7 +194,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	}
 
 	public String transMenuName(SysMenu menu, boolean permsFlag) {
-		StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer();
 		sb.append(menu.getMenuName());
 		if (permsFlag) {
 			sb.append("<font color=\"#888\">&nbsp;&nbsp;&nbsp;" + menu.getPerms() + "</font>");
@@ -204,7 +204,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 删除菜单管理信息
-	 * 
+	 *
 	 * @param menuId 菜单ID
 	 * @return 结果
 	 */
@@ -215,7 +215,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 根据菜单ID查询信息
-	 * 
+	 *
 	 * @param menuId 菜单ID
 	 * @return 菜单信息
 	 */
@@ -226,7 +226,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 查询子菜单数量
-	 * 
+	 *
 	 * @param parentId 父级菜单ID
 	 * @return 结果
 	 */
@@ -237,7 +237,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 查询菜单使用数量
-	 * 
+	 *
 	 * @param menuId 菜单ID
 	 * @return 结果
 	 */
@@ -248,18 +248,18 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 新增保存菜单信息
-	 * 
+	 *
 	 * @param menu 菜单信息
 	 * @return 结果
 	 */
 	@Override
 	public int insertMenu(SysMenu menu) {
-		int rows = menuMapper.insertMenu(menu);
+		final int rows = menuMapper.insertMenu(menu);
 		if (rows > 0 && "C".equals(menu.getMenuType())) {
-			String buttons = menu.getButtons();
+			final String buttons = menu.getButtons();
 			if (!StringUtils.isEmpty(buttons)) {
-				Long[] longArray = Convert.toLongArray(buttons);
-				for (Long type : longArray) {
+				final Long[] longArray = Convert.toLongArray(buttons);
+				for (final Long type : longArray) {
 					addButton(menu.getMenuId(), menu.getPerms(), type);
 				}
 			}
@@ -271,10 +271,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
 		if (parentId == null || type == null) {
 			return;
 		}
-		String prefix = parentPerms.substring(0, parentPerms.lastIndexOf(":"));
-		SysMenu menu = new SysMenu();
+		final String prefix = parentPerms.substring(0, parentPerms.lastIndexOf(":"));
+		final SysMenu menu = new SysMenu();
 		String menuName = null;
-		String icon = "#";
+		final String icon = "#";
 		String perms = null;
 		switch (type.intValue()) {
 		case 1:
@@ -321,7 +321,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 修改保存菜单信息
-	 * 
+	 *
 	 * @param menu 菜单信息
 	 * @return 结果
 	 */
@@ -332,14 +332,14 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 校验菜单名称是否唯一
-	 * 
+	 *
 	 * @param menu 菜单信息
 	 * @return 结果
 	 */
 	@Override
 	public String checkMenuNameUnique(SysMenu menu) {
-		Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
-		SysMenu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
+		final Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
+		final SysMenu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
 		if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue()) {
 			return UserConstants.MENU_NAME_NOT_UNIQUE;
 		}
@@ -348,15 +348,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 根据父节点的ID获取所有子节点
-	 * 
+	 *
 	 * @param list     分类表
 	 * @param parentId 传入的父节点ID
 	 * @return String
 	 */
 	public List<SysMenu> getChildPerms(List<SysMenu> list, int parentId) {
-		List<SysMenu> returnList = new ArrayList<SysMenu>();
-		for (Iterator<SysMenu> iterator = list.iterator(); iterator.hasNext();) {
-			SysMenu t = (SysMenu) iterator.next();
+		final List<SysMenu> returnList = new ArrayList<SysMenu>();
+		for (final Iterator<SysMenu> iterator = list.iterator(); iterator.hasNext();) {
+			final SysMenu t = iterator.next();
 			// 一、根据传入的某个父节点ID,遍历该父节点的所有子节点
 			if (t.getParentId() == parentId) {
 				recursionFn(list, t);
@@ -368,15 +368,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
 	/**
 	 * 递归列表
-	 * 
+	 *
 	 * @param list
 	 * @param t
 	 */
 	private void recursionFn(List<SysMenu> list, SysMenu t) {
 		// 得到子节点列表
-		List<SysMenu> childList = getChildList(list, t);
+		final List<SysMenu> childList = getChildList(list, t);
 		t.setChildren(childList);
-		for (SysMenu tChild : childList) {
+		for (final SysMenu tChild : childList) {
 			if (hasChild(list, tChild)) {
 				recursionFn(list, tChild);
 			}
@@ -387,10 +387,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	 * 得到子节点列表
 	 */
 	private List<SysMenu> getChildList(List<SysMenu> list, SysMenu t) {
-		List<SysMenu> tlist = new ArrayList<SysMenu>();
-		Iterator<SysMenu> it = list.iterator();
+		final List<SysMenu> tlist = new ArrayList<SysMenu>();
+		final Iterator<SysMenu> it = list.iterator();
 		while (it.hasNext()) {
-			SysMenu n = (SysMenu) it.next();
+			final SysMenu n = it.next();
 			if (n.getParentId().longValue() == t.getMenuId().longValue()) {
 				tlist.add(n);
 			}

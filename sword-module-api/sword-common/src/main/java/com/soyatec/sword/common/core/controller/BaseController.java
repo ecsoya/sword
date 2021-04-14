@@ -29,7 +29,7 @@ import com.soyatec.sword.common.utils.sql.SqlUtil;
 
 /**
  * web层通用数据处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class BaseController {
@@ -57,20 +57,20 @@ public class BaseController {
 	}
 
 	protected Page<?> startPage(PageDomain pageDomain) {
-		Integer pageNum = pageDomain.getPageNum();
-		Integer pageSize = pageDomain.getPageSize();
+		final Integer pageNum = pageDomain.getPageNum();
+		final Integer pageSize = pageDomain.getPageSize();
 		if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
-			String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
+			final String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
 			return PageMethod.startPage(pageNum, pageSize, orderBy);
 		} else if (StringUtils.isNotEmpty(pageDomain.getOrderBy())) {
-			String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
+			final String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
 			PageMethod.orderBy(orderBy);
 		}
 		return null;
 	}
 
 	protected void startPage(boolean force) {
-		PageDomain pageDomain = TableSupport.buildPageRequest();
+		final PageDomain pageDomain = TableSupport.buildPageRequest();
 		Integer pageNum = pageDomain.getPageNum();
 		Integer pageSize = pageDomain.getPageSize();
 		if (force) {
@@ -82,7 +82,7 @@ public class BaseController {
 			}
 		}
 		if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
-			String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
+			final String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
 			PageMethod.startPage(pageNum, pageSize, orderBy);
 		}
 	}
@@ -91,9 +91,9 @@ public class BaseController {
 	 * 设置请求分页数据
 	 */
 	protected void startPage(String orderBy) {
-		PageDomain pageDomain = TableSupport.buildPageRequest();
-		Integer pageNum = pageDomain.getPageNum();
-		Integer pageSize = pageDomain.getPageSize();
+		final PageDomain pageDomain = TableSupport.buildPageRequest();
+		final Integer pageNum = pageDomain.getPageNum();
+		final Integer pageSize = pageDomain.getPageSize();
 
 		if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize) && StringUtils.isNotEmpty(orderBy)) {
 			PageMethod.startPage(pageNum, pageSize, SqlUtil.escapeOrderBySql(orderBy));
@@ -108,9 +108,9 @@ public class BaseController {
 	 * 设置请求排序数据
 	 */
 	protected void startOrderBy() {
-		PageDomain pageDomain = TableSupport.buildPageRequest();
+		final PageDomain pageDomain = TableSupport.buildPageRequest();
 		if (StringUtils.isNotEmpty(pageDomain.getOrderBy())) {
-			String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
+			final String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
 			PageMethod.orderBy(orderBy);
 		}
 	}
@@ -141,7 +141,7 @@ public class BaseController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected TableDataInfo getDataTable(List<?> list) {
-		TableDataInfo rspData = new TableDataInfo();
+		final TableDataInfo rspData = new TableDataInfo();
 		rspData.setCode(0);
 		rspData.setRows(list);
 		rspData.setTotal(new PageInfo(list).getTotal());
@@ -150,7 +150,7 @@ public class BaseController {
 
 	/**
 	 * 响应返回结果
-	 * 
+	 *
 	 * @param rows 影响行数
 	 * @return 操作结果
 	 */
@@ -160,7 +160,7 @@ public class BaseController {
 
 	/**
 	 * 响应返回结果
-	 * 
+	 *
 	 * @param result 结果
 	 * @return 操作结果
 	 */

@@ -25,13 +25,13 @@ import com.soyatec.sword.system.service.ISysDictDataService;
 
 /**
  * 数据字典信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/system/dict/data")
 public class SysDictDataController extends BaseController {
-	private String prefix = "system/dict/data";
+	private final String prefix = "system/dict/data";
 
 	@Autowired
 	private ISysDictDataService dictDataService;
@@ -47,7 +47,7 @@ public class SysDictDataController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysDictData dictData) {
 		startPage();
-		List<SysDictData> list = dictDataService.selectDictDataList(dictData);
+		final List<SysDictData> list = dictDataService.selectDictDataList(dictData);
 		return getDataTable(list);
 	}
 
@@ -56,8 +56,8 @@ public class SysDictDataController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysDictData dictData) {
-		List<SysDictData> list = dictDataService.selectDictDataList(dictData);
-		ExcelUtil<SysDictData> util = new ExcelUtil<SysDictData>(SysDictData.class);
+		final List<SysDictData> list = dictDataService.selectDictDataList(dictData);
+		final ExcelUtil<SysDictData> util = new ExcelUtil<SysDictData>(SysDictData.class);
 		return util.exportExcel(list, "字典数据");
 	}
 

@@ -7,11 +7,11 @@ import com.soyatec.sword.common.core.domain.entity.SysUser;
 public class AnonymousAuthenticationToken extends UsernamePasswordToken {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -3358571335507074241L;
 
-	private SysUser user;
+	private final SysUser user;
 
 	private String[] userTypes;
 

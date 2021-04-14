@@ -10,7 +10,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 提现订单对象 t_user_order_withdrawal
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */

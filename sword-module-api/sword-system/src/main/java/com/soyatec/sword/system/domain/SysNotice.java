@@ -10,7 +10,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 通知公告表 sys_notice
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysNotice extends BaseEntity {

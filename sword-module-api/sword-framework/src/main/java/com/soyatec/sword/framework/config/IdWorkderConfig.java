@@ -17,8 +17,8 @@ public class IdWorkderConfig {
 
 	@PostConstruct
 	public void init() {
-		Long workId = getWorkId();
-		Long dataCenterId = getDataCenterId();
+		final Long workId = getWorkId();
+		final Long dataCenterId = getDataCenterId();
 		log.info("IdWorkderConfig workId={} and dataCenterId={}", workId, dataCenterId);
 		IdWorker.setIdentifierGenerator(new DefaultIdentifierGenerator(workId, dataCenterId));
 	}

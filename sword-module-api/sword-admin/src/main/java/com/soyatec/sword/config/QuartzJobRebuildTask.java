@@ -35,11 +35,11 @@ public class QuartzJobRebuildTask {
 		}
 		log.info("Job recreator");
 		try {
-			List<SysJob> jobList = jobMapper.selectJobAll();
-			for (SysJob job : jobList) {
-				Long jobId = job.getJobId();
-				String jobGroup = job.getJobGroup();
-				JobKey jobKey = ScheduleUtils.getJobKey(jobId, jobGroup);
+			final List<SysJob> jobList = jobMapper.selectJobAll();
+			for (final SysJob job : jobList) {
+				final Long jobId = job.getJobId();
+				final String jobGroup = job.getJobGroup();
+				final JobKey jobKey = ScheduleUtils.getJobKey(jobId, jobGroup);
 				if (scheduler.checkExists(jobKey)) {
 					log.info("Job exist: " + jobKey);
 					continue;
@@ -47,7 +47,7 @@ public class QuartzJobRebuildTask {
 				ScheduleUtils.createScheduleJob(scheduler, job);
 				log.info("Job rebuild: " + jobKey);
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("Job rebuild failed: " + e.getLocalizedMessage());
 		}
 	}

@@ -28,14 +28,14 @@ import com.soyatec.sword.user.service.IUserProfileService;
 
 /**
  * 用户实名Controller
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-23
  */
 @Controller
 @RequestMapping("/mining/certificate")
 public class MiningCertificateController extends BaseController {
-	private String prefix = "mining/certificate";
+	private final String prefix = "mining/certificate";
 
 	@Autowired
 	private IUserCertificateService userCertificateService;
@@ -58,7 +58,7 @@ public class MiningCertificateController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(UserCertificate userCertificate) {
 		startPage();
-		List<UserCertificate> list = userCertificateService.selectUserCertificateList(userCertificate);
+		final List<UserCertificate> list = userCertificateService.selectUserCertificateList(userCertificate);
 		return getDataTable(list);
 	}
 
@@ -70,8 +70,8 @@ public class MiningCertificateController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(UserCertificate userCertificate) {
-		List<UserCertificate> list = userCertificateService.selectUserCertificateList(userCertificate);
-		ExcelUtil<UserCertificate> util = new ExcelUtil<UserCertificate>(UserCertificate.class);
+		final List<UserCertificate> list = userCertificateService.selectUserCertificateList(userCertificate);
+		final ExcelUtil<UserCertificate> util = new ExcelUtil<UserCertificate>(UserCertificate.class);
 		return util.exportExcel(list, "certificate");
 	}
 
@@ -99,7 +99,7 @@ public class MiningCertificateController extends BaseController {
 	 */
 	@GetMapping("/edit/{userId}")
 	public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
-		UserCertificate userCertificate = userCertificateService.selectUserCertificateById(userId);
+		final UserCertificate userCertificate = userCertificateService.selectUserCertificateById(userId);
 		mmap.put("userCertificate", userCertificate);
 		return prefix + "/edit";
 	}
@@ -133,8 +133,8 @@ public class MiningCertificateController extends BaseController {
 	@ResponseBody
 	public SelectDataInfo listCategories(String search, Integer page) {
 		PageMethod.startPage(page, 10);
-		List<UserProfile> list = userService.fuzzySearchUserList(search);
-		SelectDataInfo build = SelectDataInfo.build(list, page, "userId", "loginName", UserProfile.class);
+		final List<UserProfile> list = userService.fuzzySearchUserList(search);
+		final SelectDataInfo build = SelectDataInfo.build(list, page, "userId", "loginName", UserProfile.class);
 		return build;
 	}
 

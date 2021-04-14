@@ -6,7 +6,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 定时任务调度测试
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Component("ryTask")

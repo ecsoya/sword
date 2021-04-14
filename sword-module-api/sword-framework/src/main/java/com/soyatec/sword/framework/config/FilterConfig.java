@@ -10,7 +10,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.xss.XssFilter;
 
 /**
@@ -32,13 +31,13 @@ public class FilterConfig {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean
 	public FilterRegistrationBean xssFilterRegistration() {
-		FilterRegistrationBean registration = new FilterRegistrationBean();
+		final FilterRegistrationBean registration = new FilterRegistrationBean();
 		registration.setDispatcherTypes(DispatcherType.REQUEST);
 		registration.setFilter(new XssFilter());
-		registration.addUrlPatterns(StringUtils.split(urlPatterns, ","));
+		registration.addUrlPatterns(org.apache.commons.lang3.StringUtils.split(urlPatterns, ","));
 		registration.setName("xssFilter");
 		registration.setOrder(Integer.MAX_VALUE);
-		Map<String, String> initParameters = new HashMap<String, String>();
+		final Map<String, String> initParameters = new HashMap<String, String>();
 		initParameters.put("excludes", excludes);
 		initParameters.put("enabled", enabled);
 		registration.setInitParameters(initParameters);

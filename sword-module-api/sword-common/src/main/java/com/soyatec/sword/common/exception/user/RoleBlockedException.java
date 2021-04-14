@@ -2,7 +2,7 @@ package com.soyatec.sword.common.exception.user;
 
 /**
  * 角色锁定异常类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class RoleBlockedException extends UserException {

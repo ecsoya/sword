@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 钱包地址接口
- * 
+ *
  * @author ecsoya
  */
 @RestController
@@ -33,7 +33,7 @@ public class UserLevelController extends BaseController {
 	@ApiOperation("查询用户级别")
 	@GetMapping
 	public CommonResult<MiningLevel> info() {
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return CommonResult.build(miningLevelService.selectMiningLevelByUserId(userId));
 	}
 

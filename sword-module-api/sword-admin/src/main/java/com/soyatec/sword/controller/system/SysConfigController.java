@@ -26,13 +26,13 @@ import com.soyatec.sword.system.service.ISysConfigService;
 
 /**
  * 参数配置 信息操作处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/system/config")
 public class SysConfigController extends BaseController {
-	private String prefix = "system/config";
+	private final String prefix = "system/config";
 
 	@Autowired
 	private ISysConfigService configService;
@@ -51,7 +51,7 @@ public class SysConfigController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysConfig config) {
 		startPage();
-		List<SysConfig> list = configService.selectConfigList(config);
+		final List<SysConfig> list = configService.selectConfigList(config);
 		return getDataTable(list);
 	}
 
@@ -60,8 +60,8 @@ public class SysConfigController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysConfig config) {
-		List<SysConfig> list = configService.selectConfigList(config);
-		ExcelUtil<SysConfig> util = new ExcelUtil<SysConfig>(SysConfig.class);
+		final List<SysConfig> list = configService.selectConfigList(config);
+		final ExcelUtil<SysConfig> util = new ExcelUtil<SysConfig>(SysConfig.class);
 		return util.exportExcel(list, "参数数据");
 	}
 

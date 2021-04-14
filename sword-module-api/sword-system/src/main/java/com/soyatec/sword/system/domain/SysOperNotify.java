@@ -8,7 +8,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 敏感操作通知对象 sys_oper_notify
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-04-06
  */

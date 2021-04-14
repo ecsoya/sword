@@ -9,13 +9,13 @@ import com.soyatec.sword.common.core.controller.BaseController;
 
 /**
  * druid 监控
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/monitor/data")
 public class DruidController extends BaseController {
-	private String prefix = "/druid";
+	private final String prefix = "/druid";
 
 	@RequiresPermissions("monitor:data:view")
 	@GetMapping()

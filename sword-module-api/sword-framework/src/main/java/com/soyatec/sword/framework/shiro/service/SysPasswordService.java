@@ -22,7 +22,7 @@ import com.soyatec.sword.framework.manager.factory.AsyncFactory;
 
 /**
  * 登录密码方法
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Component
@@ -41,7 +41,7 @@ public class SysPasswordService {
 	}
 
 	public void validate(SysUser user, String password) {
-		String loginName = user.getLoginName();
+		final String loginName = user.getLoginName();
 
 		AtomicInteger retryCount = loginRecordCache.get(loginName);
 

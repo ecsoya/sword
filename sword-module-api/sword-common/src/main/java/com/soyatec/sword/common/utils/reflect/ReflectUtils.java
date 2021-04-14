@@ -22,7 +22,7 @@ import com.soyatec.sword.common.utils.DateUtils;
 
 /**
  * 反射工具类. 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @SuppressWarnings("rawtypes")
@@ -41,8 +41,8 @@ public class ReflectUtils {
 	@SuppressWarnings("unchecked")
 	public static <E> E invokeGetter(Object obj, String propertyName) {
 		Object object = obj;
-		for (String name : StringUtils.split(propertyName, ".")) {
-			String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(name);
+		for (final String name : StringUtils.split(propertyName, ".")) {
+			final String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(name);
 			object = invokeMethod(object, getterMethodName, new Class[] {}, new Object[] {});
 		}
 		return (E) object;
@@ -53,13 +53,13 @@ public class ReflectUtils {
 	 */
 	public static <E> void invokeSetter(Object obj, String propertyName, E value) {
 		Object object = obj;
-		String[] names = StringUtils.split(propertyName, ".");
+		final String[] names = StringUtils.split(propertyName, ".");
 		for (int i = 0; i < names.length; i++) {
 			if (i < names.length - 1) {
-				String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
+				final String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
 				object = invokeMethod(object, getterMethodName, new Class[] {}, new Object[] {});
 			} else {
-				String setterMethodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
+				final String setterMethodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
 				invokeMethodByName(object, setterMethodName, new Object[] { value });
 			}
 		}
@@ -70,7 +70,7 @@ public class ReflectUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> E getFieldValue(final Object obj, final String fieldName) {
-		Field field = getAccessibleField(obj, fieldName);
+		final Field field = getAccessibleField(obj, fieldName);
 		if (field == null) {
 			logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
 			return null;
@@ -78,7 +78,7 @@ public class ReflectUtils {
 		E result = null;
 		try {
 			result = (E) field.get(obj);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			logger.error("不可能抛出的异常{}", e.getMessage());
 		}
 		return result;
@@ -88,7 +88,7 @@ public class ReflectUtils {
 	 * 直接设置对象属性值, 无视private/protected修饰符, 不经过setter函数.
 	 */
 	public static <E> void setFieldValue(final Object obj, final String fieldName, final E value) {
-		Field field = getAccessibleField(obj, fieldName);
+		final Field field = getAccessibleField(obj, fieldName);
 		if (field == null) {
 			// throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" +
 			// fieldName + "] 字段 ");
@@ -97,7 +97,7 @@ public class ReflectUtils {
 		}
 		try {
 			field.set(obj, value);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			logger.error("不可能抛出的异常: {}", e.getMessage());
 		}
 	}
@@ -112,15 +112,15 @@ public class ReflectUtils {
 		if (obj == null || methodName == null) {
 			return null;
 		}
-		Method method = getAccessibleMethod(obj, methodName, parameterTypes);
+		final Method method = getAccessibleMethod(obj, methodName, parameterTypes);
 		if (method == null) {
 			logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
 			return null;
 		}
 		try {
 			return (E) method.invoke(obj, args);
-		} catch (Exception e) {
-			String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
+		} catch (final Exception e) {
+			final String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
 			throw convertReflectionExceptionToUnchecked(msg, e);
 		}
 	}
@@ -132,7 +132,7 @@ public class ReflectUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> E invokeMethodByName(final Object obj, final String methodName, final Object[] args) {
-		Method method = getAccessibleMethodByName(obj, methodName, args.length);
+		final Method method = getAccessibleMethodByName(obj, methodName, args.length);
 		if (method == null) {
 			// 如果为空不报错，直接返回空。
 			logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
@@ -140,7 +140,7 @@ public class ReflectUtils {
 		}
 		try {
 			// 类型转换（将参数数据类型转换为目标方法参数类型）
-			Class<?>[] cs = method.getParameterTypes();
+			final Class<?>[] cs = method.getParameterTypes();
 			for (int i = 0; i < cs.length; i++) {
 				if (args[i] != null && !args[i].getClass().equals(cs[i])) {
 					if (cs[i] == String.class) {
@@ -168,8 +168,8 @@ public class ReflectUtils {
 				}
 			}
 			return (E) method.invoke(obj, args);
-		} catch (Exception e) {
-			String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
+		} catch (final Exception e) {
+			final String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
 			throw convertReflectionExceptionToUnchecked(msg, e);
 		}
 	}
@@ -186,10 +186,10 @@ public class ReflectUtils {
 		for (Class<?> superClass = obj.getClass(); superClass != Object.class; superClass = superClass
 				.getSuperclass()) {
 			try {
-				Field field = superClass.getDeclaredField(fieldName);
+				final Field field = superClass.getDeclaredField(fieldName);
 				makeAccessible(field);
 				return field;
-			} catch (NoSuchFieldException e) {
+			} catch (final NoSuchFieldException e) {
 				continue;
 			}
 		}
@@ -210,10 +210,10 @@ public class ReflectUtils {
 		for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType
 				.getSuperclass()) {
 			try {
-				Method method = searchType.getDeclaredMethod(methodName, parameterTypes);
+				final Method method = searchType.getDeclaredMethod(methodName, parameterTypes);
 				makeAccessible(method);
 				return method;
-			} catch (NoSuchMethodException e) {
+			} catch (final NoSuchMethodException e) {
 				continue;
 			}
 		}
@@ -232,8 +232,8 @@ public class ReflectUtils {
 		Validate.notBlank(methodName, "methodName can't be blank");
 		for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType
 				.getSuperclass()) {
-			Method[] methods = searchType.getDeclaredMethods();
-			for (Method method : methods) {
+			final Method[] methods = searchType.getDeclaredMethods();
+			for (final Method method : methods) {
 				if (method.getName().equals(methodName) && method.getParameterTypes().length == argsNum) {
 					makeAccessible(method);
 					return method;
@@ -275,14 +275,14 @@ public class ReflectUtils {
 	 * 通过反射, 获得Class定义中声明的父类的泛型参数的类型. 如无法找到, 返回Object.class.
 	 */
 	public static Class getClassGenricType(final Class clazz, final int index) {
-		Type genType = clazz.getGenericSuperclass();
+		final Type genType = clazz.getGenericSuperclass();
 
 		if (!(genType instanceof ParameterizedType)) {
 			logger.debug(clazz.getSimpleName() + "'s superclass not ParameterizedType");
 			return Object.class;
 		}
 
-		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+		final Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 
 		if (index >= params.length || index < 0) {
 			logger.debug("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
@@ -301,9 +301,9 @@ public class ReflectUtils {
 		if (instance == null) {
 			throw new RuntimeException("Instance must not be null");
 		}
-		Class clazz = instance.getClass();
+		final Class clazz = instance.getClass();
 		if (clazz != null && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
-			Class<?> superClass = clazz.getSuperclass();
+			final Class<?> superClass = clazz.getSuperclass();
 			if (superClass != null && !Object.class.equals(superClass)) {
 				return superClass;
 			}
@@ -329,15 +329,15 @@ public class ReflectUtils {
 		if (type == null || Object.class == type) {
 			return Collections.emptyList();
 		}
-		List<Field> fields = new ArrayList<>();
-		Field[] declaredFields = type.getDeclaredFields();
-		for (Field field : declaredFields) {
+		final List<Field> fields = new ArrayList<>();
+		final Field[] declaredFields = type.getDeclaredFields();
+		for (final Field field : declaredFields) {
 			if (Modifier.isStatic(field.getModifiers()) || Modifier.isTransient(field.getModifiers())) {
 				continue;
 			}
 			fields.add(field);
 		}
-		List<Field> superFields = getAllFields(type.getSuperclass());
+		final List<Field> superFields = getAllFields(type.getSuperclass());
 		if (!superFields.isEmpty()) {
 			fields.addAll(superFields);
 		}

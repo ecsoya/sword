@@ -10,14 +10,14 @@ import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 
 /**
  * 提现订单Mapper接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
 public interface UserWithdrawalOrderMapper {
 	/**
 	 * 查询提现订单
-	 * 
+	 *
 	 * @param id 提现订单ID
 	 * @return 提现订单
 	 */
@@ -25,7 +25,7 @@ public interface UserWithdrawalOrderMapper {
 
 	/**
 	 * 查询提现订单列表
-	 * 
+	 *
 	 * @param userWithdrawalOrder 提现订单
 	 * @return 提现订单集合
 	 */
@@ -33,7 +33,7 @@ public interface UserWithdrawalOrderMapper {
 
 	/**
 	 * 新增提现订单
-	 * 
+	 *
 	 * @param userWithdrawalOrder 提现订单
 	 * @return 结果
 	 */
@@ -41,7 +41,7 @@ public interface UserWithdrawalOrderMapper {
 
 	/**
 	 * 修改提现订单
-	 * 
+	 *
 	 * @param userWithdrawalOrder 提现订单
 	 * @return 结果
 	 */
@@ -49,7 +49,7 @@ public interface UserWithdrawalOrderMapper {
 
 	/**
 	 * 删除提现订单
-	 * 
+	 *
 	 * @param id 提现订单ID
 	 * @return 结果
 	 */
@@ -57,7 +57,7 @@ public interface UserWithdrawalOrderMapper {
 
 	/**
 	 * 批量删除提现订单
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */

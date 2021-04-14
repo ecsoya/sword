@@ -5,7 +5,7 @@ import com.soyatec.sword.common.utils.ServletUtils;
 
 /**
  * 表格数据处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class TableSupport {
@@ -13,7 +13,7 @@ public class TableSupport {
 	 * 封装分页对象
 	 */
 	public static PageDomain getPageDomain() {
-		PageDomain pageDomain = new PageDomain();
+		final PageDomain pageDomain = new PageDomain();
 		Integer pageNum = ServletUtils.getParameterToInt(Constants.PAGE_NUM);
 		if (pageNum == null) {
 			pageNum = ServletUtils.getParameterToInt("pageNo");

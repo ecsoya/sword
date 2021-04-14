@@ -16,7 +16,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 用户反馈Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-06
  */
@@ -27,7 +27,7 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 
 	/**
 	 * 查询用户反馈
-	 * 
+	 *
 	 * @param id 用户反馈ID
 	 * @return 用户反馈
 	 */
@@ -38,7 +38,7 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 
 	/**
 	 * 查询用户反馈列表
-	 * 
+	 *
 	 * @param userAdvise 用户反馈
 	 * @return 用户反馈
 	 */
@@ -49,7 +49,7 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 
 	/**
 	 * 新增用户反馈
-	 * 
+	 *
 	 * @param userAdvise 用户反馈
 	 * @return 结果
 	 */
@@ -72,7 +72,7 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 
 	/**
 	 * 修改用户反馈
-	 * 
+	 *
 	 * @param userAdvise 用户反馈
 	 * @return 结果
 	 */
@@ -84,7 +84,7 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 
 	/**
 	 * 删除用户反馈对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -95,7 +95,7 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 
 	/**
 	 * 删除用户反馈信息
-	 * 
+	 *
 	 * @param id 用户反馈ID
 	 * @return 结果
 	 */
@@ -109,7 +109,7 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 		if (userId == null) {
 			return Collections.emptyList();
 		}
-		List<UserAdvise> list = userAdviseMapper.selectUserAdviseListByUserId(userId);
+		final List<UserAdvise> list = userAdviseMapper.selectUserAdviseListByUserId(userId);
 		if (list == null || list.isEmpty()) {
 			return Collections.emptyList();
 		}

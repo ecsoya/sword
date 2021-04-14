@@ -39,7 +39,7 @@ import com.soyatec.sword.system.service.ISysRoleService;
 
 /**
  * 自定义Realm 处理登录 权限
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class UserRealm extends AuthorizingRealm {
@@ -59,12 +59,12 @@ public class UserRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
-		SysUser user = ShiroUtils.getSysUser();
+		final SysUser user = ShiroUtils.getSysUser();
 		// 角色列表
 		Set<String> roles = new HashSet<String>();
 		// 功能列表
 		Set<String> menus = new HashSet<String>();
-		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		final SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		// 管理员拥有所有权限
 		if (user.isAdmin()) {
 			info.addRole("admin");
@@ -85,15 +85,15 @@ public class UserRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-		String username = upToken.getUsername();
+		final UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+		final String username = upToken.getUsername();
 		String password = "";
 		if (upToken.getPassword() != null) {
 			password = new String(upToken.getPassword());
 		}
 		SysUser user = null;
-		List<String> userTypes = new ArrayList<>();
-		boolean withoutPassword = false;
+		final List<String> userTypes = new ArrayList<>();
+		final boolean withoutPassword = false;
 		if (token instanceof TypedAuthenticationToken) {
 			userTypes.addAll(Arrays.asList(((TypedAuthenticationToken) token).getUserTypes()));
 		} else if (token instanceof AnonymousAuthenticationToken) {
@@ -102,24 +102,24 @@ public class UserRealm extends AuthorizingRealm {
 		if (user == null) {
 			try {
 				user = loginService.login(username, password, userTypes, withoutPassword);
-			} catch (CaptchaException e) {
+			} catch (final CaptchaException e) {
 				throw new AuthenticationException(e.getMessage(), e);
-			} catch (UserNotExistsException e) {
+			} catch (final UserNotExistsException e) {
 				throw new UnknownAccountException(e.getMessage(), e);
-			} catch (UserPasswordNotMatchException e) {
+			} catch (final UserPasswordNotMatchException e) {
 				throw new IncorrectCredentialsException(e.getMessage(), e);
-			} catch (UserPasswordRetryLimitExceedException e) {
+			} catch (final UserPasswordRetryLimitExceedException e) {
 				throw new ExcessiveAttemptsException(e.getMessage(), e);
-			} catch (UserBlockedException e) {
+			} catch (final UserBlockedException e) {
 				throw new LockedAccountException(e.getMessage(), e);
-			} catch (RoleBlockedException e) {
+			} catch (final RoleBlockedException e) {
 				throw new LockedAccountException(e.getMessage(), e);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				log.info("对用户[" + username + "]进行登录验证..验证未通过{}", e.getMessage());
 				throw new AuthenticationException(e.getMessage(), e);
 			}
 		}
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+		final SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
 		return info;
 	}
 
@@ -127,7 +127,7 @@ public class UserRealm extends AuthorizingRealm {
 	 * 清理指定用户授权信息缓存
 	 */
 	public void clearCachedAuthorizationInfo(Object principal) {
-		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
+		final SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
 		this.clearCachedAuthorizationInfo(principals);
 	}
 
@@ -135,9 +135,9 @@ public class UserRealm extends AuthorizingRealm {
 	 * 清理所有用户授权信息缓存
 	 */
 	public void clearAllCachedAuthorizationInfo() {
-		Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
+		final Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
 		if (cache != null) {
-			for (Object key : cache.keys()) {
+			for (final Object key : cache.keys()) {
 				cache.remove(key);
 			}
 		}

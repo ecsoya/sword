@@ -13,7 +13,7 @@ import com.soyatec.sword.mining.service.IMiningSymbolService;
 
 /**
  * 币种Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-08
  */
@@ -24,7 +24,7 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 
 	/**
 	 * 查询币种
-	 * 
+	 *
 	 * @param symbol 币种ID
 	 * @return 币种
 	 */
@@ -35,7 +35,7 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 
 	/**
 	 * 查询币种列表
-	 * 
+	 *
 	 * @param miningSymbol 币种
 	 * @return 币种
 	 */
@@ -46,7 +46,7 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 
 	/**
 	 * 新增币种
-	 * 
+	 *
 	 * @param miningSymbol 币种
 	 * @return 结果
 	 */
@@ -60,7 +60,7 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 
 	/**
 	 * 修改币种
-	 * 
+	 *
 	 * @param miningSymbol 币种
 	 * @return 结果
 	 */
@@ -72,7 +72,7 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 
 	/**
 	 * 删除币种对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -83,7 +83,7 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 
 	/**
 	 * 删除币种信息
-	 * 
+	 *
 	 * @param symbol 币种ID
 	 * @return 结果
 	 */

@@ -38,9 +38,9 @@ public class TickerCacheTask {
 		boolean locked = false;
 		try {
 			locked = lockService.tryLock(LOCK_NAME);
-			List<String> symbols = symbolService.selectMiningSymbols();
+			final List<String> symbols = symbolService.selectMiningSymbols();
 			symbols.forEach(symbol -> walletService.updateTickerCache(symbol));
-		} catch (LockableException e) {
+		} catch (final LockableException e) {
 			log.warn("TickerCacheTask missing");
 		} finally {
 			if (locked) {

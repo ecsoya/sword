@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Cookie工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class CookieUtils {
 	/**
 	 * 设置 Cookie（生成时间为1天）
-	 * 
+	 *
 	 * @param name  名称
 	 * @param value 值
 	 */
@@ -26,7 +26,7 @@ public class CookieUtils {
 
 	/**
 	 * 设置 Cookie
-	 * 
+	 *
 	 * @param name   名称
 	 * @param value  值
 	 * @param maxAge 生存时间（单位秒）
@@ -38,7 +38,7 @@ public class CookieUtils {
 
 	/**
 	 * 设置 Cookie
-	 * 
+	 *
 	 * @param name   名称
 	 * @param value  值
 	 * @param maxAge 生存时间（单位秒）
@@ -50,19 +50,19 @@ public class CookieUtils {
 
 	/**
 	 * 设置 Cookie
-	 * 
+	 *
 	 * @param name   名称
 	 * @param value  值
 	 * @param maxAge 生存时间（单位秒）
 	 * @param uri    路径
 	 */
 	public static void setCookie(HttpServletResponse response, String name, String value, String path, int maxAge) {
-		Cookie cookie = new Cookie(name, null);
+		final Cookie cookie = new Cookie(name, null);
 		cookie.setPath(path);
 		cookie.setMaxAge(maxAge);
 		try {
 			cookie.setValue(URLEncoder.encode(value, "utf-8"));
-		} catch (UnsupportedEncodingException e) {
+		} catch (final UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		response.addCookie(cookie);
@@ -70,7 +70,7 @@ public class CookieUtils {
 
 	/**
 	 * 获得指定Cookie的值
-	 * 
+	 *
 	 * @param name 名称
 	 * @return 值
 	 */
@@ -80,7 +80,7 @@ public class CookieUtils {
 
 	/**
 	 * 获得指定Cookie的值，并删除。
-	 * 
+	 *
 	 * @param name 名称
 	 * @return 值
 	 */
@@ -90,7 +90,7 @@ public class CookieUtils {
 
 	/**
 	 * 获得指定Cookie的值
-	 * 
+	 *
 	 * @param request  请求对象
 	 * @param response 响应对象
 	 * @param name     名字
@@ -100,13 +100,13 @@ public class CookieUtils {
 	public static String getCookie(HttpServletRequest request, HttpServletResponse response, String name,
 			boolean isRemove) {
 		String value = null;
-		Cookie[] cookies = request.getCookies();
+		final Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
-			for (Cookie cookie : cookies) {
+			for (final Cookie cookie : cookies) {
 				if (cookie.getName().equals(name)) {
 					try {
 						value = URLDecoder.decode(cookie.getValue(), "utf-8");
-					} catch (UnsupportedEncodingException e) {
+					} catch (final UnsupportedEncodingException e) {
 						e.printStackTrace();
 					}
 					if (isRemove) {

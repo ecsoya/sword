@@ -13,7 +13,7 @@ import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 
 /**
  * 验证码过滤器
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class CaptchaValidateFilter extends AccessControlFilter {
@@ -45,7 +45,7 @@ public class CaptchaValidateFilter extends AccessControlFilter {
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {
-		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+		final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		// 验证码禁用 或不是表单提交 允许访问
 		if (captchaEnabled == false || !"post".equals(httpServletRequest.getMethod().toLowerCase())) {
 			return true;
@@ -55,8 +55,8 @@ public class CaptchaValidateFilter extends AccessControlFilter {
 	}
 
 	public boolean validateResponse(HttpServletRequest request, String validateCode) {
-		Object obj = ShiroUtils.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-		String code = String.valueOf(obj != null ? obj : "");
+		final Object obj = ShiroUtils.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		final String code = String.valueOf(obj != null ? obj : "");
 		// 验证码清除，防止多次使用。
 		request.getSession().removeAttribute(Constants.KAPTCHA_SESSION_KEY);
 		if (StringUtils.isEmpty(validateCode) || !validateCode.equalsIgnoreCase(code)) {

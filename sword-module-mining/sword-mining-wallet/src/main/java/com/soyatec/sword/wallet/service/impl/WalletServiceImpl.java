@@ -43,9 +43,9 @@ public class WalletServiceImpl implements IWalletService {
 		if (StringUtils.isEmpty(symbol)) {
 			return CommonResult.fail("币种错误");
 		}
-		CommonResult<Ticker> ticker = delegateService.getTicker(symbol);
+		final CommonResult<Ticker> ticker = delegateService.getTicker(symbol);
 		if (ticker != null && ticker.isSuccess(true)) {
-			Ticker data = ticker.getData();
+			final Ticker data = ticker.getData();
 			// 缓存1
 			setSimpleCache(symbol, data);
 			// 缓存2
@@ -53,7 +53,7 @@ public class WalletServiceImpl implements IWalletService {
 			return ticker;
 		}
 
-		Ticker cache = getSimpleCache(symbol);
+		final Ticker cache = getSimpleCache(symbol);
 		if (cache != null) {
 			return CommonResult.success(cache);
 		}
@@ -67,7 +67,7 @@ public class WalletServiceImpl implements IWalletService {
 		}
 		try {
 			return (Ticker) templates.opsForValue().get(name);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -81,9 +81,9 @@ public class WalletServiceImpl implements IWalletService {
 
 	@Override
 	public BigDecimal getPrice(String symbol) {
-		CommonResult<Ticker> ticker = getTicker(symbol);
+		final CommonResult<Ticker> ticker = getTicker(symbol);
 		if (ticker.isSuccess()) {
-			Ticker data = ticker.getData();
+			final Ticker data = ticker.getData();
 			if (data != null) {
 				return data.getPrice();
 			}
@@ -94,21 +94,21 @@ public class WalletServiceImpl implements IWalletService {
 	@Override
 	public Ticker getTickerFromHistory(String symbol, Date time) {
 		if (time == null || StringUtils.isEmpty(symbol)) {
-			Ticker ticker = new Ticker();
+			final Ticker ticker = new Ticker();
 			ticker.setSymbol(symbol);
 			ticker.setDate(time);
 			ticker.setPrice(BigDecimal.ZERO);
 			return ticker;
 		}
 		if (DateUtils.isDuring5Minutes(time)) {
-			CommonResult<Ticker> ticker = getTicker(symbol);
+			final CommonResult<Ticker> ticker = getTicker(symbol);
 			if (ticker.isSuccess(true)) {
 				return ticker.getData();
 			}
 		}
 		Ticker ticker = getTikcerFromRedis(symbol, time);
 		if (ticker == null && config != null) {
-			BigDecimal price = config.getPrice(symbol, time);
+			final BigDecimal price = config.getPrice(symbol, time);
 			if (price != null) {
 				ticker = new Ticker();
 				ticker.setSymbol(symbol);
@@ -133,7 +133,7 @@ public class WalletServiceImpl implements IWalletService {
 		if (templates == null || name == null || ticker == null) {
 			return;
 		}
-		String cacheName = getTickerCacheName(name, DateUtils.getNowDate());
+		final String cacheName = getTickerCacheName(name, DateUtils.getNowDate());
 		templates.opsForValue().setIfAbsent(cacheName, ticker, 8, TimeUnit.DAYS);
 		log.info("putTickerToRedis {}={}", cacheName, ticker);
 	}
@@ -150,13 +150,13 @@ public class WalletServiceImpl implements IWalletService {
 		int count = 0;
 		Ticker ticker = null;
 		while (cacheName != null) {
-			Object object = templates.opsForValue().get(cacheName);
+			final Object object = templates.opsForValue().get(cacheName);
 			if (object instanceof Ticker) {
 				ticker = (Ticker) object;
 				break;
 			}
 			count++;
-			date = DateUtils.addMinutes(date, -1);
+			date = org.apache.commons.lang3.time.DateUtils.addMinutes(date, -1);
 			cacheName = getTickerCacheName(name, date);
 			if (count > 60) {
 				log.warn("over 60 times");
@@ -171,7 +171,7 @@ public class WalletServiceImpl implements IWalletService {
 		if (StringUtils.isEmpty(symbol)) {
 			return null;
 		}
-		CommonResult<Ticker> ticker = getTicker(symbol);
+		final CommonResult<Ticker> ticker = getTicker(symbol);
 		return ticker.getData();
 	}
 
@@ -185,7 +185,7 @@ public class WalletServiceImpl implements IWalletService {
 
 	@Override
 	public String getDepositAddressValue(String symbol, String chain) {
-		CommonResult<Address> result = getDepositAddress(symbol, chain);
+		final CommonResult<Address> result = getDepositAddress(symbol, chain);
 		if (result.isSuccess(true)) {
 			return result.getData().getAddress();
 		}
@@ -194,10 +194,11 @@ public class WalletServiceImpl implements IWalletService {
 
 	@Override
 	public BigDecimal exchangeToUsdt(String symbol, BigDecimal value) {
-		if (StringUtils.isEmpty(symbol) || StringUtils.equals("usdt", symbol) || value == null) {
+		if (StringUtils.isEmpty(symbol) || org.apache.commons.lang3.StringUtils.equals("usdt", symbol)
+				|| value == null) {
 			return value;
 		}
-		BigDecimal price = getPrice(symbol);
+		final BigDecimal price = getPrice(symbol);
 		if (price == null) {
 			return null;
 		}
@@ -206,10 +207,11 @@ public class WalletServiceImpl implements IWalletService {
 
 	@Override
 	public BigDecimal exchangeFromUsdt(String symbol, BigDecimal value) {
-		if (StringUtils.isEmpty(symbol) || StringUtils.equals("usdt", symbol) || value == null) {
+		if (StringUtils.isEmpty(symbol) || org.apache.commons.lang3.StringUtils.equals("usdt", symbol)
+				|| value == null) {
 			return value;
 		}
-		BigDecimal price = getPrice(symbol);
+		final BigDecimal price = getPrice(symbol);
 		if (price == null || price.doubleValue() == 0) {
 			return null;
 		}

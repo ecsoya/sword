@@ -5,7 +5,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * sql操作工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SqlUtil {

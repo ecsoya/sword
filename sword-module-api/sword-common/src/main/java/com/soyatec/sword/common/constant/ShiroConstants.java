@@ -2,7 +2,7 @@ package com.soyatec.sword.common.constant;
 
 /**
  * Shiro通用常量
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class ShiroConstants {

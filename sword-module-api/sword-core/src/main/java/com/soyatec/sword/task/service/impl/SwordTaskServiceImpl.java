@@ -10,13 +10,14 @@ import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.constants.IConstants;
 import com.soyatec.sword.task.domain.SwordTask;
 import com.soyatec.sword.task.mapper.SwordTaskMapper;
 import com.soyatec.sword.task.service.ISwordTaskService;
 
 /**
  * 定时任务执行结果Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-06
  */
@@ -27,7 +28,7 @@ public class SwordTaskServiceImpl implements ISwordTaskService {
 
 	/**
 	 * 查询定时任务执行结果
-	 * 
+	 *
 	 * @param id 定时任务执行结果ID
 	 * @return 定时任务执行结果
 	 */
@@ -38,7 +39,7 @@ public class SwordTaskServiceImpl implements ISwordTaskService {
 
 	/**
 	 * 查询定时任务执行结果列表
-	 * 
+	 *
 	 * @param swordTask 定时任务执行结果
 	 * @return 定时任务执行结果
 	 */
@@ -49,7 +50,7 @@ public class SwordTaskServiceImpl implements ISwordTaskService {
 
 	/**
 	 * 新增定时任务执行结果
-	 * 
+	 *
 	 * @param swordTask 定时任务执行结果
 	 * @return 结果
 	 */
@@ -66,7 +67,7 @@ public class SwordTaskServiceImpl implements ISwordTaskService {
 
 	/**
 	 * 修改定时任务执行结果
-	 * 
+	 *
 	 * @param swordTask 定时任务执行结果
 	 * @return 结果
 	 */
@@ -78,7 +79,7 @@ public class SwordTaskServiceImpl implements ISwordTaskService {
 
 	/**
 	 * 删除定时任务执行结果对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -89,7 +90,7 @@ public class SwordTaskServiceImpl implements ISwordTaskService {
 
 	/**
 	 * 删除定时任务执行结果信息
-	 * 
+	 *
 	 * @param id 定时任务执行结果ID
 	 * @return 结果
 	 */
@@ -108,7 +109,7 @@ public class SwordTaskServiceImpl implements ISwordTaskService {
 			task = new SwordTask();
 			task.setDate(date);
 			task.setName(name);
-			task.setStatus(SwordTask.STATUS_NONE);
+			task.setStatus(IConstants.STATUS_NONE);
 			insertSwordTask(task);
 		}
 		return task;

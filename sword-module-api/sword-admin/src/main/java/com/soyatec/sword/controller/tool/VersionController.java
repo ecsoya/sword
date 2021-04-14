@@ -24,14 +24,14 @@ import com.soyatec.sword.version.service.ISwordVersionService;
 
 /**
  * 版本Controller
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-22
  */
 @Controller
 @RequestMapping("/tool/version")
 public class VersionController extends BaseController {
-	private String prefix = "tool/version";
+	private final String prefix = "tool/version";
 
 	@Autowired
 	private ISwordVersionService swordVersionService;
@@ -50,7 +50,7 @@ public class VersionController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SwordVersion beeplusVersion) {
 		startPage();
-		List<SwordVersion> list = swordVersionService.selectSwordVersionList(beeplusVersion);
+		final List<SwordVersion> list = swordVersionService.selectSwordVersionList(beeplusVersion);
 		return getDataTable(list);
 	}
 
@@ -62,8 +62,8 @@ public class VersionController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SwordVersion beeplusVersion) {
-		List<SwordVersion> list = swordVersionService.selectSwordVersionList(beeplusVersion);
-		ExcelUtil<SwordVersion> util = new ExcelUtil<SwordVersion>(SwordVersion.class);
+		final List<SwordVersion> list = swordVersionService.selectSwordVersionList(beeplusVersion);
+		final ExcelUtil<SwordVersion> util = new ExcelUtil<SwordVersion>(SwordVersion.class);
 		return util.exportExcel(list, "version");
 	}
 
@@ -87,7 +87,7 @@ public class VersionController extends BaseController {
 			return AjaxResult.error("");
 		}
 		if (StringUtils.isNotEmpty(android)) {
-			SwordVersion va = new SwordVersion();
+			final SwordVersion va = new SwordVersion();
 			va.setType(SwordVersion.TYPE_ANDROID);
 			va.setVersion(version);
 			va.setUrl(android);
@@ -96,7 +96,7 @@ public class VersionController extends BaseController {
 			swordVersionService.insertSwordVersion(va);
 		}
 		if (StringUtils.isNotEmpty(ios)) {
-			SwordVersion va = new SwordVersion();
+			final SwordVersion va = new SwordVersion();
 			va.setType(SwordVersion.TYPE_IOS);
 			va.setVersion(version);
 			va.setUrl(ios);
@@ -112,7 +112,7 @@ public class VersionController extends BaseController {
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
-		SwordVersion beeplusVersion = swordVersionService.selectSwordVersionById(id);
+		final SwordVersion beeplusVersion = swordVersionService.selectSwordVersionById(id);
 		mmap.put("swordVersion", beeplusVersion);
 		return prefix + "/edit";
 	}

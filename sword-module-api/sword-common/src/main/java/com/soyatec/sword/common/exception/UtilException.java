@@ -2,7 +2,7 @@ package com.soyatec.sword.common.exception;
 
 /**
  * 工具类异常
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class UtilException extends RuntimeException {

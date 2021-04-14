@@ -11,7 +11,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 用户钱包对象 t_user_wallet
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */

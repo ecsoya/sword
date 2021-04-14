@@ -2,7 +2,7 @@ package com.soyatec.sword.common.exception;
 
 /**
  * 业务异常
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class BusinessException extends RuntimeException {

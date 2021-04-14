@@ -1,13 +1,22 @@
 package com.soyatec.sword.user.domain;
 
-public class UserReferrerTeam {
+public class UserReferrerTeamCount {
 
 	private Long userId;
 
+	/**
+	 * 全部人数
+	 */
 	private UserTeamCount total;
 
+	/**
+	 * 今日新增
+	 */
 	private UserTeamCount today;
 
+	/**
+	 * 昨日新增
+	 */
 	private UserTeamCount yesterday;
 
 	public Long getUserId() {
@@ -40,6 +49,11 @@ public class UserReferrerTeam {
 
 	public void setYesterday(UserTeamCount yesterday) {
 		this.yesterday = yesterday;
+	}
+
+	@Override
+	public String toString() {
+		return "userId=" + userId + ", total=" + total + ", today=" + today + ", yesterday=" + yesterday;
 	}
 
 }

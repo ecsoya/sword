@@ -26,7 +26,7 @@ public class CodeController extends BaseController {
 	@PostMapping("/delivery")
 	@RepeatSubmit
 	public AjaxResult delivery() {
-		Long userId = ShiroUtils.getUserId();
+		final Long userId = ShiroUtils.getUserId();
 		if (GlobalConfig.getEmailCode()) {
 			if (mailCodeService == null) {
 				return error("不支持邮件");
@@ -40,7 +40,7 @@ public class CodeController extends BaseController {
 	}
 
 	/**
-	 * 
+	 *
 	 * 验证邮箱、短信验证码
 	 */
 	@PostMapping("/verify")
@@ -49,7 +49,7 @@ public class CodeController extends BaseController {
 		if (StringUtils.isEmpty(code)) {
 			return error("请输入验证码");
 		}
-		Long userId = ShiroUtils.getUserId();
+		final Long userId = ShiroUtils.getUserId();
 		if (GlobalConfig.getEmailCode()) {
 			if (mailCodeService == null) {
 				return error("不支持邮件");

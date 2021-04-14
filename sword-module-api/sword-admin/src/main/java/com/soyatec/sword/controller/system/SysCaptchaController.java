@@ -22,7 +22,7 @@ import com.soyatec.sword.framework.config.CaptchaConfig;
 
 /**
  * 图片验证码（支持算术形式）
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
@@ -41,19 +41,19 @@ public class SysCaptchaController extends BaseController {
 	public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response) {
 		ServletOutputStream out = null;
 		try {
-			HttpSession session = request.getSession();
+			final HttpSession session = request.getSession();
 			response.setDateHeader("Expires", 0);
 			response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 			response.addHeader("Cache-Control", "post-check=0, pre-check=0");
 			response.setHeader("Pragma", "no-cache");
 			response.setContentType("image/jpeg");
 
-			String type = request.getParameter("type");
+			final String type = request.getParameter("type");
 			String capStr = null;
 			String code = null;
 			BufferedImage bi = null;
 			if ("math".equals(type)) {
-				String capText = captchaProducerMath.createText();
+				final String capText = captchaProducerMath.createText();
 				capStr = capText.substring(0, capText.lastIndexOf("@"));
 				code = capText.substring(capText.lastIndexOf("@") + 1);
 				bi = CaptchaConfig.applyColor(captchaProducerMath).createImage(capStr);
@@ -66,14 +66,14 @@ public class SysCaptchaController extends BaseController {
 			ImageIO.write(bi, "jpg", out);
 			out.flush();
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				if (out != null) {
 					out.close();
 				}
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}

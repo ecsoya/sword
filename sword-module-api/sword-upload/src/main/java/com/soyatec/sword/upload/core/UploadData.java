@@ -36,7 +36,7 @@ public class UploadData {
 	 * @return 返回上传对象
 	 */
 	public static UploadData build(String fileName, InputStream inputStream) {
-		UploadData uploadData = new UploadData();
+		final UploadData uploadData = new UploadData();
 		uploadData.setFileName(fileName);
 		uploadData.setInputStream(inputStream);
 		return uploadData;
@@ -49,11 +49,11 @@ public class UploadData {
 
 		UploadData uploadData;
 		try {
-			InputStream inputStream = file.getInputStream();
-			byte[] datas = file.getBytes();
+			final InputStream inputStream = file.getInputStream();
+			final byte[] datas = file.getBytes();
 			uploadData = new UploadData();
 
-			String name = file.getOriginalFilename();
+			final String name = file.getOriginalFilename();
 			if (name != null && name.indexOf(".") != -1) {
 				uploadData.setExtension(name.substring(name.lastIndexOf(".")));
 			}
@@ -63,7 +63,7 @@ public class UploadData {
 			uploadData.setInputStream(inputStream);
 			uploadData.setDatas(datas);
 			return uploadData;
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new FileUploadException(e.getLocalizedMessage());
 		}
 	}

@@ -20,7 +20,7 @@ import com.soyatec.sword.system.service.ISysUserOnlineService;
 
 /**
  * 退出过滤器
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
@@ -42,12 +42,12 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	@Override
 	protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
 		try {
-			Subject subject = getSubject(request, response);
-			String redirectUrl = getRedirectUrl(request, response, subject);
+			final Subject subject = getSubject(request, response);
+			final String redirectUrl = getRedirectUrl(request, response, subject);
 			try {
-				SysUser user = ShiroUtils.getSysUser();
+				final SysUser user = ShiroUtils.getSysUser();
 				if (StringUtils.isNotNull(user)) {
-					String loginName = user.getLoginName();
+					final String loginName = user.getLoginName();
 					// 记录用户退出日志
 					AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.LOGOUT,
 							MessageUtils.message("user.logout.success")));
@@ -57,11 +57,11 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 				}
 				// 退出登录
 				subject.logout();
-			} catch (SessionException ise) {
+			} catch (final SessionException ise) {
 				log.error("logout fail.", ise);
 			}
 			issueRedirect(request, response, redirectUrl);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("Encountered session exception during logout.  This can generally safely be ignored.", e);
 		}
 		return false;
@@ -72,7 +72,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	 */
 	@Override
 	protected String getRedirectUrl(ServletRequest request, ServletResponse response, Subject subject) {
-		String url = getLoginUrl();
+		final String url = getLoginUrl();
 		if (StringUtils.isNotEmpty(url)) {
 			return url;
 		}

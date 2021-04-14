@@ -15,7 +15,7 @@ import com.soyatec.sword.framework.shiro.realm.UserRealm;
 
 /**
  * shiro 工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class ShiroUtils {
@@ -33,7 +33,7 @@ public class ShiroUtils {
 
 	public static SysUser getSysUser() {
 		SysUser user = null;
-		Object obj = getSubject().getPrincipal();
+		final Object obj = getSubject().getPrincipal();
 		if (StringUtils.isNotNull(obj)) {
 			user = new SysUser();
 			BeanUtils.copyBeanProp(user, obj);
@@ -42,10 +42,10 @@ public class ShiroUtils {
 	}
 
 	public static void setSysUser(SysUser user) {
-		Subject subject = getSubject();
-		PrincipalCollection principalCollection = subject.getPrincipals();
-		String realmName = principalCollection.getRealmNames().iterator().next();
-		PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(user, realmName);
+		final Subject subject = getSubject();
+		final PrincipalCollection principalCollection = subject.getPrincipals();
+		final String realmName = principalCollection.getRealmNames().iterator().next();
+		final PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(user, realmName);
 		// 重新加载Principal
 		subject.runAs(newPrincipalCollection);
 	}
@@ -67,8 +67,8 @@ public class ShiroUtils {
 	}
 
 	public static void clearCachedAuthorizationInfo() {
-		RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
-		UserRealm realm = (UserRealm) rsm.getRealms().iterator().next();
+		final RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
+		final UserRealm realm = (UserRealm) rsm.getRealms().iterator().next();
 		realm.clearAllCachedAuthorizationInfo();
 	}
 
@@ -77,8 +77,8 @@ public class ShiroUtils {
 	 */
 	public static String randomSalt() {
 		// 一个Byte占两个字节，此处生成的3字节，字符串长度为6
-		SecureRandomNumberGenerator secureRandom = new SecureRandomNumberGenerator();
-		String hex = secureRandom.nextBytes(3).toHex();
+		final SecureRandomNumberGenerator secureRandom = new SecureRandomNumberGenerator();
+		final String hex = secureRandom.nextBytes(3).toHex();
 		return hex;
 	}
 }

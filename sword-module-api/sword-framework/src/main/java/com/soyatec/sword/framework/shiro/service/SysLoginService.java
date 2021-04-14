@@ -26,7 +26,7 @@ import com.soyatec.sword.system.service.ISysUserService;
 
 /**
  * 登录校验方法
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Component
@@ -73,12 +73,12 @@ public class SysLoginService {
 		}
 
 		// 查询用户信息
-		SysUser user = userService.selectUserByLoginName(username);
+		final SysUser user = userService.selectUserByLoginName(username);
 
 		/**
 		 * if (user == null && maybeMobilePhoneNumber(username)) { user =
 		 * userService.selectUserByPhoneNumber(username); }
-		 * 
+		 *
 		 * if (user == null && maybeEmail(username)) { user =
 		 * userService.selectUserByEmail(username); }
 		 */
@@ -120,7 +120,7 @@ public class SysLoginService {
 	 * private boolean maybeEmail(String username) { if
 	 * (!username.matches(UserConstants.EMAIL_PATTERN)) { return false; } return
 	 * true; }
-	 * 
+	 *
 	 * private boolean maybeMobilePhoneNumber(String username) { if
 	 * (!username.matches(UserConstants.MOBILE_PHONE_NUMBER_PATTERN)) { return
 	 * false; } return true; }

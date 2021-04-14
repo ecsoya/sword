@@ -20,7 +20,7 @@ import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 
 /**
  * 自定义访问控制
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class OnlineSessionFilter extends AccessControlFilter {
@@ -38,18 +38,18 @@ public class OnlineSessionFilter extends AccessControlFilter {
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {
-		Subject subject = getSubject(request, response);
+		final Subject subject = getSubject(request, response);
 		if (subject == null || subject.getSession() == null) {
 			return true;
 		}
-		Session session = onlineSessionDAO.readSession(subject.getSession().getId());
+		final Session session = onlineSessionDAO.readSession(subject.getSession().getId());
 		if (session != null && session instanceof OnlineSession) {
-			OnlineSession onlineSession = (OnlineSession) session;
+			final OnlineSession onlineSession = (OnlineSession) session;
 			request.setAttribute(ShiroConstants.ONLINE_SESSION, onlineSession);
 			// 把user对象设置进去
-			boolean isGuest = onlineSession.getUserId() == null || onlineSession.getUserId() == 0L;
+			final boolean isGuest = onlineSession.getUserId() == null || onlineSession.getUserId() == 0L;
 			if (isGuest == true) {
-				SysUser user = ShiroUtils.getSysUser();
+				final SysUser user = ShiroUtils.getSysUser();
 				if (user != null) {
 					onlineSession.setUserId(user.getUserId());
 					onlineSession.setLoginName(user.getLoginName());
@@ -71,7 +71,7 @@ public class OnlineSessionFilter extends AccessControlFilter {
 	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-		Subject subject = getSubject(request, response);
+		final Subject subject = getSubject(request, response);
 		if (subject != null) {
 			subject.logout();
 		}

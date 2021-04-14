@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 import com.soyatec.sword.wallet.domain.Ticker;
 
 /**
- * 
+ *
  * 聚合行情
- * 
+ *
  * @author ecsoya
  *
  */

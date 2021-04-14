@@ -23,11 +23,11 @@ public class SendCloudService {
 	private SendCloudProperties config;
 
 	public ResponseData sendCommon(String email, String subject, String html) throws Throwable {
-		MailAddressReceiver receiver = new MailAddressReceiver();
+		final MailAddressReceiver receiver = new MailAddressReceiver();
 		// 添加收件人
 		receiver.addTo(email);
 
-		MailBody body = new MailBody();
+		final MailBody body = new MailBody();
 		// 设置 From
 		body.setFrom(config.getFrom());
 		// 设置 FromName
@@ -35,22 +35,22 @@ public class SendCloudService {
 		// 设置标题
 		body.setSubject(subject);
 
-		TextContent content = new TextContent();
+		final TextContent content = new TextContent();
 		content.setContent_type(ScContentType.html);
 		content.setText(html);
 
-		SendCloudMail mail = new SendCloudMail();
+		final SendCloudMail mail = new SendCloudMail();
 		mail.setTo(receiver);
 		mail.setBody(body);
 		mail.setContent(content);
 
-		SendCloud sc = SendCloudBuilder.build();
-		Credential credential = new Credential(config.getApiUser(), config.getApiKey());
+		final SendCloud sc = SendCloudBuilder.build();
+		final Credential credential = new Credential(config.getApiUser(), config.getApiKey());
 		return sc.sendMail(mail, credential, config.getRegion());
 	}
 
 	public ResponseData sendTemplate(String email, String subject, String template) throws Throwable {
-		MailBody body = new MailBody();
+		final MailBody body = new MailBody();
 		// 设置 From
 		body.setFrom(config.getFrom());
 		// 设置 FromName
@@ -58,16 +58,16 @@ public class SendCloudService {
 		body.setSubject(subject);
 		body.addXsmtpapi("to", Collections.singletonList(email));
 		// 使用邮件模板
-		TemplateContent content = new TemplateContent();
+		final TemplateContent content = new TemplateContent();
 		content.setTemplateInvokeName(template);
 
-		SendCloudMail mail = new SendCloudMail();
+		final SendCloudMail mail = new SendCloudMail();
 		// 模板发送时, 必须使用 Xsmtpapi 来指明收件人; mail.setTo();
 		mail.setBody(body);
 		mail.setContent(content);
 
-		SendCloud sc = SendCloudBuilder.build();
-		Credential credential = new Credential(config.getApiUser(), config.getApiKey());
+		final SendCloud sc = SendCloudBuilder.build();
+		final Credential credential = new Credential(config.getApiUser(), config.getApiKey());
 		return sc.sendMail(mail, credential, config.getRegion());
 	}
 

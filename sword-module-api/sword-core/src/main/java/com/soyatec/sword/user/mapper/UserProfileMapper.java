@@ -2,6 +2,8 @@ package com.soyatec.sword.user.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.soyatec.sword.user.domain.UserProfile;
 
 public interface UserProfileMapper {
@@ -32,5 +34,7 @@ public interface UserProfileMapper {
 	List<Long> selectUserIdsByType(String userType);
 
 	List<UserProfile> fuzzySearchUserList(String loginName);
+
+	List<UserProfile> selectUserProfileList(@Param("userIds") List<Long> userIds);
 
 }

@@ -7,7 +7,7 @@ import com.soyatec.sword.framework.shiro.realm.UserRealm;
 
 /**
  * 用户授权信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class AuthorizationUtils {
@@ -22,7 +22,7 @@ public class AuthorizationUtils {
 	 * 获取自定义Realm
 	 */
 	public static UserRealm getUserRealm() {
-		RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
+		final RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
 		return (UserRealm) rsm.getRealms().iterator().next();
 	}
 }

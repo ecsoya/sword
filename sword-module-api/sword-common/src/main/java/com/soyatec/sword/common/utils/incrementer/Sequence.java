@@ -93,9 +93,9 @@ public class Sequence {
 	 * 获取 maxWorkerId
 	 */
 	protected static long getMaxWorkerId(long datacenterId, long maxWorkerId) {
-		StringBuilder mpid = new StringBuilder();
+		final StringBuilder mpid = new StringBuilder();
 		mpid.append(datacenterId);
-		String name = ManagementFactory.getRuntimeMXBean().getName();
+		final String name = ManagementFactory.getRuntimeMXBean().getName();
 		if (org.apache.commons.lang3.StringUtils.isNotBlank(name)) {
 			/*
 			 * GET jvmPid
@@ -114,19 +114,19 @@ public class Sequence {
 	protected static long getDatacenterId(long maxDatacenterId) {
 		long id = 0L;
 		try {
-			InetAddress ip = InetAddress.getLocalHost();
-			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+			final InetAddress ip = InetAddress.getLocalHost();
+			final NetworkInterface network = NetworkInterface.getByInetAddress(ip);
 			if (network == null) {
 				id = 1L;
 			} else {
-				byte[] mac = network.getHardwareAddress();
+				final byte[] mac = network.getHardwareAddress();
 				if (null != mac) {
 					id = ((0x000000FF & (long) mac[mac.length - 1])
 							| (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
 					id = id % (maxDatacenterId + 1);
 				}
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			logger.warn(" getDatacenterId: " + e.getMessage());
 		}
 		return id;
@@ -141,7 +141,7 @@ public class Sequence {
 		long timestamp = timeGen();
 		// 闰秒
 		if (timestamp < lastTimestamp) {
-			long offset = lastTimestamp - timestamp;
+			final long offset = lastTimestamp - timestamp;
 			if (offset <= 5) {
 				try {
 					wait(offset << 1);
@@ -150,7 +150,7 @@ public class Sequence {
 						throw new RuntimeException(String
 								.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
 					}
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					throw new RuntimeException(e);
 				}
 			} else {

@@ -2,7 +2,7 @@ package com.soyatec.sword.common.utils.file;
 
 /**
  * 媒体类型工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class MimeTypeUtils {

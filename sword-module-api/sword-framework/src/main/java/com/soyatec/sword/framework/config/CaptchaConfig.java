@@ -27,15 +27,15 @@ import com.soyatec.sword.common.config.GlobalConfig;
 
 /**
  * 验证码配置
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Configuration
 public class CaptchaConfig {
 	@Bean(name = "captchaProducer")
 	public DefaultKaptcha getKaptchaBean() {
-		DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
-		Properties properties = new Properties();
+		final DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
+		final Properties properties = new Properties();
 		// 是否有边框 默认为true 我们可以自己设置yes，no
 		properties.setProperty(KAPTCHA_BORDER, "yes");
 		properties.setProperty(KAPTCHA_BORDER_COLOR, GlobalConfig.getAdminColor());
@@ -61,15 +61,15 @@ public class CaptchaConfig {
 		properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.WaterRipple");
 		// properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL,
 		// "com.google.code.kaptcha.impl.ShadowGimpy");
-		Config config = new Config(properties);
+		final Config config = new Config(properties);
 		defaultKaptcha.setConfig(config);
 		return defaultKaptcha;
 	}
 
 	@Bean(name = "captchaProducerMath")
 	public DefaultKaptcha getKaptchaBeanMath() {
-		DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
-		Properties properties = new Properties();
+		final DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
+		final Properties properties = new Properties();
 		// 是否有边框 默认为true 我们可以自己设置yes，no
 		properties.setProperty(KAPTCHA_BORDER, "yes");
 		// 边框颜色 默认为Color.BLACK
@@ -102,7 +102,7 @@ public class CaptchaConfig {
 //		properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.ShadowGimpy");
 		properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.WaterRipple");
 //		properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.FishEyeGimpy");
-		Config config = new Config(properties);
+		final Config config = new Config(properties);
 		defaultKaptcha.setConfig(config);
 		return defaultKaptcha;
 	}
@@ -112,7 +112,7 @@ public class CaptchaConfig {
 	 */
 	public static Producer applyColor(Producer producer) {
 		if (producer instanceof DefaultKaptcha) {
-			Config config = ((DefaultKaptcha) producer).getConfig();
+			final Config config = ((DefaultKaptcha) producer).getConfig();
 			if (config != null) {
 				config.getProperties().put(KAPTCHA_BORDER_COLOR, GlobalConfig.getAdminColor());
 				config.getProperties().put(KAPTCHA_TEXTPRODUCER_FONT_COLOR, GlobalConfig.getAdminColor());

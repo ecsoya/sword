@@ -2,7 +2,7 @@ package com.soyatec.sword.common.constant;
 
 /**
  * 权限通用常量
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class PermissionConstants {

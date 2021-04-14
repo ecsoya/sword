@@ -21,7 +21,7 @@ public interface IUserProfileService {
 	String selectUserEmailById(Long userId);
 
 	/**
-	 * 
+	 *
 	 * 修改用户状态
 	 */
 	int changeStatus(Long userId, Integer status);
@@ -55,4 +55,6 @@ public interface IUserProfileService {
 	List<Long> selectUserIdsByType(String userType);
 
 	List<UserProfile> fuzzySearchUserList(String loginName);
+
+	List<UserProfile> selectUserProfileList(List<Long> userIds);
 }

@@ -23,7 +23,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 文件处理工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class FileUtils extends org.apache.commons.io.FileUtils {
@@ -31,7 +31,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 输出指定文件的byte数组
-	 * 
+	 *
 	 * @param filePath 文件路径
 	 * @param os       输出流
 	 * @return
@@ -39,30 +39,30 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	public static void writeBytes(String filePath, OutputStream os) throws IOException {
 		FileInputStream fis = null;
 		try {
-			File file = new File(filePath);
+			final File file = new File(filePath);
 			if (!file.exists()) {
 				throw new FileNotFoundException(filePath);
 			}
 			fis = new FileInputStream(file);
-			byte[] b = new byte[1024];
+			final byte[] b = new byte[1024];
 			int length;
 			while ((length = fis.read(b)) > 0) {
 				os.write(b, 0, length);
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw e;
 		} finally {
 			if (os != null) {
 				try {
 					os.close();
-				} catch (IOException e1) {
+				} catch (final IOException e1) {
 					e1.printStackTrace();
 				}
 			}
 			if (fis != null) {
 				try {
 					fis.close();
-				} catch (IOException e1) {
+				} catch (final IOException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -71,13 +71,13 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 删除文件
-	 * 
+	 *
 	 * @param filePath 文件
 	 * @return
 	 */
 	public static boolean deleteFile(String filePath) {
 		boolean flag = false;
-		File file = new File(filePath);
+		final File file = new File(filePath);
 		// 路径为文件且不为空则进行删除
 		if (file.isFile() && file.exists()) {
 			file.delete();
@@ -88,7 +88,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 文件名称验证
-	 * 
+	 *
 	 * @param filename 文件名称
 	 * @return true 正常 false 非法
 	 */
@@ -98,13 +98,13 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 检查文件是否可下载
-	 * 
+	 *
 	 * @param resource 需要下载的文件
 	 * @return true 正常 false 非法
 	 */
 	public static boolean checkAllowDownload(String resource) {
 		// 禁止目录上跳级别
-		if (StringUtils.contains(resource, "..")) {
+		if (org.apache.commons.lang3.StringUtils.contains(resource, "..")) {
 			return false;
 		}
 
@@ -119,7 +119,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 下载文件名重新编码
-	 * 
+	 *
 	 * @param request  请求对象
 	 * @param fileName 文件名
 	 * @return 编码后的文件名
@@ -154,9 +154,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 */
 	public static void setAttachmentResponseHeader(HttpServletResponse response, String realFileName)
 			throws UnsupportedEncodingException {
-		String percentEncodedFileName = percentEncode(realFileName);
+		final String percentEncodedFileName = percentEncode(realFileName);
 
-		StringBuilder contentDispositionValue = new StringBuilder();
+		final StringBuilder contentDispositionValue = new StringBuilder();
 		contentDispositionValue.append("attachment; filename=").append(percentEncodedFileName).append(";")
 				.append("filename*=").append("utf-8''").append(percentEncodedFileName);
 
@@ -170,7 +170,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @return 百分号编码后的字符串
 	 */
 	public static String percentEncode(String s) throws UnsupportedEncodingException {
-		String encode = URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
+		final String encode = URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
 		return encode.replaceAll("\\+", "%20");
 	}
 
@@ -179,11 +179,11 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			return null;
 		}
 		try {
-			URL url = new URL(detailsUrl);
-			URLConnection conn = url.openConnection();
-			InputStream in = conn.getInputStream();
-			StringBuilder stringBuilder = new StringBuilder();
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+			final URL url = new URL(detailsUrl);
+			final URLConnection conn = url.openConnection();
+			final InputStream in = conn.getInputStream();
+			final StringBuilder stringBuilder = new StringBuilder();
+			final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
 			boolean firstLine = true;
 			String line = null;
 			while ((line = bufferedReader.readLine()) != null) {
@@ -195,7 +195,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				stringBuilder.append(line);
 			}
 			return stringBuilder.toString();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 		return "";

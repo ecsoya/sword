@@ -125,7 +125,7 @@ public enum Country {
 	public static List<Map<String, String>> list() {
 		if (ENUM_JSON_LIST == null) {
 			ENUM_JSON_LIST = Arrays.asList(Country.values()).parallelStream().map(c -> {
-				Map<String, String> map = new HashMap<>();
+				final Map<String, String> map = new HashMap<>();
 				map.put("name", c.name());
 				map.put("chineseName", c.getChineseName());
 				map.put("englishName", c.getEnglishName());

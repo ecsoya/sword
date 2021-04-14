@@ -14,7 +14,7 @@ import com.soyatec.sword.mining.service.IMiningLevelService;
 
 /**
  * Mining级别Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-03-15
  */
@@ -25,7 +25,7 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 
 	/**
 	 * 查询Mining级别
-	 * 
+	 *
 	 * @param id Mining级别ID
 	 * @return Mining级别
 	 */
@@ -36,7 +36,7 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 
 	/**
 	 * 查询Mining级别列表
-	 * 
+	 *
 	 * @param miningLevel Mining级别
 	 * @return Mining级别
 	 */
@@ -47,7 +47,7 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 
 	/**
 	 * 新增Mining级别
-	 * 
+	 *
 	 * @param miningLevel Mining级别
 	 * @return 结果
 	 */
@@ -64,7 +64,7 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 
 	/**
 	 * 修改Mining级别
-	 * 
+	 *
 	 * @param miningLevel Mining级别
 	 * @return 结果
 	 */
@@ -76,7 +76,7 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 
 	/**
 	 * 删除Mining级别对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -87,7 +87,7 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 
 	/**
 	 * 删除Mining级别信息
-	 * 
+	 *
 	 * @param id Mining级别ID
 	 * @return 结果
 	 */
@@ -106,7 +106,7 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 
 	@Override
 	public List<MiningLevel> selectMiningLevelListByType(Integer type) {
-		MiningLevel query = new MiningLevel();
+		final MiningLevel query = new MiningLevel();
 		query.setType(type);
 		return selectMiningLevelList(query);
 	}

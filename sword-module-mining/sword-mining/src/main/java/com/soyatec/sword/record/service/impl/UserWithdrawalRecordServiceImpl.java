@@ -17,7 +17,7 @@ import com.soyatec.sword.record.service.IUserWithdrawalRecordService;
 
 /**
  * 用户提现Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-06
  */
@@ -28,7 +28,7 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 
 	/**
 	 * 查询用户提现
-	 * 
+	 *
 	 * @param id 用户提现ID
 	 * @return 用户提现
 	 */
@@ -39,7 +39,7 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 
 	/**
 	 * 查询用户提现列表
-	 * 
+	 *
 	 * @param userWithdrawalRecord 用户提现
 	 * @return 用户提现
 	 */
@@ -50,7 +50,7 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 
 	/**
 	 * 新增用户提现
-	 * 
+	 *
 	 * @param userWithdrawalRecord 用户提现
 	 * @return 结果
 	 */
@@ -67,7 +67,7 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 
 	/**
 	 * 修改用户提现
-	 * 
+	 *
 	 * @param userWithdrawalRecord 用户提现
 	 * @return 结果
 	 */
@@ -79,7 +79,7 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 
 	/**
 	 * 删除用户提现对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -90,7 +90,7 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 
 	/**
 	 * 删除用户提现信息
-	 * 
+	 *
 	 * @param id 用户提现ID
 	 * @return 结果
 	 */

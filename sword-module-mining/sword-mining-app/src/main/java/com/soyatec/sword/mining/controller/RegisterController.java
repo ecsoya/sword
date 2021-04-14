@@ -48,11 +48,11 @@ public class RegisterController extends BaseController {
 		if (StringUtils.isEmpty(email)) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.0")); //$NON-NLS-1$
 		}
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(email, code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(email, code);
 		if (!verifyCode.isSuccess()) {
 			return verifyCode;
 		}
-		User user = new User();
+		final User user = new User();
 		user.setEmail(email);
 		user.setPhonenumber(mobile);
 		user.setLoginName(username);
@@ -71,11 +71,11 @@ public class RegisterController extends BaseController {
 		if (StringUtils.isEmpty(mobile)) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.1")); //$NON-NLS-1$
 		}
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(mobile, code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(mobile, code);
 		if (!verifyCode.isSuccess()) {
 			return verifyCode;
 		}
-		User user = new User();
+		final User user = new User();
 		user.setEmail(email);
 		user.setPhonenumber(mobile);
 		user.setLoginName(username);
@@ -93,15 +93,15 @@ public class RegisterController extends BaseController {
 		if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(walletPassword) || StringUtils.isEmpty(password)) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.2")); //$NON-NLS-1$
 		}
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(mobile, code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(mobile, code);
 		if (!verifyCode.isSuccess()) {
 			return verifyCode;
 		}
-		SysUser user = userService.selectUserByPhoneNumber(mobile);
+		final SysUser user = userService.selectUserByPhoneNumber(mobile);
 		if (user == null || !User.TYPE_USER.equals(user.getUserType())) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.3")); //$NON-NLS-1$
 		}
-		CommonResult<?> resetUserPassword = userProfieService.resetUserPassword(user.getUserId(), password);
+		final CommonResult<?> resetUserPassword = userProfieService.resetUserPassword(user.getUserId(), password);
 		if (!resetUserPassword.isSuccess()) {
 			return resetUserPassword;
 		}
@@ -117,21 +117,23 @@ public class RegisterController extends BaseController {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(walletPassword) || StringUtils.isEmpty(password)) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.4")); //$NON-NLS-1$
 		}
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(email, code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(email, code);
 		if (!verifyCode.isSuccess()) {
 			return verifyCode;
 		}
-		SysUser user = userService.selectUserByEmail(email);
+		final SysUser user = userService.selectUserByEmail(email);
 		if (user == null || !User.TYPE_USER.equals(user.getUserType())) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.5")); //$NON-NLS-1$
 		}
-		if (StringUtils.isNotEmpty(mobile) && !StringUtils.equals(mobile, user.getPhonenumber())) {
+		if (StringUtils.isNotEmpty(mobile)
+				&& !org.apache.commons.lang3.StringUtils.equals(mobile, user.getPhonenumber())) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.5") + "【1】");
 		}
-		if (StringUtils.isNotEmpty(loginName) && !StringUtils.equals(loginName, user.getLoginName())) {
+		if (StringUtils.isNotEmpty(loginName)
+				&& !org.apache.commons.lang3.StringUtils.equals(loginName, user.getLoginName())) {
 			return CommonResult.fail(MessageUtils.message("RegisterController.5") + "【2】");
 		}
-		CommonResult<?> resetUserPassword = userProfieService.resetUserPassword(user.getUserId(), password);
+		final CommonResult<?> resetUserPassword = userProfieService.resetUserPassword(user.getUserId(), password);
 		if (!resetUserPassword.isSuccess()) {
 			return resetUserPassword;
 		}

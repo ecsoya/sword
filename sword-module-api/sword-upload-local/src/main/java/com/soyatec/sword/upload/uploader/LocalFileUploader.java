@@ -30,33 +30,33 @@ public class LocalFileUploader extends AbstractFileUploader {
 		if (files == null || files.isEmpty()) {
 			return Collections.emptyList();
 		}
-		File root = new File(config.getUploadPath());
+		final File root = new File(config.getUploadPath());
 		log.debug("LocalFileUploader, uploadTo={}", root);
 		if (!root.exists()) {
 			try {
 				root.mkdirs();
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				throw new FileUploadException("Could not init upload path");
 			}
 		}
 
-		List<String> result = new ArrayList<String>();
-		for (UploadData data : files) {
-			String fileName = getFileName(data, config);
+		final List<String> result = new ArrayList<String>();
+		for (final UploadData data : files) {
+			final String fileName = getFileName(data, config);
 			log.debug("LocalFileUploader, upload={}", fileName);
-			File target = new File(root, fileName);
+			final File target = new File(root, fileName);
 			try {
-				InputStream in = data.getInputStream();
+				final InputStream in = data.getInputStream();
 				if (in != null && in.available() > 0) {
 					Files.copy(in, target.toPath());
 				} else {
-					byte[] bytes = data.getDatas();
+					final byte[] bytes = data.getDatas();
 					if (bytes != null && bytes.length > 0) {
 						Files.write(target.toPath(), bytes);
 					}
 				}
 				result.add(target.getAbsolutePath());
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				log.warn("LocalFileUploader, uploadFailed={}, error={}", fileName, e.getLocalizedMessage());
 				continue;
 			}

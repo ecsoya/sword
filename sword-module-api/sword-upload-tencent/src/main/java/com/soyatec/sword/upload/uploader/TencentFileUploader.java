@@ -28,21 +28,21 @@ public class TencentFileUploader extends AbstractFileUploader {
 	protected List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException {
 		log.info("TencentFileUploader, config={}", config);
 
-		COSCredentials cred = new BasicCOSCredentials(config.getAccessKey(), config.getSecretKey());
-		String endpoint = config.getEndpoint();
-		ClientConfig clientConfig = new ClientConfig(new Region(endpoint));
-		COSClient client = new COSClient(cred, clientConfig);
+		final COSCredentials cred = new BasicCOSCredentials(config.getAccessKey(), config.getSecretKey());
+		final String endpoint = config.getEndpoint();
+		final ClientConfig clientConfig = new ClientConfig(new Region(endpoint));
+		final COSClient client = new COSClient(cred, clientConfig);
 
-		String bucket = config.getBucket();
-		List<String> result = new ArrayList<>();
+		final String bucket = config.getBucket();
+		final List<String> result = new ArrayList<>();
 		try {
-			for (UploadData file : files) {
-				String contentType = file.getContentType();
-				Long length = file.getLength();
-				String path = getFileName(file, config);
-				InputStream inputStream = file.getInputStream();
+			for (final UploadData file : files) {
+				final String contentType = file.getContentType();
+				final Long length = file.getLength();
+				final String path = getFileName(file, config);
+				final InputStream inputStream = file.getInputStream();
 				if (inputStream != null && inputStream.available() > 0) {
-					ObjectMetadata metadata = new ObjectMetadata();
+					final ObjectMetadata metadata = new ObjectMetadata();
 					if (length != null) {
 						metadata.setContentLength(length);
 					}
@@ -60,7 +60,7 @@ public class TencentFileUploader extends AbstractFileUploader {
 					result.add("https://" + bucket + ".cos." + endpoint + ".myqcloud.com/" + path);
 				}
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.warn("TencentFileUploader, error={}", e.getLocalizedMessage());
 		} finally {
 			client.shutdown();

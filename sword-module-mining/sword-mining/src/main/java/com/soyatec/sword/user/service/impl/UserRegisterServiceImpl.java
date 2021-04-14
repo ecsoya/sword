@@ -48,13 +48,13 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 
 	@Override
 	public CommonResult<?> registerUser(User user, String referrerCode, String walletPassword, boolean async) {
-		boolean needReferrerCode = "true" //$NON-NLS-1$
+		final boolean needReferrerCode = "true" //$NON-NLS-1$
 				.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_NEED_REFERRER_CODE));
 		Long referralId = null;
 		if (StringUtils.isEmpty(referrerCode) && needReferrerCode) {
 			return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.1")); //$NON-NLS-1$
 		} else if (needReferrerCode) {
-			UserReferrer referral = referrerService.selectUserReferrerByCode(referrerCode);
+			final UserReferrer referral = referrerService.selectUserReferrerByCode(referrerCode);
 			if (referral == null) {
 				return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.2")); //$NON-NLS-1$
 			}
@@ -62,9 +62,9 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 		}
 		if (user.getUserId() == null) {
 			// user.setUserId(100000000l + StringUtils.randomNum(8));// 避免和导入用户ID冲突
-			boolean emailUnique = "true" //$NON-NLS-1$
+			final boolean emailUnique = "true" //$NON-NLS-1$
 					.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.REGISTER_EMAIL_UNIQUE));
-			String email = user.getEmail();
+			final String email = user.getEmail();
 			// 使用邮箱验证码或邮箱唯一
 			if (GlobalConfig.getEmailCode() || emailUnique) {
 				if (StringUtils.isEmpty(email)) {
@@ -76,8 +76,8 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 				return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.5")); //$NON-NLS-1$
 			}
 
-			String mobile = user.getPhonenumber();
-			boolean mobileUnique = "true".equalsIgnoreCase( //$NON-NLS-1$
+			final String mobile = user.getPhonenumber();
+			final boolean mobileUnique = "true".equalsIgnoreCase( //$NON-NLS-1$
 					configService.selectConfigValueByKey(IMiningConstants.REGISTER_MOBILE_UNIQUE));
 			// 使用手机验证码或手机唯一
 			if (!GlobalConfig.getEmailCode() || mobileUnique) {
@@ -89,7 +89,8 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 				return CommonResult.fail(MessageUtils.message("UserRegisterServiceImpl.8")); //$NON-NLS-1$
 			}
 
-			String msg = "", username = user.getLoginName(), password = user.getPassword(); //$NON-NLS-1$
+			String msg = ""; //$NON-NLS-1$
+			final String username = user.getLoginName(), password = user.getPassword();
 
 			if (StringUtils.isEmpty(username)) {
 				msg = MessageUtils.message("UserRegisterServiceImpl.10"); //$NON-NLS-1$
@@ -141,14 +142,14 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 			userReferrer.setBtree(UserReferrer.BTREE_UNFINISHED);
 			referrerService.insertUserReferrer(userReferrer);
 		} else if (referralId != null) {
-			UserReferrer update = new UserReferrer();
+			final UserReferrer update = new UserReferrer();
 			update.setUserId(userId);
 			update.setReferralCode(referralCode);
 			update.setReferralId(referralId);
 			referrerService.updateUserReferrer(update);
 		}
 		// 2. 更新钱包
-		CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WALLET);
+		final CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WALLET);
 		walletService.createUserWalletByUserId(userId, walletPassword, checked.isSuccess());
 
 		// 3. 注册双区树

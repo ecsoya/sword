@@ -37,7 +37,8 @@ public class TencentCodeHandler implements SendMailCodeHandler, IMailCodeHandler
 
 	@Override
 	public CommonResult<?> sendCode(String email, String code) {
-		SendEmailResponse sent = servie.sendCode(email, config.getSubject(), code, config.getHtmlTemplateId() != null);
+		final SendEmailResponse sent = servie.sendCode(email, config.getSubject(), code,
+				config.getHtmlTemplateId() != null);
 		if (sent != null) {
 			return CommonResult.success(sent);
 		}

@@ -2,7 +2,7 @@ package com.soyatec.sword.common.constant;
 
 /**
  * 用户常量信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class UserConstants {

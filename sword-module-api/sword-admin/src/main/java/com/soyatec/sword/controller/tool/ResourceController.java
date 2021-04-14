@@ -13,14 +13,14 @@ import com.soyatec.sword.qrcode.QrcodeUtils;
 
 /**
  * 版本Controller
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-22
  */
 @Controller
 @RequestMapping("/tool/resource")
 public class ResourceController extends BaseController {
-	private String prefix = "tool/resource";
+	private final String prefix = "tool/resource";
 
 	@RequiresPermissions("tool:resource:view")
 	@GetMapping()
@@ -35,11 +35,11 @@ public class ResourceController extends BaseController {
 	@ResponseBody
 	public AjaxResult qrcode(String content) {
 		try {
-			String url = QrcodeUtils.generate(content);
-			AjaxResult ajax = AjaxResult.success();
+			final String url = QrcodeUtils.generate(content);
+			final AjaxResult ajax = AjaxResult.success();
 			ajax.put("url", url);
 			return ajax;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return AjaxResult.error(e.getMessage());
 		}
 	}

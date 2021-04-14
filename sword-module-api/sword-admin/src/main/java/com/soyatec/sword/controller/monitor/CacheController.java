@@ -14,13 +14,13 @@ import com.soyatec.sword.framework.web.service.CacheService;
 
 /**
  * 缓存监控
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/monitor/cache")
 public class CacheController extends BaseController {
-	private String prefix = "monitor/cache";
+	private final String prefix = "monitor/cache";
 
 	@Autowired
 	private CacheService cacheService;

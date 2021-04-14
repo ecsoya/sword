@@ -4,7 +4,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 字符串格式化
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class StrFormatter {
@@ -21,7 +21,7 @@ public class StrFormatter {
 	 * 通常使用：format("this is {} for {}", "a", "b") -> this is a for b<br>
 	 * 转义{}： format("this is \\{} for {}", "a", "b") -> this is \{} for a<br>
 	 * 转义\： format("this is \\\\{} for {}", "a", "b") -> this is \a for b<br>
-	 * 
+	 *
 	 * @param strPattern 字符串模板
 	 * @param argArray   参数列表
 	 * @return 结果
@@ -33,7 +33,7 @@ public class StrFormatter {
 		final int strPatternLength = strPattern.length();
 
 		// 初始化定义好的长度以获得更好的性能
-		StringBuilder sbuf = new StringBuilder(strPatternLength + 50);
+		final StringBuilder sbuf = new StringBuilder(strPatternLength + 50);
 
 		int handledPosition = 0;
 		int delimIndex;// 占位符所在位置
@@ -46,26 +46,24 @@ public class StrFormatter {
 					sbuf.append(strPattern, handledPosition, strPatternLength);
 					return sbuf.toString();
 				}
-			} else {
-				if (delimIndex > 0 && strPattern.charAt(delimIndex - 1) == C_BACKSLASH) {
-					if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == C_BACKSLASH) {
-						// 转义符之前还有一个转义符，占位符依旧有效
-						sbuf.append(strPattern, handledPosition, delimIndex - 1);
-						sbuf.append(Convert.utf8Str(argArray[argIndex]));
-						handledPosition = delimIndex + 2;
-					} else {
-						// 占位符被转义
-						argIndex--;
-						sbuf.append(strPattern, handledPosition, delimIndex - 1);
-						sbuf.append(C_DELIM_START);
-						handledPosition = delimIndex + 1;
-					}
-				} else {
-					// 正常占位符
-					sbuf.append(strPattern, handledPosition, delimIndex);
+			} else if (delimIndex > 0 && strPattern.charAt(delimIndex - 1) == C_BACKSLASH) {
+				if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == C_BACKSLASH) {
+					// 转义符之前还有一个转义符，占位符依旧有效
+					sbuf.append(strPattern, handledPosition, delimIndex - 1);
 					sbuf.append(Convert.utf8Str(argArray[argIndex]));
 					handledPosition = delimIndex + 2;
+				} else {
+					// 占位符被转义
+					argIndex--;
+					sbuf.append(strPattern, handledPosition, delimIndex - 1);
+					sbuf.append(C_DELIM_START);
+					handledPosition = delimIndex + 1;
 				}
+			} else {
+				// 正常占位符
+				sbuf.append(strPattern, handledPosition, delimIndex);
+				sbuf.append(Convert.utf8Str(argArray[argIndex]));
+				handledPosition = delimIndex + 2;
 			}
 		}
 		// 加入最后一个占位符后所有的字符

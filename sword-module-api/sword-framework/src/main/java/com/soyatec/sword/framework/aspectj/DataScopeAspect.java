@@ -19,7 +19,7 @@ import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 
 /**
  * 数据过滤处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Aspect
@@ -67,12 +67,12 @@ public class DataScopeAspect {
 
 	protected void handleDataScope(final JoinPoint joinPoint) {
 		// 获得注解
-		DataScope controllerDataScope = getAnnotationLog(joinPoint);
+		final DataScope controllerDataScope = getAnnotationLog(joinPoint);
 		if (controllerDataScope == null) {
 			return;
 		}
 		// 获取当前的用户
-		SysUser currentUser = ShiroUtils.getSysUser();
+		final SysUser currentUser = ShiroUtils.getSysUser();
 		if (currentUser != null) {
 			// 如果是超级管理员，则不过滤数据
 			if (!currentUser.isAdmin()) {
@@ -84,7 +84,7 @@ public class DataScopeAspect {
 
 	/**
 	 * 数据范围过滤
-	 * 
+	 *
 	 * @param joinPoint 切点
 	 * @param user      用户
 	 * @param deptAlias 部门别名
@@ -93,8 +93,8 @@ public class DataScopeAspect {
 	public static void dataScopeFilter(JoinPoint joinPoint, SysUser user, String deptAlias, String userAlias) {
 		StringBuilder sqlString = new StringBuilder();
 
-		for (SysRole role : user.getRoles()) {
-			String dataScope = role.getDataScope();
+		for (final SysRole role : user.getRoles()) {
+			final String dataScope = role.getDataScope();
 			if (DATA_SCOPE_ALL.equals(dataScope)) {
 				sqlString = new StringBuilder();
 				break;
@@ -109,7 +109,7 @@ public class DataScopeAspect {
 						" OR {}.dept_id IN ( SELECT dept_id FROM sys_dept WHERE dept_id = {} or find_in_set( {} , ancestors ) )",
 						deptAlias, user.getDeptId(), user.getDeptId()));
 			} else if (DATA_SCOPE_SELF.equals(dataScope)) {
-				if (StringUtils.isNotBlank(userAlias)) {
+				if (org.apache.commons.lang3.StringUtils.isNotBlank(userAlias)) {
 					sqlString.append(StringUtils.format(" OR {}.user_id = {} ", userAlias, user.getUserId()));
 				} else {
 					// 数据权限为仅本人且没有userAlias别名不查询任何数据
@@ -118,10 +118,10 @@ public class DataScopeAspect {
 			}
 		}
 
-		if (StringUtils.isNotBlank(sqlString.toString())) {
-			Object params = joinPoint.getArgs()[0];
+		if (org.apache.commons.lang3.StringUtils.isNotBlank(sqlString.toString())) {
+			final Object params = joinPoint.getArgs()[0];
 			if (StringUtils.isNotNull(params) && params instanceof BaseEntity) {
-				BaseEntity baseEntity = (BaseEntity) params;
+				final BaseEntity baseEntity = (BaseEntity) params;
 				baseEntity.getParams().put(DATA_SCOPE, " AND (" + sqlString.substring(4) + ")");
 			}
 		}
@@ -131,9 +131,9 @@ public class DataScopeAspect {
 	 * 是否存在注解，如果存在就获取
 	 */
 	private DataScope getAnnotationLog(JoinPoint joinPoint) {
-		Signature signature = joinPoint.getSignature();
-		MethodSignature methodSignature = (MethodSignature) signature;
-		Method method = methodSignature.getMethod();
+		final Signature signature = joinPoint.getSignature();
+		final MethodSignature methodSignature = (MethodSignature) signature;
+		final Method method = methodSignature.getMethod();
 
 		if (method != null) {
 			return method.getAnnotation(DataScope.class);

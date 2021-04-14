@@ -29,7 +29,7 @@ import com.soyatec.sword.system.service.ISysUserService;
 
 /**
  * 敏感操作通知Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-04-06
  */
@@ -54,7 +54,7 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 
 	/**
 	 * 查询敏感操作通知
-	 * 
+	 *
 	 * @param id 敏感操作通知ID
 	 * @return 敏感操作通知
 	 */
@@ -65,7 +65,7 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 
 	/**
 	 * 查询敏感操作通知列表
-	 * 
+	 *
 	 * @param sysOperNotify 敏感操作通知
 	 * @return 敏感操作通知
 	 */
@@ -76,7 +76,7 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 
 	/**
 	 * 新增敏感操作通知
-	 * 
+	 *
 	 * @param sysOperNotify 敏感操作通知
 	 * @return 结果
 	 */
@@ -93,7 +93,7 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 
 	/**
 	 * 修改敏感操作通知
-	 * 
+	 *
 	 * @param sysOperNotify 敏感操作通知
 	 * @return 结果
 	 */
@@ -105,7 +105,7 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 
 	/**
 	 * 删除敏感操作通知对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -116,7 +116,7 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 
 	/**
 	 * 删除敏感操作通知信息
-	 * 
+	 *
 	 * @param id 敏感操作通知ID
 	 * @return 结果
 	 */
@@ -126,9 +126,9 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 	}
 
 	private SysOperNotify selectNotifiesByType(Integer type, String url) {
-		SysOperNotify query = new SysOperNotify();
+		final SysOperNotify query = new SysOperNotify();
 		query.setType(type);
-		List<SysOperNotify> list = selectSysOperNotifyList(query);
+		final List<SysOperNotify> list = selectSysOperNotifyList(query);
 		if (list == null || list.isEmpty()) {
 			return null;
 		}
@@ -136,9 +136,9 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 			if (url.equals(prefix + n.getOperateUrl())) {
 				return true;
 			}
-			String[] array = Convert.toStrArray(n.getOperateUrl());
+			final String[] array = Convert.toStrArray(n.getOperateUrl());
 			if (array.length > 1) {
-				for (String s : array) {
+				for (final String s : array) {
 					if (url.equals(prefix + s)) {
 						return true;
 					}
@@ -153,26 +153,26 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 		if (operLog == null || StringUtils.isEmpty(operLog.getOperUrl())) {
 			return;
 		}
-		String json = operLog.getJsonResult();
+		final String json = operLog.getJsonResult();
 		if (StringUtils.isEmpty(json)) {
 			return;
 		}
-		AjaxResult ajax = JSON.parseObject(json, AjaxResult.class);
+		final AjaxResult ajax = JSON.parseObject(json, AjaxResult.class);
 		if (ajax == null || ajax.getCode() != 0) {
 			return;
 		}
-		String url = operLog.getOperUrl();
-		SysUser admin = getAdmin(operLog);
+		final String url = operLog.getOperUrl();
+		final SysUser admin = getAdmin(operLog);
 		if (admin == null) {
 			return;
 		}
 		log.info("Notify: url={}, admin={}", url, admin.getLoginName());
-		SysOperNotify emailNotify = selectNotifiesByType(SysOperNotify.TYPE_EMAIL, url);
+		final SysOperNotify emailNotify = selectNotifiesByType(SysOperNotify.TYPE_EMAIL, url);
 		if (emailNotify != null) {
 			sendNotifyByEmail(emailNotify, operLog);
 		}
 
-		SysOperNotify mobileNotify = selectNotifiesByType(SysOperNotify.TYPE_MOBILE, url);
+		final SysOperNotify mobileNotify = selectNotifiesByType(SysOperNotify.TYPE_MOBILE, url);
 		if (mobileNotify != null) {
 			sendNotifyByMobile(mobileNotify, operLog);
 		}
@@ -182,12 +182,12 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 		if (notify == null || operLog == null) {
 			return;
 		}
-		SysUser admin = getAdmin(operLog);
+		final SysUser admin = getAdmin(operLog);
 		if (admin == null) {
 			return;
 		}
-		String content = formatTemplate(notify, operLog);
-		String mobile = admin.getPhonenumber();
+		final String content = formatTemplate(notify, operLog);
+		final String mobile = admin.getPhonenumber();
 		log.debug("Notify: mobile={}, content={}", mobile, content);
 		if (GlobalConfig.isNotifyEnabled() && mobileService != null) {
 			mobileService.sendMessage(mobile, content);
@@ -198,13 +198,13 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 		if (notify == null || operLog == null) {
 			return;
 		}
-		SysUser admin = getAdmin(operLog);
+		final SysUser admin = getAdmin(operLog);
 		if (admin == null) {
 			return;
 		}
-		String content = formatTemplate(notify, operLog);
-		String email = admin.getEmail();
-		String subject = notify.getSubject();
+		final String content = formatTemplate(notify, operLog);
+		final String email = admin.getEmail();
+		final String subject = notify.getSubject();
 		log.debug("Notify: email={}, subject={}, content={}", email, subject, content);
 		if (GlobalConfig.isNotifyEnabled() && mailService != null) {
 			mailService.sendEmail(email, subject, content);
@@ -215,7 +215,7 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 		if (operLog == null) {
 			return null;
 		}
-		String admin = operLog.getOperName();
+		final String admin = operLog.getOperName();
 		if (StringUtils.isEmpty(admin)) {
 			return null;
 		}
@@ -230,18 +230,18 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 		if (StringUtils.isEmpty(template)) {
 			return null;
 		}
-		List<Field> fields = ReflectUtils.getAllFields(SysOperLog.class);
-		for (Field field : fields) {
-			String name = field.getName();
+		final List<Field> fields = ReflectUtils.getAllFields(SysOperLog.class);
+		for (final Field field : fields) {
+			final String name = field.getName();
 			field.setAccessible(true);
 			try {
-				Object value = field.get(operLog);
+				final Object value = field.get(operLog);
 				String target = value == null ? "" : value.toString();
 				if (value instanceof Date) {
 					target = DateUtils.toDefault((Date) value);
 				}
 				template = template.replaceAll("\\{" + name + "\\}", target);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				continue;
 			}
 		}

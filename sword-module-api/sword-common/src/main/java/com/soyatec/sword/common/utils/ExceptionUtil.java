@@ -15,9 +15,9 @@ public class ExceptionUtil {
 	 * 获取exception的详细错误信息。
 	 */
 	public static String getExceptionMessage(Throwable e) {
-		StringWriter sw = new StringWriter();
+		final StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw, true));
-		String str = sw.toString();
+		final String str = sw.toString();
 		return str;
 	}
 
@@ -27,10 +27,10 @@ public class ExceptionUtil {
 		if (root == null) {
 			return "";
 		}
-		String msg = root.getMessage();
+		final String msg = root.getMessage();
 		if (msg == null) {
 			return "null";
 		}
-		return StringUtils.defaultString(msg);
+		return org.apache.commons.lang3.StringUtils.defaultString(msg);
 	}
 }

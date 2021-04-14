@@ -31,7 +31,7 @@ import com.soyatec.sword.system.service.ISysUserOnlineService;
 
 /**
  * 主要是在此如果会话的属性修改了 就标识下其修改了 然后方便 OnlineSessionDao同步
- * 
+ *
  * @author King Crab
  */
 public class CustomWebSessionManager extends DefaultWebSessionManager {
@@ -42,7 +42,7 @@ public class CustomWebSessionManager extends DefaultWebSessionManager {
 
 	@Override
 	protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-		String id = WebUtils.toHttp(request).getHeader(AUTHORIZATION);
+		final String id = WebUtils.toHttp(request).getHeader(AUTHORIZATION);
 		// 如果请求头中有 Authorization 则其值为sessionId
 		if (!StringUtils.isEmpty(id)) {
 			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, REFERENCED_SESSION_ID_SOURCE);
@@ -59,7 +59,7 @@ public class CustomWebSessionManager extends DefaultWebSessionManager {
 	public void setAttribute(SessionKey sessionKey, Object attributeKey, Object value) throws InvalidSessionException {
 		super.setAttribute(sessionKey, attributeKey, value);
 		if (value != null && needMarkAttributeChanged(attributeKey)) {
-			OnlineSession session = getOnlineSession(sessionKey);
+			final OnlineSession session = getOnlineSession(sessionKey);
 			session.markAttributeChanged();
 		}
 	}
@@ -68,7 +68,7 @@ public class CustomWebSessionManager extends DefaultWebSessionManager {
 		if (attributeKey == null) {
 			return false;
 		}
-		String attributeKeyStr = attributeKey.toString();
+		final String attributeKeyStr = attributeKey.toString();
 		// 优化 flash属性没必要持久化
 		if (attributeKeyStr.startsWith("org.springframework")) {
 			return false;
@@ -84,9 +84,9 @@ public class CustomWebSessionManager extends DefaultWebSessionManager {
 
 	@Override
 	public Object removeAttribute(SessionKey sessionKey, Object attributeKey) throws InvalidSessionException {
-		Object removed = super.removeAttribute(sessionKey, attributeKey);
+		final Object removed = super.removeAttribute(sessionKey, attributeKey);
 		if (removed != null) {
-			OnlineSession s = getOnlineSession(sessionKey);
+			final OnlineSession s = getOnlineSession(sessionKey);
 			s.markAttributeChanged();
 		}
 
@@ -95,7 +95,7 @@ public class CustomWebSessionManager extends DefaultWebSessionManager {
 
 	public OnlineSession getOnlineSession(SessionKey sessionKey) {
 		OnlineSession session = null;
-		Object obj = doGetSession(sessionKey);
+		final Object obj = doGetSession(sessionKey);
 		if (StringUtils.isNotNull(obj)) {
 			session = new OnlineSession();
 			BeanUtils.copyBeanProp(session, obj);
@@ -114,26 +114,26 @@ public class CustomWebSessionManager extends DefaultWebSessionManager {
 
 		int invalidCount = 0;
 
-		int timeout = (int) this.getGlobalSessionTimeout();
+		final int timeout = (int) this.getGlobalSessionTimeout();
 		if (timeout < 0) {
 			return;
 		}
-		Date expiredDate = DateUtils.addMilliseconds(new Date(), 0 - timeout);
-		ISysUserOnlineService userOnlineService = SpringUtils.getBean(ISysUserOnlineService.class);
-		List<SysUserOnline> userOnlineList = userOnlineService.selectOnlineByExpired(expiredDate);
+		final Date expiredDate = DateUtils.addMilliseconds(new Date(), 0 - timeout);
+		final ISysUserOnlineService userOnlineService = SpringUtils.getBean(ISysUserOnlineService.class);
+		final List<SysUserOnline> userOnlineList = userOnlineService.selectOnlineByExpired(expiredDate);
 		// 批量过期删除
-		List<String> needOfflineIdList = new ArrayList<String>();
-		for (SysUserOnline userOnline : userOnlineList) {
+		final List<String> needOfflineIdList = new ArrayList<String>();
+		for (final SysUserOnline userOnline : userOnlineList) {
 			try {
-				SessionKey key = new DefaultSessionKey(userOnline.getSessionId());
-				Session session = retrieveSession(key);
+				final SessionKey key = new DefaultSessionKey(userOnline.getSessionId());
+				final Session session = retrieveSession(key);
 				if (session != null) {
 					throw new InvalidSessionException();
 				}
-			} catch (InvalidSessionException e) {
+			} catch (final InvalidSessionException e) {
 				if (log.isDebugEnabled()) {
-					boolean expired = (e instanceof ExpiredSessionException);
-					String msg = "Invalidated session with id [" + userOnline.getSessionId() + "]"
+					final boolean expired = (e instanceof ExpiredSessionException);
+					final String msg = "Invalidated session with id [" + userOnline.getSessionId() + "]"
 							+ (expired ? " (expired)" : " (stopped)");
 					log.debug(msg);
 				}
@@ -146,7 +146,7 @@ public class CustomWebSessionManager extends DefaultWebSessionManager {
 		if (needOfflineIdList.size() > 0) {
 			try {
 				userOnlineService.batchDeleteOnline(needOfflineIdList);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				log.error("batch delete db session error.", e);
 			}
 		}

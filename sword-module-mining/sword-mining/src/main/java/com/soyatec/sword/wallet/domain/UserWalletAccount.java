@@ -15,7 +15,7 @@ import com.soyatec.sword.utils.MathUtils;
 
 /**
  * 用户钱包账号对象 t_user_wallet_account
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */

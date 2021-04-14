@@ -40,7 +40,7 @@ public class MiningUserReferrerController extends BaseController {
 	public TableDataInfo table(UserReferrerInfo query) {
 		startPage();
 
-		List<UserReferrerInfo> list = userReferrerService.selectUserReferrerInfoList(query);
+		final List<UserReferrerInfo> list = userReferrerService.selectUserReferrerInfoList(query);
 		return getDataTable(list);
 	}
 

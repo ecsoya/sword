@@ -18,7 +18,7 @@ import com.soyatec.sword.wallet.service.IUserWalletAddressService;
 
 /**
  * 用户钱包地址Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-06
  */
@@ -29,7 +29,7 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 
 	/**
 	 * 查询用户钱包地址
-	 * 
+	 *
 	 * @param id 用户钱包地址ID
 	 * @return 用户钱包地址
 	 */
@@ -40,13 +40,13 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 
 	/**
 	 * 查询用户钱包地址列表
-	 * 
+	 *
 	 * @param userWalletAddress 用户钱包地址
 	 * @return 用户钱包地址
 	 */
 	@Override
 	public List<UserWalletAddress> selectUserWalletAddressList(UserWalletAddress userWalletAddress) {
-		List<UserWalletAddress> list = userWalletAddressMapper.selectUserWalletAddressList(userWalletAddress);
+		final List<UserWalletAddress> list = userWalletAddressMapper.selectUserWalletAddressList(userWalletAddress);
 		list.forEach(walletAddress -> updateQrcodeUrl(walletAddress));
 		return list;
 	}
@@ -61,7 +61,7 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 
 				@Override
 				public void run() {
-					UserWalletAddress update = new UserWalletAddress();
+					final UserWalletAddress update = new UserWalletAddress();
 					update.setId(walletAddress.getId());
 					update.setQrcodeUrl(walletAddress.getQrcodeUrl());
 					updateUserWalletAddress(update);
@@ -73,7 +73,7 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 
 	/**
 	 * 新增用户钱包地址
-	 * 
+	 *
 	 * @param userWalletAddress 用户钱包地址
 	 * @return 结果
 	 */
@@ -93,7 +93,7 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 
 	/**
 	 * 修改用户钱包地址
-	 * 
+	 *
 	 * @param userWalletAddress 用户钱包地址
 	 * @return 结果
 	 */
@@ -105,7 +105,7 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 
 	/**
 	 * 删除用户钱包地址对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -116,7 +116,7 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 
 	/**
 	 * 删除用户钱包地址信息
-	 * 
+	 *
 	 * @param id 用户钱包地址ID
 	 * @return 结果
 	 */
@@ -130,7 +130,7 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 		if (userId == null) {
 			return Collections.emptyList();
 		}
-		UserWalletAddress query = new UserWalletAddress();
+		final UserWalletAddress query = new UserWalletAddress();
 		query.setUserId(userId);
 		query.setSymbol(symbol);
 		return selectUserWalletAddressList(query);

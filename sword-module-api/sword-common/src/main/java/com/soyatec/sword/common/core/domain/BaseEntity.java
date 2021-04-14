@@ -17,7 +17,7 @@ import com.soyatec.sword.common.utils.DateUtils;
 
 /**
  * Entity基类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @JsonIgnoreProperties(ignoreUnknown = true, value = { "searchValue", "createBy", "updateBy" })
@@ -115,14 +115,14 @@ public class BaseEntity implements Serializable {
 
 	public Map<String, String> toMap(String... fields) {
 		try {
-			Map<String, String> describe = BeanUtils.describe(this);
+			final Map<String, String> describe = BeanUtils.describe(this);
 			if (fields != null && fields.length > 0) {
-				List<String> filters = Arrays.asList(fields);
+				final List<String> filters = Arrays.asList(fields);
 				return describe.entrySet().stream().filter(map -> filters.contains(map.getKey()))
 						.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 			}
 			return describe;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return Collections.emptyMap();
 		}
 	}

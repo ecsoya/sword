@@ -70,9 +70,9 @@ public class UserWalletController extends BaseController {
 			end = DateUtils.getEndOf(end);
 		}
 		startPage("create_time desc");
-		Long userId = SwordUtils.getUserId();
-		List<UserWalletUnionRecord> list = walletRecordService.selectWalletRecordListByUserId(userId, symbol, start,
-				end, kind);
+		final Long userId = SwordUtils.getUserId();
+		final List<UserWalletUnionRecord> list = walletRecordService.selectWalletRecordListByUserId(userId, symbol,
+				start, end, kind);
 		return getDataTable(list);
 	}
 
@@ -98,15 +98,15 @@ public class UserWalletController extends BaseController {
 	@PostMapping("/checkPwd")
 	@RepeatSubmit
 	public CommonResult<?> checkPassword() {
-		String password = configService.selectConfigValueByKey(IMiningConstants.WALLET_DEFAULT_PASSWORD);
+		final String password = configService.selectConfigValueByKey(IMiningConstants.WALLET_DEFAULT_PASSWORD);
 		if (StringUtils.isNotEmpty(password)) {
-			CommonResult<?> verified = SwordMiningUtils.verifyWalletPassword(password);
+			final CommonResult<?> verified = SwordMiningUtils.verifyWalletPassword(password);
 			if (verified.isSuccess()) {
 				return CommonResult.fail("默认支付密码，请及时修改");
 			}
 		}
-		Long userId = SwordUtils.getUserId();
-		UserWallet wallet = userWalletService.selectUserWalletById(userId);
+		final Long userId = SwordUtils.getUserId();
+		final UserWallet wallet = userWalletService.selectUserWalletById(userId);
 		if (wallet == null || StringUtils.isEmpty(wallet.getPassword())) {
 			return CommonResult.fail("未设置支付密码");
 		}
@@ -117,11 +117,11 @@ public class UserWalletController extends BaseController {
 	@PostMapping("/changePwd")
 	@RepeatSubmit
 	public CommonResult<?> changePassword(String oldPassword, String newPassword, String code) {
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {
 			return CommonResult.fail(verifyCode.getInfo());
 		}
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return userWalletService.changeUserWalletPassword(userId, oldPassword, newPassword);
 	}
 
@@ -129,11 +129,11 @@ public class UserWalletController extends BaseController {
 	@PostMapping("/resetPwd")
 	@RepeatSubmit
 	public CommonResult<?> resetPassword(String password, String code) {
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {
 			return CommonResult.fail(verifyCode.getInfo());
 		}
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return CommonResult.ajax(userWalletService.resetUserWalletPassword(userId, password));
 	}
 
@@ -142,11 +142,11 @@ public class UserWalletController extends BaseController {
 	@RepeatSubmit
 	public CommonResult<UserWithdrawalOrder> withdrawal(String symbol, String address, BigDecimal amount,
 			String password, String code) {
-		CommonResult<?> verifyWalletPassword = SwordMiningUtils.verifyWalletPassword(password);
+		final CommonResult<?> verifyWalletPassword = SwordMiningUtils.verifyWalletPassword(password);
 		if (!verifyWalletPassword.isSuccess()) {
 			return CommonResult.fail(verifyWalletPassword.getInfo());
 		}
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {
 			return CommonResult.fail(verifyCode.getInfo());
 		}
@@ -154,7 +154,7 @@ public class UserWalletController extends BaseController {
 				|| StringUtils.isEmpty(password)) {
 			return CommonResult.fail("参数错误");
 		}
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return withdrawalOrderService.withdrawal(userId, symbol, address, amount, password);
 	}
 
@@ -163,11 +163,11 @@ public class UserWalletController extends BaseController {
 	@RepeatSubmit
 	public CommonResult<?> withdrawalAuto(String symbol, String address, BigDecimal amount, String password,
 			String code) {
-		CommonResult<?> verifyWalletPassword = SwordMiningUtils.verifyWalletPassword(password);
+		final CommonResult<?> verifyWalletPassword = SwordMiningUtils.verifyWalletPassword(password);
 		if (!verifyWalletPassword.isSuccess()) {
 			return CommonResult.fail(verifyWalletPassword.getInfo());
 		}
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {
 			return CommonResult.fail(verifyCode.getInfo());
 		}
@@ -175,16 +175,16 @@ public class UserWalletController extends BaseController {
 				|| StringUtils.isEmpty(password)) {
 			return CommonResult.fail("参数错误");
 		}
-		Long userId = SwordUtils.getUserId();
-		CommonResult<UserWithdrawalOrder> withdrawal = withdrawalOrderService.withdrawal(userId, symbol, address,
+		final Long userId = SwordUtils.getUserId();
+		final CommonResult<UserWithdrawalOrder> withdrawal = withdrawalOrderService.withdrawal(userId, symbol, address,
 				amount, password);
 		if (!withdrawal.isSuccess(true)) {
 			return withdrawal;
 		}
-		MiningSymbol miningSymbol = symbolService.selectMiningSymbolById(symbol);
+		final MiningSymbol miningSymbol = symbolService.selectMiningSymbolById(symbol);
 		// 如果不需要人工审核，直接确认
 		if (miningSymbol != null && !miningSymbol.needWithdrawalManualAudit(amount)) {
-			UserWithdrawalOrder order = withdrawal.getData();
+			final UserWithdrawalOrder order = withdrawal.getData();
 			return withdrawalOrderService.confirmWithdrawal(userId, order.getOrderNo());
 		} else {
 			return withdrawal;
@@ -195,14 +195,14 @@ public class UserWalletController extends BaseController {
 	@PostMapping("/withdrawal/cancel")
 	@RepeatSubmit
 	public CommonResult<?> cancelWithdrawal(String orderNo, String code, String remark) {
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {
 			return CommonResult.fail(verifyCode.getInfo());
 		}
 		if (StringUtils.isEmpty(orderNo)) {
 			return CommonResult.fail("参数错误");
 		}
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return withdrawalOrderService.cancelWithdrawal(userId, orderNo, remark);
 	}
 
@@ -210,19 +210,19 @@ public class UserWalletController extends BaseController {
 	@PostMapping("/withdrawal/confirm")
 	@RepeatSubmit
 	public CommonResult<?> confirmWithdrawal(String orderNo, String code, String remark) {
-		CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
+		final CommonResult<?> verifyCode = SwordUtils.verifyCode(code);
 		if (!verifyCode.isSuccess()) {
 			return CommonResult.fail(verifyCode.getInfo());
 		}
 		if (StringUtils.isEmpty(orderNo)) {
 			return CommonResult.fail("参数错误");
 		}
-		Long userId = SwordUtils.getUserId();
-		UserWithdrawalOrder order = withdrawalOrderService.selectUserWithdrawalOrderByOrderNo(orderNo);
+		final Long userId = SwordUtils.getUserId();
+		final UserWithdrawalOrder order = withdrawalOrderService.selectUserWithdrawalOrderByOrderNo(orderNo);
 		if (order == null || !Objects.equals(userId, order.getUserId())) {
 			return CommonResult.fail("订单错误");
 		}
-		MiningSymbol miningSymbol = symbolService.selectMiningSymbolById(order.getSymbol());
+		final MiningSymbol miningSymbol = symbolService.selectMiningSymbolById(order.getSymbol());
 		if (miningSymbol != null && miningSymbol.needWithdrawalManualAudit(order.getAmount())) {
 			return CommonResult.success("等待人工审核");
 		}

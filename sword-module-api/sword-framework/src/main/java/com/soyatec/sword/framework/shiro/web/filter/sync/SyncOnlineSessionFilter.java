@@ -11,7 +11,7 @@ import com.soyatec.sword.framework.shiro.session.OnlineSessionDAO;
 
 /**
  * 同步Session数据到Db
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SyncOnlineSessionFilter extends PathMatchingFilter {
@@ -23,7 +23,7 @@ public class SyncOnlineSessionFilter extends PathMatchingFilter {
 	@Override
 	protected boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {
-		OnlineSession session = (OnlineSession) request.getAttribute(ShiroConstants.ONLINE_SESSION);
+		final OnlineSession session = (OnlineSession) request.getAttribute(ShiroConstants.ONLINE_SESSION);
 		// 如果session stop了 也不同步
 		// session停止时间，如果stopTimestamp不为null，则代表已停止
 		if (session != null && session.getUserId() != null && session.getStopTimestamp() == null) {

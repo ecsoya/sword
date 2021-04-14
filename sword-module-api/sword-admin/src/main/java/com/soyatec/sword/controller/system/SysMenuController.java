@@ -27,13 +27,13 @@ import com.soyatec.sword.system.service.ISysMenuService;
 
 /**
  * 菜单信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/system/menu")
 public class SysMenuController extends BaseController {
-	private String prefix = "system/menu";
+	private final String prefix = "system/menu";
 
 	@Autowired
 	private ISysMenuService menuService;
@@ -48,8 +48,8 @@ public class SysMenuController extends BaseController {
 	@PostMapping("/list")
 	@ResponseBody
 	public List<SysMenu> list(SysMenu menu) {
-		Long userId = ShiroUtils.getUserId();
-		List<SysMenu> menuList = menuService.selectMenuList(menu, userId);
+		final Long userId = ShiroUtils.getUserId();
+		final List<SysMenu> menuList = menuService.selectMenuList(menu, userId);
 		return menuList;
 	}
 
@@ -152,8 +152,8 @@ public class SysMenuController extends BaseController {
 	@GetMapping("/roleMenuTreeData")
 	@ResponseBody
 	public List<Ztree> roleMenuTreeData(SysRole role) {
-		Long userId = ShiroUtils.getUserId();
-		List<Ztree> ztrees = menuService.roleMenuTreeData(role, userId);
+		final Long userId = ShiroUtils.getUserId();
+		final List<Ztree> ztrees = menuService.roleMenuTreeData(role, userId);
 		return ztrees;
 	}
 
@@ -163,8 +163,8 @@ public class SysMenuController extends BaseController {
 	@GetMapping("/menuTreeData")
 	@ResponseBody
 	public List<Ztree> menuTreeData() {
-		Long userId = ShiroUtils.getUserId();
-		List<Ztree> ztrees = menuService.menuTreeData(userId);
+		final Long userId = ShiroUtils.getUserId();
+		final List<Ztree> ztrees = menuService.menuTreeData(userId);
 		return ztrees;
 	}
 

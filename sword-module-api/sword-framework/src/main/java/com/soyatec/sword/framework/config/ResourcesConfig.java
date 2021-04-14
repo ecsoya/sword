@@ -14,7 +14,7 @@ import com.soyatec.sword.framework.interceptor.RepeatSubmitInterceptor;
 
 /**
  * 通用配置
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Configuration

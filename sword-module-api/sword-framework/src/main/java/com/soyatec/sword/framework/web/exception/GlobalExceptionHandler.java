@@ -19,7 +19,7 @@ import com.soyatec.sword.common.utils.security.PermissionUtils;
 
 /**
  * 全局异常处理器
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @RestControllerAdvice
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
 		if (ServletUtils.isAjaxRequest(request)) {
 			return AjaxResult.error(PermissionUtils.getMsg(e.getMessage()));
 		} else {
-			ModelAndView modelAndView = new ModelAndView();
+			final ModelAndView modelAndView = new ModelAndView();
 			modelAndView.setViewName("error/unauth");
 			return modelAndView;
 		}
@@ -77,7 +77,7 @@ public class GlobalExceptionHandler {
 		if (ServletUtils.isAjaxRequest(request)) {
 			return AjaxResult.error(e.getMessage());
 		} else {
-			ModelAndView modelAndView = new ModelAndView();
+			final ModelAndView modelAndView = new ModelAndView();
 			modelAndView.addObject("errorMessage", e.getMessage());
 			modelAndView.setViewName("error/business");
 			return modelAndView;
@@ -90,7 +90,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(BindException.class)
 	public AjaxResult validatedBindException(BindException e) {
 		log.error(e.getMessage(), e);
-		String message = e.getAllErrors().get(0).getDefaultMessage();
+		final String message = e.getAllErrors().get(0).getDefaultMessage();
 		return AjaxResult.error(message);
 	}
 

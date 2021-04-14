@@ -2,7 +2,7 @@ package com.soyatec.sword.common.exception.user;
 
 /**
  * 用户错误最大次数异常类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class UserPasswordRetryLimitExceedException extends UserException {

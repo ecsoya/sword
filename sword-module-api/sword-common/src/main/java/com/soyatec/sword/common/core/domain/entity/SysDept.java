@@ -11,7 +11,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 部门表 sys_dept
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysDept extends BaseEntity {

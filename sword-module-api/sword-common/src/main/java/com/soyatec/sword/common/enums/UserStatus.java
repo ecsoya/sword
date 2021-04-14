@@ -2,7 +2,7 @@ package com.soyatec.sword.common.enums;
 
 /**
  * 用户状态
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public enum UserStatus {

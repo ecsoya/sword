@@ -27,7 +27,7 @@ public class ProfileController extends BaseController {
 	@ApiOperation("查询用户资料")
 	@GetMapping("/get")
 	public CommonResult<UserProfile> profile() {
-		UserProfile profile = userService.selectUserProfileById(SwordUtils.getUserId());
+		final UserProfile profile = userService.selectUserProfileById(SwordUtils.getUserId());
 		return CommonResult.build(profile);
 	}
 
@@ -35,7 +35,7 @@ public class ProfileController extends BaseController {
 	@PostMapping("/edit")
 	@RepeatSubmit
 	public CommonResult<?> edit(String avatar, String userName) {
-		UserProfile profile = new UserProfile();
+		final UserProfile profile = new UserProfile();
 		profile.setUserId(SwordUtils.getUserId());
 		profile.setAvatar(avatar);
 		profile.setUserName(userName);
@@ -46,8 +46,8 @@ public class ProfileController extends BaseController {
 	@PostMapping("/changePwd")
 	@RepeatSubmit
 	public CommonResult<?> changePwd(String oldPassword, String newPassword, String code) {
-		Long userId = SwordUtils.getUserId();
-		CommonResult<?> verified = SwordUtils.verifyCode(code);
+		final Long userId = SwordUtils.getUserId();
+		final CommonResult<?> verified = SwordUtils.verifyCode(code);
 		if (!verified.isSuccess()) {
 			return verified;
 		}
@@ -58,8 +58,8 @@ public class ProfileController extends BaseController {
 	@PostMapping("/resetPwd")
 	@RepeatSubmit
 	public CommonResult<?> resetPwd(String password, String code) {
-		Long userId = SwordUtils.getUserId();
-		CommonResult<?> verified = SwordUtils.verifyCode(code);
+		final Long userId = SwordUtils.getUserId();
+		final CommonResult<?> verified = SwordUtils.verifyCode(code);
 		if (!verified.isSuccess()) {
 			return verified;
 		}

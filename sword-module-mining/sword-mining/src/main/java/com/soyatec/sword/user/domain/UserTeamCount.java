@@ -1,11 +1,25 @@
 package com.soyatec.sword.user.domain;
 
+/**
+ * 用户直推及伞下人数
+ *
+ * @author ecsoya
+ */
 public class UserTeamCount {
 
+	/**
+	 * 用户ID
+	 */
 	private Long userId;
 
+	/**
+	 * 直推人数
+	 */
 	private Long referrerCount;
 
+	/**
+	 * 伞下人数
+	 */
 	private Long umbrellaCount;
 
 	public Long getReferrerCount() {
@@ -31,4 +45,10 @@ public class UserTeamCount {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
+	@Override
+	public String toString() {
+		return "userId=" + userId + ", referrerCount=" + referrerCount + ", umbrellaCount=" + umbrellaCount;
+	}
+
 }

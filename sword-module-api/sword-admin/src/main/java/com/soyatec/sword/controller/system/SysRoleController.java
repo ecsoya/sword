@@ -30,13 +30,13 @@ import com.soyatec.sword.system.service.ISysUserService;
 
 /**
  * 角色信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/system/role")
 public class SysRoleController extends BaseController {
-	private String prefix = "system/role";
+	private final String prefix = "system/role";
 
 	@Autowired
 	private ISysRoleService roleService;
@@ -55,7 +55,7 @@ public class SysRoleController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysRole role) {
 		startPage();
-		List<SysRole> list = roleService.selectRoleList(role);
+		final List<SysRole> list = roleService.selectRoleList(role);
 		return getDataTable(list);
 	}
 
@@ -64,8 +64,8 @@ public class SysRoleController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysRole role) {
-		List<SysRole> list = roleService.selectRoleList(role);
-		ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
+		final List<SysRole> list = roleService.selectRoleList(role);
+		final ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
 		return util.exportExcel(list, "角色数据");
 	}
 
@@ -214,7 +214,7 @@ public class SysRoleController extends BaseController {
 	@ResponseBody
 	public TableDataInfo allocatedList(SysUser user) {
 		startPage();
-		List<SysUser> list = userService.selectAllocatedList(user);
+		final List<SysUser> list = userService.selectAllocatedList(user);
 		return getDataTable(list);
 	}
 
@@ -255,7 +255,7 @@ public class SysRoleController extends BaseController {
 	@ResponseBody
 	public TableDataInfo unallocatedList(SysUser user) {
 		startPage();
-		List<SysUser> list = userService.selectUnallocatedList(user);
+		final List<SysUser> list = userService.selectUnallocatedList(user);
 		return getDataTable(list);
 	}
 

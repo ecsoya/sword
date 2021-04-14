@@ -13,7 +13,7 @@ import com.soyatec.sword.system.service.ISysUserOnlineService;
 
 /**
  * 会话db操作处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Component
@@ -37,12 +37,12 @@ public class SysShiroService {
 	 * @return
 	 */
 	public Session getSession(Serializable sessionId) {
-		SysUserOnline userOnline = onlineService.selectOnlineById(String.valueOf(sessionId));
+		final SysUserOnline userOnline = onlineService.selectOnlineById(String.valueOf(sessionId));
 		return StringUtils.isNull(userOnline) ? null : createSession(userOnline);
 	}
 
 	public Session createSession(SysUserOnline userOnline) {
-		OnlineSession onlineSession = new OnlineSession();
+		final OnlineSession onlineSession = new OnlineSession();
 		if (StringUtils.isNotNull(userOnline)) {
 			onlineSession.setId(userOnline.getSessionId());
 			onlineSession.setHost(userOnline.getIpaddr());

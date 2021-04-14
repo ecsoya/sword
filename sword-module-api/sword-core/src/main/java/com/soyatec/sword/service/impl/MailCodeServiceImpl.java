@@ -46,20 +46,20 @@ public class MailCodeServiceImpl implements IMailCodeService {
 
 	@Override
 	public CommonResult<?> sendCodeByUserId(Long userId) {
-		String email = userService.selectUserEmailById(userId);
+		final String email = userService.selectUserEmailById(userId);
 		return sendCode(email);
 	}
 
 	@Override
 	public CommonResult<?> verifyCodeByUserId(Long userId, String code) {
-		String email = userService.selectUserEmailById(userId);
+		final String email = userService.selectUserEmailById(userId);
 		return verifyCode(email, code);
 	}
 
 	@Override
 	public CommonResult<?> verifyCodeByUsername(String username, String code) {
 		String email = userService.selectUserEmailByUsername(username);
-		if (StringUtils.isBlank(email)) {
+		if (org.apache.commons.lang3.StringUtils.isBlank(email)) {
 			email = username;
 		}
 		return verifyCode(email, code);
@@ -67,7 +67,7 @@ public class MailCodeServiceImpl implements IMailCodeService {
 
 	@Override
 	public CommonResult<?> sendCodeByUsername(String username) {
-		String email = userService.selectUserEmailByUsername(username);
+		final String email = userService.selectUserEmailByUsername(username);
 		return sendCode(email);
 	}
 

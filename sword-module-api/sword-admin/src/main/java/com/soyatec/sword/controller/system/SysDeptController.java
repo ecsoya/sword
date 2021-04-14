@@ -27,13 +27,13 @@ import com.soyatec.sword.system.service.ISysDeptService;
 
 /**
  * 部门信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/system/dept")
 public class SysDeptController extends BaseController {
-	private String prefix = "system/dept";
+	private final String prefix = "system/dept";
 
 	@Autowired
 	private ISysDeptService deptService;
@@ -48,7 +48,7 @@ public class SysDeptController extends BaseController {
 	@PostMapping("/list")
 	@ResponseBody
 	public List<SysDept> list(SysDept dept) {
-		List<SysDept> deptList = deptService.selectDeptList(dept);
+		final List<SysDept> deptList = deptService.selectDeptList(dept);
 		return deptList;
 	}
 
@@ -81,7 +81,7 @@ public class SysDeptController extends BaseController {
 	 */
 	@GetMapping("/edit/{deptId}")
 	public String edit(@PathVariable("deptId") Long deptId, ModelMap mmap) {
-		SysDept dept = deptService.selectDeptById(deptId);
+		final SysDept dept = deptService.selectDeptById(deptId);
 		if (StringUtils.isNotNull(dept) && 100L == deptId) {
 			dept.setParentName("无");
 		}
@@ -101,7 +101,7 @@ public class SysDeptController extends BaseController {
 			return error("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
 		} else if (dept.getParentId().equals(dept.getDeptId())) {
 			return error("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
-		} else if (StringUtils.equals(UserConstants.DEPT_DISABLE, dept.getStatus())
+		} else if (org.apache.commons.lang3.StringUtils.equals(UserConstants.DEPT_DISABLE, dept.getStatus())
 				&& deptService.selectNormalChildrenDeptById(dept.getDeptId()) > 0) {
 			return AjaxResult.error("该部门包含未停用的子部门！");
 		}
@@ -137,7 +137,7 @@ public class SysDeptController extends BaseController {
 
 	/**
 	 * 选择部门树
-	 * 
+	 *
 	 * @param deptId    部门ID
 	 * @param excludeId 排除ID
 	 */
@@ -155,7 +155,7 @@ public class SysDeptController extends BaseController {
 	@GetMapping("/treeData")
 	@ResponseBody
 	public List<Ztree> treeData() {
-		List<Ztree> ztrees = deptService.selectDeptTree(new SysDept());
+		final List<Ztree> ztrees = deptService.selectDeptTree(new SysDept());
 		return ztrees;
 	}
 
@@ -165,9 +165,9 @@ public class SysDeptController extends BaseController {
 	@GetMapping("/treeData/{excludeId}")
 	@ResponseBody
 	public List<Ztree> treeDataExcludeChild(@PathVariable(value = "excludeId", required = false) Long excludeId) {
-		SysDept dept = new SysDept();
+		final SysDept dept = new SysDept();
 		dept.setDeptId(excludeId);
-		List<Ztree> ztrees = deptService.selectDeptTreeExcludeChild(dept);
+		final List<Ztree> ztrees = deptService.selectDeptTreeExcludeChild(dept);
 		return ztrees;
 	}
 
@@ -177,7 +177,7 @@ public class SysDeptController extends BaseController {
 	@GetMapping("/roleDeptTreeData")
 	@ResponseBody
 	public List<Ztree> deptTreeData(SysRole role) {
-		List<Ztree> ztrees = deptService.roleDeptTreeData(role);
+		final List<Ztree> ztrees = deptService.roleDeptTreeData(role);
 		return ztrees;
 	}
 }

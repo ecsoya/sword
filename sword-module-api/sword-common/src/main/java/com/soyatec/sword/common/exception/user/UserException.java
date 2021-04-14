@@ -4,7 +4,7 @@ import com.soyatec.sword.common.exception.base.BaseException;
 
 /**
  * 用户信息异常类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class UserException extends BaseException {

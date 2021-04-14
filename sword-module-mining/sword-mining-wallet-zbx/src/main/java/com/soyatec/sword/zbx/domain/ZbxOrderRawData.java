@@ -8,7 +8,7 @@ import com.soyatec.sword.zbx.utils.HttpUtil;
 
 /**
  * 开放接口返回数据
- * 
+ *
  * @author ecsoya
  *
  */
@@ -53,13 +53,13 @@ public class ZbxOrderRawData extends ZbxResponse {
 
 	/**
 	 * 充值: 0:待确认 2:成功 提币： 0:提交 1:失败 2:成功 3:取消 4:审核中 5:待确认
-	 * 
+	 *
 	 */
 	private String status;
 
 	/**
 	 * deposit:充值 withdrawal:提币
-	 * 
+	 *
 	 */
 	private String method;
 
@@ -193,13 +193,13 @@ public class ZbxOrderRawData extends ZbxResponse {
 		if (StringUtils.isEmpty(secretKey)) {
 			return "SecretKey查询失败";
 		}
-		String sign = getSign();
+		final String sign = getSign();
 		if (StringUtils.isEmpty(sign)) {
 			return "API签名错误";
 		}
-		String nonce = getNonce();
-		long timestamp = Long.parseLong(nonce.trim());
-		long currentTimeMillis = System.currentTimeMillis();
+		final String nonce = getNonce();
+		final long timestamp = Long.parseLong(nonce.trim());
+		final long currentTimeMillis = System.currentTimeMillis();
 		if ((currentTimeMillis - timestamp) > 10 * 60 * 1000) {
 			return "API请求超时";
 		}
@@ -208,7 +208,7 @@ public class ZbxOrderRawData extends ZbxResponse {
 				return "API参数错误(提现订单号orderNo没有设置)";
 			}
 		}
-		Map<String, Object> params = new HashMap<String, Object>();
+		final Map<String, Object> params = new HashMap<String, Object>();
 		params.put("accessKey", getAccessKey());
 		params.put("symbol", getSymbol());
 		params.put("nonce", getNonce());
@@ -231,7 +231,7 @@ public class ZbxOrderRawData extends ZbxResponse {
 		if (StringUtils.isNotEmpty(getMemo())) {
 			params.put("memo", getMemo());
 		}
-		String target = HttpUtil.getSignature(params, secretKey);
+		final String target = HttpUtil.getSignature(params, secretKey);
 		if (!sign.equals(target)) {
 			return "API签名验证未通过";
 		}

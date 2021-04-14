@@ -2,7 +2,7 @@ package com.soyatec.sword.common.exception.user;
 
 /**
  * 用户账号已被删除
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class UserDeleteException extends UserException {

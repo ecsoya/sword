@@ -1,9 +1,9 @@
 package com.soyatec.sword.zbx.domain;
 
 /**
- * 
+ *
  * ZBX内部地址
- * 
+ *
  * @author ecsoya
  *
  */

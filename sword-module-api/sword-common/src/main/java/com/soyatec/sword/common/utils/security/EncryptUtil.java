@@ -15,14 +15,14 @@ public class EncryptUtil {
 	private static String encodingCharset = "UTF-8";
 
 	public static String hmacMd5(String aValue, String aKey) {
-		byte k_ipad[] = new byte[64];
-		byte k_opad[] = new byte[64];
+		final byte k_ipad[] = new byte[64];
+		final byte k_opad[] = new byte[64];
 		byte keyb[];
 		byte value[];
 		try {
 			keyb = aKey.getBytes(encodingCharset);
 			value = aValue.getBytes(encodingCharset);
-		} catch (UnsupportedEncodingException e) {
+		} catch (final UnsupportedEncodingException e) {
 			keyb = aKey.getBytes();
 			value = aValue.getBytes();
 		}
@@ -36,7 +36,7 @@ public class EncryptUtil {
 		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException e) {
 
 			return null;
 		}
@@ -53,27 +53,27 @@ public class EncryptUtil {
 	/***
 	 * 对应python里面的hmac.new(API_SECRET, msg=message,
 	 * digestmod=hashlib.sha256).hexdigest().upper()
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @return
 	 */
 	public static String hmacSha256(String value, String key) {
 		String result = null;
-		byte[] keyBytes = key.getBytes();
-		SecretKeySpec localMac = new SecretKeySpec(keyBytes, "HmacSHA256");
+		final byte[] keyBytes = key.getBytes();
+		final SecretKeySpec localMac = new SecretKeySpec(keyBytes, "HmacSHA256");
 		try {
-			Mac mac = Mac.getInstance("HmacSHA256");
+			final Mac mac = Mac.getInstance("HmacSHA256");
 			mac.init(localMac);
-			byte[] arrayOfByte = mac.doFinal(value.getBytes());
-			BigInteger localBigInteger = new BigInteger(1, arrayOfByte);
+			final byte[] arrayOfByte = mac.doFinal(value.getBytes());
+			final BigInteger localBigInteger = new BigInteger(1, arrayOfByte);
 			result = String.format("%0" + (arrayOfByte.length << 1) + "x", new Object[] { localBigInteger });
 
-		} catch (InvalidKeyException e) {
+		} catch (final InvalidKeyException e) {
 			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException e) {
 			e.printStackTrace();
-		} catch (IllegalStateException e) {
+		} catch (final IllegalStateException e) {
 			e.printStackTrace();
 		}
 
@@ -82,7 +82,7 @@ public class EncryptUtil {
 
 	/***
 	 * MD5加密
-	 * 
+	 *
 	 * @param string
 	 * @return
 	 */
@@ -92,7 +92,7 @@ public class EncryptUtil {
 
 	/***
 	 * sha-1散列加密
-	 * 
+	 *
 	 * @param string
 	 * @return
 	 */
@@ -102,7 +102,7 @@ public class EncryptUtil {
 
 	/***
 	 * sha-256散列加密
-	 * 
+	 *
 	 * @param string
 	 * @return
 	 */
@@ -112,7 +112,7 @@ public class EncryptUtil {
 
 	/***
 	 * sha-512散列加密
-	 * 
+	 *
 	 * @param string
 	 * @return
 	 */
@@ -122,7 +122,7 @@ public class EncryptUtil {
 
 	/**
 	 * 通用加密方法
-	 * 
+	 *
 	 * @param aValue
 	 * @param algorithm
 	 * @return
@@ -132,13 +132,13 @@ public class EncryptUtil {
 		byte value[];
 		try {
 			value = aValue.getBytes(encodingCharset);
-		} catch (UnsupportedEncodingException e) {
+		} catch (final UnsupportedEncodingException e) {
 			value = aValue.getBytes();
 		}
 		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance(algorithm);
-		} catch (NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -146,13 +146,15 @@ public class EncryptUtil {
 	}
 
 	public static String toHex(byte input[]) {
-		if (input == null)
+		if (input == null) {
 			return null;
-		StringBuffer output = new StringBuffer(input.length * 2);
+		}
+		final StringBuffer output = new StringBuffer(input.length * 2);
 		for (int i = 0; i < input.length; i++) {
-			int current = input[i] & 0xff;
-			if (current < 16)
+			final int current = input[i] & 0xff;
+			if (current < 16) {
 				output.append("0");
+			}
 			output.append(Integer.toString(current, 16));
 		}
 		return output.toString();
@@ -160,7 +162,7 @@ public class EncryptUtil {
 
 	/**
 	 * 生成签名消息
-	 * 
+	 *
 	 * @param aValue 要签名的字符串
 	 * @param aKey   签名密钥
 	 * @return
@@ -176,7 +178,7 @@ public class EncryptUtil {
 		if (args == null || args.length == 0) {
 			return (null);
 		}
-		StringBuffer str = new StringBuffer();
+		final StringBuffer str = new StringBuffer();
 		for (int i = 0; i < args.length; i++) {
 			str.append(args[i]);
 		}
@@ -185,7 +187,7 @@ public class EncryptUtil {
 
 	/**
 	 * SHA加密
-	 * 
+	 *
 	 * @param aValue
 	 * @return
 	 */
@@ -194,13 +196,13 @@ public class EncryptUtil {
 		byte value[];
 		try {
 			value = aValue.getBytes(encodingCharset);
-		} catch (UnsupportedEncodingException e) {
+		} catch (final UnsupportedEncodingException e) {
 			value = aValue.getBytes();
 		}
 		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance("SHA");
-		} catch (NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
 		}

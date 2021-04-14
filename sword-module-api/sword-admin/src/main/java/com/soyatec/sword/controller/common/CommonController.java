@@ -21,7 +21,7 @@ import com.soyatec.sword.upload.utils.FileUploadUtils;
 
 /**
  * 通用请求处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
@@ -30,7 +30,7 @@ public class CommonController {
 
 	/**
 	 * 通用下载请求
-	 * 
+	 *
 	 * @param fileName 文件名称
 	 * @param delete   是否删除
 	 */
@@ -41,8 +41,8 @@ public class CommonController {
 			if (!FileUtils.checkAllowDownload(fileName)) {
 				throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
 			}
-			String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
-			String filePath = GlobalConfig.getDownloadPath() + fileName;
+			final String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
+			final String filePath = GlobalConfig.getDownloadPath() + fileName;
 
 			response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 			FileUtils.setAttachmentResponseHeader(response, realFileName);
@@ -50,7 +50,7 @@ public class CommonController {
 			if (delete) {
 				FileUtils.deleteFile(filePath);
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("下载文件失败", e);
 		}
 	}
@@ -63,12 +63,12 @@ public class CommonController {
 	public AjaxResult uploadFile(MultipartFile file) throws Exception {
 		try {
 			// 上传并返回新文件名称
-			String fileName = FileUploadUtils.upload(file);
-			AjaxResult ajax = AjaxResult.success();
+			final String fileName = FileUploadUtils.upload(file);
+			final AjaxResult ajax = AjaxResult.success();
 			ajax.put("fileName", fileName);
 			ajax.put("url", fileName);
 			return ajax;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return AjaxResult.error(e.getMessage());
 		}
 	}
@@ -78,13 +78,13 @@ public class CommonController {
 	public AjaxResult uploadFileCloud(MultipartFile file) throws Exception {
 		try {
 			// 上传并返回新文件名称
-			String fileName = FileUploadUtils.upload(file);
-			String url = fileName;
-			AjaxResult ajax = AjaxResult.success();
+			final String fileName = FileUploadUtils.upload(file);
+			final String url = fileName;
+			final AjaxResult ajax = AjaxResult.success();
 			ajax.put("fileName", fileName);
 			ajax.put("url", url);
 			return ajax;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return AjaxResult.error(e.getMessage());
 		}
 	}
@@ -100,15 +100,16 @@ public class CommonController {
 				throw new Exception(StringUtils.format("资源文件({})非法，不允许下载。 ", resource));
 			}
 			// 本地资源路径
-			String localPath = GlobalConfig.getProfile();
+			final String localPath = GlobalConfig.getProfile();
 			// 数据库资源地址
-			String downloadPath = localPath + StringUtils.substringAfter(resource, Constants.RESOURCE_PREFIX);
+			final String downloadPath = localPath
+					+ org.apache.commons.lang3.StringUtils.substringAfter(resource, Constants.RESOURCE_PREFIX);
 			// 下载名称
-			String downloadName = StringUtils.substringAfterLast(downloadPath, "/");
+			final String downloadName = org.apache.commons.lang3.StringUtils.substringAfterLast(downloadPath, "/");
 			response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 			FileUtils.setAttachmentResponseHeader(response, downloadName);
 			FileUtils.writeBytes(downloadPath, response.getOutputStream());
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("下载文件失败", e);
 		}
 	}

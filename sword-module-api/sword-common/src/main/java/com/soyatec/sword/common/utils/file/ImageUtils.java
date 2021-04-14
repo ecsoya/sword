@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.constant.Constants;
-import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 图片处理工具类
@@ -25,10 +24,10 @@ public class ImageUtils {
 	private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
 
 	public static byte[] getImage(String imagePath) {
-		InputStream is = getFile(imagePath);
+		final InputStream is = getFile(imagePath);
 		try {
 			return IOUtils.toByteArray(is);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("图片加载异常 {}", e);
 			return null;
 		} finally {
@@ -41,7 +40,7 @@ public class ImageUtils {
 			byte[] result = readFile(imagePath);
 			result = Arrays.copyOf(result, result.length);
 			return new ByteArrayInputStream(result);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("获取图片异常 {}", e);
 		}
 		return null;
@@ -49,30 +48,31 @@ public class ImageUtils {
 
 	/**
 	 * 读取文件为字节数据
-	 * 
+	 *
 	 * @param key 地址
 	 * @return 字节数据
 	 */
 	public static byte[] readFile(String url) {
 		InputStream in = null;
-		ByteArrayOutputStream baos = null;
+		final ByteArrayOutputStream baos = null;
 		try {
 			if (url.startsWith("http")) {
 				// 网络地址
-				URL urlObj = new URL(url);
-				URLConnection urlConnection = urlObj.openConnection();
+				final URL urlObj = new URL(url);
+				final URLConnection urlConnection = urlObj.openConnection();
 				urlConnection.setConnectTimeout(30 * 1000);
 				urlConnection.setReadTimeout(60 * 1000);
 				urlConnection.setDoInput(true);
 				in = urlConnection.getInputStream();
 			} else {
 				// 本机地址
-				String localPath = GlobalConfig.getProfile();
-				String downloadPath = localPath + StringUtils.substringAfter(url, Constants.RESOURCE_PREFIX);
+				final String localPath = GlobalConfig.getProfile();
+				final String downloadPath = localPath
+						+ org.apache.commons.lang3.StringUtils.substringAfter(url, Constants.RESOURCE_PREFIX);
 				in = new FileInputStream(downloadPath);
 			}
 			return IOUtils.toByteArray(in);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.error("获取文件路径异常 {}", e);
 			return null;
 		} finally {

@@ -12,7 +12,7 @@ import com.soyatec.sword.generator.domain.GenTableColumn;
 
 /**
  * 代码生成器 工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class GenUtils {
@@ -33,8 +33,8 @@ public class GenUtils {
 	 * 初始化列属性字段
 	 */
 	public static void initColumnField(GenTableColumn column, GenTable table) {
-		String dataType = getDbType(column.getColumnType());
-		String columnName = column.getColumnName();
+		final String dataType = getDbType(column.getColumnType());
+		final String columnName = column.getColumnName();
 		column.setTableId(table.getTableId());
 		column.setCreateBy(table.getCreateBy());
 		// 设置java字段名
@@ -45,8 +45,8 @@ public class GenUtils {
 		if (arraysContains(GenConstants.COLUMNTYPE_STR, dataType)
 				|| arraysContains(GenConstants.COLUMNTYPE_TEXT, dataType)) {
 			// 字符串长度超过500设置为文本域
-			Integer columnLength = getColumnLength(column.getColumnType());
-			String htmlType = columnLength >= 500 || arraysContains(GenConstants.COLUMNTYPE_TEXT, dataType)
+			final Integer columnLength = getColumnLength(column.getColumnType());
+			final String htmlType = columnLength >= 500 || arraysContains(GenConstants.COLUMNTYPE_TEXT, dataType)
 					? GenConstants.HTML_TEXTAREA
 					: GenConstants.HTML_INPUT;
 			column.setHtmlType(htmlType);
@@ -57,7 +57,8 @@ public class GenUtils {
 			column.setHtmlType(GenConstants.HTML_INPUT);
 
 			// 如果是浮点型
-			String[] str = StringUtils.split(StringUtils.substringBetween(column.getColumnType(), "(", ")"), ",");
+			final String[] str = org.apache.commons.lang3.StringUtils.split(
+					org.apache.commons.lang3.StringUtils.substringBetween(column.getColumnType(), "(", ")"), ",");
 			if (str != null && str.length == 2 && Integer.parseInt(str[1]) > 0) {
 				column.setJavaType(GenConstants.TYPE_BIGDECIMAL);
 			}
@@ -88,31 +89,31 @@ public class GenUtils {
 		}
 
 		// 查询字段类型
-		if (StringUtils.endsWithIgnoreCase(columnName, "name")) {
+		if (org.apache.commons.lang3.StringUtils.endsWithIgnoreCase(columnName, "name")) {
 			column.setQueryType(GenConstants.QUERY_LIKE);
 		}
 		// 状态字段设置单选框
-		if (StringUtils.endsWithIgnoreCase(columnName, "status")) {
+		if (org.apache.commons.lang3.StringUtils.endsWithIgnoreCase(columnName, "status")) {
 			column.setHtmlType(GenConstants.HTML_RADIO);
 		}
 		// 类型&性别字段设置下拉框
-		else if (StringUtils.endsWithIgnoreCase(columnName, "type")
-				|| StringUtils.endsWithIgnoreCase(columnName, "sex")) {
+		else if (org.apache.commons.lang3.StringUtils.endsWithIgnoreCase(columnName, "type")
+				|| org.apache.commons.lang3.StringUtils.endsWithIgnoreCase(columnName, "sex")) {
 			column.setHtmlType(GenConstants.HTML_SELECT);
 		}
 		// 文件字段设置上传控件
-		else if (StringUtils.endsWithIgnoreCase(columnName, "file")) {
+		else if (org.apache.commons.lang3.StringUtils.endsWithIgnoreCase(columnName, "file")) {
 			column.setHtmlType(GenConstants.HTML_UPLOAD);
 		}
 		// 内容字段设置富文本控件
-		else if (StringUtils.endsWithIgnoreCase(columnName, "content")) {
+		else if (org.apache.commons.lang3.StringUtils.endsWithIgnoreCase(columnName, "content")) {
 			column.setHtmlType(GenConstants.HTML_SUMMERNOTE);
 		}
 	}
 
 	/**
 	 * 校验数组是否包含指定值
-	 * 
+	 *
 	 * @param arr         数组
 	 * @param targetValue 值
 	 * @return 是否包含
@@ -123,41 +124,41 @@ public class GenUtils {
 
 	/**
 	 * 获取模块名
-	 * 
+	 *
 	 * @param packageName 包名
 	 * @return 模块名
 	 */
 	public static String getModuleName(String packageName) {
-		int lastIndex = packageName.lastIndexOf(".");
-		int nameLength = packageName.length();
-		String moduleName = StringUtils.substring(packageName, lastIndex + 1, nameLength);
+		final int lastIndex = packageName.lastIndexOf(".");
+		final int nameLength = packageName.length();
+		final String moduleName = StringUtils.substring(packageName, lastIndex + 1, nameLength);
 		return moduleName;
 	}
 
 	/**
 	 * 获取业务名
-	 * 
+	 *
 	 * @param tableName 表名
 	 * @return 业务名
 	 */
 	public static String getBusinessName(String tableName) {
-		int lastIndex = tableName.lastIndexOf("_");
-		int nameLength = tableName.length();
-		String businessName = StringUtils.substring(tableName, lastIndex + 1, nameLength);
+		final int lastIndex = tableName.lastIndexOf("_");
+		final int nameLength = tableName.length();
+		final String businessName = StringUtils.substring(tableName, lastIndex + 1, nameLength);
 		return businessName;
 	}
 
 	/**
 	 * 表名转换成Java类名
-	 * 
+	 *
 	 * @param tableName 表名称
 	 * @return 类名
 	 */
 	public static String convertClassName(String tableName) {
-		boolean autoRemovePre = GenConfig.getAutoRemovePre();
-		String tablePrefix = GenConfig.getTablePrefix();
+		final boolean autoRemovePre = GenConfig.getAutoRemovePre();
+		final String tablePrefix = GenConfig.getTablePrefix();
 		if (autoRemovePre && StringUtils.isNotEmpty(tablePrefix)) {
-			String[] searchList = StringUtils.split(tablePrefix, ",");
+			final String[] searchList = org.apache.commons.lang3.StringUtils.split(tablePrefix, ",");
 			tableName = replaceFirst(tableName, searchList);
 		}
 		return StringUtils.convertToCamelCase(tableName);
@@ -165,14 +166,14 @@ public class GenUtils {
 
 	/**
 	 * 批量替换前缀
-	 * 
+	 *
 	 * @param replacementm 替换值
 	 * @param searchList   替换列表
 	 * @return
 	 */
 	public static String replaceFirst(String replacementm, String[] searchList) {
 		String text = replacementm;
-		for (String searchString : searchList) {
+		for (final String searchString : searchList) {
 			if (replacementm.startsWith(searchString)) {
 				text = replacementm.replaceFirst(searchString, "");
 				break;
@@ -183,7 +184,7 @@ public class GenUtils {
 
 	/**
 	 * 关键字替换
-	 * 
+	 *
 	 * @param text 需要被替换的名字
 	 * @return 替换后的名字
 	 */
@@ -193,13 +194,13 @@ public class GenUtils {
 
 	/**
 	 * 获取数据库类型字段
-	 * 
+	 *
 	 * @param columnType 列类型
 	 * @return 截取后的列类型
 	 */
 	public static String getDbType(String columnType) {
-		if (StringUtils.indexOf(columnType, "(") > 0) {
-			return StringUtils.substringBefore(columnType, "(");
+		if (org.apache.commons.lang3.StringUtils.indexOf(columnType, "(") > 0) {
+			return org.apache.commons.lang3.StringUtils.substringBefore(columnType, "(");
 		} else {
 			return columnType;
 		}
@@ -207,13 +208,13 @@ public class GenUtils {
 
 	/**
 	 * 获取字段长度
-	 * 
+	 *
 	 * @param columnType 列类型
 	 * @return 截取后的列类型
 	 */
 	public static Integer getColumnLength(String columnType) {
-		if (StringUtils.indexOf(columnType, "(") > 0) {
-			String length = StringUtils.substringBetween(columnType, "(", ")");
+		if (org.apache.commons.lang3.StringUtils.indexOf(columnType, "(") > 0) {
+			final String length = org.apache.commons.lang3.StringUtils.substringBetween(columnType, "(", ")");
 			return Integer.valueOf(length);
 		} else {
 			return 0;
@@ -222,14 +223,14 @@ public class GenUtils {
 
 	/**
 	 * 获取空数组列表
-	 * 
+	 *
 	 * @param length 长度
 	 * @return 数组信息
 	 */
 	public static String[] emptyList(int length) {
-		String[] values = new String[length];
+		final String[] values = new String[length];
 		for (int i = 0; i < length; i++) {
-			values[i] = StringUtils.EMPTY;
+			values[i] = org.apache.commons.lang3.StringUtils.EMPTY;
 		}
 		return values;
 	}

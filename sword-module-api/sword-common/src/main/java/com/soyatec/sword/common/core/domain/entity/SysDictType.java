@@ -12,7 +12,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 字典类型表 sys_dict_type
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysDictType extends BaseEntity {

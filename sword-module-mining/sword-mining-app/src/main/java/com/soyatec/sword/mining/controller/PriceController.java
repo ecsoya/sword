@@ -49,11 +49,11 @@ public class PriceController extends BaseController {
 		if (StringUtils.isEmpty(symbol)) {
 			return CommonResult.fail("symbol为空");
 		}
-		Map<String, Object> data = new HashMap<String, Object>();
-		Date end = DateUtils.getNowDate();
-		Date start = DateUtils.addDays(end, -6);
-		List<Date> dates = DateUtils.getDates(start, end);
-		List<Ticker> list = dates.parallelStream().map(time -> walletService.getTickerFromHistory(symbol, time))
+		final Map<String, Object> data = new HashMap<String, Object>();
+		final Date end = DateUtils.getNowDate();
+		final Date start = org.apache.commons.lang3.time.DateUtils.addDays(end, -6);
+		final List<Date> dates = DateUtils.getDates(start, end);
+		final List<Ticker> list = dates.parallelStream().map(time -> walletService.getTickerFromHistory(symbol, time))
 				.collect(Collectors.toList());
 		data.put("dates", dates.parallelStream().map(t -> DateUtils.parseDateToStr("yyyy/MM/dd HH:mm:ss", t))
 				.collect(Collectors.toList()));

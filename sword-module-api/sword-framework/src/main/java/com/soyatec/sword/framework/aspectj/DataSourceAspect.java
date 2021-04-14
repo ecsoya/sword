@@ -19,7 +19,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 多数据源处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Aspect
@@ -36,7 +36,7 @@ public class DataSourceAspect {
 
 	@Around("dsPointCut()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
-		DataSource dataSource = getDataSource(point);
+		final DataSource dataSource = getDataSource(point);
 
 		if (StringUtils.isNotNull(dataSource)) {
 			DynamicDataSourceContextHolder.setDataSourceType(dataSource.value().name());
@@ -54,8 +54,8 @@ public class DataSourceAspect {
 	 * 获取需要切换的数据源
 	 */
 	public DataSource getDataSource(ProceedingJoinPoint point) {
-		MethodSignature signature = (MethodSignature) point.getSignature();
-		DataSource dataSource = AnnotationUtils.findAnnotation(signature.getMethod(), DataSource.class);
+		final MethodSignature signature = (MethodSignature) point.getSignature();
+		final DataSource dataSource = AnnotationUtils.findAnnotation(signature.getMethod(), DataSource.class);
 		if (Objects.nonNull(dataSource)) {
 			return dataSource;
 		}

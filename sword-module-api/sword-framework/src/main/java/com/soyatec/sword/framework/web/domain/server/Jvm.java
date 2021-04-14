@@ -7,7 +7,7 @@ import com.soyatec.sword.common.utils.DateUtils;
 
 /**
  * JVM相关信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class Jvm {

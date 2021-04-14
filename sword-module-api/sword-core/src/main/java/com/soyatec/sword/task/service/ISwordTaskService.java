@@ -7,14 +7,14 @@ import com.soyatec.sword.task.domain.SwordTask;
 
 /**
  * 定时任务执行结果Service接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
 public interface ISwordTaskService {
 	/**
 	 * 查询定时任务执行结果
-	 * 
+	 *
 	 * @param id 定时任务执行结果ID
 	 * @return 定时任务执行结果
 	 */
@@ -22,7 +22,7 @@ public interface ISwordTaskService {
 
 	/**
 	 * 查询定时任务执行结果列表
-	 * 
+	 *
 	 * @param swordTask 定时任务执行结果
 	 * @return 定时任务执行结果集合
 	 */
@@ -30,7 +30,7 @@ public interface ISwordTaskService {
 
 	/**
 	 * 新增定时任务执行结果
-	 * 
+	 *
 	 * @param swordTask 定时任务执行结果
 	 * @return 结果
 	 */
@@ -38,7 +38,7 @@ public interface ISwordTaskService {
 
 	/**
 	 * 修改定时任务执行结果
-	 * 
+	 *
 	 * @param swordTask 定时任务执行结果
 	 * @return 结果
 	 */
@@ -46,7 +46,7 @@ public interface ISwordTaskService {
 
 	/**
 	 * 批量删除定时任务执行结果
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -54,7 +54,7 @@ public interface ISwordTaskService {
 
 	/**
 	 * 删除定时任务执行结果信息
-	 * 
+	 *
 	 * @param id 定时任务执行结果ID
 	 * @return 结果
 	 */

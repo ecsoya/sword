@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.velocity.VelocityContext;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.soyatec.sword.common.constant.GenConstants;
 import com.soyatec.sword.common.utils.DateUtils;
@@ -29,22 +30,22 @@ public class VelocityUtils {
 
 	/**
 	 * 设置模板变量信息
-	 * 
+	 *
 	 * @return 模板列表
 	 */
 	public static VelocityContext prepareContext(GenTable genTable) {
-		String moduleName = genTable.getModuleName();
-		String businessName = genTable.getBusinessName();
-		String packageName = genTable.getPackageName();
-		String tplCategory = genTable.getTplCategory();
-		String functionName = genTable.getFunctionName();
+		final String moduleName = genTable.getModuleName();
+		final String businessName = genTable.getBusinessName();
+		final String packageName = genTable.getPackageName();
+		final String tplCategory = genTable.getTplCategory();
+		final String functionName = genTable.getFunctionName();
 
-		VelocityContext velocityContext = new VelocityContext();
+		final VelocityContext velocityContext = new VelocityContext();
 		velocityContext.put("tplCategory", genTable.getTplCategory());
 		velocityContext.put("tableName", genTable.getTableName());
 		velocityContext.put("functionName", StringUtils.isNotEmpty(functionName) ? functionName : "【请填写功能名称】");
 		velocityContext.put("ClassName", genTable.getClassName());
-		velocityContext.put("className", StringUtils.uncapitalize(genTable.getClassName()));
+		velocityContext.put("className", org.apache.commons.lang3.StringUtils.uncapitalize(genTable.getClassName()));
 		velocityContext.put("moduleName", genTable.getModuleName());
 		velocityContext.put("businessName", genTable.getBusinessName());
 		velocityContext.put("basePackage", getPackagePrefix(packageName));
@@ -67,18 +68,18 @@ public class VelocityUtils {
 	}
 
 	public static void setMenuVelocityContext(VelocityContext context, GenTable genTable) {
-		String options = genTable.getOptions();
-		JSONObject paramsObj = JSONObject.parseObject(options);
-		String parentMenuId = getParentMenuId(paramsObj);
+		final String options = genTable.getOptions();
+		final JSONObject paramsObj = JSON.parseObject(options);
+		final String parentMenuId = getParentMenuId(paramsObj);
 		context.put("parentMenuId", parentMenuId);
 	}
 
 	public static void setTreeVelocityContext(VelocityContext context, GenTable genTable) {
-		String options = genTable.getOptions();
-		JSONObject paramsObj = JSONObject.parseObject(options);
-		String treeCode = getTreecode(paramsObj);
-		String treeParentCode = getTreeParentCode(paramsObj);
-		String treeName = getTreeName(paramsObj);
+		final String options = genTable.getOptions();
+		final JSONObject paramsObj = JSON.parseObject(options);
+		final String treeCode = getTreecode(paramsObj);
+		final String treeParentCode = getTreeParentCode(paramsObj);
+		final String treeName = getTreeName(paramsObj);
 
 		context.put("treeCode", treeCode);
 		context.put("treeParentCode", treeParentCode);
@@ -93,29 +94,29 @@ public class VelocityUtils {
 	}
 
 	public static void setSubVelocityContext(VelocityContext context, GenTable genTable) {
-		GenTable subTable = genTable.getSubTable();
-		String subTableName = genTable.getSubTableName();
-		String subTableFkName = genTable.getSubTableFkName();
-		String subClassName = genTable.getSubTable().getClassName();
-		String subTableFkClassName = StringUtils.convertToCamelCase(subTableFkName);
+		final GenTable subTable = genTable.getSubTable();
+		final String subTableName = genTable.getSubTableName();
+		final String subTableFkName = genTable.getSubTableFkName();
+		final String subClassName = genTable.getSubTable().getClassName();
+		final String subTableFkClassName = StringUtils.convertToCamelCase(subTableFkName);
 
 		context.put("subTable", subTable);
 		context.put("subTableName", subTableName);
 		context.put("subTableFkName", subTableFkName);
 		context.put("subTableFkClassName", subTableFkClassName);
-		context.put("subTableFkclassName", StringUtils.uncapitalize(subTableFkClassName));
+		context.put("subTableFkclassName", org.apache.commons.lang3.StringUtils.uncapitalize(subTableFkClassName));
 		context.put("subClassName", subClassName);
-		context.put("subclassName", StringUtils.uncapitalize(subClassName));
+		context.put("subclassName", org.apache.commons.lang3.StringUtils.uncapitalize(subClassName));
 		context.put("subImportList", getImportList(genTable.getSubTable()));
 	}
 
 	/**
 	 * 获取模板信息
-	 * 
+	 *
 	 * @return 模板列表
 	 */
 	public static List<String> getTemplateList(String tplCategory) {
-		List<String> templates = new ArrayList<String>();
+		final List<String> templates = new ArrayList<String>();
 		templates.add("vm/java/domain.java.vm");
 		templates.add("vm/java/mapper.java.vm");
 		templates.add("vm/java/service.java.vm");
@@ -144,23 +145,24 @@ public class VelocityUtils {
 		// 文件名称
 		String fileName = "";
 		// 包路径
-		String packageName = genTable.getPackageName();
+		final String packageName = genTable.getPackageName();
 		// 模块名
-		String moduleName = genTable.getModuleName();
+		final String moduleName = genTable.getModuleName();
 		// 大写类名
-		String className = genTable.getClassName();
+		final String className = genTable.getClassName();
 		// 业务名称
-		String businessName = genTable.getBusinessName();
+		final String businessName = genTable.getBusinessName();
 
-		String javaPath = PROJECT_PATH + "/" + StringUtils.replace(packageName, ".", "/");
-		String mybatisPath = MYBATIS_PATH + "/" + moduleName;
-		String htmlPath = TEMPLATES_PATH + "/" + moduleName + "/" + businessName;
+		final String javaPath = PROJECT_PATH + "/"
+				+ org.apache.commons.lang3.StringUtils.replace(packageName, ".", "/");
+		final String mybatisPath = MYBATIS_PATH + "/" + moduleName;
+		final String htmlPath = TEMPLATES_PATH + "/" + moduleName + "/" + businessName;
 
 		if (template.contains("domain.java.vm")) {
 			fileName = StringUtils.format("{}/domain/{}.java", javaPath, className);
 		}
 		if (template.contains("sub-domain.java.vm")
-				&& StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
+				&& org.apache.commons.lang3.StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
 			fileName = StringUtils.format("{}/domain/{}.java", javaPath, genTable.getSubTable().getClassName());
 		} else if (template.contains("mapper.java.vm")) {
 			fileName = StringUtils.format("{}/mapper/{}Mapper.java", javaPath, className);
@@ -190,12 +192,12 @@ public class VelocityUtils {
 
 	/**
 	 * 获取项目文件路径
-	 * 
+	 *
 	 * @return 路径
 	 */
 	public static String getProjectPath() {
-		String packageName = GenConfig.getPackageName();
-		StringBuffer projectPath = new StringBuffer();
+		final String packageName = GenConfig.getPackageName();
+		final StringBuffer projectPath = new StringBuffer();
 		projectPath.append("main/java/");
 		projectPath.append(packageName.replace(".", "/"));
 		projectPath.append("/");
@@ -204,30 +206,30 @@ public class VelocityUtils {
 
 	/**
 	 * 获取包前缀
-	 * 
+	 *
 	 * @param packageName 包名称
 	 * @return 包前缀名称
 	 */
 	public static String getPackagePrefix(String packageName) {
-		int lastIndex = packageName.lastIndexOf(".");
-		String basePackage = StringUtils.substring(packageName, 0, lastIndex);
+		final int lastIndex = packageName.lastIndexOf(".");
+		final String basePackage = StringUtils.substring(packageName, 0, lastIndex);
 		return basePackage;
 	}
 
 	/**
 	 * 根据列类型获取导入包
-	 * 
+	 *
 	 * @param genTable 业务表对象
 	 * @return 返回需要导入的包列表
 	 */
 	public static HashSet<String> getImportList(GenTable genTable) {
-		List<GenTableColumn> columns = genTable.getColumns();
-		GenTable subGenTable = genTable.getSubTable();
-		HashSet<String> importList = new HashSet<String>();
+		final List<GenTableColumn> columns = genTable.getColumns();
+		final GenTable subGenTable = genTable.getSubTable();
+		final HashSet<String> importList = new HashSet<String>();
 		if (StringUtils.isNotNull(subGenTable)) {
 			importList.add("java.util.List");
 		}
-		for (GenTableColumn column : columns) {
+		for (final GenTableColumn column : columns) {
 			if (!column.isSuperColumn() && GenConstants.TYPE_DATE.equals(column.getJavaType())) {
 				importList.add("java.util.Date");
 				importList.add("com.fasterxml.jackson.annotation.JsonFormat");
@@ -240,7 +242,7 @@ public class VelocityUtils {
 
 	/**
 	 * 获取权限前缀
-	 * 
+	 *
 	 * @param moduleName   模块名称
 	 * @param businessName 业务名称
 	 * @return 返回权限前缀
@@ -251,7 +253,7 @@ public class VelocityUtils {
 
 	/**
 	 * 获取上级菜单ID字段
-	 * 
+	 *
 	 * @param options 生成其他选项
 	 * @return 上级菜单ID字段
 	 */
@@ -264,7 +266,7 @@ public class VelocityUtils {
 
 	/**
 	 * 获取树编码
-	 * 
+	 *
 	 * @param options 生成其他选项
 	 * @return 树编码
 	 */
@@ -272,12 +274,12 @@ public class VelocityUtils {
 		if (paramsObj.containsKey(GenConstants.TREE_CODE)) {
 			return StringUtils.toCamelCase(paramsObj.getString(GenConstants.TREE_CODE));
 		}
-		return StringUtils.EMPTY;
+		return org.apache.commons.lang3.StringUtils.EMPTY;
 	}
 
 	/**
 	 * 获取树父编码
-	 * 
+	 *
 	 * @param options 生成其他选项
 	 * @return 树父编码
 	 */
@@ -285,12 +287,12 @@ public class VelocityUtils {
 		if (paramsObj.containsKey(GenConstants.TREE_PARENT_CODE)) {
 			return StringUtils.toCamelCase(paramsObj.getString(GenConstants.TREE_PARENT_CODE));
 		}
-		return StringUtils.EMPTY;
+		return org.apache.commons.lang3.StringUtils.EMPTY;
 	}
 
 	/**
 	 * 获取树名称
-	 * 
+	 *
 	 * @param options 生成其他选项
 	 * @return 树名称
 	 */
@@ -298,24 +300,24 @@ public class VelocityUtils {
 		if (paramsObj.containsKey(GenConstants.TREE_NAME)) {
 			return StringUtils.toCamelCase(paramsObj.getString(GenConstants.TREE_NAME));
 		}
-		return StringUtils.EMPTY;
+		return org.apache.commons.lang3.StringUtils.EMPTY;
 	}
 
 	/**
 	 * 获取需要在哪一列上面显示展开按钮
-	 * 
+	 *
 	 * @param genTable 业务表对象
 	 * @return 展开按钮列序号
 	 */
 	public static int getExpandColumn(GenTable genTable) {
-		String options = genTable.getOptions();
-		JSONObject paramsObj = JSONObject.parseObject(options);
-		String treeName = paramsObj.getString(GenConstants.TREE_NAME);
+		final String options = genTable.getOptions();
+		final JSONObject paramsObj = JSON.parseObject(options);
+		final String treeName = paramsObj.getString(GenConstants.TREE_NAME);
 		int num = 0;
-		for (GenTableColumn column : genTable.getColumns()) {
+		for (final GenTableColumn column : genTable.getColumns()) {
 			if (column.isList()) {
 				num++;
-				String columnName = column.getColumnName();
+				final String columnName = column.getColumnName();
 				if (columnName.equals(treeName)) {
 					break;
 				}

@@ -32,7 +32,7 @@ public class NoticeController extends BaseController {
 	@ApiOperation("查询公告列表")
 	@GetMapping("/list")
 	public CommonResult<List<SysNotice>> noticeList() {
-		List<SysNotice> list = noticeService.selectNoticeListByType(SysNotice.NOTICE_TYPE_NOTICE);
+		final List<SysNotice> list = noticeService.selectNoticeListByType(SysNotice.NOTICE_TYPE_NOTICE);
 		return CommonResult.build(list);
 	}
 }

@@ -30,7 +30,7 @@ import com.soyatec.sword.system.service.ISysUserService;
 
 /**
  * 角色信息
- * 
+ *
  * @author King Crab
  */
 @Controller
@@ -39,7 +39,7 @@ public class AdminRoleController extends BaseController {
 
 	private static final String ADMIN_DATA_SCOPE = "5";
 
-	private String prefix = "admin/role";
+	private final String prefix = "admin/role";
 
 	@Autowired
 	private ISysRoleService roleService;
@@ -59,7 +59,7 @@ public class AdminRoleController extends BaseController {
 	public TableDataInfo list(SysRole role) {
 		role.setDataScope(ADMIN_DATA_SCOPE);
 		startPage();
-		List<SysRole> list = roleService.selectRoleList(role);
+		final List<SysRole> list = roleService.selectRoleList(role);
 		return getDataTable(list);
 	}
 
@@ -69,8 +69,8 @@ public class AdminRoleController extends BaseController {
 	@ResponseBody
 	public AjaxResult export(SysRole role) {
 		role.setDataScope(ADMIN_DATA_SCOPE);
-		List<SysRole> list = roleService.selectRoleList(role);
-		ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
+		final List<SysRole> list = roleService.selectRoleList(role);
+		final ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
 		return util.exportExcel(list, "角色数据");
 	}
 
@@ -164,7 +164,7 @@ public class AdminRoleController extends BaseController {
 	public AjaxResult remove(String ids) {
 		try {
 			return toAjax(roleService.deleteRoleByIds(ids));
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return error(e.getMessage());
 		}
 	}
@@ -225,7 +225,7 @@ public class AdminRoleController extends BaseController {
 	@ResponseBody
 	public TableDataInfo allocatedList(SysUser user) {
 		startPage();
-		List<SysUser> list = userService.selectAllocatedList(user);
+		final List<SysUser> list = userService.selectAllocatedList(user);
 		return getDataTable(list);
 	}
 
@@ -266,7 +266,7 @@ public class AdminRoleController extends BaseController {
 	@ResponseBody
 	public TableDataInfo unallocatedList(SysUser user) {
 		startPage();
-		List<SysUser> list = userService.selectUnallocatedList(user);
+		final List<SysUser> list = userService.selectUnallocatedList(user);
 		return getDataTable(list);
 	}
 

@@ -32,7 +32,7 @@ public class AdminCodeController extends BaseController {
 	@PostMapping("/email")
 	@ResponseBody
 	public AjaxResult sendEmail(String email, String subject, String content) {
-		CommonResult<?> sent = mailService.sendEmail(email, subject, content);
+		final CommonResult<?> sent = mailService.sendEmail(email, subject, content);
 		if (sent.isSuccess()) {
 			return success("发送成功");
 		}
@@ -42,7 +42,7 @@ public class AdminCodeController extends BaseController {
 	@PostMapping("/mobile")
 	@ResponseBody
 	public AjaxResult sendMobile(String mobile, String message) {
-		CommonResult<?> sent = mobileService.sendMessage(mobile, message);
+		final CommonResult<?> sent = mobileService.sendMessage(mobile, message);
 		if (sent.isSuccess()) {
 			return success("发送成功");
 		}
@@ -52,7 +52,7 @@ public class AdminCodeController extends BaseController {
 	@PostMapping("/email/code")
 	@ResponseBody
 	public AjaxResult sendEmailCode(String email) {
-		CommonResult<?> sent = mailService.sendCode(email);
+		final CommonResult<?> sent = mailService.sendCode(email);
 		if (sent.isSuccess()) {
 			return success("发送成功");
 		}
@@ -62,7 +62,7 @@ public class AdminCodeController extends BaseController {
 	@PostMapping("/mobile/code")
 	@ResponseBody
 	public AjaxResult sendMobileCode(String mobile) {
-		CommonResult<?> sent = mobileService.sendCode(mobile);
+		final CommonResult<?> sent = mobileService.sendCode(mobile);
 		if (sent.isSuccess()) {
 			return success("发送成功");
 		}

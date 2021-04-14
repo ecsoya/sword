@@ -32,7 +32,7 @@ public class MiningUserServiceImpl implements IMiningUserService {
 		if (query == null) {
 			query = new MiningUser();
 		}
-		Long parentId = query.getParentId();
+		final Long parentId = query.getParentId();
 		if (parentId == null
 				&& (StringUtils.isEmpty(query.getLoginName()) && StringUtils.isEmpty(query.getMobile())
 						&& StringUtils.isEmpty(query.getEmail()) && query.getLevelId() == null
@@ -40,7 +40,7 @@ public class MiningUserServiceImpl implements IMiningUserService {
 				&& StringUtils.isEmpty(query.getParams().get("startTime"))) {
 			query.setParentId(MathUtils.parseLong(configService.selectConfigValueByKey(IMiningConstants.ROOT_USER_ID)));
 		}
-		List<MiningUser> list = miningUserMapper.selectMiningUserList(query);
+		final List<MiningUser> list = miningUserMapper.selectMiningUserList(query);
 		list.parallelStream().forEach(user -> {
 			user.setAccounts(accountService.selectUserWalletAccountListByUserId(user.getUserId()));
 		});

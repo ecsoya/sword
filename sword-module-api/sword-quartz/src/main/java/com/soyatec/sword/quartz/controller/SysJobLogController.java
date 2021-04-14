@@ -27,13 +27,13 @@ import com.soyatec.sword.quartz.service.ISysJobService;
 
 /**
  * 调度日志操作处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/monitor/jobLog")
 public class SysJobLogController extends BaseController {
-	private String prefix = "monitor/job";
+	private final String prefix = "monitor/job";
 
 	@Autowired
 	private ISysJobService jobService;
@@ -45,7 +45,7 @@ public class SysJobLogController extends BaseController {
 	@GetMapping()
 	public String jobLog(@RequestParam(value = "jobId", required = false) Long jobId, ModelMap mmap) {
 		if (StringUtils.isNotNull(jobId)) {
-			SysJob job = jobService.selectJobById(jobId);
+			final SysJob job = jobService.selectJobById(jobId);
 			mmap.put("job", job);
 		}
 		return prefix + "/jobLog";
@@ -56,7 +56,7 @@ public class SysJobLogController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysJobLog jobLog) {
 		startPage();
-		List<SysJobLog> list = jobLogService.selectJobLogList(jobLog);
+		final List<SysJobLog> list = jobLogService.selectJobLogList(jobLog);
 		return getDataTable(list);
 	}
 
@@ -65,8 +65,8 @@ public class SysJobLogController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysJobLog jobLog) {
-		List<SysJobLog> list = jobLogService.selectJobLogList(jobLog);
-		ExcelUtil<SysJobLog> util = new ExcelUtil<SysJobLog>(SysJobLog.class);
+		final List<SysJobLog> list = jobLogService.selectJobLogList(jobLog);
+		final ExcelUtil<SysJobLog> util = new ExcelUtil<SysJobLog>(SysJobLog.class);
 		return util.exportExcel(list, "调度日志");
 	}
 

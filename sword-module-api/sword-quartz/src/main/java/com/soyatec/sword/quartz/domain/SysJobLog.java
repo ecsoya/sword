@@ -10,7 +10,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 定时任务调度日志表 sys_job_log
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysJobLog extends BaseEntity {

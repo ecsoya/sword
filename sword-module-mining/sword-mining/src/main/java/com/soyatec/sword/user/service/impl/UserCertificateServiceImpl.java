@@ -19,7 +19,7 @@ import com.soyatec.sword.wallet.service.IUserWalletService;
 
 /**
  * 用户实名Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-23
  */
@@ -36,7 +36,7 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 
 	/**
 	 * 查询用户实名
-	 * 
+	 *
 	 * @param userId 用户实名ID
 	 * @return 用户实名
 	 */
@@ -47,7 +47,7 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 
 	/**
 	 * 查询用户实名列表
-	 * 
+	 *
 	 * @param userCertificate 用户实名
 	 * @return 用户实名
 	 */
@@ -58,7 +58,7 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 
 	/**
 	 * 新增用户实名
-	 * 
+	 *
 	 * @param userCertificate 用户实名
 	 * @return 结果
 	 */
@@ -72,7 +72,7 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 
 	/**
 	 * 修改用户实名
-	 * 
+	 *
 	 * @param userCertificate 用户实名
 	 * @return 结果
 	 */
@@ -84,7 +84,7 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 
 	/**
 	 * 删除用户实名对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -95,7 +95,7 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 
 	/**
 	 * 删除用户实名信息
-	 * 
+	 *
 	 * @param userId 用户实名ID
 	 * @return 结果
 	 */
@@ -111,11 +111,11 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 			return 0;
 		}
 
-		UserCertificate c = new UserCertificate();
+		final UserCertificate c = new UserCertificate();
 		c.setUserId(userId);
 		c.setStatus(status);
 		c.setRemark(remark);
-		int rows = updateUserCertificate(c);
+		final int rows = updateUserCertificate(c);
 		if (rows > 0 && UserCertificate.STATUS_SUCCESS.equals(status)) {
 			// 实名审核成功后，创建钱包地址
 			AsyncManager.me().execute(new Runnable() {
@@ -131,7 +131,7 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 
 	@Override
 	public CommonResult<?> checkUserCertificate(Long userId, Integer kind) {
-		String value = configService.selectConfigValueByKey(IMiningConstants.ENABLE_USER_CERTIFICATE);
+		final String value = configService.selectConfigValueByKey(IMiningConstants.ENABLE_USER_CERTIFICATE);
 		if (StringUtils.isEmpty(value) || "false".equalsIgnoreCase(value)) {
 			return CommonResult.success("实名功能未启用");
 		}
@@ -141,13 +141,13 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 		int ucKind = 0;
 		try {
 			ucKind = Integer.parseInt(value);
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			ucKind = 0;
 		}
 		if (!UserCertificate.checkKind(ucKind, kind)) {
 			return CommonResult.success("无需检测");
 		}
-		UserCertificate uc = selectUserCertificateById(userId);
+		final UserCertificate uc = selectUserCertificateById(userId);
 		if (uc == null) {
 			return CommonResult.fail("未实名认证");
 		} else if (UserCertificate.STATUS_SUCCESS.equals(uc.getStatus())) {

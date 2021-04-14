@@ -10,11 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.soyatec.sword.common.utils.StringUtils;
-
 /**
  * RuoYi首创 js调用 thymeleaf 实现按钮权限可见性
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Service("permission")
@@ -30,12 +28,12 @@ public class PermissionService {
 
 	/**
 	 * 验证用户是否具备某权限，无权限返回hidden用于前端隐藏（如需返回Boolean使用isPermitted）
-	 * 
+	 *
 	 * @param permission 权限字符串
 	 * @return 用户是否具备某权限
 	 */
 	public String hasPermi(String permission) {
-		return isPermitted(permission) ? StringUtils.EMPTY : NOACCESS;
+		return isPermitted(permission) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
@@ -45,7 +43,7 @@ public class PermissionService {
 	 * @return 用户是否不具备某权限
 	 */
 	public String lacksPermi(String permission) {
-		return isLacksPermitted(permission) ? StringUtils.EMPTY : NOACCESS;
+		return isLacksPermitted(permission) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
@@ -55,27 +53,28 @@ public class PermissionService {
 	 * @return 用户是否具有以下任意一个权限
 	 */
 	public String hasAnyPermi(String permissions) {
-		return hasAnyPermissions(permissions, PERMISSION_DELIMETER) ? StringUtils.EMPTY : NOACCESS;
+		return hasAnyPermissions(permissions, PERMISSION_DELIMETER) ? org.apache.commons.lang3.StringUtils.EMPTY
+				: NOACCESS;
 	}
 
 	/**
 	 * 验证用户是否具备某角色，无权限返回hidden用于隐藏（如需返回Boolean使用isRole）
-	 * 
+	 *
 	 * @param role 角色字符串
 	 * @return 用户是否具备某角色
 	 */
 	public String hasRole(String role) {
-		return isRole(role) ? StringUtils.EMPTY : NOACCESS;
+		return isRole(role) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
 	 * 验证用户是否不具备某角色，与hasRole逻辑相反。无权限返回hidden用于隐藏（如需返回Boolean使用isLacksRole）
-	 * 
+	 *
 	 * @param role 角色字符串
 	 * @return 用户是否不具备某角色
 	 */
 	public String lacksRole(String role) {
-		return isLacksRole(role) ? StringUtils.EMPTY : NOACCESS;
+		return isLacksRole(role) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
@@ -85,7 +84,7 @@ public class PermissionService {
 	 * @return 用户是否具有以下任意一个角色
 	 */
 	public String hasAnyRoles(String roles) {
-		return isAnyRoles(roles, ROLE_DELIMETER) ? StringUtils.EMPTY : NOACCESS;
+		return isAnyRoles(roles, ROLE_DELIMETER) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
@@ -94,13 +93,13 @@ public class PermissionService {
 	 * @return 用户是否认证通过或已记住的用户
 	 */
 	public boolean isUser() {
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 		return subject != null && subject.getPrincipal() != null;
 	}
 
 	/**
 	 * 判断用户是否拥有某个权限
-	 * 
+	 *
 	 * @param permission 权限字符串
 	 * @return 用户是否具备某权限
 	 */
@@ -136,14 +135,14 @@ public class PermissionService {
 	 * @return 用户是否具有以下任意一个权限
 	 */
 	public boolean hasAnyPermissions(String permissions, String delimeter) {
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 
 		if (subject != null) {
 			if (delimeter == null || delimeter.length() == 0) {
 				delimeter = PERMISSION_DELIMETER;
 			}
 
-			for (String permission : permissions.split(delimeter)) {
+			for (final String permission : permissions.split(delimeter)) {
 				if (permission != null && subject.isPermitted(permission.trim()) == true) {
 					return true;
 				}
@@ -155,7 +154,7 @@ public class PermissionService {
 
 	/**
 	 * 判断用户是否拥有某个角色
-	 * 
+	 *
 	 * @param role 角色字符串
 	 * @return 用户是否具备某角色
 	 */
@@ -191,13 +190,13 @@ public class PermissionService {
 	 * @return 用户是否具有以下任意一个角色
 	 */
 	public boolean isAnyRoles(String roles, String delimeter) {
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 		if (subject != null) {
 			if (delimeter == null || delimeter.length() == 0) {
 				delimeter = ROLE_DELIMETER;
 			}
 
-			for (String role : roles.split(delimeter)) {
+			for (final String role : roles.split(delimeter)) {
 				if (subject.hasRole(role.trim()) == true) {
 					return true;
 				}
@@ -214,17 +213,17 @@ public class PermissionService {
 	 * @return 用户属性值
 	 */
 	public Object getPrincipalProperty(String property) {
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 		if (subject != null) {
-			Object principal = subject.getPrincipal();
+			final Object principal = subject.getPrincipal();
 			try {
-				BeanInfo bi = Introspector.getBeanInfo(principal.getClass());
-				for (PropertyDescriptor pd : bi.getPropertyDescriptors()) {
+				final BeanInfo bi = Introspector.getBeanInfo(principal.getClass());
+				for (final PropertyDescriptor pd : bi.getPropertyDescriptors()) {
 					if (pd.getName().equals(property) == true) {
 						return pd.getReadMethod().invoke(principal, (Object[]) null);
 					}
 				}
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				log.error("Error reading property [{}] from principal of type [{}]", property,
 						principal.getClass().getName());
 			}

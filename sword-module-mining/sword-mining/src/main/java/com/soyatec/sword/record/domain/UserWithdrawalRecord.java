@@ -11,7 +11,7 @@ import com.soyatec.sword.constants.IConstants;
 
 /**
  * 用户提现对象 t_user_record_withdrawal
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */

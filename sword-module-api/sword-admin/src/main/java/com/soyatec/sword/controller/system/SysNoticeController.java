@@ -23,13 +23,13 @@ import com.soyatec.sword.system.service.ISysNoticeService;
 
 /**
  * 公告 信息操作处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/system/notice")
 public class SysNoticeController extends BaseController {
-	private String prefix = "system/notice";
+	private final String prefix = "system/notice";
 
 	@Autowired
 	private ISysNoticeService noticeService;
@@ -48,7 +48,7 @@ public class SysNoticeController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysNotice notice) {
 		startPage();
-		List<SysNotice> list = noticeService.selectNoticeList(notice);
+		final List<SysNotice> list = noticeService.selectNoticeList(notice);
 		return getDataTable(list);
 	}
 

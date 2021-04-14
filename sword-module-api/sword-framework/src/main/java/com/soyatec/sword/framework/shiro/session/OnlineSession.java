@@ -8,7 +8,7 @@ import com.soyatec.sword.common.enums.OnlineStatus;
 
 /**
  * 在线用户会话属性
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class OnlineSession extends SimpleSession {

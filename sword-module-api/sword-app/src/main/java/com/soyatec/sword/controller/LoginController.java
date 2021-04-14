@@ -49,7 +49,7 @@ public class LoginController extends BaseController {
 
 	/**
 	 * 用户登录
-	 * 
+	 *
 	 * @param username
 	 * @param password
 	 * @return
@@ -60,26 +60,26 @@ public class LoginController extends BaseController {
 	public CommonResult<?> login(@ApiParam("用户名") String username, @ApiParam("密码") String password,
 			@ApiParam("验证码") String code, Long version) {
 		log.info("username={}, version={}", username, version);
-		CommonResult<?> checkVersion = SwordUtils.checkVersion(version);
+		final CommonResult<?> checkVersion = SwordUtils.checkVersion(version);
 		if (!checkVersion.isSuccess()) {
 			return checkVersion;
 		}
 		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
 			return CommonResult.fail(MessageUtils.message("LoginController.0")); //$NON-NLS-1$
 		}
-		CommonResult<?> verifiedCode = SwordUtils.verifyCodeByUsername(username, code);
+		final CommonResult<?> verifiedCode = SwordUtils.verifyCodeByUsername(username, code);
 		if (!verifiedCode.isSuccess()) {
 			return verifiedCode;
 		}
 
-		TypedAuthenticationToken token = new TypedAuthenticationToken(username, password, true,
+		final TypedAuthenticationToken token = new TypedAuthenticationToken(username, password, true,
 				UserConstants.REGISTER_USER_TYPE);
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(token);
-			Session session = subject.getSession();
+			final Session session = subject.getSession();
 			return CommonResult.success(session.getId());
-		} catch (AuthenticationException e) {
+		} catch (final AuthenticationException e) {
 			String msg = MessageUtils.message("LoginController.3"); //$NON-NLS-1$
 			if (StringUtils.isNotEmpty(e.getMessage())) {
 				msg = e.getMessage();
@@ -90,7 +90,7 @@ public class LoginController extends BaseController {
 
 	/**
 	 * 用户登录
-	 * 
+	 *
 	 * @param username
 	 * @param password
 	 * @return
@@ -100,30 +100,30 @@ public class LoginController extends BaseController {
 	@RepeatSubmit
 	public CommonResult<?> loginByMobile(@ApiParam("用户名") String mobile, @ApiParam("验证码") String code, Long version) {
 		log.info("mobile={}, version={}", mobile, version);
-		CommonResult<?> checkVersion = SwordUtils.checkVersion(version);
+		final CommonResult<?> checkVersion = SwordUtils.checkVersion(version);
 		if (!checkVersion.isSuccess()) {
 			return checkVersion;
 		}
 		if (StringUtils.isEmpty(mobile)) {
 			return CommonResult.fail(MessageUtils.message("LoginController.0")); //$NON-NLS-1$
 		}
-		CommonResult<?> verifiedCode = SwordUtils.verifyCode(mobile, code);
+		final CommonResult<?> verifiedCode = SwordUtils.verifyCode(mobile, code);
 		if (!verifiedCode.isSuccess()) {
 			return verifiedCode;
 		}
-		SysUser user = sysUserService.selectUserByPhoneNumber(mobile);
+		final SysUser user = sysUserService.selectUserByPhoneNumber(mobile);
 		if (user == null) {
 			return CommonResult.fail("此号码尚未注册，请注册后使用");
 		}
 
-		AnonymousAuthenticationToken token = new AnonymousAuthenticationToken(user, true,
+		final AnonymousAuthenticationToken token = new AnonymousAuthenticationToken(user, true,
 				UserConstants.REGISTER_USER_TYPE);
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(token);
-			Session session = subject.getSession();
+			final Session session = subject.getSession();
 			return CommonResult.success(session.getId());
-		} catch (AuthenticationException e) {
+		} catch (final AuthenticationException e) {
 			String msg = MessageUtils.message("LoginController.3"); //$NON-NLS-1$
 			if (StringUtils.isNotEmpty(e.getMessage())) {
 				msg = e.getMessage();
@@ -134,7 +134,7 @@ public class LoginController extends BaseController {
 
 	/**
 	 * 用户登录
-	 * 
+	 *
 	 * @param username
 	 * @param password
 	 * @return
@@ -144,30 +144,30 @@ public class LoginController extends BaseController {
 	@RepeatSubmit
 	public CommonResult<?> loginByEmail(@ApiParam("用户名") String email, @ApiParam("验证码") String code, Long version) {
 		log.info("email={}, version={}", email, version);
-		CommonResult<?> checkVersion = SwordUtils.checkVersion(version);
+		final CommonResult<?> checkVersion = SwordUtils.checkVersion(version);
 		if (!checkVersion.isSuccess()) {
 			return checkVersion;
 		}
 		if (StringUtils.isEmpty(email)) {
 			return CommonResult.fail(MessageUtils.message("LoginController.0")); //$NON-NLS-1$
 		}
-		CommonResult<?> verifiedCode = SwordUtils.verifyCode(email, code);
+		final CommonResult<?> verifiedCode = SwordUtils.verifyCode(email, code);
 		if (!verifiedCode.isSuccess()) {
 			return verifiedCode;
 		}
-		SysUser user = sysUserService.selectUserByEmail(email);
+		final SysUser user = sysUserService.selectUserByEmail(email);
 		if (user == null) {
 			return CommonResult.fail("此邮箱尚未注册，请注册后使用");
 		}
 
-		AnonymousAuthenticationToken token = new AnonymousAuthenticationToken(user, true,
+		final AnonymousAuthenticationToken token = new AnonymousAuthenticationToken(user, true,
 				UserConstants.REGISTER_USER_TYPE);
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(token);
-			Session session = subject.getSession();
+			final Session session = subject.getSession();
 			return CommonResult.success(session.getId());
-		} catch (AuthenticationException e) {
+		} catch (final AuthenticationException e) {
 			String msg = MessageUtils.message("LoginController.3"); //$NON-NLS-1$
 			if (StringUtils.isNotEmpty(e.getMessage())) {
 				msg = e.getMessage();
@@ -186,15 +186,15 @@ public class LoginController extends BaseController {
 //		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(code)) {
 //			return CommonResult.fail(MessageUtils.message("LoginController.5")); //$NON-NLS-1$
 //		}
-		CommonResult<?> verifiedCode = SwordUtils.verifyCodeByUsername(username, code);
+		final CommonResult<?> verifiedCode = SwordUtils.verifyCodeByUsername(username, code);
 		if (!verifiedCode.isSuccess()) {
 			return CommonResult.fail(MessageUtils.message("LoginController.6")); //$NON-NLS-1$
 		}
-		SysUser user = sysUserService.selectUserByLoginName(username);
+		final SysUser user = sysUserService.selectUserByLoginName(username);
 		if (user == null) {
 			return CommonResult.fail(MessageUtils.message("LoginController.7")); //$NON-NLS-1$
 		}
-		SysUser resetPwd = new SysUser();
+		final SysUser resetPwd = new SysUser();
 		resetPwd.setUserId(user.getUserId());
 		resetPwd.setSalt(ShiroUtils.randomSalt());
 		resetPwd.setPassword(StringUtils.encryptPassword(username, password, resetPwd.getSalt()));
@@ -214,21 +214,21 @@ public class LoginController extends BaseController {
 		if (StringUtils.isEmpty(account)) {
 			return CommonResult.fail(MessageUtils.message("LoginController.8"));// 参数错误 //$NON-NLS-1$
 		}
-		Long userId = SwordUtils.getUserId();
-		String oldEmail = userService.selectUserEmailById(userId);
-		String newEmail = userService.selectUserEmailByUsername(account);
-		if (!StringUtils.equals(oldEmail, newEmail)) {
+		final Long userId = SwordUtils.getUserId();
+		final String oldEmail = userService.selectUserEmailById(userId);
+		final String newEmail = userService.selectUserEmailByUsername(account);
+		if (!org.apache.commons.lang3.StringUtils.equals(oldEmail, newEmail)) {
 			return CommonResult.fail(MessageUtils.message("LoginController.9"));// 非法请求 //$NON-NLS-1$
 		}
-		Subject subject = SecurityUtils.getSubject();
-		SysUser user = sysUserService.selectUserByLoginName(account);
+		final Subject subject = SecurityUtils.getSubject();
+		final SysUser user = sysUserService.selectUserByLoginName(account);
 		if (user == null || userId.equals(user.getUserId())) {
 			return CommonResult.success(subject.getSession().getId());
 		}
 
-		PrincipalCollection principalCollection = subject.getPrincipals();
-		String realmName = principalCollection.getRealmNames().iterator().next();
-		PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(user, realmName);
+		final PrincipalCollection principalCollection = subject.getPrincipals();
+		final String realmName = principalCollection.getRealmNames().iterator().next();
+		final PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(user, realmName);
 		subject.runAs(newPrincipalCollection);
 		return CommonResult.success(subject.getSession().getId());
 //		ShiroUtils.logout();
@@ -249,7 +249,7 @@ public class LoginController extends BaseController {
 
 	/**
 	 * 用户退出
-	 * 
+	 *
 	 * @param username
 	 * @param password
 	 * @return

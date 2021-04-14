@@ -16,7 +16,7 @@ import com.soyatec.sword.token.service.ITokenSecretService;
 
 /**
  * 开放接口APIService业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-07
  */
@@ -27,7 +27,7 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 
 	/**
 	 * 查询开放接口API
-	 * 
+	 *
 	 * @param id 开放接口APIID
 	 * @return 开放接口API
 	 */
@@ -38,7 +38,7 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 
 	/**
 	 * 查询开放接口API列表
-	 * 
+	 *
 	 * @param tokenSecret 开放接口API
 	 * @return 开放接口API
 	 */
@@ -49,7 +49,7 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 
 	/**
 	 * 新增开放接口API
-	 * 
+	 *
 	 * @param tokenSecret 开放接口API
 	 * @return 结果
 	 */
@@ -66,7 +66,7 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 
 	/**
 	 * 修改开放接口API
-	 * 
+	 *
 	 * @param tokenSecret 开放接口API
 	 * @return 结果
 	 */
@@ -78,7 +78,7 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 
 	/**
 	 * 删除开放接口API对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -89,7 +89,7 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 
 	/**
 	 * 删除开放接口API信息
-	 * 
+	 *
 	 * @param id 开放接口APIID
 	 * @return 结果
 	 */
@@ -108,7 +108,7 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 
 	@Override
 	public int generateTokenSecret() {
-		TokenSecret token = new TokenSecret();
+		final TokenSecret token = new TokenSecret();
 		token.setAccessKey(UUID.fastUUID().toString());
 		token.setSecretKey(IdWorker.get32UUID());
 		return insertTokenSecret(token);

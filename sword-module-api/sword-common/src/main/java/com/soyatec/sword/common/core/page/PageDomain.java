@@ -4,7 +4,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 分页数据
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class PageDomain {

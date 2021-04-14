@@ -31,13 +31,13 @@ import com.soyatec.sword.system.service.ISysUserService;
 
 /**
  * 用户信息
- * 
+ *
  * @author King Crab
  */
 @Controller
 @RequestMapping("/admin/manager")
 public class AdminManagerController extends BaseController {
-	private String prefix = "admin/manager";
+	private final String prefix = "admin/manager";
 
 	private static final Long MANAGER_DEPT_ID = 101l;
 
@@ -60,8 +60,9 @@ public class AdminManagerController extends BaseController {
 		manager.setUserType(UserConstants.SYSTEM_USER_TYPE);
 		manager.setDeptId(MANAGER_DEPT_ID);
 		startPage();
-		List<SysUser> list = userService.selectUserList(manager).stream()
-				.filter(a -> !StringUtils.equals(a.getLoginName(), "admin")).collect(Collectors.toList());
+		final List<SysUser> list = userService.selectUserList(manager).stream()
+				.filter(a -> !org.apache.commons.lang3.StringUtils.equals(a.getLoginName(), "admin"))
+				.collect(Collectors.toList());
 		return getDataTable(list);
 	}
 
@@ -72,8 +73,8 @@ public class AdminManagerController extends BaseController {
 	public AjaxResult export(SysUser manager) {
 		manager.setUserType(UserConstants.SYSTEM_USER_TYPE);
 		manager.setDeptId(MANAGER_DEPT_ID);
-		List<SysUser> list = userService.selectUserList(manager);
-		ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+		final List<SysUser> list = userService.selectUserList(manager);
+		final ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
 		return util.exportExcel(list, "用户数据");
 	}
 
@@ -82,10 +83,10 @@ public class AdminManagerController extends BaseController {
 	@PostMapping("/importData")
 	@ResponseBody
 	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
-		ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
-		List<SysUser> userList = util.importExcel(file.getInputStream());
-		String operName = ShiroUtils.getSysUser().getLoginName();
-		String message = userService.importUser(userList, updateSupport, operName);
+		final ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+		final List<SysUser> userList = util.importExcel(file.getInputStream());
+		final String operName = ShiroUtils.getSysUser().getLoginName();
+		final String message = userService.importUser(userList, updateSupport, operName);
 		return AjaxResult.success(message);
 	}
 
@@ -93,7 +94,7 @@ public class AdminManagerController extends BaseController {
 	@GetMapping("/importTemplate")
 	@ResponseBody
 	public AjaxResult importTemplate() {
-		ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+		final ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
 		return util.importTemplateExcel("用户数据");
 	}
 
@@ -191,9 +192,9 @@ public class AdminManagerController extends BaseController {
 	 */
 	@GetMapping("/authRole/{userId}")
 	public String authRole(@PathVariable("userId") Long userId, ModelMap mmap) {
-		SysUser manager = userService.selectUserById(userId);
+		final SysUser manager = userService.selectUserById(userId);
 		// 获取用户所属的角色列表
-		List<SysRole> roles = roleService.selectRolesByUserId(userId);
+		final List<SysRole> roles = roleService.selectRolesByUserId(userId);
 		mmap.put("manager", manager);
 		mmap.put("roles", SysUser.isAdmin(userId) ? roles
 				: roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
@@ -219,7 +220,7 @@ public class AdminManagerController extends BaseController {
 	public AjaxResult remove(String ids) {
 		try {
 			return toAjax(userService.deleteUserByIds(ids));
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return error(e.getMessage());
 		}
 	}

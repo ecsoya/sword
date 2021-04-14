@@ -14,6 +14,7 @@ import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.constants.IConstants;
 import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.exceptions.TransactionException;
 import com.soyatec.sword.mining.domain.MiningSymbol;
@@ -34,7 +35,7 @@ import com.soyatec.sword.wallet.service.IWalletService;
 
 /**
  * 提现订单Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-06
  */
@@ -63,7 +64,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 	/**
 	 * 查询提现订单
-	 * 
+	 *
 	 * @param id 提现订单ID
 	 * @return 提现订单
 	 */
@@ -82,7 +83,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 	/**
 	 * 查询提现订单列表
-	 * 
+	 *
 	 * @param userWithdrawalOrder 提现订单
 	 * @return 提现订单
 	 */
@@ -93,7 +94,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 	/**
 	 * 新增提现订单
-	 * 
+	 *
 	 * @param userWithdrawalOrder 提现订单
 	 * @return 结果
 	 */
@@ -110,7 +111,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 	/**
 	 * 修改提现订单
-	 * 
+	 *
 	 * @param userWithdrawalOrder 提现订单
 	 * @return 结果
 	 */
@@ -122,7 +123,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 	/**
 	 * 删除提现订单对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -133,7 +134,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 	/**
 	 * 删除提现订单信息
-	 * 
+	 *
 	 * @param id 提现订单ID
 	 * @return 结果
 	 */
@@ -150,11 +151,12 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 				|| StringUtils.isEmpty(password)) {
 			return CommonResult.fail("参数错误");
 		}
-		CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WITHDRAWAL);
+		final CommonResult<?> checked = certificateService.checkUserCertificate(userId,
+				UserCertificate.KIND_WITHDRAWAL);
 		if (!checked.isSuccess()) {
 			return CommonResult.fail(checked.getInfo());
 		}
-		MiningSymbol swordSymbol = symbolService.selectMiningSymbolById(symbol);
+		final MiningSymbol swordSymbol = symbolService.selectMiningSymbolById(symbol);
 		if (swordSymbol == null) {
 			return CommonResult.fail("币种错误");
 		}
@@ -163,39 +165,39 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 			return CommonResult.fail("提币通道尚未开放");
 		}
 		// 2. 单笔最小提币量
-		BigDecimal withdrawalMinimum = swordSymbol.getWithdrawalMinimum();
+		final BigDecimal withdrawalMinimum = swordSymbol.getWithdrawalMinimum();
 		if (MathUtils.isPositive(withdrawalMinimum) && MathUtils.lt(amount, withdrawalMinimum)) {
 			return CommonResult.fail("未达到最小提币额");
 		}
 		// 3. 单笔最大提币量
-		BigDecimal withdrawalMaximum = swordSymbol.getWithdrawalMaximum();
+		final BigDecimal withdrawalMaximum = swordSymbol.getWithdrawalMaximum();
 		if (MathUtils.isPositive(withdrawalMaximum) && MathUtils.gt(amount, withdrawalMaximum)) {
 			return CommonResult.fail("超过了最大单笔提币额");
 		}
 		// 4. 单日提币量
-		BigDecimal withdrawalDaily = swordSymbol.getWithdrawalDaily();
+		final BigDecimal withdrawalDaily = swordSymbol.getWithdrawalDaily();
 		if (MathUtils.isPositive(withdrawalDaily)) {
-			BigDecimal todayAmount = selectUserWithdrawalAmountByDate(swordSymbol.getSymbol(),
+			final BigDecimal todayAmount = selectUserWithdrawalAmountByDate(swordSymbol.getSymbol(),
 					DateUtils.getTodayStart(), DateUtils.getNowDate());
 			if (MathUtils.gt(MathUtils.plus(todayAmount, amount), withdrawalDaily)) {
 				return CommonResult.fail("今日提币已达到最大限额");
 			}
 		}
 		// 5. 累积提币量
-		BigDecimal withdrawalTotally = swordSymbol.getWithdrawalTotally();
+		final BigDecimal withdrawalTotally = swordSymbol.getWithdrawalTotally();
 		if (MathUtils.isPositive(withdrawalTotally)) {
-			BigDecimal totallyAmount = selectUserWithdrawalAmountByDate(swordSymbol.getSymbol(), null, null);
+			final BigDecimal totallyAmount = selectUserWithdrawalAmountByDate(swordSymbol.getSymbol(), null, null);
 			if (MathUtils.gt(MathUtils.plus(totallyAmount, amount), withdrawalTotally)) {
 				return CommonResult.fail("累积提币已达到最大限额");
 			}
 		}
 		// 6. 钱包密码确认
-		CommonResult<?> verified = userWalletService.verifyUserWalletPassword(userId, password);
+		final CommonResult<?> verified = userWalletService.verifyUserWalletPassword(userId, password);
 		if (!verified.isSuccess()) {
 			return CommonResult.fail("密码错误");
 		}
 		// 7. 账户检测，自身提币是否冻结
-		UserWalletAccount walletAccount = userWalletAccountService.selectUserWalletAccount(userId, symbol);
+		final UserWalletAccount walletAccount = userWalletAccountService.selectUserWalletAccount(userId, symbol);
 		if (walletAccount == null || !walletAccount.chechWithdrawalEnabled()) {
 			return CommonResult.fail("钱包异常");
 		}
@@ -203,13 +205,13 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		if (MathUtils.isEmpty(walletAccount.getAmount()) || MathUtils.lt(walletAccount.getAmount(), amount)) {
 			return CommonResult.fail("余额不足");
 		}
-		String orderNo = IdWorker.get32UUID();
+		final String orderNo = IdWorker.get32UUID();
 
 //		手续费
 		BigDecimal withdrawal = amount;
 		BigDecimal fee = swordSymbol.getWithdrawalFee();
 		if (MathUtils.isValid(fee)) {
-			String withdrawalFeeSymbol = swordSymbol.getWithdrawalFeeSymbol();
+			final String withdrawalFeeSymbol = swordSymbol.getWithdrawalFeeSymbol();
 			// 手续费兑换
 			if (IMiningConstants.SYMBOL_USDT.equals(withdrawalFeeSymbol)) {
 				fee = walletService.exchangeFromUsdt(symbol, fee);
@@ -220,7 +222,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 			withdrawal = withdrawal.subtract(fee);
 		}
 		// 生成订单
-		UserWithdrawalOrder order = new UserWithdrawalOrder();
+		final UserWithdrawalOrder order = new UserWithdrawalOrder();
 		order.setUserId(userId);
 		order.setAddress(address);
 		order.setAmount(amount);
@@ -231,7 +233,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		order.setStatus(UserWithdrawalOrder.STATUS_NONE);
 		order.setCallable(UserWithdrawalOrder.CALLABLE_NONE);
 		order.setRemark("提币申请");
-		int rows = insertUserWithdrawalOrder(order);
+		final int rows = insertUserWithdrawalOrder(order);
 		if (rows <= 0) {
 			throw new TransactionException("内部错误");
 		}
@@ -250,21 +252,21 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 	@Override
 	@Transactional(rollbackFor = TransactionException.class)
 	public CommonResult<?> cancelWithdrawal(Long userId, String orderNo, String remark) throws TransactionException {
-		UserWithdrawalOrder order = selectUserWithdrawalOrderByOrderNo(orderNo);
+		final UserWithdrawalOrder order = selectUserWithdrawalOrderByOrderNo(orderNo);
 		if (order == null || !Objects.equals(userId, order.getUserId())) {
 			return CommonResult.fail("无效订单");
 		}
 		if (!UserWithdrawalOrder.STATUS_NONE.equals(order.getStatus())) {
 			return CommonResult.fail("订单已处理");
 		}
-		String symbol = order.getSymbol();
-		BigDecimal amount = order.getAmount();
+		final String symbol = order.getSymbol();
+		final BigDecimal amount = order.getAmount();
 		// 资产解冻
 		if (!userWalletAccountService.unfreezeAmount(userId, symbol, amount, orderNo, true)) {
 			return CommonResult.fail("解冻资金失败");
 		}
 
-		UserWithdrawalOrder update = new UserWithdrawalOrder();
+		final UserWithdrawalOrder update = new UserWithdrawalOrder();
 		update.setId(order.getId());
 		update.setStatus(UserWithdrawalOrder.STATUS_CANCEL);
 		if (StringUtils.isEmpty(remark)) {
@@ -272,7 +274,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		} else {
 			update.setRemark(remark);
 		}
-		int rows = updateUserWithdrawalOrder(update);
+		final int rows = updateUserWithdrawalOrder(update);
 		if (rows <= 0) {
 			throw new TransactionException("内部错误");
 		}
@@ -285,21 +287,21 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		if (StringUtils.isEmpty(orderNos)) {
 			return CommonResult.fail("参数错误");
 		}
-		String[] array = Convert.toStrArray(orderNos);
+		final String[] array = Convert.toStrArray(orderNos);
 		int rows = 0;
-		for (String orderNo : array) {
-			UserWithdrawalOrder order = selectUserWithdrawalOrderByOrderNo(orderNo);
+		for (final String orderNo : array) {
+			final UserWithdrawalOrder order = selectUserWithdrawalOrderByOrderNo(orderNo);
 			if (order == null) {
 				continue;
 			}
 			try {
-				CommonResult<?> confirmed = confirmWithdrawal(order.getUserId(), orderNo);
+				final CommonResult<?> confirmed = confirmWithdrawal(order.getUserId(), orderNo);
 				if (confirmed.isSuccess()) {
 					rows++;
 				}
-			} catch (TransactionException e) {
+			} catch (final TransactionException e) {
 				// 再次设置同意
-				UserWithdrawalOrder update = new UserWithdrawalOrder();
+				final UserWithdrawalOrder update = new UserWithdrawalOrder();
 				update.setId(order.getId());
 				update.setStatus(UserWithdrawalOrder.STATUS_CONFIRM);
 				update.setRemark("同意提币");
@@ -312,7 +314,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 	@Override
 	@Transactional
 	public CommonResult<?> confirmWithdrawal(Long userId, String orderNo) throws TransactionException {
-		UserWithdrawalOrder order = selectUserWithdrawalOrderByOrderNo(orderNo);
+		final UserWithdrawalOrder order = selectUserWithdrawalOrderByOrderNo(orderNo);
 		if (order == null || !Objects.equals(userId, order.getUserId())) {
 			return CommonResult.fail("订单错误");
 		}
@@ -326,27 +328,27 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 			return CommonResult.fail("暂不支持提币");
 		}
 		// 实际提币额度
-		BigDecimal withdrawal = order.getWithdrawal();
-		String address = order.getAddress();
-		String symbol = order.getSymbol();
+		final BigDecimal withdrawal = order.getWithdrawal();
+		final String address = order.getAddress();
+		final String symbol = order.getSymbol();
 
-		CommonResult<WithdrawalResponse> dispatched = walletService.withdrawal(orderNo, symbol, null, address, "",
+		final CommonResult<WithdrawalResponse> dispatched = walletService.withdrawal(orderNo, symbol, null, address, "",
 				withdrawal);
-		Long id = order.getId();
+		final Long id = order.getId();
 		if (!dispatched.isSuccess()) {
 			// 调用接口失败
 			userWalletAccountService.unfreezeAmount(userId, symbol, order.getAmount(), orderNo, true);
 			// 更新订单
-			UserWithdrawalOrder update = new UserWithdrawalOrder();
+			final UserWithdrawalOrder update = new UserWithdrawalOrder();
 			update.setId(id);
 			update.setStatus(UserWithdrawalOrder.STATUS_FAILURE);
 			update.setRemark("提币接口错误");
 			updateUserWithdrawalOrder(update);
 			return CommonResult.fail(dispatched.getInfo());
 		}
-		WithdrawalResponse data = dispatched.getData();
+		final WithdrawalResponse data = dispatched.getData();
 		if (data != null) {
-			int status = data.getStatus();
+			final int status = data.getStatus();
 			if (WithdrawalResponse.STATUS_SUCCESS.equals(status)) {
 				// 内部转账
 				addWithdrawalRecord(userId, order.getAmount(), order.getFee(), orderNo, symbol, true, "交易所内部转账"); //$NON-NLS-1$
@@ -365,19 +367,19 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 	private boolean addWithdrawalRecord(Long userId, BigDecimal amount, BigDecimal fee, String orderNo, String symbol,
 			boolean success, String remark) {
 		// 1. 扣款
-		boolean unfreezed = userWalletAccountService.unfreezeAmount(userId, symbol, amount, orderNo, !success);
+		final boolean unfreezed = userWalletAccountService.unfreezeAmount(userId, symbol, amount, orderNo, !success);
 		if (!unfreezed) {
 			throw new TransactionException("钱包错误");
 		}
 		// 2. 生成记录
-		UserWithdrawalRecord record = new UserWithdrawalRecord();
+		final UserWithdrawalRecord record = new UserWithdrawalRecord();
 		record.setUserId(userId);
 		record.setFee(fee);
 		record.setOrderNo(orderNo);
 		record.setType(UserWithdrawalRecord.TYPE_WALLET);
 		record.setSymbol(symbol);
 		record.setAmount(amount);
-		record.setStatus(UserWithdrawalRecord.STATUS_FINISHED);
+		record.setStatus(IConstants.STATUS_FINISHED);
 		record.setRemark(remark);
 		if (userWithdrawalRecordService.insertUserWithdrawalRecord(record) <= 0) {
 			throw new TransactionException("内部错误");
@@ -386,7 +388,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 	}
 
 	private CommonResult<?> result(Long orderId, Integer status, Integer feedback, String remark, boolean success) {
-		UserWithdrawalOrder update = new UserWithdrawalOrder();
+		final UserWithdrawalOrder update = new UserWithdrawalOrder();
 		update.setId(orderId);
 		update.setStatus(status);
 		update.setFeedback(feedback);
@@ -407,21 +409,21 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		if (StringUtils.isEmpty(remark)) {
 			remark = "后台审核拒绝";
 		}
-		String[] array = Convert.toStrArray(orderNos);
+		final String[] array = Convert.toStrArray(orderNos);
 		int rows = 0;
-		for (String orderNo : array) {
-			UserWithdrawalOrder order = selectUserWithdrawalOrderByOrderNo(orderNo);
+		for (final String orderNo : array) {
+			final UserWithdrawalOrder order = selectUserWithdrawalOrderByOrderNo(orderNo);
 			if (order == null) {
 				continue;
 			}
 			try {
-				CommonResult<?> cancel = cancelWithdrawal(order.getUserId(), orderNo, remark);
+				final CommonResult<?> cancel = cancelWithdrawal(order.getUserId(), orderNo, remark);
 				if (cancel.isSuccess()) {
 					rows++;
 				}
-			} catch (TransactionException e) {
+			} catch (final TransactionException e) {
 				// 再次设置取消
-				UserWithdrawalOrder update = new UserWithdrawalOrder();
+				final UserWithdrawalOrder update = new UserWithdrawalOrder();
 				update.setId(order.getId());
 				update.setStatus(UserWithdrawalOrder.STATUS_CANCEL);
 				update.setRemark(remark);
@@ -438,7 +440,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 	@Override
 	public BigDecimal selectUserWithdrawalAmount(String symbol) {
-		UserWithdrawalOrder query = new UserWithdrawalOrder();
+		final UserWithdrawalOrder query = new UserWithdrawalOrder();
 		query.setSymbol(symbol);
 		return selectUserWithdrawalAmount(query);
 	}

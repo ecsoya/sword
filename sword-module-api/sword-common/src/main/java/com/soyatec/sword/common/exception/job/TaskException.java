@@ -2,13 +2,13 @@ package com.soyatec.sword.common.exception.job;
 
 /**
  * 计划策略异常
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class TaskException extends Exception {
 	private static final long serialVersionUID = 1L;
 
-	private Code code;
+	private final Code code;
 
 	public TaskException(String msg, Code code) {
 		this(msg, code, null);

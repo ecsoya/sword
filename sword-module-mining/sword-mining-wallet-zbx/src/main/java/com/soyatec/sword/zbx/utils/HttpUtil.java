@@ -10,11 +10,11 @@ import com.soyatec.sword.common.utils.security.EncryptUtil;
 public class HttpUtil {
 
 	public static String paramToUrl(Map<String, Object> data) {
-		Set<String> keySet = data.keySet();
-		String[] keyArray = keySet.toArray(new String[keySet.size()]);
+		final Set<String> keySet = data.keySet();
+		final String[] keyArray = keySet.toArray(new String[keySet.size()]);
 		Arrays.sort(keyArray);
-		StringBuilder sb = new StringBuilder();
-		for (String k : keyArray) {
+		final StringBuilder sb = new StringBuilder();
+		for (final String k : keyArray) {
 			sb.append(k).append("=").append(data.get(k).toString().trim()).append("&");
 		}
 		if (sb.length() > 0) {
@@ -25,15 +25,15 @@ public class HttpUtil {
 
 	public static String getSignature(final Map<String, Object> data, String secretKey) {
 		try {
-			Set<String> keySet = data.keySet();
-			String[] keyArray = keySet.toArray(new String[keySet.size()]);
+			final Set<String> keySet = data.keySet();
+			final String[] keyArray = keySet.toArray(new String[keySet.size()]);
 			Arrays.sort(keyArray);
-			StringBuilder sb = new StringBuilder();
-			for (String key : keyArray) {
+			final StringBuilder sb = new StringBuilder();
+			for (final String key : keyArray) {
 				if (StringUtils.isEmpty(key)) {
 					continue;
 				}
-				Object value = data.get(key);
+				final Object value = data.get(key);
 				if (value == null) {
 					continue;
 				}
@@ -43,7 +43,7 @@ public class HttpUtil {
 				sb.deleteCharAt(sb.length() - 1);
 			}
 			return EncryptUtil.hmacSha256(sb.toString(), secretKey);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 		return null;

@@ -16,7 +16,7 @@ import com.soyatec.sword.common.utils.IdWorker;
 
 /**
  * 用户文章Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-02-04
  */
@@ -27,7 +27,7 @@ public class UserArticleServiceImpl implements IUserArticleService {
 
 	/**
 	 * 查询用户文章
-	 * 
+	 *
 	 * @param id 用户文章ID
 	 * @return 用户文章
 	 */
@@ -38,7 +38,7 @@ public class UserArticleServiceImpl implements IUserArticleService {
 
 	/**
 	 * 查询用户文章列表
-	 * 
+	 *
 	 * @param userArticle 用户文章
 	 * @return 用户文章
 	 */
@@ -49,7 +49,7 @@ public class UserArticleServiceImpl implements IUserArticleService {
 
 	/**
 	 * 新增用户文章
-	 * 
+	 *
 	 * @param userArticle 用户文章
 	 * @return 结果
 	 */
@@ -66,7 +66,7 @@ public class UserArticleServiceImpl implements IUserArticleService {
 
 	/**
 	 * 修改用户文章
-	 * 
+	 *
 	 * @param userArticle 用户文章
 	 * @return 结果
 	 */
@@ -78,7 +78,7 @@ public class UserArticleServiceImpl implements IUserArticleService {
 
 	/**
 	 * 删除用户文章对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -89,7 +89,7 @@ public class UserArticleServiceImpl implements IUserArticleService {
 
 	/**
 	 * 删除用户文章信息
-	 * 
+	 *
 	 * @param id 用户文章ID
 	 * @return 结果
 	 */
@@ -103,14 +103,14 @@ public class UserArticleServiceImpl implements IUserArticleService {
 		if (articleId == null || userId == null) {
 			return null;
 		}
-		UserArticle query = new UserArticle();
+		final UserArticle query = new UserArticle();
 		query.setArticleId(articleId);
 		query.setUserId(userId);
-		List<UserArticle> list = selectUserArticleList(query);
+		final List<UserArticle> list = selectUserArticleList(query);
 		if (!list.isEmpty()) {
 			return list.get(0);
 		}
-		UserArticle article = new UserArticle();
+		final UserArticle article = new UserArticle();
 		article.setArticleId(articleId);
 		article.setUserId(userId);
 		insertUserArticle(article);

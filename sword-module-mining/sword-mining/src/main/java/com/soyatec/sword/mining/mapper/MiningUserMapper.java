@@ -7,7 +7,7 @@ import com.soyatec.sword.report.domain.DateCount;
 
 /**
  * Mining级别Mapper接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-03-15
  */

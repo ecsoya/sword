@@ -2,7 +2,7 @@ package com.soyatec.sword.common.constant;
 
 /**
  * 任务调度通用常量
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class ScheduleConstants {
@@ -33,7 +33,7 @@ public class ScheduleConstants {
 		 */
 		PAUSE("1");
 
-		private String value;
+		private final String value;
 
 		private Status(String value) {
 			this.value = value;

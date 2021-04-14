@@ -7,14 +7,14 @@ import com.soyatec.sword.wallet.domain.UserWallet;
 
 /**
  * 用户钱包Service接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
 public interface IUserWalletService {
 	/**
 	 * 查询用户钱包
-	 * 
+	 *
 	 * @param userId 用户钱包ID
 	 * @return 用户钱包
 	 */
@@ -22,7 +22,7 @@ public interface IUserWalletService {
 
 	/**
 	 * 查询用户钱包列表
-	 * 
+	 *
 	 * @param userWallet 用户钱包
 	 * @return 用户钱包集合
 	 */
@@ -30,7 +30,7 @@ public interface IUserWalletService {
 
 	/**
 	 * 新增用户钱包
-	 * 
+	 *
 	 * @param userWallet 用户钱包
 	 * @return 结果
 	 */
@@ -38,7 +38,7 @@ public interface IUserWalletService {
 
 	/**
 	 * 修改用户钱包
-	 * 
+	 *
 	 * @param userWallet 用户钱包
 	 * @return 结果
 	 */
@@ -46,7 +46,7 @@ public interface IUserWalletService {
 
 	/**
 	 * 批量删除用户钱包
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -54,7 +54,7 @@ public interface IUserWalletService {
 
 	/**
 	 * 删除用户钱包信息
-	 * 
+	 *
 	 * @param userId 用户钱包ID
 	 * @return 结果
 	 */
@@ -62,7 +62,7 @@ public interface IUserWalletService {
 
 	/**
 	 * 更新用户钱包
-	 * 
+	 *
 	 * @param createAccounts TODO
 	 */
 	public int createUserWalletByUserId(Long userId, String password, boolean createAccounts);

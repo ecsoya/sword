@@ -50,12 +50,12 @@ public class WalletConfig {
 		if (StringUtils.isEmpty(symbol) || date == null || histories == null || histories.isEmpty()) {
 			return null;
 		}
-		Map<Date, BigDecimal> values = histories.get(symbol);
+		final Map<Date, BigDecimal> values = histories.get(symbol);
 		if (values == null) {
 			return null;
 		}
-		Set<Entry<Date, BigDecimal>> entrySet = values.entrySet();
-		for (Entry<Date, BigDecimal> entry : entrySet) {
+		final Set<Entry<Date, BigDecimal>> entrySet = values.entrySet();
+		for (final Entry<Date, BigDecimal> entry : entrySet) {
 			if (DateUtils.dayEquals(date, entry.getKey())) {
 				return entry.getValue();
 			}
@@ -67,31 +67,32 @@ public class WalletConfig {
 		if (historyFiles == null || historyFiles.isEmpty()) {
 			return;
 		}
-		Set<Entry<String, String>> entrySet = historyFiles.entrySet();
-		for (Entry<String, String> entry : entrySet) {
+		final Set<Entry<String, String>> entrySet = historyFiles.entrySet();
+		for (final Entry<String, String> entry : entrySet) {
 			try {
-				String symbol = entry.getKey();
-				String file = entry.getValue();
-				Map<Date, BigDecimal> prices = new HashMap<>();
-				ClassPathResource resource = new ClassPathResource(file);
-				List<String> lines = IOUtils.readLines(resource.getInputStream(), "utf-8");
-				for (String line : lines) {
-					String[] split = line.split("=");
+				final String symbol = entry.getKey();
+				final String file = entry.getValue();
+				final Map<Date, BigDecimal> prices = new HashMap<>();
+				final ClassPathResource resource = new ClassPathResource(file);
+				final List<String> lines = IOUtils.readLines(resource.getInputStream(), "utf-8");
+				for (final String line : lines) {
+					final String[] split = line.split("=");
 					if (split.length != 2) {
 						continue;
 					}
 
-					Date date = DateUtils.parseDate(split[0], "yyyy-MM-dd", "yyyy/MM/dd", "yyyyMMdd");
+					final Date date = org.apache.commons.lang3.time.DateUtils.parseDate(split[0], "yyyy-MM-dd",
+							"yyyy/MM/dd", "yyyyMMdd");
 					if (date == null) {
 						continue;
 					}
-					BigDecimal price = new BigDecimal(split[1].trim());
+					final BigDecimal price = new BigDecimal(split[1].trim());
 					if (price != null) {
 						prices.put(date, price);
 					}
 				}
 				getHistories().put(symbol, prices);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				continue;
 			}
 		}

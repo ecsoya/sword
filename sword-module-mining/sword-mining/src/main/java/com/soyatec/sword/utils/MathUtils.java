@@ -47,7 +47,7 @@ public class MathUtils {
 	public static BigDecimal plus(BigDecimal... members) {
 		BigDecimal sum = BigDecimal.ZERO;
 		if (members != null) {
-			for (BigDecimal bigDecimal : members) {
+			for (final BigDecimal bigDecimal : members) {
 				if (bigDecimal != null) {
 					sum = sum.add(bigDecimal);
 				}
@@ -59,7 +59,7 @@ public class MathUtils {
 	public static Long plus(Long... numbers) {
 		BigDecimal sum = BigDecimal.ZERO;
 		if (numbers != null) {
-			for (Long number : numbers) {
+			for (final Long number : numbers) {
 				if (number != null) {
 					sum = sum.add(BigDecimal.valueOf(number.longValue()));
 				}
@@ -74,7 +74,7 @@ public class MathUtils {
 		}
 		try {
 			return Long.parseLong(value);
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return null;
 		}
 	}
@@ -115,7 +115,7 @@ public class MathUtils {
 		}
 		try {
 			return new BigDecimal(value);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return BigDecimal.ZERO;
 		}
 	}
@@ -144,7 +144,7 @@ public class MathUtils {
 	public static <T extends Number> T parseNumber(String string, Class<T> type) {
 		try {
 			return NumberUtils.parseNumber(string, type);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
@@ -175,7 +175,7 @@ public class MathUtils {
 		}
 		try {
 			return Integer.parseInt(value.trim());
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}

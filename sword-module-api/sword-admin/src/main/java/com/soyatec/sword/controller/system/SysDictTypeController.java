@@ -27,13 +27,13 @@ import com.soyatec.sword.system.service.ISysDictTypeService;
 
 /**
  * 数据字典信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/system/dict")
 public class SysDictTypeController extends BaseController {
-	private String prefix = "system/dict/type";
+	private final String prefix = "system/dict/type";
 
 	@Autowired
 	private ISysDictTypeService dictTypeService;
@@ -49,7 +49,7 @@ public class SysDictTypeController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysDictType dictType) {
 		startPage();
-		List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
+		final List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
 		return getDataTable(list);
 	}
 
@@ -59,8 +59,8 @@ public class SysDictTypeController extends BaseController {
 	@ResponseBody
 	public AjaxResult export(SysDictType dictType) {
 
-		List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
-		ExcelUtil<SysDictType> util = new ExcelUtil<SysDictType>(SysDictType.class);
+		final List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
+		final ExcelUtil<SysDictType> util = new ExcelUtil<SysDictType>(SysDictType.class);
 		return util.exportExcel(list, "字典类型");
 	}
 
@@ -168,7 +168,7 @@ public class SysDictTypeController extends BaseController {
 	@GetMapping("/treeData")
 	@ResponseBody
 	public List<Ztree> treeData() {
-		List<Ztree> ztrees = dictTypeService.selectDictTree(new SysDictType());
+		final List<Ztree> ztrees = dictTypeService.selectDictTree(new SysDictType());
 		return ztrees;
 	}
 }

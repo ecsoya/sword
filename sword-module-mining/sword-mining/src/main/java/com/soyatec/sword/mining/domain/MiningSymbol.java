@@ -12,7 +12,7 @@ import com.soyatec.sword.utils.MathUtils;
 
 /**
  * 币种对象 t_sword_symbol
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-08
  */

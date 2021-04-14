@@ -38,7 +38,7 @@ public class CommonResult<T> {
 	}
 
 	public static <T> CommonResult<T> create(int code, String info, T data) {
-		CommonResult<T> r = new CommonResult<T>();
+		final CommonResult<T> r = new CommonResult<T>();
 		r.setCode(code);
 		r.setInfo(info);
 		r.setData(data);

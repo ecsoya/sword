@@ -9,7 +9,6 @@ import com.soyatec.sword.common.constant.Constants;
 import com.soyatec.sword.common.utils.AddressUtils;
 import com.soyatec.sword.common.utils.LogUtils;
 import com.soyatec.sword.common.utils.ServletUtils;
-import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.spring.SpringUtils;
 import com.soyatec.sword.framework.shiro.session.OnlineSession;
 import com.soyatec.sword.framework.shiro.util.ShiroUtils;
@@ -24,7 +23,7 @@ import eu.bitwalker.useragentutils.UserAgent;
 
 /**
  * 异步工厂（产生任务用）
- * 
+ *
  * @author liuhulu
  *
  */
@@ -33,7 +32,7 @@ public class AsyncFactory {
 
 	/**
 	 * 同步session到数据库
-	 * 
+	 *
 	 * @param session 在线用户会话
 	 * @return 任务task
 	 */
@@ -41,7 +40,7 @@ public class AsyncFactory {
 		return new TimerTask() {
 			@Override
 			public void run() {
-				SysUserOnline online = new SysUserOnline();
+				final SysUserOnline online = new SysUserOnline();
 				online.setSessionId(String.valueOf(session.getId()));
 				online.setDeptName(session.getDeptName());
 				online.setLoginName(session.getLoginName());
@@ -61,7 +60,7 @@ public class AsyncFactory {
 
 	/**
 	 * 操作日志记录
-	 * 
+	 *
 	 * @param operLog 操作日志信息
 	 * @return 任务task
 	 */
@@ -78,7 +77,7 @@ public class AsyncFactory {
 
 	/**
 	 * 记录登录信息
-	 * 
+	 *
 	 * @param username 用户名
 	 * @param status   状态
 	 * @param message  消息
@@ -92,8 +91,8 @@ public class AsyncFactory {
 		return new TimerTask() {
 			@Override
 			public void run() {
-				String address = AddressUtils.getRealAddressByIP(ip);
-				StringBuilder s = new StringBuilder();
+				final String address = AddressUtils.getRealAddressByIP(ip);
+				final StringBuilder s = new StringBuilder();
 				s.append(LogUtils.getBlock(ip));
 				s.append(address);
 				s.append(LogUtils.getBlock(username));
@@ -102,11 +101,11 @@ public class AsyncFactory {
 				// 打印信息到日志
 				sys_user_logger.info(s.toString(), args);
 				// 获取客户端操作系统
-				String os = userAgent.getOperatingSystem().getName();
+				final String os = userAgent.getOperatingSystem().getName();
 				// 获取客户端浏览器
-				String browser = userAgent.getBrowser().getName();
+				final String browser = userAgent.getBrowser().getName();
 				// 封装对象
-				SysLogininfor logininfor = new SysLogininfor();
+				final SysLogininfor logininfor = new SysLogininfor();
 				logininfor.setLoginName(username);
 				logininfor.setIpaddr(ip);
 				logininfor.setLoginLocation(address);
@@ -114,7 +113,8 @@ public class AsyncFactory {
 				logininfor.setOs(os);
 				logininfor.setMsg(message);
 				// 日志状态
-				if (StringUtils.equalsAny(status, Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER)) {
+				if (org.apache.commons.lang3.StringUtils.equalsAny(status, Constants.LOGIN_SUCCESS, Constants.LOGOUT,
+						Constants.REGISTER)) {
 					logininfor.setStatus(Constants.SUCCESS);
 				} else if (Constants.LOGIN_FAIL.equals(status)) {
 					logininfor.setStatus(Constants.FAIL);

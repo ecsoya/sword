@@ -12,14 +12,14 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 /**
  * 资源文件配置加载
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Configuration
 public class I18nConfig implements WebMvcConfigurer {
 	@Bean
 	public LocaleResolver localeResolver() {
-		SessionLocaleResolver slr = new SessionLocaleResolver();
+		final SessionLocaleResolver slr = new SessionLocaleResolver();
 		// 默认语言
 		slr.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
 		return slr;
@@ -27,7 +27,7 @@ public class I18nConfig implements WebMvcConfigurer {
 
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
-		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+		final LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
 		// 参数名
 		lci.setParamName("lang");
 		return lci;

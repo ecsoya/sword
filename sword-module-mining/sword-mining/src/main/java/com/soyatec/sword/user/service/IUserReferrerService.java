@@ -9,14 +9,14 @@ import com.soyatec.sword.user.domain.UserReferrerInfo;
 
 /**
  * 用户直推Service接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
 public interface IUserReferrerService {
 	/**
 	 * 查询用户直推
-	 * 
+	 *
 	 * @param userId 用户直推ID
 	 * @return 用户直推
 	 */
@@ -24,7 +24,7 @@ public interface IUserReferrerService {
 
 	/**
 	 * 查询用户直推列表
-	 * 
+	 *
 	 * @param userReferrer 用户直推
 	 * @return 用户直推集合
 	 */
@@ -32,7 +32,7 @@ public interface IUserReferrerService {
 
 	/**
 	 * 新增用户直推
-	 * 
+	 *
 	 * @param userReferrer 用户直推
 	 * @return 结果
 	 */
@@ -40,7 +40,7 @@ public interface IUserReferrerService {
 
 	/**
 	 * 修改用户直推
-	 * 
+	 *
 	 * @param userReferrer 用户直推
 	 * @return 结果
 	 */
@@ -48,7 +48,7 @@ public interface IUserReferrerService {
 
 	/**
 	 * 批量删除用户直推
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -56,7 +56,7 @@ public interface IUserReferrerService {
 
 	/**
 	 * 删除用户直推信息
-	 * 
+	 *
 	 * @param userId 用户直推ID
 	 * @return 结果
 	 */

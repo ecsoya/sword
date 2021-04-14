@@ -6,14 +6,14 @@ import com.soyatec.sword.wallet.domain.UserWalletAddress;
 
 /**
  * 用户钱包地址Service接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
 public interface IUserWalletAddressService {
 	/**
 	 * 查询用户钱包地址
-	 * 
+	 *
 	 * @param id 用户钱包地址ID
 	 * @return 用户钱包地址
 	 */
@@ -21,7 +21,7 @@ public interface IUserWalletAddressService {
 
 	/**
 	 * 查询用户钱包地址列表
-	 * 
+	 *
 	 * @param userWalletAddress 用户钱包地址
 	 * @return 用户钱包地址集合
 	 */
@@ -29,7 +29,7 @@ public interface IUserWalletAddressService {
 
 	/**
 	 * 新增用户钱包地址
-	 * 
+	 *
 	 * @param userWalletAddress 用户钱包地址
 	 * @return 结果
 	 */
@@ -37,7 +37,7 @@ public interface IUserWalletAddressService {
 
 	/**
 	 * 修改用户钱包地址
-	 * 
+	 *
 	 * @param userWalletAddress 用户钱包地址
 	 * @return 结果
 	 */
@@ -45,7 +45,7 @@ public interface IUserWalletAddressService {
 
 	/**
 	 * 批量删除用户钱包地址
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -53,7 +53,7 @@ public interface IUserWalletAddressService {
 
 	/**
 	 * 删除用户钱包地址信息
-	 * 
+	 *
 	 * @param id 用户钱包地址ID
 	 * @return 结果
 	 */

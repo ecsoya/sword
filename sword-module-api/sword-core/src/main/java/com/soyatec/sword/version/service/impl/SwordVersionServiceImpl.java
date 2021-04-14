@@ -20,7 +20,7 @@ import com.soyatec.sword.version.service.ISwordVersionService;
 
 /**
  * 版本Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-22
  */
@@ -38,8 +38,8 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 	}
 
 	private void rebuildCache() {
-		for (String type : types) {
-			SwordVersion version = swordVersionMapper.selectLatestSwordVersion(type);
+		for (final String type : types) {
+			final SwordVersion version = swordVersionMapper.selectLatestSwordVersion(type);
 			if (version == null) {
 				continue;
 			}
@@ -49,7 +49,7 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 
 	/**
 	 * 查询版本
-	 * 
+	 *
 	 * @param id 版本ID
 	 * @return 版本
 	 */
@@ -60,7 +60,7 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 
 	/**
 	 * 查询版本列表
-	 * 
+	 *
 	 * @param swordVersion 版本
 	 * @return 版本
 	 */
@@ -71,7 +71,7 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 
 	/**
 	 * 新增版本
-	 * 
+	 *
 	 * @param swordVersion 版本
 	 * @return 结果
 	 */
@@ -83,7 +83,7 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 		if (swordVersion.getCreateTime() == null) {
 			swordVersion.setCreateTime(DateUtils.getNowDate());
 		}
-		int rows = swordVersionMapper.insertSwordVersion(swordVersion);
+		final int rows = swordVersionMapper.insertSwordVersion(swordVersion);
 		if (rows > 0) {
 			rebuildCache();
 		}
@@ -92,14 +92,14 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 
 	/**
 	 * 修改版本
-	 * 
+	 *
 	 * @param swordVersion 版本
 	 * @return 结果
 	 */
 	@Override
 	public int updateSwordVersion(SwordVersion swordVersion) {
 		swordVersion.setUpdateTime(DateUtils.getNowDate());
-		int rows = swordVersionMapper.updateSwordVersion(swordVersion);
+		final int rows = swordVersionMapper.updateSwordVersion(swordVersion);
 		if (rows > 0) {
 			rebuildCache();
 		}
@@ -108,13 +108,13 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 
 	/**
 	 * 删除版本对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
 	@Override
 	public int deleteSwordVersionByIds(String ids) {
-		int rows = swordVersionMapper.deleteSwordVersionByIds(Convert.toStrArray(ids));
+		final int rows = swordVersionMapper.deleteSwordVersionByIds(Convert.toStrArray(ids));
 		if (rows > 0) {
 			rebuildCache();
 		}
@@ -123,13 +123,13 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 
 	/**
 	 * 删除版本信息
-	 * 
+	 *
 	 * @param id 版本ID
 	 * @return 结果
 	 */
 	@Override
 	public int deleteSwordVersionById(Long id) {
-		int rows = swordVersionMapper.deleteSwordVersionById(id);
+		final int rows = swordVersionMapper.deleteSwordVersionById(id);
 		if (rows > 0) {
 			rebuildCache();
 		}
@@ -141,7 +141,7 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 		if (StringUtils.isEmpty(type)) {
 			return null;
 		}
-		Object version = CacheUtils.get(CACHE_VERSION, type);
+		final Object version = CacheUtils.get(CACHE_VERSION, type);
 		if (version instanceof SwordVersion) {
 			return (SwordVersion) version;
 		}
@@ -151,7 +151,7 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 
 	@Override
 	public Long selectLatestVersionNumber(String type) {
-		SwordVersion version = selectLatestVersion(type);
+		final SwordVersion version = selectLatestVersion(type);
 		if (version == null) {
 			return null;
 		}

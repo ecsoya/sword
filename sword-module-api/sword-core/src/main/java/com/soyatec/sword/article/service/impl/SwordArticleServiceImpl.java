@@ -15,7 +15,7 @@ import com.soyatec.sword.common.utils.IdWorker;
 
 /**
  * 文章Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-02-04
  */
@@ -26,7 +26,7 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 
 	/**
 	 * 查询文章
-	 * 
+	 *
 	 * @param id 文章ID
 	 * @return 文章
 	 */
@@ -37,7 +37,7 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 
 	/**
 	 * 查询文章列表
-	 * 
+	 *
 	 * @param swordArticle 文章
 	 * @return 文章
 	 */
@@ -48,7 +48,7 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 
 	/**
 	 * 新增文章
-	 * 
+	 *
 	 * @param swordArticle 文章
 	 * @return 结果
 	 */
@@ -65,7 +65,7 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 
 	/**
 	 * 修改文章
-	 * 
+	 *
 	 * @param swordArticle 文章
 	 * @return 结果
 	 */
@@ -77,7 +77,7 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 
 	/**
 	 * 删除文章对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -88,7 +88,7 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 
 	/**
 	 * 删除文章信息
-	 * 
+	 *
 	 * @param id 文章ID
 	 * @return 结果
 	 */
@@ -99,11 +99,11 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 
 	@Override
 	public List<String> selectSwordArticleCategories() {
-		List<String> list = swordArticleMapper.selectSwordArticleCategories();
-		List<String> categories = new ArrayList<>();
-		for (String c : list) {
-			String[] split = c.split("\\|");
-			for (String d : split) {
+		final List<String> list = swordArticleMapper.selectSwordArticleCategories();
+		final List<String> categories = new ArrayList<>();
+		for (final String c : list) {
+			final String[] split = c.split("\\|");
+			for (final String d : split) {
 				if (!categories.contains(d)) {
 					categories.add(d);
 				}

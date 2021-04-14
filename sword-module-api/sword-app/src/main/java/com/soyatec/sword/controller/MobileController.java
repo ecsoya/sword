@@ -32,7 +32,7 @@ public class MobileController extends BaseController {
 	@PostMapping("/delivery")
 	@RepeatSubmit
 	public CommonResult<?> delivery() {
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return mobileService.sendCodeByUserId(userId);
 	}
 
@@ -61,19 +61,19 @@ public class MobileController extends BaseController {
 	}
 
 	/**
-	 * 
+	 *
 	 * 验证手机验证码
 	 */
 	@ApiOperation("验证手机验证码，无参")
 	@GetMapping("/verify")
 	@RepeatSubmit
 	public CommonResult<?> verify(String code) {
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return mobileService.verifyCodeByUserId(userId, code);
 	}
 
 	/**
-	 * 
+	 *
 	 * 验证手机验证码
 	 */
 	@ApiOperation("验证手机验证码，用户名")
@@ -91,7 +91,7 @@ public class MobileController extends BaseController {
 	}
 
 	/**
-	 * 
+	 *
 	 * 验证手机验证码
 	 */
 	@ApiOperation("验证手机验证码，手机")

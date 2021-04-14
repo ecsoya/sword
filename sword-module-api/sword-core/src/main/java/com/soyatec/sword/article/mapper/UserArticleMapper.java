@@ -7,14 +7,14 @@ import com.soyatec.sword.article.domain.UserArticleComment;
 
 /**
  * 用户文章Mapper接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-02-04
  */
 public interface UserArticleMapper {
 	/**
 	 * 查询用户文章
-	 * 
+	 *
 	 * @param id 用户文章ID
 	 * @return 用户文章
 	 */
@@ -22,7 +22,7 @@ public interface UserArticleMapper {
 
 	/**
 	 * 查询用户文章列表
-	 * 
+	 *
 	 * @param userArticle 用户文章
 	 * @return 用户文章集合
 	 */
@@ -30,7 +30,7 @@ public interface UserArticleMapper {
 
 	/**
 	 * 新增用户文章
-	 * 
+	 *
 	 * @param userArticle 用户文章
 	 * @return 结果
 	 */
@@ -38,7 +38,7 @@ public interface UserArticleMapper {
 
 	/**
 	 * 修改用户文章
-	 * 
+	 *
 	 * @param userArticle 用户文章
 	 * @return 结果
 	 */
@@ -46,7 +46,7 @@ public interface UserArticleMapper {
 
 	/**
 	 * 删除用户文章
-	 * 
+	 *
 	 * @param id 用户文章ID
 	 * @return 结果
 	 */
@@ -54,7 +54,7 @@ public interface UserArticleMapper {
 
 	/**
 	 * 批量删除用户文章
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */

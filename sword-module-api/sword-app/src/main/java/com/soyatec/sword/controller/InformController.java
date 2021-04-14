@@ -29,7 +29,7 @@ public class InformController extends BaseController {
 	@GetMapping("/list")
 	public TableDataInfo list(@ApiParam("每页显示多少条") Integer pageSize, @ApiParam("当前页数，第几页") Integer pageNum) {
 		startPage("create_time desc");
-		List<SysNotice> informs = noticeService.selectNoticeListByType(SysNotice.NOTICE_TYPE_INFORM);
+		final List<SysNotice> informs = noticeService.selectNoticeListByType(SysNotice.NOTICE_TYPE_INFORM);
 		return getDataTable(informs);
 	}
 

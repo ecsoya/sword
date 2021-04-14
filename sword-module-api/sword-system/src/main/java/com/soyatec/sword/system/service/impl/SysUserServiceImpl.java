@@ -29,7 +29,7 @@ import com.soyatec.sword.system.service.ISysUserService;
 
 /**
  * 用户 业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Service
@@ -56,7 +56,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 根据条件分页查询用户列表
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 用户信息集合信息
 	 */
@@ -68,7 +68,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 根据条件分页查询已分配用户角色列表
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 用户信息集合信息
 	 */
@@ -80,7 +80,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 根据条件分页查询未分配用户角色列表
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 用户信息集合信息
 	 */
@@ -92,7 +92,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 通过用户名查询用户
-	 * 
+	 *
 	 * @param userName 用户名
 	 * @return 用户对象信息
 	 */
@@ -103,7 +103,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 通过手机号码查询用户
-	 * 
+	 *
 	 * @param phoneNumber 手机号码
 	 * @return 用户对象信息
 	 */
@@ -114,7 +114,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 通过邮箱查询用户
-	 * 
+	 *
 	 * @param email 邮箱
 	 * @return 用户对象信息
 	 */
@@ -125,7 +125,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 通过用户ID查询用户
-	 * 
+	 *
 	 * @param userId 用户ID
 	 * @return 用户对象信息
 	 */
@@ -136,7 +136,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 通过用户ID查询用户和角色关联
-	 * 
+	 *
 	 * @param userId 用户ID
 	 * @return 用户和角色关联列表
 	 */
@@ -147,7 +147,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 通过用户ID删除用户
-	 * 
+	 *
 	 * @param userId 用户ID
 	 * @return 结果
 	 */
@@ -163,15 +163,15 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 批量删除用户信息
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
 	@Override
 	@Transactional
 	public int deleteUserByIds(String ids) {
-		Long[] userIds = Convert.toLongArray(ids);
-		for (Long userId : userIds) {
+		final Long[] userIds = Convert.toLongArray(ids);
+		for (final Long userId : userIds) {
 			checkUserAllowed(new SysUser(userId));
 		}
 		// 删除用户与角色关联
@@ -183,7 +183,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 新增保存用户信息
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 结果
 	 */
@@ -191,7 +191,7 @@ public class SysUserServiceImpl implements ISysUserService {
 	@Transactional
 	public int insertUser(SysUser user) {
 		// 新增用户信息
-		int rows = userMapper.insertUser(user);
+		final int rows = userMapper.insertUser(user);
 		// 新增用户岗位关联
 		insertUserPost(user);
 		// 新增用户与角色管理
@@ -201,7 +201,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 注册用户信息
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 结果
 	 */
@@ -213,14 +213,14 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 修改保存用户信息
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 结果
 	 */
 	@Override
 	@Transactional
 	public int updateUser(SysUser user) {
-		Long userId = user.getUserId();
+		final Long userId = user.getUserId();
 		// 删除用户与角色关联
 		userRoleMapper.deleteUserRoleByUserId(userId);
 		// 新增用户与角色管理
@@ -234,7 +234,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 修改用户个人详细信息
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 结果
 	 */
@@ -245,7 +245,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 用户授权角色
-	 * 
+	 *
 	 * @param userId  用户ID
 	 * @param roleIds 角色组
 	 */
@@ -257,7 +257,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 修改用户密码
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 结果
 	 */
@@ -268,15 +268,15 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 新增用户角色信息
-	 * 
+	 *
 	 * @param user 用户对象
 	 */
 	public void insertUserRole(Long userId, Long[] roleIds) {
 		if (StringUtils.isNotNull(roleIds)) {
 			// 新增用户与角色管理
-			List<SysUserRole> list = new ArrayList<SysUserRole>();
-			for (Long roleId : roleIds) {
-				SysUserRole ur = new SysUserRole();
+			final List<SysUserRole> list = new ArrayList<SysUserRole>();
+			for (final Long roleId : roleIds) {
+				final SysUserRole ur = new SysUserRole();
 				ur.setUserId(userId);
 				ur.setRoleId(roleId);
 				list.add(ur);
@@ -289,7 +289,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 新增用户岗位信息
-	 * 
+	 *
 	 * @param user 用户对象
 	 */
 	public void insertUserPost(SysUser user) {
@@ -297,13 +297,13 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 校验登录名称是否唯一
-	 * 
+	 *
 	 * @param loginName 用户名
 	 * @return
 	 */
 	@Override
 	public String checkLoginNameUnique(String loginName) {
-		int count = userMapper.checkLoginNameUnique(loginName);
+		final int count = userMapper.checkLoginNameUnique(loginName);
 		if (count > 0) {
 			return UserConstants.USER_NAME_NOT_UNIQUE;
 		}
@@ -318,8 +318,8 @@ public class SysUserServiceImpl implements ISysUserService {
 	 */
 	@Override
 	public String checkPhoneUnique(SysUser user) {
-		Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-		SysUser info = userMapper.checkPhoneUnique(user.getPhonenumber(), user.getUserType());
+		final Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+		final SysUser info = userMapper.checkPhoneUnique(user.getPhonenumber(), user.getUserType());
 		if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
 			return UserConstants.USER_PHONE_NOT_UNIQUE;
 		}
@@ -334,8 +334,8 @@ public class SysUserServiceImpl implements ISysUserService {
 	 */
 	@Override
 	public String checkEmailUnique(SysUser user) {
-		Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-		SysUser info = userMapper.checkEmailUnique(user.getEmail(), user.getUserType());
+		final Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+		final SysUser info = userMapper.checkEmailUnique(user.getEmail(), user.getUserType());
 		if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
 			return UserConstants.USER_EMAIL_NOT_UNIQUE;
 		}
@@ -344,7 +344,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 校验用户是否允许操作
-	 * 
+	 *
 	 * @param user 用户信息
 	 */
 	@Override
@@ -356,15 +356,15 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 查询用户所属角色组
-	 * 
+	 *
 	 * @param userId 用户ID
 	 * @return 结果
 	 */
 	@Override
 	public String selectUserRoleGroup(Long userId) {
-		List<SysRole> list = roleMapper.selectRolesByUserId(userId);
-		StringBuffer idsStr = new StringBuffer();
-		for (SysRole role : list) {
+		final List<SysRole> list = roleMapper.selectRolesByUserId(userId);
+		final StringBuffer idsStr = new StringBuffer();
+		for (final SysRole role : list) {
 			idsStr.append(role.getRoleName()).append(",");
 		}
 		if (StringUtils.isNotEmpty(idsStr.toString())) {
@@ -375,15 +375,15 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 查询用户所属岗位组
-	 * 
+	 *
 	 * @param userId 用户ID
 	 * @return 结果
 	 */
 	@Override
 	public String selectUserPostGroup(Long userId) {
-		List<SysPost> list = postMapper.selectPostsByUserId(userId);
-		StringBuffer idsStr = new StringBuffer();
-		for (SysPost post : list) {
+		final List<SysPost> list = postMapper.selectPostsByUserId(userId);
+		final StringBuffer idsStr = new StringBuffer();
+		for (final SysPost post : list) {
 			idsStr.append(post.getPostName()).append(",");
 		}
 		if (StringUtils.isNotEmpty(idsStr.toString())) {
@@ -394,7 +394,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 导入用户数据
-	 * 
+	 *
 	 * @param userList        用户数据列表
 	 * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
 	 * @param operName        操作用户
@@ -407,13 +407,13 @@ public class SysUserServiceImpl implements ISysUserService {
 		}
 		int successNum = 0;
 		int failureNum = 0;
-		StringBuilder successMsg = new StringBuilder();
-		StringBuilder failureMsg = new StringBuilder();
-		String password = configService.selectConfigValueByKey("sys.user.initPassword");
-		for (SysUser user : userList) {
+		final StringBuilder successMsg = new StringBuilder();
+		final StringBuilder failureMsg = new StringBuilder();
+		final String password = configService.selectConfigValueByKey("sys.user.initPassword");
+		for (final SysUser user : userList) {
 			try {
 				// 验证是否存在这个用户
-				SysUser u = userMapper.selectUserByLoginName(user.getLoginName());
+				final SysUser u = userMapper.selectUserByLoginName(user.getLoginName());
 				if (StringUtils.isNull(u)) {
 					user.setPassword(Md5Utils.hash(user.getLoginName() + password));
 					user.setCreateBy(operName);
@@ -429,9 +429,9 @@ public class SysUserServiceImpl implements ISysUserService {
 					failureNum++;
 					failureMsg.append("<br/>" + failureNum + "、账号 " + user.getLoginName() + " 已存在");
 				}
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				failureNum++;
-				String msg = "<br/>" + failureNum + "、账号 " + user.getLoginName() + " 导入失败：";
+				final String msg = "<br/>" + failureNum + "、账号 " + user.getLoginName() + " 导入失败：";
 				failureMsg.append(msg + e.getMessage());
 				log.error(msg, e);
 			}
@@ -447,7 +447,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	/**
 	 * 用户状态修改
-	 * 
+	 *
 	 * @param user 用户信息
 	 * @return 结果
 	 */

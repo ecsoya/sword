@@ -3,7 +3,7 @@ package com.soyatec.sword.exceptions;
 public class LockableException extends RuntimeException {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 2595303173748972881L;
 

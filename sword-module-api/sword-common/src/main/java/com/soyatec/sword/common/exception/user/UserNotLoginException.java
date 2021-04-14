@@ -3,7 +3,7 @@ package com.soyatec.sword.common.exception.user;
 public class UserNotLoginException extends RuntimeException {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -3876665978896522335L;
 

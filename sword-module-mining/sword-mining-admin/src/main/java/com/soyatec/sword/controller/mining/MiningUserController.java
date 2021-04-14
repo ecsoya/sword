@@ -137,7 +137,7 @@ public class MiningUserController extends BaseController {
 				.equalsIgnoreCase(configService.selectConfigValueByKey(IMiningConstants.USER_BINARY_TREE_ENABLE))) {
 			return AjaxResult.error("添加失败");
 		}
-		UserReferrer userReferrer = referrerService.selectUserReferrerById(parentId);
+		final UserReferrer userReferrer = referrerService.selectUserReferrerById(parentId);
 		if (userReferrer == null) {
 			return AjaxResult.error("注册失败");
 		}
@@ -145,7 +145,7 @@ public class MiningUserController extends BaseController {
 		if (referral != null && referral == 2) {
 			referralCode = userReferrer.getRightCode();
 		}
-		CommonResult<?> result = userRegisterService.registerUser(user, referralCode, walletPassword);
+		final CommonResult<?> result = userRegisterService.registerUser(user, referralCode, walletPassword);
 		if (result.isSuccess()) {
 			return AjaxResult.success();
 		}
@@ -173,13 +173,13 @@ public class MiningUserController extends BaseController {
 			return AjaxResult.error();
 		}
 		if (StringUtils.isNotEmpty(password)) {
-			CommonResult<?> result = userProfileService.resetUserPassword(userId, password);
+			final CommonResult<?> result = userProfileService.resetUserPassword(userId, password);
 			if (!result.isSuccess()) {
 				return AjaxResult.error(result.getInfo());
 			}
 		}
 		if (StringUtils.isNotEmpty(walletPassword)) {
-			int result = userWalletService.resetUserWalletPassword(userId, walletPassword);
+			final int result = userWalletService.resetUserWalletPassword(userId, walletPassword);
 			if (result <= 0) {
 				return AjaxResult.error("更新钱包密码失败");
 			}
@@ -232,7 +232,7 @@ public class MiningUserController extends BaseController {
 	@PostMapping("/setLevel")
 	@ResponseBody
 	public AjaxResult setLevel(Long userId, Long id) {
-		UserLevel userLevel = new UserLevel();
+		final UserLevel userLevel = new UserLevel();
 		userLevel.setUserId(userId);
 		userLevel.setLevelId(id);
 		userLevel.setType(UserLevel.TYPE_ADMIN);
@@ -251,21 +251,21 @@ public class MiningUserController extends BaseController {
 			return AjaxResult.error("牛逼PLUS，你是怎么想的？");
 		}
 		InputStreamReader reader = null;
-		ClassPathResource resource = new ClassPathResource("sql/cleanTable.sql");
+		final ClassPathResource resource = new ClassPathResource("sql/cleanTable.sql");
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
-			ScriptRunner runner = new ScriptRunner(conn);
+			final ScriptRunner runner = new ScriptRunner(conn);
 			reader = new InputStreamReader(resource.getInputStream(), "utf-8");
 			runner.runScript(reader);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 			return AjaxResult.error("处理失败，请稍后再试！");
 		} finally {
 			try {
 				reader.close();
 				conn.close();
-			} catch (Exception e) {
+			} catch (final Exception e) {
 			}
 		}
 		return AjaxResult.success("处理成功");

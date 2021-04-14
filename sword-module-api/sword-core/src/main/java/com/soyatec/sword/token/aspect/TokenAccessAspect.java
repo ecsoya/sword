@@ -33,7 +33,7 @@ import com.soyatec.sword.token.service.ITokenAccessService;
 
 /**
  * 操作日志记录处理
- * 
+ *
  * @author AngryRED (jin.liu@soyatec.com)
  */
 @Aspect
@@ -58,7 +58,7 @@ public class TokenAccessAspect {
 
 	/**
 	 * 拦截异常操作
-	 * 
+	 *
 	 * @param joinPoint 切点
 	 * @param e         异常
 	 */
@@ -70,17 +70,17 @@ public class TokenAccessAspect {
 	protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult) {
 		try {
 			// 获得注解
-			TokenAccessLog controllerLog = getAnnotationLog(joinPoint);
+			final TokenAccessLog controllerLog = getAnnotationLog(joinPoint);
 			if (controllerLog == null) {
 				return;
 			}
-			String description = controllerLog.description();
+			final String description = controllerLog.description();
 			// *========数据库日志=========*//
-			TokenAccess operLog = new TokenAccess();
+			final TokenAccess operLog = new TokenAccess();
 			operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
 			// 请求的地址
-			HttpServletRequest request = ServletUtils.getRequest();
-			String ip = IpUtils.getIpAddr(request);
+			final HttpServletRequest request = ServletUtils.getRequest();
+			final String ip = IpUtils.getIpAddr(request);
 			operLog.setOperIp(ip);
 			// 返回参数
 			operLog.setJsonResult(JSON.toJSONString(jsonResult));
@@ -93,7 +93,7 @@ public class TokenAccessAspect {
 				operLog.setStatus(BusinessStatus.FAIL.ordinal());
 				operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
 			} else if (jsonResult instanceof CommonResult<?>) {
-				CommonResult<?> cr = (CommonResult<?>) jsonResult;
+				final CommonResult<?> cr = (CommonResult<?>) jsonResult;
 				if (cr.isSuccess()) {
 					operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
 				} else {
@@ -103,8 +103,8 @@ public class TokenAccessAspect {
 			}
 			// 设置方法名称
 			if (StringUtils.isNotEmpty(description)) {
-				String className = joinPoint.getTarget().getClass().getName();
-				String methodName = joinPoint.getSignature().getName();
+				final String className = joinPoint.getTarget().getClass().getName();
+				final String methodName = joinPoint.getSignature().getName();
 				operLog.setMethod(className + "." + methodName + "()");
 			} else {
 				operLog.setMethod(description);
@@ -125,7 +125,7 @@ public class TokenAccessAspect {
 				}
 			});
 			operLog.setOperTime(DateUtils.getNowDate());
-		} catch (Exception exp) {
+		} catch (final Exception exp) {
 			// 记录本地异常日志
 			log.error("==前置通知异常==");
 			log.error("异常信息:{}", exp.getMessage());
@@ -135,7 +135,7 @@ public class TokenAccessAspect {
 
 	/**
 	 * 获取注解中对方法的描述信息 用于Controller层注解
-	 * 
+	 *
 	 * @param log     日志
 	 * @param operLog 操作日志
 	 * @throws Exception
@@ -153,14 +153,14 @@ public class TokenAccessAspect {
 
 	/**
 	 * 获取请求的参数，放到log中
-	 * 
+	 *
 	 * @param operLog
 	 * @param request
 	 */
 	private void setRequestValue(TokenAccess operLog) {
-		HttpServletRequest request = ServletUtils.getRequest();
-		Map<String, String[]> map = request == null ? Collections.emptyMap() : request.getParameterMap();
-		String params = JSON.toJSONString(map);
+		final HttpServletRequest request = ServletUtils.getRequest();
+		final Map<String, String[]> map = request == null ? Collections.emptyMap() : request.getParameterMap();
+		final String params = JSON.toJSONString(map);
 		operLog.setOperParam(StringUtils.substring(params, 0, 2000));
 	}
 
@@ -168,9 +168,9 @@ public class TokenAccessAspect {
 	 * 是否存在注解，如果存在就获取
 	 */
 	private TokenAccessLog getAnnotationLog(JoinPoint joinPoint) throws Exception {
-		Signature signature = joinPoint.getSignature();
-		MethodSignature methodSignature = (MethodSignature) signature;
-		Method method = methodSignature.getMethod();
+		final Signature signature = joinPoint.getSignature();
+		final MethodSignature methodSignature = (MethodSignature) signature;
+		final Method method = methodSignature.getMethod();
 
 		if (method != null) {
 			return method.getAnnotation(TokenAccessLog.class);

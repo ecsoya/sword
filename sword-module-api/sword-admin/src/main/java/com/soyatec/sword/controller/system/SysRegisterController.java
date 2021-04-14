@@ -14,7 +14,7 @@ import com.soyatec.sword.system.service.ISysConfigService;
 
 /**
  * 注册验证
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 //@Controller
@@ -36,7 +36,7 @@ public class SysRegisterController extends BaseController {
 		if (!("true".equals(configService.selectConfigValueByKey("sys.account.registerUser")))) {
 			return error("当前系统没有开启注册功能！");
 		}
-		String msg = registerService.register(user);
+		final String msg = registerService.register(user);
 		return StringUtils.isEmpty(msg) ? success() : error(msg);
 	}
 }

@@ -11,7 +11,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 系统访问记录表 sys_logininfor
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysLogininfor extends BaseEntity {

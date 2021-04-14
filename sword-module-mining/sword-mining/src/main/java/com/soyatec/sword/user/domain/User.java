@@ -9,7 +9,7 @@ public class User extends SysUser {
 	public static final String TYPE_WALLET = TYPE_USER;
 	public static final String TYPE_ANONYMOUS = "03";// 匿名用户
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 6149988960819129465L;
 

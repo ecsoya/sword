@@ -13,7 +13,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * 菜单权限表 sys_menu
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysMenu extends BaseEntity {

@@ -30,11 +30,11 @@ public class FileUploadServiceImpl implements IFileUploadService {
 		if (file == null) {
 			return CommonResult.fail("参数错误");
 		}
-		CommonResult<List<String>> upload = upload(Collections.singletonList(file));
+		final CommonResult<List<String>> upload = upload(Collections.singletonList(file));
 		if (!upload.isSuccess()) {
 			return CommonResult.fail(upload.getInfo());
 		}
-		List<String> data = upload.getData();
+		final List<String> data = upload.getData();
 		return CommonResult.success(data == null || data.isEmpty() ? null : data.get(0));
 	}
 
@@ -46,7 +46,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 		if (files == null || files.isEmpty()) {
 			return CommonResult.fail("参数错误");
 		}
-		List<UploadData> datas = files.stream().map(file -> UploadData.build(file)).collect(Collectors.toList());
+		final List<UploadData> datas = files.stream().map(file -> UploadData.build(file)).collect(Collectors.toList());
 		return CommonResult.build(uploader.upload(datas, config));
 	}
 

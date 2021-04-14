@@ -11,7 +11,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 用户直推对象 t_user_referrer
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
@@ -178,13 +178,13 @@ public class UserReferrer extends BaseEntity {
 	}
 
 	public String generateLeftCode() {
-		String leftCode = UserReferrer.LEFT + StringUtils.randomStr(7);
+		final String leftCode = UserReferrer.LEFT + StringUtils.randomStr(7);
 		setLeftCode(leftCode);
 		return leftCode;
 	}
 
 	public String generateRightCode() {
-		String rightCode = UserReferrer.RIGHT + StringUtils.randomStr(7);
+		final String rightCode = UserReferrer.RIGHT + StringUtils.randomStr(7);
 		setRightCode(rightCode);
 		return rightCode;
 	}

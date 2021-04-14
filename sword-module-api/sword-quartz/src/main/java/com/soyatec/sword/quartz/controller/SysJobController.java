@@ -27,13 +27,13 @@ import com.soyatec.sword.quartz.util.CronUtils;
 
 /**
  * 调度任务信息操作处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/monitor/job")
 public class SysJobController extends BaseController {
-	private String prefix = "monitor/job";
+	private final String prefix = "monitor/job";
 
 	@Autowired
 	private ISysJobService jobService;
@@ -49,7 +49,7 @@ public class SysJobController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysJob job) {
 		startPage();
-		List<SysJob> list = jobService.selectJobList(job);
+		final List<SysJob> list = jobService.selectJobList(job);
 		return getDataTable(list);
 	}
 
@@ -58,8 +58,8 @@ public class SysJobController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysJob job) {
-		List<SysJob> list = jobService.selectJobList(job);
-		ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
+		final List<SysJob> list = jobService.selectJobList(job);
+		final ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
 		return util.exportExcel(list, "定时任务");
 	}
 
@@ -88,7 +88,7 @@ public class SysJobController extends BaseController {
 	@PostMapping("/changeStatus")
 	@ResponseBody
 	public AjaxResult changeStatus(SysJob job) throws SchedulerException {
-		SysJob newJob = jobService.selectJobById(job.getJobId());
+		final SysJob newJob = jobService.selectJobById(job.getJobId());
 		newJob.setStatus(job.getStatus());
 		return toAjax(jobService.changeStatus(newJob));
 	}

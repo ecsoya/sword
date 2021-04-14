@@ -24,8 +24,9 @@ public class WalletBusinessServiceImpl implements IWalletBusinessService {
 	@Override
 	public int updateWalletAddress() {
 		log.info("updateWalletAddress");
-		List<UserWalletAccount> accounts = walletAccountService.selectUserWalletAccountList(new UserWalletAccount())
-				.stream().filter(a -> StringUtils.isEmpty(a.getAddress())).collect(Collectors.toList());
+		final List<UserWalletAccount> accounts = walletAccountService
+				.selectUserWalletAccountList(new UserWalletAccount()).stream()
+				.filter(a -> StringUtils.isEmpty(a.getAddress())).collect(Collectors.toList());
 		accounts.forEach(account -> updateWalletAddress(account));
 		return 1;
 	}

@@ -18,7 +18,7 @@ import com.soyatec.sword.quartz.util.CronUtils;
 
 /**
  * 定时任务调度表 sys_job
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class SysJob extends BaseEntity implements Serializable {

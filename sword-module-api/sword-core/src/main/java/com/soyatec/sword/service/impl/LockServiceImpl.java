@@ -40,7 +40,7 @@ public class LockServiceImpl implements ILockService {
 		if (StringUtils.isEmpty(name)) {
 			throw new LockableException("Empty lock name");
 		}
-		String lock = redis.opsForValue().get(name);
+		final String lock = redis.opsForValue().get(name);
 		if (lock != null) {
 			throw new LockableException("Lock is using");
 		}

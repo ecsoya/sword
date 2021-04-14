@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createTime" column="create_time" />
 	</resultMap>
 	<select id="selectUserProfileById" parameterType="Long" resultMap="UserProfileResult">
-		select a.user_id, a.login_name, a.user_name, a.email, a.phonenumber as mobile, a.avatar, a.status, a.create_time from sys_user a
-		where a.user_id = #{userId}
+		select user_id, login_name, user_name, email, phonenumber as mobile, avatar, status, create_time from sys_user a
+		where user_id = #{userId}
 	</select>
 	
 	<select id="selectUserEmailById" parameterType="Long" resultType="String">
@@ -62,6 +62,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="fuzzySearchUserList" parameterType="String" resultMap="UserProfileResult">
 		select user_id, login_name, phonenumber, email, create_time from sys_user where user_type = 01 and user_id > 3 
 		<if test="loginName != null and login_name !=''">and login_name like concat('%', #{loginName}, '%')</if>
+	</select>
+	
+	<select id="selectUserProfileList" resultMap="UserProfileResult">
+		select user_id, login_name, user_name, email, phonenumber as mobile, avatar, status, create_time from sys_user a
+		where user_id in
+ 		<foreach collection="userIds" item="userId" open="(" separator="," close=")">
+ 			#{userId}
+        </foreach> 
 	</select>
 	
 </mapper> 

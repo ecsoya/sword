@@ -2,7 +2,7 @@ package com.soyatec.sword.common.constant;
 
 /**
  * 通用常量信息
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class Constants {

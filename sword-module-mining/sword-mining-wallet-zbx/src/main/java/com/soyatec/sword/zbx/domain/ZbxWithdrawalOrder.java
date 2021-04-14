@@ -1,9 +1,9 @@
 package com.soyatec.sword.zbx.domain;
 
 /**
- * 
+ *
  * 提币申请
- * 
+ *
  * @author ecsoya
  *
  */

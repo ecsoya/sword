@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 钱包地址接口
- * 
+ *
  * @author ecsoya
  */
 @RestController
@@ -38,7 +38,7 @@ public class UserAddressController extends BaseController {
 	@ApiOperation("提币地址列表")
 	@GetMapping("/list")
 	public CommonResult<List<UserWalletAddress>> list(String symbol) {
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return CommonResult.build(userAddressService.selectUserWalletAddressByUserId(userId, symbol));
 	}
 
@@ -49,7 +49,7 @@ public class UserAddressController extends BaseController {
 		if (StringUtils.isEmpty(address) || StringUtils.isEmpty(symbol) || StringUtils.isEmpty(name)) {
 			return CommonResult.fail("Empty Address");
 		}
-		UserWalletAddress walletAddress = new UserWalletAddress();
+		final UserWalletAddress walletAddress = new UserWalletAddress();
 		walletAddress.setSymbol(symbol);
 		walletAddress.setAddress(address);
 		walletAddress.setName(name);
@@ -59,7 +59,7 @@ public class UserAddressController extends BaseController {
 
 	/**
 	 * 更新提现或转账地址
-	 * 
+	 *
 	 */
 	@ApiOperation("更新提币地址")
 	@PostMapping("/edit")
@@ -68,7 +68,7 @@ public class UserAddressController extends BaseController {
 		if (id == null) {
 			return CommonResult.fail();
 		}
-		UserWalletAddress walletAddress = new UserWalletAddress();
+		final UserWalletAddress walletAddress = new UserWalletAddress();
 		walletAddress.setId(id);
 		walletAddress.setAddress(address);
 		walletAddress.setName(name);
@@ -77,7 +77,7 @@ public class UserAddressController extends BaseController {
 
 	/**
 	 * 删除提现或转账地址
-	 * 
+	 *
 	 */
 	@ApiOperation("删除提币地址")
 	@PostMapping("/remove")

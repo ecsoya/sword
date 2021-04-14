@@ -10,7 +10,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
  * Mining级别对象 t_mining_level
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-03-15
  */

@@ -28,8 +28,13 @@ public class UserAmount {
 		return amount == null || amount.doubleValue() <= 0;
 	}
 
+	@Override
+	public String toString() {
+		return "UserAmount [userId=" + userId + ", amount=" + amount + "]";
+	}
+
 	public static UserAmount empty(Long userId) {
-		UserAmount userAmount = new UserAmount();
+		final UserAmount userAmount = new UserAmount();
 		userAmount.setUserId(userId);
 		userAmount.setAmount(BigDecimal.ZERO);
 		return userAmount;

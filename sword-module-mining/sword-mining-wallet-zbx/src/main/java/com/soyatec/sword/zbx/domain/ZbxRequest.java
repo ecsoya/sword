@@ -7,9 +7,9 @@ import com.soyatec.sword.common.utils.StringUtils;
 
 public class ZbxRequest {
 
-	private String symbol;
+	private final String symbol;
 
-	private Map<String, Object> params = new HashMap<>();
+	private final Map<String, Object> params = new HashMap<>();
 
 	public ZbxRequest(String symbol) {
 		this.symbol = symbol;

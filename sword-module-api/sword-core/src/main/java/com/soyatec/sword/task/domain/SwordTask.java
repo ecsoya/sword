@@ -12,7 +12,7 @@ import com.soyatec.sword.constants.IConstants;
 
 /**
  * 定时任务执行结果对象 t_sword_task
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */

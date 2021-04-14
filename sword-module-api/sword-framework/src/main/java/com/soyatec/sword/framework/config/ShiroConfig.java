@@ -43,7 +43,7 @@ import com.soyatec.sword.framework.shiro.web.session.SpringSessionValidationSche
 
 /**
  * 权限配置加载
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Configuration
@@ -63,7 +63,7 @@ public class ShiroConfig {
 	@Value("${spring.redis.timeout:60000}")
 	private int timeout;
 	@Value("${spring.redis.password:}")
-	private String password = "";
+	private final String password = "";
 
 	/**
 	 * Session超时时间，单位为毫秒（默认30分钟）
@@ -150,12 +150,13 @@ public class ShiroConfig {
 	public void init() {
 		log.info("Init ShiroConfig");
 		try {
-			Class<?> type = getClass().getClassLoader().loadClass("at.pollux.thymeleaf.shiro.dialect.ShiroDialect");
+			final Class<?> type = getClass().getClassLoader()
+					.loadClass("at.pollux.thymeleaf.shiro.dialect.ShiroDialect");
 			if (type != null && context instanceof AnnotationConfigServletWebServerApplicationContext) {
 				((AnnotationConfigServletWebServerApplicationContext) context).registerBean("shiroDialect", type);
 			}
 			log.debug("Thymeleaf shiro extension started");
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.debug("Not support thymeleaf");
 		}
 	}
@@ -163,7 +164,7 @@ public class ShiroConfig {
 	@Bean
 	public RedisManager redisManager() {
 		log.info("redis={}:{}, password={}", host, port, password);
-		RedisManager redisManager = new RedisManager();
+		final RedisManager redisManager = new RedisManager();
 		redisManager.setHost(host + ":" + port);
 		redisManager.setDatabase(database);
 		redisManager.setTimeout(timeout);
@@ -178,7 +179,7 @@ public class ShiroConfig {
 	 */
 	@Bean
 	public RedisCacheManager cacheManager() {
-		RedisCacheManager redisCacheManager = new RedisCacheManager();
+		final RedisCacheManager redisCacheManager = new RedisCacheManager();
 		redisCacheManager.setRedisManager(redisManager());
 		redisCacheManager.setKeyPrefix(CACHE_KEY);
 		// 配置缓存的话要求放在session里面的实体类必须有个id标识
@@ -191,7 +192,7 @@ public class ShiroConfig {
 	 */
 	@Bean
 	public UserRealm userRealm(CacheManager cacheManager) {
-		UserRealm userRealm = new UserRealm();
+		final UserRealm userRealm = new UserRealm();
 		userRealm.setAuthorizationCacheName(Constants.SYS_AUTH_CACHE);
 		userRealm.setCacheManager(cacheManager);
 		return userRealm;
@@ -199,14 +200,14 @@ public class ShiroConfig {
 
 	/**
 	 * 配置RedisSessionDAO
-	 * 
+	 *
 	 * @Attention 使用的是shiro-redis开源插件
 	 * @Author Sans
 	 * @CreateTime 2019/6/12 13:44
 	 */
 	@Bean
 	public RedisSessionDAO redisSessionDAO() {
-		RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+		final RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
 		redisSessionDAO.setRedisManager(redisManager());
 		redisSessionDAO.setKeyPrefix(SESSION_KEY);
 		if (expireTime == -1) {
@@ -222,7 +223,7 @@ public class ShiroConfig {
 	 */
 	@Bean
 	public OnlineSessionFactory sessionFactory() {
-		OnlineSessionFactory sessionFactory = new OnlineSessionFactory();
+		final OnlineSessionFactory sessionFactory = new OnlineSessionFactory();
 		return sessionFactory;
 	}
 
@@ -231,7 +232,7 @@ public class ShiroConfig {
 	 */
 	@Bean
 	public CustomWebSessionManager sessionManager(CacheManager cacheManager) {
-		CustomWebSessionManager manager = new CustomWebSessionManager();
+		final CustomWebSessionManager manager = new CustomWebSessionManager();
 		// 加入缓存管理器
 		manager.setCacheManager(cacheManager);
 		// 删除过期的session
@@ -263,7 +264,7 @@ public class ShiroConfig {
 	@Bean
 	public SecurityManager securityManager(UserRealm userRealm, CacheManager cacheManager,
 			SessionManager sessionManager) {
-		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+		final DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		// 设置realm.
 		securityManager.setRealm(userRealm);
 		// 记住我
@@ -279,7 +280,7 @@ public class ShiroConfig {
 	 * 退出过滤器
 	 */
 	public LogoutFilter logoutFilter() {
-		LogoutFilter logoutFilter = new LogoutFilter();
+		final LogoutFilter logoutFilter = new LogoutFilter();
 		logoutFilter.setLoginUrl(loginUrl);
 		return logoutFilter;
 	}
@@ -290,7 +291,7 @@ public class ShiroConfig {
 	@Bean
 	public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager, CacheManager cacheManager,
 			SessionManager sessionManager) {
-		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+		final ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		// Shiro的核心安全接口,这个属性是必须的
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 		// 身份认证失败，则跳转到登录页面的配置
@@ -298,7 +299,7 @@ public class ShiroConfig {
 		// 权限认证失败，则跳转到指定页面
 		shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
 		// Shiro连接约束配置，即过滤链的定义
-		LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+		final LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 		// 对静态资源设置匿名访问
 		filterChainDefinitionMap.put("/favicon.ico**", "anon");
 		filterChainDefinitionMap.put("/sword.png**", "anon");
@@ -326,7 +327,7 @@ public class ShiroConfig {
 		// 系统权限列表
 		// filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
-		Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+		final Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
 		if (expireTime > 0) {
 			filters.put("kickout", kickoutSessionFilter(cacheManager, sessionManager));
 		}
@@ -352,7 +353,7 @@ public class ShiroConfig {
 
 	@Bean
 	public UserFilter userFilter() {
-		UserFilter userFilter = new CustomUserFilter();
+		final UserFilter userFilter = new CustomUserFilter();
 		userFilter.setLoginUrl(loginUrl);
 		return userFilter;
 	}
@@ -361,7 +362,7 @@ public class ShiroConfig {
 	 * 自定义验证码过滤器
 	 */
 	public CaptchaValidateFilter captchaValidateFilter() {
-		CaptchaValidateFilter captchaValidateFilter = new CaptchaValidateFilter();
+		final CaptchaValidateFilter captchaValidateFilter = new CaptchaValidateFilter();
 		captchaValidateFilter.setCaptchaEnabled(captchaEnabled);
 		captchaValidateFilter.setCaptchaType(captchaType);
 		return captchaValidateFilter;
@@ -371,7 +372,7 @@ public class ShiroConfig {
 	 * cookie 属性设置
 	 */
 	public SimpleCookie rememberMeCookie() {
-		SimpleCookie cookie = new SimpleCookie("rememberMe");
+		final SimpleCookie cookie = new SimpleCookie("rememberMe");
 		cookie.setDomain(domain);
 		cookie.setPath(path);
 		cookie.setHttpOnly(httpOnly);
@@ -383,7 +384,7 @@ public class ShiroConfig {
 	 * 记住我
 	 */
 	public CookieRememberMeManager rememberMeManager() {
-		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+		final CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
 		cookieRememberMeManager.setCookie(rememberMeCookie());
 		cookieRememberMeManager.setCipherKey(Base64.decode(cipherKey));
 		return cookieRememberMeManager;
@@ -393,7 +394,7 @@ public class ShiroConfig {
 	 * 同一个用户多设备登录限制
 	 */
 	public KickoutSessionFilter kickoutSessionFilter(CacheManager cacheManager, SessionManager sessionManager) {
-		KickoutSessionFilter kickoutSessionFilter = new KickoutSessionFilter();
+		final KickoutSessionFilter kickoutSessionFilter = new KickoutSessionFilter();
 		kickoutSessionFilter.setCacheManager(cacheManager);
 		kickoutSessionFilter.setSessionManager(sessionManager);
 		// 同一个用户最大的会话数，默认-1无限制；比如2的意思是同一个用户允许最多同时两个人登录
@@ -411,7 +412,7 @@ public class ShiroConfig {
 	@Bean
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
 			@Qualifier("securityManager") SecurityManager securityManager) {
-		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+		final AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
 		authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
 		return authorizationAttributeSourceAdvisor;
 	}

@@ -7,14 +7,14 @@ import com.soyatec.sword.wallet.domain.UserWalletRecord;
 
 /**
  * 用户钱包记录Mapper接口
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
 public interface UserWalletRecordMapper {
 	/**
 	 * 查询用户钱包记录
-	 * 
+	 *
 	 * @param id 用户钱包记录ID
 	 * @return 用户钱包记录
 	 */
@@ -22,7 +22,7 @@ public interface UserWalletRecordMapper {
 
 	/**
 	 * 查询用户钱包记录列表
-	 * 
+	 *
 	 * @param userWalletRecord 用户钱包记录
 	 * @return 用户钱包记录集合
 	 */
@@ -30,7 +30,7 @@ public interface UserWalletRecordMapper {
 
 	/**
 	 * 新增用户钱包记录
-	 * 
+	 *
 	 * @param userWalletRecord 用户钱包记录
 	 * @return 结果
 	 */
@@ -38,7 +38,7 @@ public interface UserWalletRecordMapper {
 
 	/**
 	 * 修改用户钱包记录
-	 * 
+	 *
 	 * @param userWalletRecord 用户钱包记录
 	 * @return 结果
 	 */
@@ -46,7 +46,7 @@ public interface UserWalletRecordMapper {
 
 	/**
 	 * 删除用户钱包记录
-	 * 
+	 *
 	 * @param id 用户钱包记录ID
 	 * @return 结果
 	 */
@@ -54,7 +54,7 @@ public interface UserWalletRecordMapper {
 
 	/**
 	 * 批量删除用户钱包记录
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */

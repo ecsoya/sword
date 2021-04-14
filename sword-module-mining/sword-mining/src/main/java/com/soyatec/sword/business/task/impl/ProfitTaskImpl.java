@@ -12,6 +12,7 @@ import com.soyatec.sword.business.service.IProfitService;
 import com.soyatec.sword.business.task.IProfitTask;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.constants.IConstants;
 import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.exceptions.TransactionException;
 import com.soyatec.sword.system.service.ISysConfigService;
@@ -43,13 +44,13 @@ public class ProfitTaskImpl implements IProfitTask {
 		if (tasks == null || tasks.length == 0) {
 			return;
 		}
-		for (TaskRunner runner : tasks) {
-			String taskName = runner.getTaskName();
+		for (final TaskRunner runner : tasks) {
+			final String taskName = runner.getTaskName();
 			if (StringUtils.isEmpty(taskName)) {
 				continue;
 			}
 			log.debug("Sword > 处理任务：{}", taskName);
-			SwordTask task = taskService.selectSwordTaskByName(date, taskName);
+			final SwordTask task = taskService.selectSwordTaskByName(date, taskName);
 			if (task == null) {
 				continue; // taskName is null
 			}
@@ -66,15 +67,15 @@ public class ProfitTaskImpl implements IProfitTask {
 		if (task == null || runner == null) {
 			return 0;
 		}
-		String taskName = runner.getTaskName();
+		final String taskName = runner.getTaskName();
 		log.debug("Sword > {} 开始执行", taskName);
-		IProfitService taskRunner = runner.getTaskRunner();
+		final IProfitService taskRunner = runner.getTaskRunner();
 		int result = 0;
 		if (taskRunner != null) {
 			result = taskRunner.dispatchProfit(date);
 		}
 		if (result > 0) {
-			task.setStatus(SwordTask.STATUS_FINISHED);
+			task.setStatus(IConstants.STATUS_FINISHED);
 			return taskService.updateSwordTask(task);
 		}
 		log.debug("Sword > {} 执行完成", taskName);

@@ -17,7 +17,7 @@ import com.soyatec.sword.upload.core.UploadData;
 
 /**
  * 文件上传工具类
- * 
+ *
  * @author AngryRED (jin.liu@soyatec.com)
  */
 @Service
@@ -29,17 +29,18 @@ public class AliyunFileUploader extends AbstractFileUploader {
 	protected List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException {
 		log.info("AliyunFileUploader, config={}", config);
 
-		OSS client = new OSSClientBuilder().build(config.getEndpoint(), config.getAccessKey(), config.getSecretKey());
+		final OSS client = new OSSClientBuilder().build(config.getEndpoint(), config.getAccessKey(),
+				config.getSecretKey());
 
-		List<String> result = new ArrayList<>();
+		final List<String> result = new ArrayList<>();
 		try {
-			for (UploadData file : files) {
-				String fileName = getFileName(file, config);
-				String contentType = file.getContentType();
-				Long length = file.getLength();
-				InputStream inputStream = file.getInputStream();
+			for (final UploadData file : files) {
+				final String fileName = getFileName(file, config);
+				final String contentType = file.getContentType();
+				final Long length = file.getLength();
+				final InputStream inputStream = file.getInputStream();
 				if (inputStream != null && inputStream.available() > 0) {
-					ObjectMetadata metadata = new ObjectMetadata();
+					final ObjectMetadata metadata = new ObjectMetadata();
 					if (length != null) {
 						metadata.setContentLength(length);
 					}
@@ -48,10 +49,10 @@ public class AliyunFileUploader extends AbstractFileUploader {
 					}
 					client.putObject(config.getBucket(), fileName, inputStream, metadata);
 				}
-				String url = getUrl(config.getBaseUrl(), fileName);
+				final String url = getUrl(config.getBaseUrl(), fileName);
 				result.add(url);
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log.warn("AliyunFileUploader, error={}", e.getLocalizedMessage());
 		} finally {
 			/*

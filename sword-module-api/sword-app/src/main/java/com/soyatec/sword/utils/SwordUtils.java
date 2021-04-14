@@ -35,7 +35,7 @@ public class SwordUtils {
 	}
 
 	public static Subject getSubject() throws UserNotLoginException {
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 		if (subject == null) {
 			throw new UserNotLoginException();
 		}
@@ -44,7 +44,7 @@ public class SwordUtils {
 
 	public static SysUser getUser() {
 		SysUser user = null;
-		Object obj = getSubject().getPrincipal();
+		final Object obj = getSubject().getPrincipal();
 		if (StringUtils.isNotNull(obj)) {
 			user = new SysUser();
 			BeanUtils.copyBeanProp(user, obj);
@@ -62,12 +62,12 @@ public class SwordUtils {
 		if (isDev() || redis == null || StringUtils.isEmpty(name) || t == null) {
 			return null;
 		}
-		String key = getCacheName(name);
-		Object object = redis.opsForValue().get(key);
+		final String key = getCacheName(name);
+		final Object object = redis.opsForValue().get(key);
 		if (object == null || !t.isAssignableFrom(object.getClass())) {
 			return null;
 		}
-		Long expire = redis.getExpire(key, TimeUnit.SECONDS);
+		final Long expire = redis.getExpire(key, TimeUnit.SECONDS);
 		if (expire != null && expire > getExpiresSeconds()) {
 			redis.delete(key);
 			return null;
@@ -87,7 +87,7 @@ public class SwordUtils {
 		if (redis == null || StringUtils.isEmpty(name) || value == null) {
 			return false;
 		}
-		Long expiresSeconds = getExpiresSeconds();
+		final Long expiresSeconds = getExpiresSeconds();
 		redis.opsForValue().set(getCacheName(name), value, expiresSeconds, TimeUnit.SECONDS);
 		return true;
 	}
@@ -112,23 +112,23 @@ public class SwordUtils {
 	}
 
 	public static CommonResult<?> verifyCode(String code) {
-		if (isDev() && StringUtils.equals("000000", code)) {
+		if (isDev() && org.apache.commons.lang3.StringUtils.equals("000000", code)) {
 			return CommonResult.success();
 		}
 		if (StringUtils.isEmpty(code)) {
 			return CommonResult.fail("验证码错误");
 		}
 		if (GlobalConfig.getEmailCode()) {
-			IMailCodeService mailService = SpringUtils.getBean(IMailCodeService.class);
+			final IMailCodeService mailService = SpringUtils.getBean(IMailCodeService.class);
 			return mailService.verifyCodeByUserId(getUserId(), code);
 		} else {
-			IMobileCodeService mobileService = SpringUtils.getBean(IMobileCodeService.class);
+			final IMobileCodeService mobileService = SpringUtils.getBean(IMobileCodeService.class);
 			return mobileService.verifyCodeByUserId(getUserId(), code);
 		}
 	}
 
 	public static CommonResult<?> verifyCodeByUsername(String username, String code) {
-		if (StringUtils.equals("000000", code)) {
+		if (org.apache.commons.lang3.StringUtils.equals("000000", code)) {
 			if (isDev()) {
 				return CommonResult.success();
 			} else if (isProd() && "test001".equals(username)) {
@@ -139,32 +139,32 @@ public class SwordUtils {
 			return CommonResult.fail("验证码错误");
 		}
 		if (GlobalConfig.getEmailCode()) {
-			IMailCodeService mailService = SpringUtils.getBean(IMailCodeService.class);
+			final IMailCodeService mailService = SpringUtils.getBean(IMailCodeService.class);
 			return mailService.verifyCodeByUsername(username, code);
 		} else {
-			IMobileCodeService mobileService = SpringUtils.getBean(IMobileCodeService.class);
+			final IMobileCodeService mobileService = SpringUtils.getBean(IMobileCodeService.class);
 			return mobileService.verifyCodeByUsername(username, code);
 		}
 	}
 
 	public static CommonResult<?> verifyCode(String source, String code) {
-		if (isDev() && StringUtils.equals("000000", code)) {
+		if (isDev() && org.apache.commons.lang3.StringUtils.equals("000000", code)) {
 			return CommonResult.success();
 		}
 		if (StringUtils.isEmpty(source) || StringUtils.isEmpty(code)) {
 			return CommonResult.fail("验证码错误");
 		}
 		if (GlobalConfig.getEmailCode()) {
-			IMailCodeService mailService = SpringUtils.getBean(IMailCodeService.class);
+			final IMailCodeService mailService = SpringUtils.getBean(IMailCodeService.class);
 			return mailService.verifyCode(source, code);
 		} else {
-			IMobileCodeService mailService = SpringUtils.getBean(IMobileCodeService.class);
+			final IMobileCodeService mailService = SpringUtils.getBean(IMobileCodeService.class);
 			return mailService.verifyCode(source, code);
 		}
 	}
 
 	public static CommonResult<?> checkVersion(Long version) {
-		SwordVersion current = getVersion();
+		final SwordVersion current = getVersion();
 		if (current != null && version != null && version < current.getVersion()) {
 			return CommonResult.fail("版本过低，请升级后使用");
 		}
@@ -172,10 +172,10 @@ public class SwordUtils {
 	}
 
 	public static SwordVersion getVersion() {
-		HttpServletRequest request = ServletUtils.getRequest();
-		String type = getType(request);
+		final HttpServletRequest request = ServletUtils.getRequest();
+		final String type = getType(request);
 
-		ISwordVersionService versionService = SpringUtils.getBean(ISwordVersionService.class);
+		final ISwordVersionService versionService = SpringUtils.getBean(ISwordVersionService.class);
 		return versionService.selectLatestVersion(type);
 	}
 
@@ -184,14 +184,14 @@ public class SwordUtils {
 			if (request == null) {
 				return SwordVersion.TYPE_ANDROID;
 			}
-			String agent = request.getHeader("User-Agent");
+			final String agent = request.getHeader("User-Agent");
 			if (agent != null) {
-				String name = agent.toLowerCase();
+				final String name = agent.toLowerCase();
 				if (name.indexOf("mac") != -1 || name.indexOf("iphone") != -1) {
 					return SwordVersion.TYPE_IOS;
 				}
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 		}
 		return SwordVersion.TYPE_ANDROID;
 	}

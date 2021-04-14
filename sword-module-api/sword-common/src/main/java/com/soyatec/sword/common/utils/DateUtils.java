@@ -21,7 +21,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * 时间工具类
- * 
+ *
  * @author King Crab
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
@@ -42,7 +42,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 获取当前Date型日期
-	 * 
+	 *
 	 * @return Date() 当前日期
 	 */
 	public static Date getNowDate() {
@@ -51,7 +51,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 获取当前日期, 默认格式为yyyy-MM-dd
-	 * 
+	 *
 	 * @return String
 	 */
 	public static String getDate() {
@@ -88,7 +88,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	public static final Date dateTime(final String format, final String ts) {
 		try {
 			return new SimpleDateFormat(format).parse(ts);
-		} catch (ParseException e) {
+		} catch (final ParseException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -96,7 +96,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	public static final Date defaultDate(final String ts) {
 		try {
 			return new SimpleDateFormat(DEFAULT_DATE_FORMAT).parse(ts);
-		} catch (ParseException e) {
+		} catch (final ParseException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -105,7 +105,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 * 日期路径 即年/月/日 如2018/08/08
 	 */
 	public static final String datePath() {
-		Date now = new Date();
+		final Date now = new Date();
 		return DateFormatUtils.format(now, "yyyy/MM/dd");
 	}
 
@@ -113,7 +113,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 * 日期路径 即年/月/日 如20180808
 	 */
 	public static final String dateTime() {
-		Date now = new Date();
+		final Date now = new Date();
 		return DateFormatUtils.format(now, "yyyyMMdd");
 	}
 
@@ -126,7 +126,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		}
 		try {
 			return parseDate(str.toString(), parsePatterns);
-		} catch (ParseException e) {
+		} catch (final ParseException e) {
 			return null;
 		}
 	}
@@ -135,7 +135,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 * 获取服务器启动时间
 	 */
 	public static Date getServerStartDate() {
-		long time = ManagementFactory.getRuntimeMXBean().getStartTime();
+		final long time = ManagementFactory.getRuntimeMXBean().getStartTime();
 		return new Date(time);
 	}
 
@@ -150,18 +150,18 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 * 计算两个时间差
 	 */
 	public static String getDatePoor(Date endDate, Date nowDate) {
-		long nd = 1000 * 24 * 60 * 60;
-		long nh = 1000 * 60 * 60;
-		long nm = 1000 * 60;
+		final long nd = 1000 * 24 * 60 * 60;
+		final long nh = 1000 * 60 * 60;
+		final long nm = 1000 * 60;
 		// long ns = 1000;
 		// 获得两个时间的毫秒时间差异
-		long diff = endDate.getTime() - nowDate.getTime();
+		final long diff = endDate.getTime() - nowDate.getTime();
 		// 计算差多少天
-		long day = diff / nd;
+		final long day = diff / nd;
 		// 计算差多少小时
-		long hour = diff % nd / nh;
+		final long hour = diff % nd / nh;
 		// 计算差多少分钟
-		long min = diff % nd % nh / nm;
+		final long min = diff % nd % nh / nm;
 		// 计算差多少秒//输出结果
 		// long sec = diff % nd % nh % nm / ns;
 		return day + "天" + hour + "小时" + min + "分钟";
@@ -171,12 +171,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (start == null || end == null || start.after(end)) {
 			return null;
 		}
-		long diff = end.getTime() - start.getTime();
+		final long diff = end.getTime() - start.getTime();
 		return diff / 1000;
 	}
 
 	public static int getYear(Date date) {
-		Calendar instance = Calendar.getInstance();
+		final Calendar instance = Calendar.getInstance();
 		instance.setTime(date);
 		return instance.get(Calendar.YEAR);
 	}
@@ -185,7 +185,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (birthday == null) {
 			return null;
 		}
-		Date now = getNowDate();
+		final Date now = getNowDate();
 		return getYear(now) - getYear(birthday);
 	}
 
@@ -194,9 +194,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 			return null;
 		}
 		try {
-			Date now = parseDate(dateTime(), "yyyyMMdd");
+			final Date now = parseDate(dateTime(), "yyyyMMdd");
 			return addDays(now, -duration);
-		} catch (ParseException e) {
+		} catch (final ParseException e) {
 		}
 		return null;
 	}
@@ -205,12 +205,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (date == null) {
 			return false;
 		}
-		Calendar c = Calendar.getInstance();
+		final Calendar c = Calendar.getInstance();
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
-		Date today = c.getTime();
+		final Date today = c.getTime();
 		return date.before(today);
 	}
 
@@ -225,7 +225,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (localDateTime == null) {
 			return null;
 		}
-		Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+		final Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
 		return Date.from(instant);
 	}
 
@@ -253,7 +253,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (date == null) {
 			return false;
 		}
-		Date start = toDate(LocalDate.now().atStartOfDay());
+		final Date start = toDate(LocalDate.now().atStartOfDay());
 		if (start.equals(date)) {
 			return true;
 		}
@@ -271,7 +271,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (createTime == null) {
 			return false;
 		}
-		Date fiveMinutesAgo = toDate(LocalDateTime.now().minusMinutes(5));
+		final Date fiveMinutesAgo = toDate(LocalDateTime.now().minusMinutes(5));
 		return createTime.after(fiveMinutesAgo);
 	}
 
@@ -283,12 +283,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	public static Date getWeekStart(int before) {
-		LocalDate now = LocalDate.now().minusWeeks(before);
+		final LocalDate now = LocalDate.now().minusWeeks(before);
 		return toDate(now.minusDays(now.getDayOfWeek().getValue() - 1).atStartOfDay());
 	}
 
 	public static Date getMonthStart(int before) {
-		LocalDate now = LocalDate.now().minusMonths(before);
+		final LocalDate now = LocalDate.now().minusMonths(before);
 		return toDate(now.plusDays(1 - now.getDayOfMonth()).atStartOfDay());
 	}
 
@@ -296,9 +296,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (from == null || end == null || from.after(end)) {
 			return Collections.emptyList();
 		}
-		List<Date> list = new ArrayList<Date>(); // 保存日期集合
+		final List<Date> list = new ArrayList<Date>(); // 保存日期集合
 		Date date = from;
-		Calendar cd = Calendar.getInstance();// 用Calendar 进行日期比较判断
+		final Calendar cd = Calendar.getInstance();// 用Calendar 进行日期比较判断
 		while (date.getTime() <= end.getTime()) {
 			list.add(date);
 			cd.setTime(date);
@@ -370,8 +370,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		}
 
 		LocalDate startDate = localDate(getStartOf(start));
-		LocalDate endDate = localDate(getEndOf(end));
-		List<Date> months = new ArrayList<>();
+		final LocalDate endDate = localDate(getEndOf(end));
+		final List<Date> months = new ArrayList<>();
 		while (startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
 			months.add(toDate(startDate));
 			startDate = startDate.plusMonths(1);
@@ -383,7 +383,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (month == null) {
 			return null;
 		}
-		LocalDateTime date = localDateTime(month);
+		final LocalDateTime date = localDateTime(month);
 		return getStartOf(toDate(date.minusDays(date.getDayOfMonth() - 1)));
 	}
 
@@ -391,7 +391,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (month == null) {
 			return null;
 		}
-		LocalDate date = localDate(month);
+		final LocalDate date = localDate(month);
 		return getEndOf(toDate(date.withDayOfMonth(date.lengthOfMonth())));
 	}
 
@@ -400,7 +400,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 			return null;
 		}
 
-		LocalDate localDate = localDate(month);
+		final LocalDate localDate = localDate(month);
 		return localDate.lengthOfMonth();
 	}
 
@@ -409,13 +409,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 			return null;
 		}
 
-		LocalDate localDate = localDate(date);
+		final LocalDate localDate = localDate(date);
 		return localDate.getDayOfMonth();
 	}
 
 	public static int getRemainDaysOfMonth(Date date) {
-		LocalDate monthEnd = localDate(getMonthEndOf(date));
-		LocalDate now = localDate(date);
+		final LocalDate monthEnd = localDate(getMonthEndOf(date));
+		final LocalDate now = localDate(date);
 		return monthEnd.getDayOfMonth() - now.getDayOfMonth() + 1;
 	}
 
@@ -423,8 +423,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (d1 == null || d2 == null) {
 			return false;
 		}
-		LocalDate ld1 = localDate(d1);
-		LocalDate ld2 = localDate(d2);
+		final LocalDate ld1 = localDate(d1);
+		final LocalDate ld2 = localDate(d2);
 		return ld1.getYear() == ld2.getYear() && ld1.getMonthValue() == ld2.getMonthValue();
 	}
 
@@ -432,8 +432,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (d1 == null || d2 == null) {
 			return false;
 		}
-		LocalDate ld1 = localDate(d1);
-		LocalDate ld2 = localDate(d2);
+		final LocalDate ld1 = localDate(d1);
+		final LocalDate ld2 = localDate(d2);
 		return ld1.getYear() == ld2.getYear() && ld1.getMonthValue() == ld2.getMonthValue()
 				&& ld1.getDayOfMonth() == ld2.getDayOfMonth();
 	}
@@ -459,8 +459,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (date == null) {
 			return false;
 		}
-		LocalDateTime time = localDateTime(date);
-		DayOfWeek dayOfWeek = time.getDayOfWeek();
+		final LocalDateTime time = localDateTime(date);
+		final DayOfWeek dayOfWeek = time.getDayOfWeek();
 		return DayOfWeek.SATURDAY.equals(dayOfWeek) || DayOfWeek.SUNDAY.equals(dayOfWeek);
 	}
 
@@ -468,12 +468,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (date == null) {
 			return null;
 		}
-		LocalDateTime localDateTime = localDateTime(date);
+		final LocalDateTime localDateTime = localDateTime(date);
 		return toDate(localDateTime.withHour(12).withMinute(0).withSecond(0).withNano(0));
 	}
 
 	public static Date fixHourOfDate(Date date, int hour) {
-		LocalDateTime localDateTime = localDateTime(date);
+		final LocalDateTime localDateTime = localDateTime(date);
 		return toDate(localDateTime.withHour(hour).withMinute(0).withSecond(0).withNano(0));
 	}
 }

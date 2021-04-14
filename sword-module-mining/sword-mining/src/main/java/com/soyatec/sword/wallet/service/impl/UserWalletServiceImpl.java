@@ -17,7 +17,7 @@ import com.soyatec.sword.wallet.service.IUserWalletService;
 
 /**
  * 用户钱包Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
@@ -31,7 +31,7 @@ public class UserWalletServiceImpl implements IUserWalletService {
 
 	/**
 	 * 查询用户钱包
-	 * 
+	 *
 	 * @param userId 用户钱包ID
 	 * @return 用户钱包
 	 */
@@ -45,7 +45,7 @@ public class UserWalletServiceImpl implements IUserWalletService {
 		if (userId == null) {
 			return null;
 		}
-		UserWallet wallet = userWalletMapper.selectUserWalletById(userId);
+		final UserWallet wallet = userWalletMapper.selectUserWalletById(userId);
 		if (wallet != null && withAccounts) {
 			wallet.setAccounts(walletAccountService.selectUserWalletAccountListByUserId(userId));
 		}
@@ -54,7 +54,7 @@ public class UserWalletServiceImpl implements IUserWalletService {
 
 	/**
 	 * 查询用户钱包列表
-	 * 
+	 *
 	 * @param userWallet 用户钱包
 	 * @return 用户钱包
 	 */
@@ -65,7 +65,7 @@ public class UserWalletServiceImpl implements IUserWalletService {
 
 	/**
 	 * 新增用户钱包
-	 * 
+	 *
 	 * @param userWallet 用户钱包
 	 * @return 结果
 	 */
@@ -77,7 +77,7 @@ public class UserWalletServiceImpl implements IUserWalletService {
 
 	/**
 	 * 修改用户钱包
-	 * 
+	 *
 	 * @param userWallet 用户钱包
 	 * @return 结果
 	 */
@@ -89,7 +89,7 @@ public class UserWalletServiceImpl implements IUserWalletService {
 
 	/**
 	 * 删除用户钱包对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -100,7 +100,7 @@ public class UserWalletServiceImpl implements IUserWalletService {
 
 	/**
 	 * 删除用户钱包信息
-	 * 
+	 *
 	 * @param userId 用户钱包ID
 	 * @return 结果
 	 */
@@ -138,7 +138,7 @@ public class UserWalletServiceImpl implements IUserWalletService {
 		if (userId == null || StringUtils.isEmpty(password)) {
 			return CommonResult.fail(MessageUtils.message("UserWalletPasswordServiceImpl.0")); //$NON-NLS-1$
 		}
-		UserWallet wallet = selectUserWalletById(userId);
+		final UserWallet wallet = selectUserWalletById(userId);
 		if (wallet == null) {
 			return CommonResult.fail(MessageUtils.message("UserWalletPasswordServiceImpl.1")); //$NON-NLS-1$
 		}
@@ -152,20 +152,20 @@ public class UserWalletServiceImpl implements IUserWalletService {
 	public CommonResult<?> changeUserWalletPassword(Long userId, String oldPassword, String newPassword) {
 		UserWallet wallet = selectUserWalletById(userId);
 		if (wallet != null) {
-			CommonResult<?> verified = verifyUserWalletPassword(userId, oldPassword);
+			final CommonResult<?> verified = verifyUserWalletPassword(userId, oldPassword);
 			if (!verified.isSuccess()) {
 				return verified;
 			} else if (StringUtils.isEmpty(newPassword) || newPassword.length() < 6) {
 				return CommonResult.fail(MessageUtils.message("UserWalletPasswordServiceImpl.3")); //$NON-NLS-1$
 			}
-			String salt = StringUtils.randomNum(6);
+			final String salt = StringUtils.randomNum(6);
 			wallet.setSalt(salt);
 			wallet.setPassword(StringUtils.encryptPassword(userId.toString(), newPassword, salt));
 			return CommonResult.ajax(updateUserWallet(wallet));
 		} else {
 			wallet = new UserWallet();
 			wallet.setUserId(userId);
-			String salt = StringUtils.randomNum(6);
+			final String salt = StringUtils.randomNum(6);
 			wallet.setSalt(salt);
 			wallet.setPassword(StringUtils.encryptPassword(userId.toString(), newPassword, salt));
 			return CommonResult.ajax(insertUserWallet(wallet));
@@ -179,14 +179,14 @@ public class UserWalletServiceImpl implements IUserWalletService {
 		}
 		UserWallet wallet = selectUserWalletById(userId);
 		if (wallet != null) {
-			String salt = StringUtils.randomNum(6);
+			final String salt = StringUtils.randomNum(6);
 			wallet.setSalt(salt);
 			wallet.setPassword(StringUtils.encryptPassword(userId.toString(), password, salt));
 			return updateUserWallet(wallet);
 		} else {
 			wallet = new UserWallet();
 			wallet.setUserId(userId);
-			String salt = StringUtils.randomNum(6);
+			final String salt = StringUtils.randomNum(6);
 			wallet.setSalt(salt);
 			wallet.setPassword(StringUtils.encryptPassword(userId.toString(), password, salt));
 			return insertUserWallet(wallet);

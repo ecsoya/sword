@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 全局配置类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Component

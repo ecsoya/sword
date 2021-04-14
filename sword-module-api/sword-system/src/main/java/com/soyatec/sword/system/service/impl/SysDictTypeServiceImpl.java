@@ -23,7 +23,7 @@ import com.soyatec.sword.system.service.ISysDictTypeService;
 
 /**
  * 字典 业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 @Service
@@ -39,16 +39,16 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	 */
 	@PostConstruct
 	public void init() {
-		List<SysDictType> dictTypeList = dictTypeMapper.selectDictTypeAll();
-		for (SysDictType dictType : dictTypeList) {
-			List<SysDictData> dictDatas = dictDataMapper.selectDictDataByType(dictType.getDictType());
+		final List<SysDictType> dictTypeList = dictTypeMapper.selectDictTypeAll();
+		for (final SysDictType dictType : dictTypeList) {
+			final List<SysDictData> dictDatas = dictDataMapper.selectDictDataByType(dictType.getDictType());
 			DictUtils.setDictCache(dictType.getDictType(), dictDatas);
 		}
 	}
 
 	/**
 	 * 根据条件分页查询字典类型
-	 * 
+	 *
 	 * @param dictType 字典类型信息
 	 * @return 字典类型集合信息
 	 */
@@ -59,7 +59,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
 	/**
 	 * 根据所有字典类型
-	 * 
+	 *
 	 * @return 字典类型集合信息
 	 */
 	@Override
@@ -69,7 +69,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
 	/**
 	 * 根据字典类型查询字典数据
-	 * 
+	 *
 	 * @param dictType 字典类型
 	 * @return 字典数据集合信息
 	 */
@@ -89,7 +89,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
 	/**
 	 * 根据字典类型ID查询信息
-	 * 
+	 *
 	 * @param dictId 字典类型ID
 	 * @return 字典类型
 	 */
@@ -100,7 +100,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
 	/**
 	 * 根据字典类型查询信息
-	 * 
+	 *
 	 * @param dictType 字典类型
 	 * @return 字典类型
 	 */
@@ -111,20 +111,20 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
 	/**
 	 * 批量删除字典类型
-	 * 
+	 *
 	 * @param ids 需要删除的数据
 	 * @return 结果
 	 */
 	@Override
 	public int deleteDictTypeByIds(String ids) {
-		Long[] dictIds = Convert.toLongArray(ids);
-		for (Long dictId : dictIds) {
-			SysDictType dictType = selectDictTypeById(dictId);
+		final Long[] dictIds = Convert.toLongArray(ids);
+		for (final Long dictId : dictIds) {
+			final SysDictType dictType = selectDictTypeById(dictId);
 			if (dictDataMapper.countDictDataByType(dictType.getDictType()) > 0) {
 				throw new BusinessException(String.format("%1$s已分配,不能删除", dictType.getDictName()));
 			}
 		}
-		int count = dictTypeMapper.deleteDictTypeByIds(dictIds);
+		final int count = dictTypeMapper.deleteDictTypeByIds(dictIds);
 		if (count > 0) {
 			DictUtils.clearDictCache();
 		}
@@ -141,13 +141,13 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
 	/**
 	 * 新增保存字典类型信息
-	 * 
+	 *
 	 * @param dictType 字典类型信息
 	 * @return 结果
 	 */
 	@Override
 	public int insertDictType(SysDictType dictType) {
-		int row = dictTypeMapper.insertDictType(dictType);
+		final int row = dictTypeMapper.insertDictType(dictType);
 		if (row > 0) {
 			DictUtils.clearDictCache();
 		}
@@ -156,16 +156,16 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
 	/**
 	 * 修改保存字典类型信息
-	 * 
+	 *
 	 * @param dictType 字典类型信息
 	 * @return 结果
 	 */
 	@Override
 	@Transactional
 	public int updateDictType(SysDictType dictType) {
-		SysDictType oldDict = dictTypeMapper.selectDictTypeById(dictType.getDictId());
+		final SysDictType oldDict = dictTypeMapper.selectDictTypeById(dictType.getDictId());
 		dictDataMapper.updateDictDataType(oldDict.getDictType(), dictType.getDictType());
-		int row = dictTypeMapper.updateDictType(dictType);
+		final int row = dictTypeMapper.updateDictType(dictType);
 		if (row > 0) {
 			DictUtils.clearDictCache();
 		}
@@ -174,14 +174,14 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
 	/**
 	 * 校验字典类型称是否唯一
-	 * 
+	 *
 	 * @param dict 字典类型
 	 * @return 结果
 	 */
 	@Override
 	public String checkDictTypeUnique(SysDictType dict) {
-		Long dictId = StringUtils.isNull(dict.getDictId()) ? -1L : dict.getDictId();
-		SysDictType dictType = dictTypeMapper.checkDictTypeUnique(dict.getDictType());
+		final Long dictId = StringUtils.isNull(dict.getDictId()) ? -1L : dict.getDictId();
+		final SysDictType dictType = dictTypeMapper.checkDictTypeUnique(dict.getDictType());
 		if (StringUtils.isNotNull(dictType) && dictType.getDictId().longValue() != dictId.longValue()) {
 			return UserConstants.DICT_TYPE_NOT_UNIQUE;
 		}
@@ -190,17 +190,17 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
 	/**
 	 * 查询字典类型树
-	 * 
+	 *
 	 * @param dictType 字典类型
 	 * @return 所有字典类型
 	 */
 	@Override
 	public List<Ztree> selectDictTree(SysDictType dictType) {
-		List<Ztree> ztrees = new ArrayList<Ztree>();
-		List<SysDictType> dictList = dictTypeMapper.selectDictTypeList(dictType);
-		for (SysDictType dict : dictList) {
+		final List<Ztree> ztrees = new ArrayList<Ztree>();
+		final List<SysDictType> dictList = dictTypeMapper.selectDictTypeList(dictType);
+		for (final SysDictType dict : dictList) {
 			if (UserConstants.DICT_NORMAL.equals(dict.getStatus())) {
-				Ztree ztree = new Ztree();
+				final Ztree ztree = new Ztree();
 				ztree.setId(dict.getDictId());
 				ztree.setName(transDictName(dict));
 				ztree.setTitle(dict.getDictType());
@@ -211,7 +211,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	public String transDictName(SysDictType dictType) {
-		StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer();
 		sb.append("(" + dictType.getDictName() + ")");
 		sb.append("&nbsp;&nbsp;&nbsp;" + dictType.getDictType());
 		return sb.toString();

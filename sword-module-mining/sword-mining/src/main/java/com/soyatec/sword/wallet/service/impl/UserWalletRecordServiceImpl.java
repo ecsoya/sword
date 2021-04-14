@@ -16,7 +16,7 @@ import com.soyatec.sword.wallet.service.IUserWalletRecordService;
 
 /**
  * 用户钱包记录Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-06
  */
@@ -27,7 +27,7 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 
 	/**
 	 * 查询用户钱包记录
-	 * 
+	 *
 	 * @param id 用户钱包记录ID
 	 * @return 用户钱包记录
 	 */
@@ -38,7 +38,7 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 
 	/**
 	 * 查询用户钱包记录列表
-	 * 
+	 *
 	 * @param userWalletRecord 用户钱包记录
 	 * @return 用户钱包记录
 	 */
@@ -49,7 +49,7 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 
 	/**
 	 * 新增用户钱包记录
-	 * 
+	 *
 	 * @param userWalletRecord 用户钱包记录
 	 * @return 结果
 	 */
@@ -66,7 +66,7 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 
 	/**
 	 * 修改用户钱包记录
-	 * 
+	 *
 	 * @param userWalletRecord 用户钱包记录
 	 * @return 结果
 	 */
@@ -78,7 +78,7 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 
 	/**
 	 * 删除用户钱包记录对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -89,7 +89,7 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 
 	/**
 	 * 删除用户钱包记录信息
-	 * 
+	 *
 	 * @param id 用户钱包记录ID
 	 * @return 结果
 	 */

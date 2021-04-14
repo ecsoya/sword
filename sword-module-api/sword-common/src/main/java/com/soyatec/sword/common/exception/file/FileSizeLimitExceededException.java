@@ -2,7 +2,7 @@ package com.soyatec.sword.common.exception.file;
 
 /**
  * 文件名大小限制异常类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class FileSizeLimitExceededException extends FileException {

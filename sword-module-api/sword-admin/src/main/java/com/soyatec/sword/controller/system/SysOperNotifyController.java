@@ -23,14 +23,14 @@ import com.soyatec.sword.system.service.ISysOperNotifyService;
 
 /**
  * 敏感操作通知Controller
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-04-06
  */
 @Controller
 @RequestMapping("/system/notify")
 public class SysOperNotifyController extends BaseController {
-	private String prefix = "system/notify";
+	private final String prefix = "system/notify";
 
 	@Autowired
 	private ISysOperNotifyService sysOperNotifyService;
@@ -49,7 +49,7 @@ public class SysOperNotifyController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysOperNotify sysOperNotify) {
 		startPage();
-		List<SysOperNotify> list = sysOperNotifyService.selectSysOperNotifyList(sysOperNotify);
+		final List<SysOperNotify> list = sysOperNotifyService.selectSysOperNotifyList(sysOperNotify);
 		return getDataTable(list);
 	}
 
@@ -61,8 +61,8 @@ public class SysOperNotifyController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysOperNotify sysOperNotify) {
-		List<SysOperNotify> list = sysOperNotifyService.selectSysOperNotifyList(sysOperNotify);
-		ExcelUtil<SysOperNotify> util = new ExcelUtil<SysOperNotify>(SysOperNotify.class);
+		final List<SysOperNotify> list = sysOperNotifyService.selectSysOperNotifyList(sysOperNotify);
+		final ExcelUtil<SysOperNotify> util = new ExcelUtil<SysOperNotify>(SysOperNotify.class);
 		return util.exportExcel(list, "notify");
 	}
 
@@ -90,7 +90,7 @@ public class SysOperNotifyController extends BaseController {
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
-		SysOperNotify sysOperNotify = sysOperNotifyService.selectSysOperNotifyById(id);
+		final SysOperNotify sysOperNotify = sysOperNotifyService.selectSysOperNotifyById(id);
 		mmap.put("sysOperNotify", sysOperNotify);
 		return prefix + "/edit";
 	}

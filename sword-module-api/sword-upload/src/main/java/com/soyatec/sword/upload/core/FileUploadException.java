@@ -3,7 +3,7 @@ package com.soyatec.sword.upload.core;
 public class FileUploadException extends RuntimeException {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 

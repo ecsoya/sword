@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 用户推荐码接口
- * 
+ *
  * @author ecsoya
  */
 @RestController
@@ -35,7 +35,7 @@ public class UserReferralController extends BaseController {
 	@ApiOperation(value = "获取推荐码", notes = "如果只支持一个推荐码，用left开头的变量即可")
 	@GetMapping("/code")
 	public CommonResult<UserReferrer> code() {
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return CommonResult.build(referrerService.selectUserReferrerById(userId));
 	}
 
@@ -46,7 +46,7 @@ public class UserReferralController extends BaseController {
 	@PostMapping("/refresh")
 	@RepeatSubmit
 	public CommonResult<UserReferrer> refresh() {
-		Long userId = SwordUtils.getUserId();
+		final Long userId = SwordUtils.getUserId();
 		return CommonResult.build(referrerService.refreshUserReferrerById(userId));
 	}
 

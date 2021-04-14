@@ -16,7 +16,7 @@ import com.soyatec.sword.utils.MathUtils;
 
 /**
  * 充值订单Service业务层处理
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-06
  */
@@ -27,7 +27,7 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 
 	/**
 	 * 查询充值订单
-	 * 
+	 *
 	 * @param id 充值订单ID
 	 * @return 充值订单
 	 */
@@ -38,7 +38,7 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 
 	/**
 	 * 查询充值订单列表
-	 * 
+	 *
 	 * @param userDepositOrder 充值订单
 	 * @return 充值订单
 	 */
@@ -49,7 +49,7 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 
 	/**
 	 * 新增充值订单
-	 * 
+	 *
 	 * @param userDepositOrder 充值订单
 	 * @return 结果
 	 */
@@ -66,7 +66,7 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 
 	/**
 	 * 修改充值订单
-	 * 
+	 *
 	 * @param userDepositOrder 充值订单
 	 * @return 结果
 	 */
@@ -78,7 +78,7 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 
 	/**
 	 * 删除充值订单对象
-	 * 
+	 *
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
@@ -89,7 +89,7 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 
 	/**
 	 * 删除充值订单信息
-	 * 
+	 *
 	 * @param id 充值订单ID
 	 * @return 结果
 	 */
@@ -105,7 +105,7 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 
 	@Override
 	public BigDecimal selectUserDepositAmount(String symbol) {
-		UserDepositOrder query = new UserDepositOrder();
+		final UserDepositOrder query = new UserDepositOrder();
 		query.setSymbol(symbol);
 		return selectUserDepositAmount(query);
 	}

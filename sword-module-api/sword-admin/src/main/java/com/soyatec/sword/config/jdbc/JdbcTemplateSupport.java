@@ -41,6 +41,7 @@ public class JdbcTemplateSupport extends JdbcTemplate {
 			throws DataAccessException {
 
 		return queryForPage(sql, pagination, new PreparedStatementSetter() {
+			@Override
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				return;
 			}
@@ -50,12 +51,13 @@ public class JdbcTemplateSupport extends JdbcTemplate {
 	public <T> PageBean<T> queryForPage(String sql, Page<T> pagination, PreparedStatementSetter var2, RowMapper<T> var3)
 			throws DataAccessException {
 
-		PageBean<T> result = new PageBean<T>();
+		final PageBean<T> result = new PageBean<T>();
 
 		// 获取记录条数
-		String countSql = "select count(1) as count from (" + sql + ") temp";
+		final String countSql = "select count(1) as count from (" + sql + ") temp";
 		log.info("countSql {}", countSql);
-		List<Integer> countList = super.query(countSql, var2, new RowMapper<Integer>() {
+		final List<Integer> countList = super.query(countSql, var2, new RowMapper<Integer>() {
+			@Override
 			public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
 				return new Integer(resultSet.getInt("count"));
 			}
@@ -66,21 +68,21 @@ public class JdbcTemplateSupport extends JdbcTemplate {
 		result.setPageNum(pagination.getPageNum());
 		result.setPageSize(pagination.getPageSize());
 
-		int pageCount = result.getSize() % result.getPageSize();
+		final int pageCount = result.getSize() % result.getPageSize();
 		result.setPages(pageCount == 0 ? (result.getSize() / result.getPageSize())
 				: (result.getSize() / result.getPageSize() + 1));
 
 		sql += parseLimit(result);
 		log.info("queryLimitSql {}", sql);
 
-		List<T> data = super.query(sql, var2, var3);
+		final List<T> data = super.query(sql, var2, var3);
 		result.setList(data);
 		return result;
 	}
 
 	private <T> String parseLimit(PageBean<T> pagination) {
 
-		StringBuffer stringBuffer = new StringBuffer();
+		final StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(" ");
 		stringBuffer.append("limit");
 		stringBuffer.append(" ");

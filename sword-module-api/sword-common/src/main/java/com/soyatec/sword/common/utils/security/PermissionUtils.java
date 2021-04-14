@@ -15,7 +15,7 @@ import com.soyatec.sword.common.utils.MessageUtils;
 
 /**
  * permission 工具类
- * 
+ *
  * @author Jin Liu (angryred@qq.com)
  */
 public class PermissionUtils {
@@ -53,12 +53,12 @@ public class PermissionUtils {
 
 	/**
 	 * 权限错误消息提醒
-	 * 
+	 *
 	 * @param permissionsStr 错误信息
 	 * @return 提示信息
 	 */
 	public static String getMsg(String permissionsStr) {
-		String permission = StringUtils.substringBetween(permissionsStr, "[", "]");
+		final String permission = StringUtils.substringBetween(permissionsStr, "[", "]");
 		String msg = MessageUtils.message(PERMISSION, permission);
 		if (StringUtils.endsWithIgnoreCase(permission, PermissionConstants.ADD_PERMISSION)) {
 			msg = MessageUtils.message(CREATE_PERMISSION, permission);
@@ -82,17 +82,17 @@ public class PermissionUtils {
 	 * @return 用户属性值
 	 */
 	public static Object getPrincipalProperty(String property) {
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 		if (subject != null) {
-			Object principal = subject.getPrincipal();
+			final Object principal = subject.getPrincipal();
 			try {
-				BeanInfo bi = Introspector.getBeanInfo(principal.getClass());
-				for (PropertyDescriptor pd : bi.getPropertyDescriptors()) {
+				final BeanInfo bi = Introspector.getBeanInfo(principal.getClass());
+				for (final PropertyDescriptor pd : bi.getPropertyDescriptors()) {
 					if (pd.getName().equals(property) == true) {
 						return pd.getReadMethod().invoke(principal, (Object[]) null);
 					}
 				}
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				log.error("Error reading property [{}] from principal of type [{}]", property,
 						principal.getClass().getName());
 			}

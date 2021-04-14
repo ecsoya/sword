@@ -42,11 +42,11 @@ public class MiningIndexController extends BaseController {
 		if (StringUtils.isEmpty(symbol)) {
 			return error("symbol为空");
 		}
-		AjaxResult map = AjaxResult.success();
-		Date end = DateUtils.getNowDate();
-		Date start = DateUtils.addDays(end, -6);
-		List<Date> dates = DateUtils.getDates(start, end);
-		List<Ticker> list = dates.parallelStream().map(time -> walletService.getTickerFromHistory(symbol, time))
+		final AjaxResult map = AjaxResult.success();
+		final Date end = DateUtils.getNowDate();
+		final Date start = org.apache.commons.lang3.time.DateUtils.addDays(end, -6);
+		final List<Date> dates = DateUtils.getDates(start, end);
+		final List<Ticker> list = dates.parallelStream().map(time -> walletService.getTickerFromHistory(symbol, time))
 				.collect(Collectors.toList());
 		map.put("dates", dates.parallelStream().map(t -> DateUtils.parseDateToStr("yyyy/MM/dd", t))
 				.collect(Collectors.toList()));
@@ -60,22 +60,22 @@ public class MiningIndexController extends BaseController {
 		if (StringUtils.isEmpty(symbol)) {
 			return AjaxResult.error("Symbol");
 		}
-		AjaxResult samples = AjaxResult.success();
-		CommonResult<Ticker> ticker = walletService.getTicker(symbol);
+		final AjaxResult samples = AjaxResult.success();
+		final CommonResult<Ticker> ticker = walletService.getTicker(symbol);
 		if (ticker.isSuccess(true)) {
-			Ticker data = ticker.getData();
+			final Ticker data = ticker.getData();
 			if (data != null) {
-				List<Field> fields = ReflectUtils.getAllFields(Ticker.class);
-				for (Field field : fields) {
+				final List<Field> fields = ReflectUtils.getAllFields(Ticker.class);
+				for (final Field field : fields) {
 					field.setAccessible(true);
-					String name = field.getName();
+					final String name = field.getName();
 					try {
-						Object value = field.get(data);
+						final Object value = field.get(data);
 						if (value == null) {
 							continue;
 						}
 						if ("rate".equals(name) && value instanceof BigDecimal) {
-							BigDecimal rate = (BigDecimal) value;
+							final BigDecimal rate = (BigDecimal) value;
 							if (rate.doubleValue() > 0) {
 								samples.put("price-rate",
 										"<div class='text-navy'> +" + rate.toPlainString() + "%</div>");
@@ -86,7 +86,7 @@ public class MiningIndexController extends BaseController {
 						} else {
 							samples.put("price-" + name, value);
 						}
-					} catch (Exception e) {
+					} catch (final Exception e) {
 						continue;
 					}
 				}
@@ -100,8 +100,8 @@ public class MiningIndexController extends BaseController {
 	@GetMapping("/regusers")
 	@ResponseBody
 	public AjaxResult regusers() {
-		AjaxResult map = AjaxResult.success();
-		List<DateCount> values = miningUserService.selectRegisterUserCountsByDate();
+		final AjaxResult map = AjaxResult.success();
+		final List<DateCount> values = miningUserService.selectRegisterUserCountsByDate();
 		map.put("dates", values.stream().map(p -> DateUtils.parseDateToStr("yy/MM/dd", p.getDate()))
 				.collect(Collectors.toList()));
 		map.put("counts", values.stream().map(p -> p.getCount()).collect(Collectors.toList()));
