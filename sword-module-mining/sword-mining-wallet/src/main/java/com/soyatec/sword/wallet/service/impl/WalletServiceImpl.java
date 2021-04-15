@@ -226,4 +226,12 @@ public class WalletServiceImpl implements IWalletService {
 		}
 		return delegateService.withdrawal(orderNo, symbol, chain, address, null, amount);
 	}
+
+	@Override
+	public CommonResult<?> checkWithdrawalAddress(String symbol, String chain, String address) {
+		if (delegateService == null || delegateService == this) {
+			return CommonResult.fail("钱包尚未实现");
+		}
+		return delegateService.checkWithdrawalAddress(symbol, chain, address);
+	}
 }

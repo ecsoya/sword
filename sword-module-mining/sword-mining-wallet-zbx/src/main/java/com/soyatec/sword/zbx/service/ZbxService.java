@@ -169,4 +169,12 @@ public class ZbxService implements IWalletDelegateService {
 			return CommonResult.fail();
 		}
 	}
+
+	@Override
+	public CommonResult<?> checkWithdrawalAddress(String symbol, String chain, String address) {
+		if (StringUtils.isEmpty(symbol) || StringUtils.isEmpty(address)) {
+			return CommonResult.fail("参数错误");
+		}
+		return CommonResult.success(address);
+	}
 }

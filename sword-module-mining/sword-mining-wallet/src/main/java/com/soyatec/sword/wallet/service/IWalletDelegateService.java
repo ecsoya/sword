@@ -23,6 +23,12 @@ public interface IWalletDelegateService {
 	CommonResult<Address> getDepositAddress(String symbol, String chain);
 
 	/**
+	 * 检测提币地址是否合法
+	 * @param address TODO
+	 */
+	CommonResult<?> checkWithdrawalAddress(String symbol, String chain, String address);
+
+	/**
 	 * 提币请求
 	 */
 	CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
