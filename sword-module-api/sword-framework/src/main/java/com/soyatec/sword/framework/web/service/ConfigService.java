@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.common.utils.spring.SpringUtils;
 import com.soyatec.sword.system.service.ISysConfigService;
 
 /**
@@ -44,8 +45,14 @@ public class ConfigService {
 			f.setAccessible(true);
 			return f.get(null);
 		} catch (final Exception e) {
-			return null;
-
+			return "";
 		}
+	}
+
+	/**
+	 * spring.profies.activeProfile
+	 */
+	public boolean profile(String profile) {
+		return StringUtils.equals(profile, SpringUtils.getActiveProfile());
 	}
 }
