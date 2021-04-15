@@ -59,7 +59,7 @@ public class UserWalletController extends BaseController {
 	@Autowired
 	private IMiningSymbolService symbolService;
 
-	@ApiOperation("查询钱包信息")
+	@ApiOperation(value = "查询钱包记录一", notes = "此API仅查询成功的充值和提币记录")
 	@GetMapping("/records")
 	public TableDataInfo records(@ApiParam(required = true) String symbol, @ApiParam("起始时间 yyyy-MM-dd") Date start,
 			@ApiParam("结束时间 yyyy-MM-dd") Date end, @ApiParam(value = "1-充值，2-提币，留空为所有") Integer kind) {
@@ -72,6 +72,23 @@ public class UserWalletController extends BaseController {
 		startPage("create_time desc");
 		final Long userId = SwordUtils.getUserId();
 		final List<UserWalletUnionRecord> list = walletRecordService.selectWalletRecordListByUserId(userId, symbol,
+				start, end, kind);
+		return getDataTable(list);
+	}
+
+	@ApiOperation(value = "查询钱包记录二", notes = "此API查询所有的提币和充值的订单，成功与否都会查询")
+	@GetMapping("/orders")
+	public TableDataInfo orders(@ApiParam(required = true) String symbol, @ApiParam("起始时间 yyyy-MM-dd") Date start,
+			@ApiParam("结束时间 yyyy-MM-dd") Date end, @ApiParam(value = "1-充值，2-提币，留空为所有") Integer kind) {
+		if (start != null) {
+			start = DateUtils.getStartOf(start);
+		}
+		if (end != null) {
+			end = DateUtils.getEndOf(end);
+		}
+		startPage("create_time desc");
+		final Long userId = SwordUtils.getUserId();
+		final List<UserWalletUnionRecord> list = walletRecordService.selectWalletOrderListByUserId(userId, symbol,
 				start, end, kind);
 		return getDataTable(list);
 	}

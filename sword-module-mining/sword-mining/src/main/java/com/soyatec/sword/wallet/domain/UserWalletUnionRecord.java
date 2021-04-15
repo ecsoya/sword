@@ -11,7 +11,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
 /**
  * 钱包记录，联合查询对象 t_wallet_record
  *
- * @author King Crab
+ * @author Jin Liu (angryred@qq.com)
  * @date 2020-12-18
  */
 public class UserWalletUnionRecord extends BaseEntity {

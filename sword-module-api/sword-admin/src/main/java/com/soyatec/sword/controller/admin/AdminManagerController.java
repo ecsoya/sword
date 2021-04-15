@@ -32,7 +32,7 @@ import com.soyatec.sword.system.service.ISysUserService;
 /**
  * 用户信息
  *
- * @author King Crab
+ * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/admin/manager")

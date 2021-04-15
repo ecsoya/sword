@@ -31,7 +31,7 @@ import com.soyatec.sword.system.service.ISysUserService;
 /**
  * 角色信息
  *
- * @author King Crab
+ * @author Jin Liu (angryred@qq.com)
  */
 @Controller
 @RequestMapping("/admin/role")

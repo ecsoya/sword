@@ -43,6 +43,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)
 		</if>
 	</select>
+	<select id="selectWalletOrderListByUserId"
+		resultMap="WalletRecordResult">
+		select kind, id, user_id, order_no, type, symbol, amount,
+		status,
+		create_time from t_user_wallet_union_record
+		<if test="kind == null || kind == 1">
+			union
+			(select 1, id, user_id, order_no, 0, symbol,
+			amount, status, create_time
+			from t_user_order_deposit where user_id = #{userId} 
+			<if test="symbol != null and symbol !=''">and symbol=#{symbol}</if>
+			<if test="start != null">and create_time &gt;=#{start}</if>
+			<if test="end != null">and create_time &lt;=#{end}</if>
+			)
+		</if>
+		<if test="kind == null || kind == 2">
+			union
+			(select 2, id, user_id, order_no, 0, symbol,
+			amount, status, create_time
+			from t_user_order_withdrawal where user_id = #{userId} 
+			<if test="symbol != null and symbol !=''">and symbol=#{symbol}</if>
+			<if test="start != null">and create_time &gt;=#{start}</if>
+			<if test="end != null">and create_time &lt;=#{end}</if>
+			)
+		</if>
+	</select>
 
 
 </mapper>

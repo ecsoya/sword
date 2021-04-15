@@ -8,6 +8,7 @@ import javax.servlet.Filter;
 
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.crypto.AesCipherService;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -415,5 +416,11 @@ public class ShiroConfig {
 		final AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
 		authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
 		return authorizationAttributeSourceAdvisor;
+	}
+
+	public static void main(String[] args) {
+		// 生成Cookie cipherKey
+		AesCipherService cipherService = new AesCipherService();
+		System.out.println(Base64.encodeToString(cipherService.generateNewKey().getEncoded()));
 	}
 }

@@ -22,4 +22,10 @@ public class UserWalletUnionRecordServiceImpl implements IUserWalletUnionRecordS
 		return mapper.selectWalletRecordListByUserId(userId, symbol, start, end, kind);
 	}
 
+	@Override
+	public List<UserWalletUnionRecord> selectWalletOrderListByUserId(Long userId, String symbol, Date start, Date end,
+			Integer kind) {
+		return mapper.selectWalletOrderListByUserId(userId, symbol, start, end, kind);
+	}
+
 }
