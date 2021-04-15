@@ -342,7 +342,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 			final UserWithdrawalOrder update = new UserWithdrawalOrder();
 			update.setId(id);
 			update.setStatus(UserWithdrawalOrder.STATUS_FAILURE);
-			update.setRemark("提币接口错误");
+			update.setRemark("提币失败【" + dispatched.getInfo() + "】");
 			updateUserWithdrawalOrder(update);
 			return CommonResult.fail(dispatched.getInfo());
 		}
