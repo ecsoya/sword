@@ -33,6 +33,12 @@ public class UserWalletRecord extends BaseEntity implements IConstants {
 	@Excel(name = "用户ID")
 	private Long userId;
 
+	private String loginName;
+
+	private String email;
+
+	private String address;
+
 	/** 币种 */
 	@Excel(name = "币种")
 	private String symbol;
@@ -140,5 +146,29 @@ public class UserWalletRecord extends BaseEntity implements IConstants {
 				.append("type", getType()).append("kind", getKind()).append("status", getStatus())
 				.append("orderNo", getOrderNo()).append("days", getDays()).append("createTime", getCreateTime())
 				.append("updateTime", getUpdateTime()).append("remark", getRemark()).toString();
+	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }

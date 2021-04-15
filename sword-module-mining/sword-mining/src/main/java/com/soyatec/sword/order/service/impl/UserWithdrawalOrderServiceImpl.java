@@ -238,7 +238,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 			throw new TransactionException("内部错误");
 		}
 		// 冻结资产
-		if (!userWalletAccountService.freezeAmount(walletAccount, amount, orderNo, null)) {
+		if (!userWalletAccountService.freezeAmount(walletAccount, amount, orderNo, null, "Withdrawal")) {
 			throw new TransactionException("交易繁忙");
 		}
 		return CommonResult.build(order);

@@ -72,7 +72,8 @@ public interface IUserWalletAccountService {
 	/**
 	 * 冻结资产
 	 */
-	public boolean freezeAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, Integer freezeDays);
+	public boolean freezeAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, Integer freezeDays,
+			String remark);
 
 	/**
 	 * 资金解冻
@@ -87,7 +88,7 @@ public interface IUserWalletAccountService {
 	/**
 	 * 消费
 	 */
-	public boolean decreaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo);
+	public boolean decreaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, String remark);
 
 	public UserWalletAccount selectUserWalletAccountByAddress(String address, String symbol);
 

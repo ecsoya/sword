@@ -28,8 +28,10 @@ import com.soyatec.sword.utils.MathUtils;
 import com.soyatec.sword.utils.SwordUtils;
 import com.soyatec.sword.wallet.domain.UserWallet;
 import com.soyatec.sword.wallet.domain.UserWalletAccount;
+import com.soyatec.sword.wallet.domain.UserWalletRecord;
 import com.soyatec.sword.wallet.domain.UserWalletUnionRecord;
 import com.soyatec.sword.wallet.service.IUserWalletAccountService;
+import com.soyatec.sword.wallet.service.IUserWalletRecordService;
 import com.soyatec.sword.wallet.service.IUserWalletService;
 import com.soyatec.sword.wallet.service.IUserWalletUnionRecordService;
 
@@ -52,6 +54,9 @@ public class UserWalletController extends BaseController {
 	private IUserWalletAccountService userWalletAccountService;
 	@Autowired
 	private IUserWalletUnionRecordService walletRecordService;
+
+	@Autowired
+	private IUserWalletRecordService walletDetailService;
 
 	@Autowired
 	private ISysConfigService configService;
@@ -90,6 +95,30 @@ public class UserWalletController extends BaseController {
 		final Long userId = SwordUtils.getUserId();
 		final List<UserWalletUnionRecord> list = walletRecordService.selectWalletOrderListByUserId(userId, symbol,
 				start, end, kind);
+		return getDataTable(list);
+	}
+
+	@ApiOperation(value = "查询钱包记录三", notes = "此API查询钱包各种余额变动的所有记录，成功与否都会查询")
+	@GetMapping("/details")
+	public TableDataInfo details(@ApiParam(required = true) String symbol, @ApiParam("起始时间 yyyy-MM-dd") Date start,
+			@ApiParam("结束时间 yyyy-MM-dd") Date end, @ApiParam(value = "0-可用余额，1-冻结余额（质押余额）2-锁定余额，留空为所有") Integer kind,
+			@ApiParam(value = "0-收入，1-支出，2-后台设定，留空为所有") Integer type) {
+		if (start != null) {
+			start = DateUtils.getStartOf(start);
+		}
+		if (end != null) {
+			end = DateUtils.getEndOf(end);
+		}
+		startPage("create_time desc");
+		final Long userId = SwordUtils.getUserId();
+		UserWalletRecord query = new UserWalletRecord();
+		query.setSymbol(symbol);
+		query.setUserId(userId);
+		query.setTimeParams(start, end);
+		query.setKind(kind);
+		query.setType(type);
+
+		final List<UserWalletRecord> list = walletDetailService.selectUserWalletRecordList(query);
 		return getDataTable(list);
 	}
 

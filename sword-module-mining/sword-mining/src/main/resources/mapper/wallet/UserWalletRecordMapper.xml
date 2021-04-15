@@ -7,6 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="UserWalletRecord" id="UserWalletRecordResult">
         <result property="id"    column="id"    />
         <result property="userId"    column="user_id"    />
+        <result property="loginName"    column="login_name"    />
+        <result property="email"    column="email"    />
+        <result property="address"    column="address"    />
         <result property="symbol"    column="symbol"    />
         <result property="amount"    column="amount"    />
         <result property="type"    column="type"    />
@@ -20,7 +23,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectUserWalletRecordVo">
-        select id, user_id, symbol, amount, type, kind, status, order_no, days, create_time, update_time, remark from t_user_wallet_record
+        select a.id, a.user_id, b.login_name, b.email, c.address, a.symbol, a.amount, a.type, a.kind, a.status, a.order_no, a.days, a.create_time, a.update_time, a.remark from t_user_wallet_record a
+        left join (select user_id as bid, login_name, email from sys_user) as b on a.user_id = b.bid
+        left join (select user_id as cid, address, symbol as csymbol from t_user_wallet_account) as c on a.user_id = c.cid and a.symbol = c.csymbol
     </sql>
 
     <select id="selectUserWalletRecordList" parameterType="UserWalletRecord" resultMap="UserWalletRecordResult">
@@ -33,6 +38,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="kind != null "> and kind = #{kind}</if>
             <if test="status != null "> and status = #{status}</if>
             <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="loginName != null  and loginName != ''"> and login_name = #{loginName}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
             <if test="params.orderNoLike != null  and params.orderNoLike != ''"> and order_no like concat(#{params.orderNoLike}, '%')</if>
             <if test="days != null "> and days = #{days}</if>
         </where>
@@ -106,6 +113,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select sum(amount) from t_user_wallet_record
 		<where>  
             <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="loginName != null  and loginName != ''"> and login_name = #{loginName}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
             <if test="symbol != null  and symbol != ''"> and symbol = #{symbol}</if>
             <if test="type != null "> and type = #{type}</if>
             <if test="kind != null "> and kind = #{kind}</if>

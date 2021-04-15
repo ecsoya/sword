@@ -211,7 +211,7 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 		}
 
 		// 2.更新钱包
-		final boolean deposited = userWalletAccountService.increaseAmount(account, amount, orderNo, "充值");
+		final boolean deposited = userWalletAccountService.increaseAmount(account, amount, orderNo, "External Deposit");
 		if (!deposited) {
 			throw new TransactionException("内部错误【钱包】");
 		}
@@ -225,7 +225,7 @@ public class WalletCallbackServiceImpl implements IWalletCallbackService {
 		record.setSymbol(symbol);
 		record.setAmount(amount);
 		record.setStatus(IConstants.STATUS_FINISHED);
-		record.setRemark("充值成功");
+		record.setRemark("External Deposit Success");
 		rows = userDepositeRecordService.insertUserDepositRecord(record);
 		if (rows <= 0) {
 			throw new TransactionException("内部错误【记录】");

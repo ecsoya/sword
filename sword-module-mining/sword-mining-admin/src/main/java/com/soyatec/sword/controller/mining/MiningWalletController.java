@@ -25,6 +25,8 @@ import com.soyatec.sword.order.domain.UserDepositOrder;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 import com.soyatec.sword.order.service.IUserDepositOrderService;
 import com.soyatec.sword.order.service.IUserWithdrawalOrderService;
+import com.soyatec.sword.wallet.domain.UserWalletRecord;
+import com.soyatec.sword.wallet.service.IUserWalletRecordService;
 
 @Controller
 @RequestMapping("/mining/wallet")
@@ -37,6 +39,9 @@ public class MiningWalletController extends BaseController {
 
 	@Autowired
 	private IUserWithdrawalOrderService userWithdrawalOrderService;
+
+	@Autowired
+	private IUserWalletRecordService walletRecordService;
 
 	@Autowired
 	private IMiningSymbolService symbolService;
@@ -74,7 +79,8 @@ public class MiningWalletController extends BaseController {
 
 	@RequiresPermissions("mining:wallet:deposit:view")
 	@GetMapping("/deposit")
-	public String deposit() {
+	public String deposit(ModelMap mmap) {
+		mmap.put("symbols", symbolService.selectMiningSymbolList(new MiningSymbol()));
 		return prefix + "/deposit";
 	}
 
@@ -122,5 +128,26 @@ public class MiningWalletController extends BaseController {
 			return AjaxResult.success();
 		}
 		return AjaxResult.error(result.getInfo());
+	}
+
+	@RequiresPermissions("mining:wallet:record:view")
+	@GetMapping("/record")
+	public String record(ModelMap mmap) {
+		mmap.put("symbols", symbolService.selectMiningSymbolList(new MiningSymbol()));
+		return prefix + "/record";
+	}
+
+	/**
+	 * 查询提现订单列表
+	 */
+	@RequiresPermissions("mining:wallet:record:list")
+	@PostMapping("/record/list")
+	@ResponseBody
+	public TableDataInfo record(UserWalletRecord record, Date start, Date end) {
+		record.setTimeParams(start, end);
+		startPage();
+		final List<UserWalletRecord> list = walletRecordService.selectUserWalletRecordList(record);
+		final TableDataInfo table = getDataTable(list);
+		return table;
 	}
 }

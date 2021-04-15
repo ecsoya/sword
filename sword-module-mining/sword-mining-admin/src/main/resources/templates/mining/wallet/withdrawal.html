@@ -22,8 +22,8 @@
 							<li><label>提现币种：</label> <select name="symbol"
 								onchange="$.table.search()">
 									<option value="">全部</option>
-									<option value="fil">FIL</option>
-									<option value="usdt">USDT</option>
+									<option th:each="s : ${symbols}"
+										th:text="${s.symbol.toUpperCase()}" th:value="${s.symbol}"></option>
 							</select></li>
 							<li><label>状态：</label> <select name="status"
 								onchange="$.table.search()">
@@ -38,8 +38,7 @@
 							<li class="select-time"><label>创建时间： </label> <input
 								type="text" class="time-input" id="startTime" placeholder="开始时间"
 								name="start" /> <span>-</span> <input type="text"
-								class="time-input" id="endTime" placeholder="结束时间"
-								name="end" /></li>
+								class="time-input" id="endTime" placeholder="结束时间" name="end" /></li>
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"
@@ -57,8 +56,8 @@
 				</a> <a class="btn btn-danger multiple disabled" onclick="checkDenied()"
 					shiro:hasPermission="mining:wallet:withdrawal:edit"> <i
 					class="fa fa-remove"></i> 审核拒绝
-				</a> 
-				
+				</a>
+
 				<div class=" btn select-list">
 					<ul id="tableParams">
 					</ul>
