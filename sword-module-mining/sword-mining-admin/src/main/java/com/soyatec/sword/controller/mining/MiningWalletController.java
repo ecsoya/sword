@@ -19,13 +19,17 @@ import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.enums.BusinessType;
 import com.soyatec.sword.common.utils.DateUtils;
+import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.mining.domain.MiningSymbol;
 import com.soyatec.sword.mining.service.IMiningSymbolService;
 import com.soyatec.sword.order.domain.UserDepositOrder;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 import com.soyatec.sword.order.service.IUserDepositOrderService;
 import com.soyatec.sword.order.service.IUserWithdrawalOrderService;
+import com.soyatec.sword.user.service.IUserProfileService;
+import com.soyatec.sword.wallet.domain.UserWalletAccount;
 import com.soyatec.sword.wallet.domain.UserWalletRecord;
+import com.soyatec.sword.wallet.service.IUserWalletAccountService;
 import com.soyatec.sword.wallet.service.IUserWalletRecordService;
 
 @Controller
@@ -45,6 +49,12 @@ public class MiningWalletController extends BaseController {
 
 	@Autowired
 	private IMiningSymbolService symbolService;
+
+	@Autowired
+	private IUserProfileService profileService;
+
+	@Autowired
+	private IUserWalletAccountService walletAccountService;
 
 	@RequiresPermissions("mining:wallet:withdrawal:view")
 	@GetMapping("/withdrawal")
@@ -148,6 +158,17 @@ public class MiningWalletController extends BaseController {
 		startPage();
 		final List<UserWalletRecord> list = walletRecordService.selectUserWalletRecordList(record);
 		final TableDataInfo table = getDataTable(list);
+		if (StringUtils.isNotEmpty(record.getLoginName()) && StringUtils.isNotEmpty(record.getSymbol())) {
+			Long userId = profileService.selectUserIdByUsername(record.getLoginName());
+			if (userId != null) {
+				UserWalletAccount account = walletAccountService.selectUserWalletAccount(userId, record.getSymbol());
+				if (account != null) {
+					table.addParam("可用余额", account.getAmount());
+					table.addParam("冻结余额", account.getFrozenAmount());
+					table.addParam("锁定余额", account.getLockedAmount());
+				}
+			}
+		}
 		return table;
 	}
 }

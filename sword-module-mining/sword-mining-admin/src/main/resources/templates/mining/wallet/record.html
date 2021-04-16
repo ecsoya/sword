@@ -103,25 +103,37 @@
                 {
                     field: 'symbol',
                     title: '币种',
+                    align: 'center',
                     formatter: function(value, rows, index) {
                     	return value.toUpperCase();
                     }
                 },
                 {
                     field: 'address',
-                    title: '地址'
+                    title: '地址',
+                    align: 'center'
                 },
                 
                 {
                     field: 'amount',
                     title: '金额',
+                    align: 'center',
                     formatter: function(value, rows, index) {
-                    	return $.common.formatNumber(value);
+                    	var amount = '';
+                    	if (rows.type == 0) {
+                    		amount = '<label class="text-navy"> + ' + $.common.formatNumber(value) +'</label>';
+                    	} else if (rows.type == 1) {
+                    		amount = '<label class="text-danger"> - ' + $.common.formatNumber(value) +'</label>';
+                    	} else {
+                    		amount = '<label class="text-default"> = ' + $.common.formatNumber(value) +'</label>';
+                    	}
+                    	return amount;
                     }
                 },
                 {
                     field: 'kind',
                     title: '账户',
+                    align: 'center',
                     formatter: function(value, rows, index) {
                     	return $.common.formatStatus(['可用余额','冻结余额','锁定余额'], value);
                     }
@@ -129,6 +141,7 @@
                 {
                     field: 'type',
                     title: '类型',
+                    align: 'center',
                     formatter: function(value, rows, index) {
                     	return $.common.formatStatus(['收入','支出','后台设定'], value);
                     },
@@ -136,6 +149,7 @@
                 {
                     field: 'createTime',
                     title: '创建时间',
+                    align: 'center'
                 },
                 {
                     field: 'remark',
