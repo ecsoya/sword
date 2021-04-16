@@ -214,7 +214,7 @@ public class ShiroConfig {
 		if (expireTime == -1) {
 			redisSessionDAO.setExpire(-1);
 		} else {
-			redisSessionDAO.setExpire(expireTime * 60 * 1000);
+			redisSessionDAO.setExpire(expireTime * 60);
 		}
 		return redisSessionDAO;
 	}

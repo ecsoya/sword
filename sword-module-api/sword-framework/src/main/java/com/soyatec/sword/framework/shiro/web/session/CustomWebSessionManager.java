@@ -111,6 +111,7 @@ public class CustomWebSessionManager extends DefaultWebSessionManager {
 		if (log.isInfoEnabled()) {
 			log.info("invalidation sessions...");
 		}
+		super.validateSessions();
 
 		int invalidCount = 0;
 
@@ -165,6 +166,7 @@ public class CustomWebSessionManager extends DefaultWebSessionManager {
 
 	@Override
 	protected Collection<Session> getActiveSessions() {
-		throw new UnsupportedOperationException("getActiveSessions method not supported");
+		return super.getActiveSessions();
+//		throw new UnsupportedOperationException("getActiveSessions method not supported");
 	}
 }
