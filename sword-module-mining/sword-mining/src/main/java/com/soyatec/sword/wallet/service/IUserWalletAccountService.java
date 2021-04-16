@@ -127,7 +127,10 @@ public interface IUserWalletAccountService {
 	public CommonResult<?> exchangeAmount(Long userId, String fromSymbol, String toSymbol, BigDecimal price,
 			boolean positivePrice, BigDecimal amount);
 
-	public boolean unfreezeAmount(UserWalletRecord userWalletRecord);
+	/**
+	 * 将冻结余额解冻到可用余额
+	 */
+	public boolean unfreezeToAmount(UserWalletRecord userWalletRecord);
 
 	public BigDecimal selectUserAccountAmount(String symbol, Integer kind);
 

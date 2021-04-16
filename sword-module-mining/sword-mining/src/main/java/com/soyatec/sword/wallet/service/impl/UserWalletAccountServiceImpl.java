@@ -343,7 +343,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	}
 
 	@Override
-	public boolean unfreezeAmount(UserWalletRecord record) {
+	public boolean unfreezeToAmount(UserWalletRecord record) {
 		if (record == null || !IConstants.STATUS_NONE.equals(record.getStatus())) {
 			return false;
 		}
@@ -369,6 +369,17 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			update.setFrozenAmount(lockAccount.getFrozenAmount().subtract(amount));
 			final int rows = userWalletAccountMapper.updateUserWalletAccount(update);
 			if (rows > 0) {
+				// 增加一条冻结余额到可用余额的记录
+				UserWalletRecord amountRecord = new UserWalletRecord();
+				amountRecord.setUserId(userId);
+				amountRecord.setSymbol(symbol);
+				amountRecord.setAmount(lockAccount.getFrozenAmount());
+				amountRecord.setType(UserWalletRecord.TYPE_IN);
+				amountRecord.setKind(UserWalletRecord.KIND_AMOUNT);
+				amountRecord.setStatus(UserWalletRecord.STATUS_FINISHED);
+				amountRecord.setRemark("Release Frozen Amount");
+				userWalletRecordService.insertUserWalletRecord(amountRecord);
+
 				final UserWalletRecord finish = new UserWalletRecord();
 				finish.setId(record.getId());
 				finish.setStatus(IConstants.STATUS_FINISHED);
