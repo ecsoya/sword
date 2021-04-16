@@ -82,7 +82,7 @@ public class OnlineSessionFilter extends AccessControlFilter {
 	// 跳转到登录页
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		WebUtils.issueRedirect(request, response, loginUrl);
+		WebUtils.issueRedirect(request, response, loginUrl, null, true, false);
 	}
 
 	public void setOnlineSessionDAO(OnlineSessionDAO onlineSessionDAO) {

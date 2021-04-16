@@ -134,7 +134,7 @@ public class KickoutSessionFilter extends AccessControlFilter {
 			final AjaxResult ajaxResult = AjaxResult.error("您已在别处登录，请您修改密码或重新登录");
 			ServletUtils.renderString(res, objectMapper.writeValueAsString(ajaxResult));
 		} else {
-			WebUtils.issueRedirect(request, response, kickoutUrl);
+			WebUtils.issueRedirect(request, response, kickoutUrl, null, true, false);
 		}
 		return false;
 	}
