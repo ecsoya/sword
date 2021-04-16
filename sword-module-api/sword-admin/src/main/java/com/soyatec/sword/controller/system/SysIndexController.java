@@ -64,7 +64,8 @@ public class SysIndexController extends BaseController {
 		mmap.put("ignoreFooter", configService.selectConfigValueByKey("sys.index.ignoreFooter"));
 		mmap.put("copyrightYear", GlobalConfig.getCopyrightYear());
 		mmap.put("demoEnabled", false);
-		mmap.put("isDefaultModifyPwd", initPasswordIsModify(user.getPwdUpdateDate()));
+		mmap.put("isDefaultModifyPwd",
+				initPasswordIsModify(user.getPwdUpdateDate(), user.getLoginName(), user.getPassword()));
 		mmap.put("isPasswordExpired", passwordIsExpiration(user.getPwdUpdateDate()));
 
 		// 菜单导航显示风格
@@ -134,7 +135,11 @@ public class SysIndexController extends BaseController {
 	}
 
 	// 检查初始密码是否提醒修改
-	public boolean initPasswordIsModify(Date pwdUpdateDate) {
+	public boolean initPasswordIsModify(Date pwdUpdateDate, String loginName, String password) {
+		if (StringUtils.encryptPassword(loginName, "qwer1234", "111111").equals(password)
+				|| StringUtils.encryptPassword(loginName, "qwer1234", "22222").equals(password)) {
+			return true;
+		}
 		final Integer initPasswordModify = Convert
 				.toInt(configService.selectConfigValueByKey("sys.account.initPasswordModify"));
 		return initPasswordModify != null && initPasswordModify == 1 && pwdUpdateDate == null;
