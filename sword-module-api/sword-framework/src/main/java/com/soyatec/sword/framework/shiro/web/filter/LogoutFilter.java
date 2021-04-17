@@ -5,6 +5,7 @@ import javax.servlet.ServletResponse;
 
 import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +61,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 			} catch (final SessionException ise) {
 				log.error("logout fail.", ise);
 			}
-			issueRedirect(request, response, redirectUrl);
+			WebUtils.issueRedirect(request, response, redirectUrl, null, true, false);
 		} catch (final Exception e) {
 			log.error("Encountered session exception during logout.  This can generally safely be ignored.", e);
 		}
