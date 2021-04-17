@@ -329,9 +329,9 @@ public class ShiroConfig {
 		// filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
 		final Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
-		if (expireTime > 0) {
-			filters.put("kickout", kickoutSessionFilter(cacheManager, sessionManager));
-		}
+		// if (expireTime > 0) {
+		filters.put("kickout", kickoutSessionFilter(cacheManager, sessionManager));
+		// }
 		filters.put("captchaValidate", captchaValidateFilter());
 		// 注销成功，则跳转到指定页面
 		filters.put("logout", logoutFilter());
@@ -342,11 +342,11 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setFilters(filters);
 
 		// 所有请求需要认证
-		if (expireTime > 0) {
-			filterChainDefinitionMap.put("/**", "user,kickout");
-		} else {
-			filterChainDefinitionMap.put("/**", "user");
-		}
+		// if (expireTime > 0) {
+		filterChainDefinitionMap.put("/**", "user,kickout");
+		// } else {
+		// filterChainDefinitionMap.put("/**", "user");
+		// }
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
 		return shiroFilterFactoryBean;
