@@ -40,6 +40,7 @@ public class CommonController extends BaseController {
 
 	@PostMapping("/code/delivery")
 	@RepeatSubmit
+	@ResponseBody
 	public AjaxResult delivery() {
 		final Long userId = ShiroUtils.getUserId();
 		if (GlobalConfig.getEmailCode()) {
@@ -60,6 +61,7 @@ public class CommonController extends BaseController {
 	 */
 	@PostMapping("/code/verify")
 	@RepeatSubmit
+	@ResponseBody
 	public AjaxResult verifyCode(String code) {
 		if (StringUtils.isEmpty(code)) {
 			return error("请输入验证码");
