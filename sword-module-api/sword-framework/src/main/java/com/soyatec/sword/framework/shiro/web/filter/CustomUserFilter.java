@@ -22,7 +22,7 @@ public class CustomUserFilter extends UserFilter {
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		if (StringUtils.isEmpty(loginUrl)) {
-			return true; // 如果登录地址不可以，直接返回
+			return true; // 如果登录地址不可用，直接返回
 		}
 		return super.onAccessDenied(request, response);
 	}
