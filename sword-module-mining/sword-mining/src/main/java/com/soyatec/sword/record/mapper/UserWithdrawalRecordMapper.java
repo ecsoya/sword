@@ -67,4 +67,6 @@ public interface UserWithdrawalRecordMapper {
 
 	public BigDecimal selectUserWithdrawalAmountByDate(@Param("symbol") String symbol, @Param("start") Date start,
 			@Param("end") Date end);
+
+	public BigDecimal selectUserWithdrawalFeeAmount(String symbol);
 }

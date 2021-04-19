@@ -105,6 +105,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectUserDepositRecordVo"/>
         where tx_id = #{txId}
     </select>
-        
+    
+    <select id="selectUserDepositAmount" parameterType="String" resultType="BigDecimal">
+    	select sum(amount) from t_user_record_deposit 
+    	<where>
+    		<if test="symbol != null and symbol !=''">and symbol = #{symbol}</if>
+    	</where>
+    </select>    
 
 </mapper>

@@ -64,4 +64,9 @@ public interface IUserWithdrawalRecordService {
 	public int updateUserWithdrawalRecordHeightByTxId(String txId, Long height);
 
 	public BigDecimal selectUserWithdrawalAmountByDate(String symbol, Date start, Date end);
+
+	public BigDecimal selectUserWithdrawalAmount(String symbol);
+
+	public BigDecimal selectUserWithdrawalFeeAmount(String symbol);
+
 }

@@ -1,5 +1,6 @@
 package com.soyatec.sword.record.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.soyatec.sword.record.domain.UserDepositRecord;
@@ -60,4 +61,6 @@ public interface IUserDepositRecordService {
 	public int deleteUserDepositRecordById(Long id);
 
 	public UserDepositRecord selectUserDepositRecordByTxId(String txId);
+
+	public BigDecimal selectUserDepositAmount(String symbol);
 }

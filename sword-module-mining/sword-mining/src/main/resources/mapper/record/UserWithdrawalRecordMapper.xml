@@ -123,4 +123,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="end != null">and create_time &lt;=#{end}</if>
 		</where>
 	</select>
+
+	<select id="selectUserWithdrawalFeeAmount" parameterType="String" resultType="BigDecimal">
+		select sum(fee) from t_user_record_withdrawal 
+		<where>
+			<if test="symbol != null and symbol != ''">and symbol=#{symbol}</if>
+		</where>
+	</select>
 </mapper>

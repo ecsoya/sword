@@ -14,6 +14,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.record.domain.UserWithdrawalRecord;
 import com.soyatec.sword.record.mapper.UserWithdrawalRecordMapper;
 import com.soyatec.sword.record.service.IUserWithdrawalRecordService;
+import com.soyatec.sword.utils.MathUtils;
 
 /**
  * 用户提现Service业务层处理
@@ -110,5 +111,15 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 	@Override
 	public BigDecimal selectUserWithdrawalAmountByDate(String symbol, Date start, Date end) {
 		return userWithdrawalRecordMapper.selectUserWithdrawalAmountByDate(symbol, start, end);
+	}
+
+	@Override
+	public BigDecimal selectUserWithdrawalAmount(String symbol) {
+		return MathUtils.nullToZero(userWithdrawalRecordMapper.selectUserWithdrawalAmountByDate(symbol, null, null));
+	}
+
+	@Override
+	public BigDecimal selectUserWithdrawalFeeAmount(String symbol) {
+		return MathUtils.nullToZero(userWithdrawalRecordMapper.selectUserWithdrawalFeeAmount(symbol));
 	}
 }

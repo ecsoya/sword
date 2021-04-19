@@ -1,5 +1,6 @@
 package com.soyatec.sword.record.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.record.domain.UserDepositRecord;
 import com.soyatec.sword.record.mapper.UserDepositRecordMapper;
 import com.soyatec.sword.record.service.IUserDepositRecordService;
+import com.soyatec.sword.utils.MathUtils;
 
 /**
  * 用户充值Service业务层处理
@@ -103,5 +105,10 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 			return null;
 		}
 		return userDepositRecordMapper.selectUserDepositRecordByTxId(txId);
+	}
+
+	@Override
+	public BigDecimal selectUserDepositAmount(String symbol) {
+		return MathUtils.nullToZero(userDepositRecordMapper.selectUserDepositAmount(symbol));
 	}
 }
