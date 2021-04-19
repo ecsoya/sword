@@ -12,6 +12,11 @@ public interface IMailService {
 	/**
 	 * 发送验证码
 	 */
+	public CommonResult<?> sendCode(String email, String subject, String template);
+
+	/**
+	 * 发送验证码
+	 */
 	public CommonResult<?> sendCode(String email);
 
 	/**

@@ -31,6 +31,17 @@ public class MailCodeServiceImpl implements IMailCodeService {
 	}
 
 	@Override
+	public CommonResult<?> sendCode(String email, String subject, String template) {
+		if (mailService == null) {
+			return CommonResult.fail("Not implemented");
+		}
+		if (StringUtils.isEmpty(email)) {
+			return CommonResult.fail("Email not exist");
+		}
+		return mailService.sendCode(email, subject, template);
+	}
+
+	@Override
 	public CommonResult<?> verifyCode(String email, String code) {
 		if (StringUtils.isEmpty(email)) {
 			return CommonResult.fail("Email not exist");
@@ -48,6 +59,12 @@ public class MailCodeServiceImpl implements IMailCodeService {
 	public CommonResult<?> sendCodeByUserId(Long userId) {
 		final String email = userService.selectUserEmailById(userId);
 		return sendCode(email);
+	}
+
+	@Override
+	public CommonResult<?> sendCodeByUserId(Long userId, String subject, String template) {
+		final String email = userService.selectUserEmailById(userId);
+		return sendCode(email, subject, template);
 	}
 
 	@Override
@@ -71,4 +88,9 @@ public class MailCodeServiceImpl implements IMailCodeService {
 		return sendCode(email);
 	}
 
+	@Override
+	public CommonResult<?> sendCodeByUsername(String username, String subject, String template) {
+		final String email = userService.selectUserEmailByUsername(username);
+		return sendCode(email, subject, template);
+	}
 }

@@ -18,8 +18,6 @@ public class SendCloudProperties extends CodeProperties {
 
 	private String fromName;
 
-	private String subject;
-
 	private Region region = Region.CN;
 
 	public String getApiUser() {
@@ -54,14 +52,6 @@ public class SendCloudProperties extends CodeProperties {
 
 	public void setFromName(String fromName) {
 		this.fromName = fromName;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
 	}
 
 	public Region getRegion() {

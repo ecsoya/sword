@@ -45,4 +45,9 @@ public class TencentCodeHandler implements SendMailCodeHandler, IMailCodeHandler
 		return CommonResult.fail("发送失败");
 	}
 
+	@Override
+	public CommonResult<?> sendCode(String email, String code, String subject, String template) {
+		return sendCode(email, code);
+	}
+
 }

@@ -81,6 +81,11 @@ public class MailServiceImpl implements IMailService {
 
 	@Override
 	public CommonResult<?> sendCode(String email) {
+		return sendCode(email, null, null);
+	}
+
+	@Override
+	public CommonResult<?> sendCode(String email, String subject, String template) {
 		if (withoutHandlers()) {
 			return CommonResult.fail("暂不支持");
 		}
@@ -96,7 +101,7 @@ public class MailServiceImpl implements IMailService {
 		log.debug("sendCode: {} = {}", email, code);
 		boolean success = false;
 		for (final SendMailCodeHandler handler : handlers) {
-			final CommonResult<?> sent = handler.sendCode(email, code.toString());
+			final CommonResult<?> sent = handler.sendCode(email, code.toString(), subject, template);
 			if (sent != null && sent.isSuccess()) {
 				success = true;
 				break;
@@ -106,7 +111,6 @@ public class MailServiceImpl implements IMailService {
 			return CommonResult.success("发送成功");
 		}
 		return CommonResult.fail("发送失败");
-
 	}
 
 	@Override

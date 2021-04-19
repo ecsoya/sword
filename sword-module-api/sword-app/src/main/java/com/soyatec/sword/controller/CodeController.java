@@ -31,15 +31,15 @@ public class CodeController extends BaseController {
 	@ApiOperation("发送邮箱验证码，无参")
 	@PostMapping("/delivery")
 	@RepeatSubmit
-	public CommonResult<?> delivery() {
+	public CommonResult<?> delivery(String subject, String template) {
 		final Long userId = SwordUtils.getUserId();
-		return mailService.sendCodeByUserId(userId);
+		return mailService.sendCodeByUserId(userId, subject, template);
 	}
 
 	@ApiOperation("发送邮箱验证码，用户名")
 	@PostMapping("/deliveryByUsername")
 	@RepeatSubmit
-	public CommonResult<?> deliveryByUserName(String username) {
+	public CommonResult<?> deliveryByUserName(String username, String subject, String template) {
 		Long userId = null;
 		if (StringUtils.isNotEmpty(username)) {
 			userId = userService.selectUserIdByUsername(username);
@@ -47,7 +47,7 @@ public class CodeController extends BaseController {
 		if (userId == null) {
 			return CommonResult.fail("Unknown username");
 		}
-		return mailService.sendCodeByUserId(userId);
+		return mailService.sendCodeByUserId(userId, subject, template);
 	}
 
 	@ApiOperation("发送邮箱验证码，邮箱")

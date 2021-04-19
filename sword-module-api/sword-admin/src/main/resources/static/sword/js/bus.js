@@ -23,7 +23,7 @@ function uploadImg(obj){
 
 
 function verifyCode(callback) {
-	$.post(ctx + 'code/delivery', {}, function(res){
+	$.post(ctx + 'code/delivery?subject=后台验证码', {}, function(res){
     			if (res.code == 0) {
     				layer.prompt({
     		    		title: '请输入验证码',

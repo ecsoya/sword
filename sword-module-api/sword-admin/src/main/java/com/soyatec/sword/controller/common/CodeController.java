@@ -31,7 +31,7 @@ public class CodeController extends BaseController {
 
 	@PostMapping("/deliveryByUsername")
 	@RepeatSubmit
-	public AjaxResult deliveryByUsername(String username) {
+	public AjaxResult deliveryByUsername(String username, String subject, String template) {
 		if (StringUtils.isEmpty(username)) {
 			return error("请输入用户名");
 		}
@@ -43,7 +43,7 @@ public class CodeController extends BaseController {
 			if (mailCodeService == null) {
 				return error("不支持邮件");
 			}
-			return toAjax(mailCodeService.sendCodeByUsername(username));
+			return toAjax(mailCodeService.sendCodeByUsername(username, subject, template));
 		}
 		if (mobileCodeService == null) {
 			return error("不支持短信");

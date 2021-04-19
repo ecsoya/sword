@@ -17,8 +17,6 @@ public class JavamailCodeProperties extends CodeProperties {
 
 	private String password;
 
-	private String subject;
-
 	private boolean ssl = true;
 
 	private String charset = "utf-8";
@@ -45,14 +43,6 @@ public class JavamailCodeProperties extends CodeProperties {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
 	}
 
 	public String getFromName() {

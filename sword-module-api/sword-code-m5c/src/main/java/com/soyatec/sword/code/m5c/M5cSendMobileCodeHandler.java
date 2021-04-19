@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.google.auto.service.AutoService;
@@ -44,7 +45,7 @@ public class M5cSendMobileCodeHandler implements SendMobileCodeHandler, IMobileC
 		if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(code)) {
 			return CommonResult.fail("参数错误");
 		}
-		String template = properties.getTemplate();
+		String template = properties.getTemplate(LocaleContextHolder.getLocale());
 		if (StringUtils.isEmpty(template)) {
 			template = DEFAULT_TEMPLATE;
 		}

@@ -41,13 +41,13 @@ public class CommonController extends BaseController {
 	@PostMapping("/code/delivery")
 	@RepeatSubmit
 	@ResponseBody
-	public AjaxResult delivery() {
+	public AjaxResult delivery(String subject, String template) {
 		final Long userId = ShiroUtils.getUserId();
 		if (GlobalConfig.getEmailCode()) {
 			if (mailCodeService == null) {
 				return error("不支持邮件");
 			}
-			return toAjax(mailCodeService.sendCodeByUserId(userId));
+			return toAjax(mailCodeService.sendCodeByUserId(userId, subject, template));
 		}
 		if (mobileCodeService == null) {
 			return error("不支持短信");

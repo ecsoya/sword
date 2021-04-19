@@ -17,8 +17,6 @@ public class TencentCodeProperties extends CodeProperties {
 
 	private String fromName;
 
-	private String subject;
-
 	private String region = "ap-hongkong";
 
 	private Long textTemplateId;
@@ -39,14 +37,6 @@ public class TencentCodeProperties extends CodeProperties {
 
 	public void setFromName(String fromName) {
 		this.fromName = fromName;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
 	}
 
 	public String getRegion() {

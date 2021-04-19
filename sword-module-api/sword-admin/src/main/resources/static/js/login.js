@@ -24,7 +24,8 @@ function notifyTimer() {
       },  1000)  
    }  
 }  
-     
+var subject='后台登录验证码';
+var template = encodeURI('<html><body><h3>亲爱的管理员，</h3><p>你正在尝试登录后台，你的验证码是： <strong>{}</strong>，请在5分钟之内使用！</p> <small>温馨提示：请保护好自己的账号和密码，验证码切记不要告诉他人！</small></body></html>');
 
 function sendNotifyCode() {
 	
@@ -42,7 +43,7 @@ function sendNotifyCode() {
     
     $.ajax({
         type: "post",
-        url: ctx + "open/code/deliveryByUsername?username=" + username,
+        url: ctx + "open/code/deliveryByUsername?subject="+subject+ "&template=" +template +"&username=" + username,
         success: function(r) {
             if (r.code == 0) {
                 $.modal.msg('发送成功');

@@ -1,6 +1,7 @@
 package com.soyatec.sword.code.sendcloud;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.google.auto.service.AutoService;
@@ -53,8 +54,26 @@ public class SendCloudEmailCodeHandler implements SendMailCodeHandler, IMailCode
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(code)) {
 			return CommonResult.fail("参数错误");
 		}
-		final String subject = properties.getSubject();
-		String template = properties.getTemplate();
+		final String subject = properties.getSubject(LocaleContextHolder.getLocale());
+		String template = properties.getTemplate(LocaleContextHolder.getLocale());
+		if (StringUtils.isEmpty(template)) {
+			template = CodeProperties.DEFAULT_TEMPLATE;
+		}
+		final String content = StringUtils.formatAll(template, code);
+		return sendEmail(email, subject, content);
+	}
+
+	@Override
+	public CommonResult<?> sendCode(String email, String code, String subject, String template) {
+		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(code)) {
+			return CommonResult.fail("参数错误");
+		}
+		if (StringUtils.isEmpty(subject)) {
+			subject = properties.getSubject(LocaleContextHolder.getLocale());
+		}
+		if (StringUtils.isEmpty(template)) {
+			template = properties.getTemplate(LocaleContextHolder.getLocale());
+		}
 		if (StringUtils.isEmpty(template)) {
 			template = CodeProperties.DEFAULT_TEMPLATE;
 		}

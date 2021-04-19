@@ -8,4 +8,6 @@ public interface SendMailCodeHandler extends SendCodeHandler {
 
 	CommonResult<?> sendCode(String email, String code);
 
+	CommonResult<?> sendCode(String email, String code, String subject, String template);
+
 }
