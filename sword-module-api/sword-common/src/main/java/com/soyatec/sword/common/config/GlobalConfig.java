@@ -39,6 +39,9 @@ public class GlobalConfig {
 	/** 后台邮箱验证码开关 */
 	private static boolean notifyEnabled;
 
+	/** 产品链接 */
+	private static String baseUrl;
+
 	public static String getName() {
 		return name;
 	}
@@ -138,6 +141,14 @@ public class GlobalConfig {
 
 	public void setAdminColor(String adminColor) {
 		GlobalConfig.adminColor = adminColor;
+	}
+
+	public static String getBaseUrl() {
+		return baseUrl;
+	}
+
+	public void setBaseUrl(String baseUrl) {
+		GlobalConfig.baseUrl = baseUrl;
 	}
 
 }

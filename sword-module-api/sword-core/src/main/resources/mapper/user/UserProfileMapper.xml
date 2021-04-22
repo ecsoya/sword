@@ -48,11 +48,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="selectUserMobileById" parameterType="Long" resultType="String">
-		select email from sys_user where user_id = #{userId}
+		select phonenumber from sys_user where user_id = #{userId}
 	</select>
 
 	<select id="selectUserMobileByLoginName" parameterType="String" resultType="String">
-		select email from sys_user where login_name = #{username}
+		select phonenumber from sys_user where login_name = #{username}
 	</select>
 	
 	<select id="selectUserIdsByType" parameterType="String" resultType="Long">

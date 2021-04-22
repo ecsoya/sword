@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soyatec.sword.business.service.IWithdrawalNotifyService;
 import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.mining.domain.MiningSymbol;
 import com.soyatec.sword.mining.service.IMiningSymbolService;
@@ -63,6 +65,9 @@ public class UserWalletController extends BaseController {
 
 	@Autowired
 	private IMiningSymbolService symbolService;
+
+	@Autowired
+	private IWithdrawalNotifyService withdrawalNotifyService;
 
 	@ApiOperation(value = "查询钱包记录一", notes = "此API仅查询成功的充值和提币记录")
 	@GetMapping("/records")
@@ -233,6 +238,13 @@ public class UserWalletController extends BaseController {
 			final UserWithdrawalOrder order = withdrawal.getData();
 			return withdrawalOrderService.confirmWithdrawal(userId, order.getOrderNo());
 		} else {
+			// 发消息给系统管理员
+			AsyncManager.me().execute(new Runnable() {
+				@Override
+				public void run() {
+					withdrawalNotifyService.notify(withdrawal.getData());
+				}
+			});
 			return withdrawal;
 		}
 	}
