@@ -86,7 +86,7 @@ public class UserWalletController extends BaseController {
 		return getDataTable(list);
 	}
 
-	@ApiOperation(value = "查询钱包记录二", notes = "此API查询所有的提币和充值的订单，成功与否都会查询")
+	@ApiOperation(value = "查询钱包记录二", notes = "此API查询所有的提币和充值的订单，成功与否都会查询。1. kind==1充值订单；kind==2提币订单 2. kind==1充值订单，status==0待同步，status=1充值成功；kind==2提币订单：status=0待确认，status=1取消（提币被拒绝），status=2成功（调用接口成功），status=3失败（接口调用失败），status=4确认（提币订单已确认），status=5到账（提币已到账）")
 	@GetMapping("/orders")
 	public TableDataInfo orders(@ApiParam(required = true) String symbol, @ApiParam("起始时间 yyyy-MM-dd") Date start,
 			@ApiParam("结束时间 yyyy-MM-dd") Date end, @ApiParam(value = "1-充值，2-提币，留空为所有") Integer kind) {
