@@ -450,14 +450,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	public static void main(String[] args) {
-		String username = "soyatec";
-		String password = "qwer1234";
-		int salt = 533015;
-		Md5Hash md5Hash = new Md5Hash(username, password, salt);
-		String hex = md5Hash.toHex();
-		System.out.println(hex);
-		Md5Hash fromHexString = Md5Hash.fromHexString(hex);
-		System.out.println(fromHexString);
-		System.out.println(encryptPassword("soyatec", "qwer1234", "533015"));
+		System.out.println(encryptPassword("soyatec", "qwer1234", "111111"));
 	}
 }

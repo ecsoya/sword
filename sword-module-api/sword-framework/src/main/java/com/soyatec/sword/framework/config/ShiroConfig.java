@@ -13,7 +13,6 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.UserFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -35,8 +34,9 @@ import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.spring.SpringUtils;
 import com.soyatec.sword.framework.shiro.realm.UserRealm;
 import com.soyatec.sword.framework.shiro.session.OnlineSessionFactory;
-import com.soyatec.sword.framework.shiro.web.filter.CustomUserFilter;
+import com.soyatec.sword.framework.shiro.web.filter.AdminUserFilter;
 import com.soyatec.sword.framework.shiro.web.filter.LogoutFilter;
+import com.soyatec.sword.framework.shiro.web.filter.RestUserFilter;
 import com.soyatec.sword.framework.shiro.web.filter.captcha.CaptchaValidateFilter;
 import com.soyatec.sword.framework.shiro.web.filter.kickout.KickoutSessionFilter;
 import com.soyatec.sword.framework.shiro.web.session.CustomWebSessionManager;
@@ -336,7 +336,9 @@ public class ShiroConfig {
 		// 注销成功，则跳转到指定页面
 		filters.put("logout", logoutFilter());
 		if (StringUtils.isEmpty(loginUrl)) {
-			filters.put("user", userFilter());
+			filters.put("user", new RestUserFilter());
+		} else {
+			filters.put("user", new AdminUserFilter());
 		}
 
 		shiroFilterFactoryBean.setFilters(filters);
@@ -350,13 +352,6 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
 		return shiroFilterFactoryBean;
-	}
-
-	@Bean
-	public UserFilter userFilter() {
-		final UserFilter userFilter = new CustomUserFilter();
-		userFilter.setLoginUrl(loginUrl);
-		return userFilter;
 	}
 
 	/**
