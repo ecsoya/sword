@@ -1,10 +1,13 @@
 
-function uploadImg(obj){
+function uploadImg(obj, width){
     var formData = new FormData();
     var files = obj.files[0];
     formData.append("code", $("#rid").val());
     formData.append("file", files);
     formData.append("type", "img");
+    if (width) {
+    	formData.append("width", width);
+    }
     $.ajax({
         url: ctx + 'common/uploadCloud',
         type: 'POST',

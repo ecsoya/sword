@@ -1,5 +1,7 @@
 package com.soyatec.sword.controller.common;
 
+import java.io.InputStream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,8 +20,10 @@ import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.constant.Constants;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.AjaxResult;
+import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.file.FileUtils;
+import com.soyatec.sword.common.utils.file.ImageUtils;
 import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 import com.soyatec.sword.service.IMailCodeService;
 import com.soyatec.sword.service.IMobileCodeService;
@@ -111,7 +115,22 @@ public class CommonController extends BaseController {
 	 */
 	@PostMapping("/common/upload")
 	@ResponseBody
-	public AjaxResult uploadFile(MultipartFile file) throws Exception {
+	public AjaxResult uploadFile(MultipartFile file, Integer width) throws Exception {
+		if (width != null && width > 0 && file != null) {
+			InputStream in = ImageUtils.compressImage(file.getInputStream(), width);
+			if (in != null) {
+				try {
+					// 上传并返回新文件名称
+					final String fileName = FileUploadUtils.upload(IdWorker.getIdStr() + ".jpeg", in);
+					final AjaxResult ajax = AjaxResult.success();
+					ajax.put("fileName", fileName);
+					ajax.put("url", fileName);
+					return ajax;
+				} catch (final Exception e) {
+					return AjaxResult.error(e.getMessage());
+				}
+			}
+		}
 		try {
 			// 上传并返回新文件名称
 			final String fileName = FileUploadUtils.upload(file);
@@ -126,7 +145,22 @@ public class CommonController extends BaseController {
 
 	@PostMapping("/common/uploadCloud")
 	@ResponseBody
-	public AjaxResult uploadFileCloud(MultipartFile file) throws Exception {
+	public AjaxResult uploadFileCloud(MultipartFile file, Integer width) throws Exception {
+		if (width != null && width > 0 && file != null) {
+			InputStream in = ImageUtils.compressImage(file.getInputStream(), width);
+			if (in != null) {
+				try {
+					// 上传并返回新文件名称
+					final String fileName = FileUploadUtils.upload(IdWorker.getIdStr() + ".jpeg", in);
+					final AjaxResult ajax = AjaxResult.success();
+					ajax.put("fileName", fileName);
+					ajax.put("url", fileName);
+					return ajax;
+				} catch (final Exception e) {
+					return AjaxResult.error(e.getMessage());
+				}
+			}
+		}
 		try {
 			// 上传并返回新文件名称
 			final String fileName = FileUploadUtils.upload(file);

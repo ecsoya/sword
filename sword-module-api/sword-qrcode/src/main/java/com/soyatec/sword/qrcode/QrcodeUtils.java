@@ -1,12 +1,8 @@
 package com.soyatec.sword.qrcode;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.imageio.ImageIO;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -14,6 +10,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.soyatec.sword.common.utils.IdWorker;
+import com.soyatec.sword.common.utils.file.ImageUtils;
 import com.soyatec.sword.upload.utils.FileUploadUtils;
 
 public class QrcodeUtils {
@@ -67,12 +64,9 @@ public class QrcodeUtils {
 	public static String generate(String content) {
 		final BufferedImage image = generateQrcode(content);
 		if (image != null) {
-			InputStream is = null;
+			InputStream is = ImageUtils.toInputStream(image);
 			try {
-				final String fileName = "qrcode/" + IdWorker.getIdStr() + ".png";
-				final ByteArrayOutputStream os = new ByteArrayOutputStream();
-				ImageIO.write(image, "PNG", os);
-				is = new ByteArrayInputStream(os.toByteArray());
+				final String fileName = "qrcode/" + IdWorker.getIdStr() + ".jpeg";
 				return FileUploadUtils.upload(fileName, is);
 			} catch (final Exception e) {
 			} finally {

@@ -92,8 +92,9 @@
 			var formData = new FormData();
 			var files = obj.files[0];
 			formData.append("file", files);
+			formData.append("width", 600);
 			$.ajax({
-				url : ctx + 'common/uploadCloud',
+				url : ctx + 'common/upload',
 				type : 'POST',
 				data : formData,
 				processData : false,

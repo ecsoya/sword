@@ -1,5 +1,7 @@
 package com.soyatec.sword.controller;
 
+import java.io.InputStream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,8 +17,10 @@ import com.soyatec.sword.common.annotation.RepeatSubmit;
 import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.constant.Constants;
 import com.soyatec.sword.common.core.domain.AjaxResult;
+import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.file.FileUtils;
+import com.soyatec.sword.common.utils.file.ImageUtils;
 import com.soyatec.sword.upload.utils.FileUploadUtils;
 
 import io.swagger.annotations.Api;
@@ -66,7 +70,22 @@ public class CommonController {
 	@ApiOperation("通用上传请求")
 	@PostMapping("/common/upload")
 	@RepeatSubmit
-	public AjaxResult uploadFile(MultipartFile file) throws Exception {
+	public AjaxResult uploadFile(MultipartFile file, Integer width) throws Exception {
+		if (width != null && width > 0 && file != null) {
+			// 压缩文件上传
+			InputStream in = ImageUtils.compressImage(file.getInputStream(), width);
+			if (in != null) {
+				try {
+					final String fileName = FileUploadUtils.upload(IdWorker.getIdStr() + ".jpeg", in);
+					final AjaxResult ajax = AjaxResult.success();
+					ajax.put("fileName", fileName);
+					ajax.put("url", fileName);
+					return ajax;
+				} catch (final Exception e) {
+					return AjaxResult.error(e.getMessage());
+				}
+			}
+		}
 		try {
 			// 上传并返回新文件名称
 			final String fileName = FileUploadUtils.upload(file);
