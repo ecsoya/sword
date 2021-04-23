@@ -1,5 +1,6 @@
 package com.soyatec.sword.controller.tool;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -11,14 +12,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.soyatec.sword.common.annotation.Log;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.enums.BusinessType;
+import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.poi.ExcelUtil;
+import com.soyatec.sword.upload.utils.FileUploadUtils;
 import com.soyatec.sword.version.domain.SwordVersion;
 import com.soyatec.sword.version.service.ISwordVersionService;
 
@@ -71,7 +75,14 @@ public class VersionController extends BaseController {
 	 * 新增版本
 	 */
 	@GetMapping("/add")
-	public String add() {
+	public String add(ModelMap mmap) {
+		SwordVersion version = swordVersionService.selectLatestVersion(SwordVersion.TYPE_ANDROID);
+		if (version != null) {
+			Long versionNumber = version.getVersion();
+			if (versionNumber != null) {
+				mmap.put("version", versionNumber + 1);
+			}
+		}
 		return prefix + "/add";
 	}
 
@@ -137,5 +148,40 @@ public class VersionController extends BaseController {
 	@ResponseBody
 	public AjaxResult remove(String ids) {
 		return toAjax(swordVersionService.deleteSwordVersionByIds(ids));
+	}
+
+	/**
+	 * 通用上传请求
+	 */
+	@PostMapping("/upload")
+	@ResponseBody
+	public AjaxResult uploadFile(MultipartFile file, Long version) throws Exception {
+		try {
+			String fileName = file.getOriginalFilename();
+			int index = fileName.lastIndexOf(".");
+			if (index != -1) {
+				String prefix = fileName.substring(0, index);
+				String ext = fileName.substring(index);
+				if (version != null) {
+					fileName = prefix + "-" + version;
+				}
+				fileName += DateUtils.dateTimeNow() + ext;
+				InputStream in = file.getInputStream();
+				// 上传并返回新文件名称
+				final String url = FileUploadUtils.upload(fileName, in);
+				final AjaxResult ajax = AjaxResult.success();
+				ajax.put("fileName", url);
+				ajax.put("url", url);
+				return ajax;
+			}
+			// 上传并返回新文件名称
+			final String url = FileUploadUtils.upload(file);
+			final AjaxResult ajax = AjaxResult.success();
+			ajax.put("fileName", url);
+			ajax.put("url", url);
+			return ajax;
+		} catch (final Exception e) {
+			return AjaxResult.error(e.getMessage());
+		}
 	}
 }
