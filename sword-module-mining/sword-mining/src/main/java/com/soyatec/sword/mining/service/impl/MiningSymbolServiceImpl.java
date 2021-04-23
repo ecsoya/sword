@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
+import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.mining.domain.MiningSymbol;
 import com.soyatec.sword.mining.mapper.MiningSymbolMapper;
 import com.soyatec.sword.mining.service.IMiningSymbolService;
@@ -95,5 +97,17 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 	@Override
 	public List<String> selectMiningSymbols() {
 		return miningSymbolMapper.selectMiningSymbols();
+	}
+
+	@Override
+	public String selectMiningSymbolChain(String symbol) {
+		if (StringUtils.isEmpty(symbol)) {
+			return null;
+		}
+		String chain = miningSymbolMapper.selectMiningSymbolChain(symbol);
+		if (chain == null) {
+			chain = IMiningConstants.CHAIN_DEFAULT;
+		}
+		return chain;
 	}
 }

@@ -117,4 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	select symbol from t_mining_symbol order by symbol
     </select>
 
+	<select id="selectMiningSymbolChain" parameterType="String" resultType="String">
+		select chain from t_mining_symbol where symbol = #{symbol}
+	</select>
 </mapper>

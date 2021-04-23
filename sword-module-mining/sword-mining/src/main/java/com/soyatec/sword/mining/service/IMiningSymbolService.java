@@ -60,4 +60,6 @@ public interface IMiningSymbolService {
 	public int deleteMiningSymbolById(String symbol);
 
 	List<String> selectMiningSymbols();
+
+	public String selectMiningSymbolChain(String symbol);
 }

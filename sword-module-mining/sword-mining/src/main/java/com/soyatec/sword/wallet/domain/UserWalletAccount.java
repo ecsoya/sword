@@ -46,6 +46,8 @@ public class UserWalletAccount extends BaseEntity implements IConstants {
 	@Excel(name = "币种")
 	private String symbol;
 
+	private String chain;
+
 	/** 地址 */
 	@Excel(name = "地址")
 	private String address;
@@ -211,6 +213,14 @@ public class UserWalletAccount extends BaseEntity implements IConstants {
 
 	public void setWithdrawal(MiningSymbol withdrawal) {
 		this.withdrawal = withdrawal;
+	}
+
+	public String getChain() {
+		return chain;
+	}
+
+	public void setChain(String chain) {
+		this.chain = chain;
 	}
 
 }

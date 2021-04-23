@@ -331,9 +331,9 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		final BigDecimal withdrawal = order.getWithdrawal();
 		final String address = order.getAddress();
 		final String symbol = order.getSymbol();
-
-		final CommonResult<WithdrawalResponse> dispatched = walletService.withdrawal(orderNo, symbol, null, address, "",
-				withdrawal);
+		final String chain = symbolService.selectMiningSymbolChain(symbol);
+		final CommonResult<WithdrawalResponse> dispatched = walletService.withdrawal(orderNo, symbol, chain, address,
+				"", withdrawal);
 		final Long id = order.getId();
 		if (!dispatched.isSuccess()) {
 			// 调用接口失败

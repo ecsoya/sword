@@ -147,16 +147,19 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		}
 		UserWalletAccount account = userWalletAccountMapper.selectUserWalletAccount(userId, symbol);
 		if (account == null) {
-			account = updateUserWalletAccountAddress(userId, symbol);
+			account = updateUserWalletAccountAddress(userId, symbol, symbolService.selectMiningSymbolChain(symbol));
 		}
 		return account;
 	}
 
 	@Override
-	public UserWalletAccount updateUserWalletAccountAddress(Long userId, String symbol) {
+	public UserWalletAccount updateUserWalletAccountAddress(Long userId, String symbol, String chain) {
 		final CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WALLET);
 		if (!checked.isSuccess()) {
 			return null;
+		}
+		if (chain == null) {
+			chain = IMiningConstants.CHAIN_DEFAULT;
 		}
 
 		UserWalletAccount account = userWalletAccountMapper.selectUserWalletAccount(userId, symbol);
@@ -164,11 +167,11 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			account = new UserWalletAccount();
 			account.setUserId(userId);
 			account.setSymbol(symbol);
-			account.setAddress(walletService.getDepositAddressValue(symbol, IMiningConstants.CHAIN));
+			account.setAddress(walletService.getDepositAddressValue(symbol, chain));
 			account.setAddressUrl(generateQrcodeUrl(account.getAddress()));
 			insertUserWalletAccount(account);
 		} else if (StringUtils.isEmpty(account.getAddress())) {
-			final String address = walletService.getDepositAddressValue(symbol, IMiningConstants.CHAIN);
+			final String address = walletService.getDepositAddressValue(symbol, chain);
 			if (StringUtils.isNotEmpty(address)) {
 				account.setAddress(address);
 				account.setAddressUrl(generateQrcodeUrl(account.getAddress()));
@@ -180,9 +183,9 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	@Override
 	public int updateUserWalletAccountByUserId(Long userId) {
-		final List<String> symbols = symbolService.selectMiningSymbols();
-		for (final String symbol : symbols) {
-			updateUserWalletAccountAddress(userId, symbol);
+		List<MiningSymbol> list = symbolService.selectMiningSymbolList(new MiningSymbol());
+		for (MiningSymbol symbol : list) {
+			updateUserWalletAccountAddress(userId, symbol.getSymbol(), symbol.getChain());
 		}
 		return 1;
 	}

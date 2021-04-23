@@ -17,7 +17,7 @@ public interface IMiningConstants {
 	String SYMBOL_FIL = "fil";
 	String SYMBOL_BGA = "bga";
 	String SYMBOL_USDT = "usdt";
-	String CHAIN = "";
+	String CHAIN_DEFAULT = "";
 	String PARAM_CHAIN = "chain";
 	String PARAM_CHAIN_ERC20 = "eth";
 	String PARAM_CHAIN_OMNI = "btc";

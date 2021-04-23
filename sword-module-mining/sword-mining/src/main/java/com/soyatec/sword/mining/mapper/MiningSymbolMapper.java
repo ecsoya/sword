@@ -60,4 +60,6 @@ public interface MiningSymbolMapper {
 	public int deleteMiningSymbolByIds(String[] symbols);
 
 	public List<String> selectMiningSymbols();
+
+	public String selectMiningSymbolChain(String symbol);
 }
