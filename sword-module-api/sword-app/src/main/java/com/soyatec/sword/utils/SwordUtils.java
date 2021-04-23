@@ -176,7 +176,11 @@ public class SwordUtils {
 		final String type = getType(request);
 
 		final ISwordVersionService versionService = SpringUtils.getBean(ISwordVersionService.class);
-		return versionService.selectLatestVersion(type);
+		SwordVersion version = versionService.selectLatestVersion(type);
+		if (version == null) {
+			return versionService.selectLatestVersion(SwordVersion.TYPE_ANDROID);
+		}
+		return version;
 	}
 
 	private static String getType(HttpServletRequest request) {
