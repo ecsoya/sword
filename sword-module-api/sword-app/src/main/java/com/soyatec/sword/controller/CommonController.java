@@ -76,7 +76,7 @@ public class CommonController {
 			InputStream in = ImageUtils.compressImage(file.getInputStream(), width);
 			if (in != null) {
 				try {
-					final String fileName = FileUploadUtils.upload(IdWorker.getIdStr() + ".jpeg", in);
+					final String fileName = FileUploadUtils.upload(IdWorker.getIdStr() + ".jpg", in);
 					final AjaxResult ajax = AjaxResult.success();
 					ajax.put("fileName", fileName);
 					ajax.put("url", fileName);

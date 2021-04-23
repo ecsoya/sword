@@ -64,9 +64,9 @@ public class QrcodeUtils {
 	public static String generate(String content) {
 		final BufferedImage image = generateQrcode(content);
 		if (image != null) {
-			InputStream is = ImageUtils.toInputStream(image);
+			InputStream is = ImageUtils.toInputStream(image, "png");
 			try {
-				final String fileName = "qrcode/" + IdWorker.getIdStr() + ".jpeg";
+				final String fileName = "qrcode/" + IdWorker.getIdStr() + ".png";
 				return FileUploadUtils.upload(fileName, is);
 			} catch (final Exception e) {
 			} finally {

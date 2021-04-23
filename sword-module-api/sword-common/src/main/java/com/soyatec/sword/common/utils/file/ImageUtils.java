@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.constant.Constants;
+import com.soyatec.sword.common.utils.StringUtils;
 
 /**
  * 图片处理工具类
@@ -100,20 +101,23 @@ public class ImageUtils {
 			int height = (int) (h * (width * 1.0 / w));
 			BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 			newImage.getGraphics().drawImage(image.getScaledInstance(width, height, Image.SCALE_SMOOTH), 0, 0, null);
-			return toInputStream(newImage);
+			return toInputStream(newImage, "jpg");
 		} catch (IOException e) {
 			return null;
 		}
 	}
 
-	public static InputStream toInputStream(BufferedImage image) {
+	public static InputStream toInputStream(BufferedImage image, String format) {
 		if (image == null) {
 			return null;
+		}
+		if (StringUtils.isEmpty(format)) {
+			format = "jpg";
 		}
 		ByteArrayOutputStream os = null;
 		try {
 			os = new ByteArrayOutputStream();
-			ImageIO.write(image, "jpeg", os);
+			ImageIO.write(image, format, os);
 			return new ByteArrayInputStream(os.toByteArray());
 		} catch (final Exception e) {
 		} finally {

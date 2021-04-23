@@ -121,7 +121,7 @@ public class CommonController extends BaseController {
 			if (in != null) {
 				try {
 					// 上传并返回新文件名称
-					final String fileName = FileUploadUtils.upload(IdWorker.getIdStr() + ".jpeg", in);
+					final String fileName = FileUploadUtils.upload(IdWorker.getIdStr() + ".jpg", in);
 					final AjaxResult ajax = AjaxResult.success();
 					ajax.put("fileName", fileName);
 					ajax.put("url", fileName);
@@ -151,7 +151,7 @@ public class CommonController extends BaseController {
 			if (in != null) {
 				try {
 					// 上传并返回新文件名称
-					final String fileName = FileUploadUtils.upload(IdWorker.getIdStr() + ".jpeg", in);
+					final String fileName = FileUploadUtils.upload(IdWorker.getIdStr() + ".jpg", in);
 					final AjaxResult ajax = AjaxResult.success();
 					ajax.put("fileName", fileName);
 					ajax.put("url", fileName);
