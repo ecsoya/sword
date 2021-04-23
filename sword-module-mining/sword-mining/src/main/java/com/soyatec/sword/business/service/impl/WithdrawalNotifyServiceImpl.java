@@ -78,7 +78,7 @@ public class WithdrawalNotifyServiceImpl implements IWithdrawalNotifyService {
 			value = URLEncoder.encode(encrypt(order.getUserId(), order.getOrderNo(), type), UTF_8.name());
 		} catch (UnsupportedEncodingException e) {
 		}
-		return GlobalConfig.getBaseUrl() + PATH + value;
+		return GlobalConfig.getGateway() + PATH + value;
 	}
 
 	@Override

@@ -9,11 +9,14 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 
+import com.alibaba.fastjson.JSON;
 import com.soyatec.sword.common.constant.ShiroConstants;
+import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
 import com.soyatec.sword.common.enums.OnlineStatus;
+import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.framework.shiro.session.OnlineSession;
 import com.soyatec.sword.framework.shiro.session.OnlineSessionDAO;
 import com.soyatec.sword.framework.shiro.util.ShiroUtils;
@@ -24,11 +27,6 @@ import com.soyatec.sword.framework.shiro.util.ShiroUtils;
  * @author Jin Liu (angryred@qq.com)
  */
 public class OnlineSessionFilter extends AccessControlFilter {
-	/**
-	 * 强制退出后重定向的地址
-	 */
-	@Value("${shiro.user.loginUrl}")
-	private String loginUrl;
 
 	private OnlineSessionDAO onlineSessionDAO;
 
@@ -82,7 +80,16 @@ public class OnlineSessionFilter extends AccessControlFilter {
 	// 跳转到登录页
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		WebUtils.issueRedirect(request, response, loginUrl, null, true, false);
+		String loginUrl = getLoginUrl();
+		if (StringUtils.isEmpty(getLoginUrl())) {
+			// 请求被拦截后直接返回json格式的响应数据
+			response.getWriter()
+					.write(JSON.toJSONString(CommonResult.fail(HttpStatus.UNAUTHORIZED.value(), "Not Login")));
+			response.getWriter().flush();
+			response.getWriter().close();
+		} else {
+			WebUtils.issueRedirect(request, response, loginUrl, null, true, false);
+		}
 	}
 
 	public void setOnlineSessionDAO(OnlineSessionDAO onlineSessionDAO) {

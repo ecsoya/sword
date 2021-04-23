@@ -18,12 +18,16 @@ import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.http.HttpStatus;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soyatec.sword.common.constant.ShiroConstants;
 import com.soyatec.sword.common.core.domain.AjaxResult;
+import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
 import com.soyatec.sword.common.utils.ServletUtils;
+import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.framework.shiro.util.ShiroUtils;
 
 /**
@@ -134,7 +138,15 @@ public class KickoutSessionFilter extends AccessControlFilter {
 			final AjaxResult ajaxResult = AjaxResult.error("您已在别处登录，请您修改密码或重新登录");
 			ServletUtils.renderString(res, objectMapper.writeValueAsString(ajaxResult));
 		} else {
-			WebUtils.issueRedirect(request, response, kickoutUrl, null, true, false);
+			if (StringUtils.isEmpty(getLoginUrl())) {
+				// 请求被拦截后直接返回json格式的响应数据
+				response.getWriter()
+						.write(JSON.toJSONString(CommonResult.fail(HttpStatus.UNAUTHORIZED.value(), "Not Login")));
+				response.getWriter().flush();
+				response.getWriter().close();
+			} else {
+				WebUtils.issueRedirect(request, response, kickoutUrl, null, true, false);
+			}
 		}
 		return false;
 	}

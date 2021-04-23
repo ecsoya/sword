@@ -40,7 +40,7 @@ public class GlobalConfig {
 	private static boolean notifyEnabled;
 
 	/** 产品链接 */
-	private static String baseUrl;
+	private static String gateway;
 
 	public static String getName() {
 		return name;
@@ -143,12 +143,12 @@ public class GlobalConfig {
 		GlobalConfig.adminColor = adminColor;
 	}
 
-	public static String getBaseUrl() {
-		return baseUrl;
+	public static String getGateway() {
+		return gateway;
 	}
 
-	public void setBaseUrl(String baseUrl) {
-		GlobalConfig.baseUrl = baseUrl;
+	public void setGateway(String gateway) {
+		GlobalConfig.gateway = gateway;
 	}
 
 }
