@@ -123,27 +123,27 @@ public class KickoutSessionFilter extends AccessControlFilter {
 				// 退出登录
 				subject.logout();
 				saveRequest(request);
-				return isAjaxResponse(request, response);
+				return redirectToKickoutLogin(request, response);
 			}
 			return true;
 		} catch (final Exception e) {
-			return isAjaxResponse(request, response);
+			return redirectToKickoutLogin(request, response);
 		}
 	}
 
-	private boolean isAjaxResponse(ServletRequest request, ServletResponse response) throws IOException {
+	private boolean redirectToKickoutLogin(ServletRequest request, ServletResponse response) throws IOException {
 		final HttpServletRequest req = (HttpServletRequest) request;
 		final HttpServletResponse res = (HttpServletResponse) response;
-		if (ServletUtils.isAjaxRequest(req)) {
-			final AjaxResult ajaxResult = AjaxResult.error("您已在别处登录，请您修改密码或重新登录");
-			ServletUtils.renderString(res, objectMapper.writeValueAsString(ajaxResult));
+		if (StringUtils.isEmpty(getLoginUrl())) {
+			// 请求被拦截后直接返回json格式的响应数据
+			response.getWriter()
+					.write(JSON.toJSONString(CommonResult.fail(HttpStatus.UNAUTHORIZED.value(), "Not Login")));
+			response.getWriter().flush();
+			response.getWriter().close();
 		} else {
-			if (StringUtils.isEmpty(getLoginUrl())) {
-				// 请求被拦截后直接返回json格式的响应数据
-				response.getWriter()
-						.write(JSON.toJSONString(CommonResult.fail(HttpStatus.UNAUTHORIZED.value(), "Not Login")));
-				response.getWriter().flush();
-				response.getWriter().close();
+			if (ServletUtils.isAjaxRequest(req)) {
+				final AjaxResult ajaxResult = AjaxResult.error("您已在别处登录，请您修改密码或重新登录");
+				ServletUtils.renderString(res, objectMapper.writeValueAsString(ajaxResult));
 			} else {
 				WebUtils.issueRedirect(request, response, kickoutUrl, null, true, false);
 			}
