@@ -189,6 +189,13 @@ public class GenUtils {
 	 * @return 替换后的名字
 	 */
 	public static String replaceText(String text) {
+		if (StringUtils.isEmpty(text)) {
+			return text;
+		}
+		int index = text.indexOf("\n");
+		if (index != -1) {
+			return text.substring(0,index);
+		}
 		return RegExUtils.replaceAll(text, "(?:表|蜜蜂Plus)", "");
 	}
 
