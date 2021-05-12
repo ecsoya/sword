@@ -10,6 +10,9 @@ import java.util.Arrays;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
+
 public class EncryptUtil {
 
 	private static String encodingCharset = "UTF-8";
@@ -149,15 +152,27 @@ public class EncryptUtil {
 		if (input == null) {
 			return null;
 		}
-		final StringBuffer output = new StringBuffer(input.length * 2);
-		for (int i = 0; i < input.length; i++) {
-			final int current = input[i] & 0xff;
-			if (current < 16) {
-				output.append("0");
-			}
-			output.append(Integer.toString(current, 16));
+//		final StringBuffer output = new StringBuffer(input.length * 2);
+//		for (int i = 0; i < input.length; i++) {
+//			final int current = input[i] & 0xff;
+//			if (current < 16) {
+//				output.append("0");
+//			}
+//			output.append(Integer.toString(current, 16));
+//		}
+		return Hex.encodeHexString(input);
+	}
+
+	public static byte[] fromHex(String hex) {
+		if (hex == null) {
+			return null;
 		}
-		return output.toString();
+		try {
+			return Hex.decodeHex(hex);
+		} catch (DecoderException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
@@ -208,5 +223,29 @@ public class EncryptUtil {
 		}
 		return toHex(md.digest(value));
 
+	}
+
+	/**
+	 * 对字符串进行散列, 支持md5与sha1算法.
+	 */
+	public static String digest(byte[] input, String algorithm, byte[] salt, int iterations) {
+		try {
+			MessageDigest digest = MessageDigest.getInstance(algorithm);
+
+			if (salt != null) {
+				digest.update(salt);
+			}
+
+			byte[] result = digest.digest(input);
+
+			for (int i = 1; i < iterations; i++) {
+				digest.reset();
+				result = digest.digest(result);
+			}
+			return toHex(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

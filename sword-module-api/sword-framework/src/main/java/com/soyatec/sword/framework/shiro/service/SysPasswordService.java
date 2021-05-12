@@ -66,7 +66,8 @@ public class SysPasswordService {
 	}
 
 	public boolean matches(SysUser user, String newPassword) {
-		return user.getPassword().equals(encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
+		return SysPasswordMatcher.matches(user, newPassword);
+//		return user.getPassword().equals(encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
 	}
 
 	public void clearLoginRecordCache(String loginName) {
@@ -74,7 +75,11 @@ public class SysPasswordService {
 	}
 
 	public String encryptPassword(String loginName, String password, String salt) {
-		return StringUtils.encryptPassword(loginName, password, salt);
+		SysUser user = new SysUser();
+		user.setLoginName(loginName);
+		user.setSalt(salt);
+		user.setPassword(password);
+		return SysPasswordMatcher.encryptPassword(user, password);
 	}
 
 	public static void main(String[] args) {
