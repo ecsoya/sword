@@ -14,6 +14,8 @@ public class GlobalConfig {
 	/** 项目名称 */
 	private static String name;
 
+	private static String title = "后台管理";
+
 	/** 版本 */
 	private static String version;
 
@@ -149,6 +151,14 @@ public class GlobalConfig {
 
 	public void setGateway(String gateway) {
 		GlobalConfig.gateway = gateway;
+	}
+
+	public static String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		GlobalConfig.title = title;
 	}
 
 }
