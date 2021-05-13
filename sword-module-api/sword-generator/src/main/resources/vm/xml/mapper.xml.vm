@@ -74,6 +74,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="select${ClassName}ById" parameterType="${pkColumn.javaType}" resultMap="#if($table.sub)${ClassName}${subClassName}Result#else${ClassName}Result#end">
 #if($table.crud)
         <include refid="select${ClassName}Vo"/>
+        from ${tableName} a
+        <include refid="select${ClassName}Joins"/>
         where ${pkColumn.columnName} = #{${pkColumn.javaField}}
 #elseif($table.tree)
         select#foreach($column in $columns) t.$column.columnName,#end p.${tree_name} as parent_name
