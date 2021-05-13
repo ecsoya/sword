@@ -10,7 +10,6 @@ import java.util.Arrays;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
 public class EncryptUtil {
@@ -168,9 +167,8 @@ public class EncryptUtil {
 			return null;
 		}
 		try {
-			return Hex.decodeHex(hex);
-		} catch (DecoderException e) {
-			e.printStackTrace();
+			return Hex.decodeHex(hex.toCharArray());
+		} catch (Exception e) {
 			return null;
 		}
 	}

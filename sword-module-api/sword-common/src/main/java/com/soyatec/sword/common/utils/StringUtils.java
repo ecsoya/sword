@@ -1,5 +1,6 @@
 package com.soyatec.sword.common.utils;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	/** 邮箱验证器 */
 	private static final String MAIL_REGEX = "^([a-z0-9A-Z_]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 
+	private static SecureRandom random = new SecureRandom();
+
 	public static String randomStr(int length) {
 		final Random random = new Random();
 		final StringBuffer sb = new StringBuffer();
@@ -45,6 +48,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 			num = num + String.valueOf((int) Math.floor(Math.random() * 9 + 1));
 		}
 		return num;
+	}
+
+	public static byte[] randomSalt(int numBytes) {
+		byte[] bytes = new byte[numBytes];
+		random.nextBytes(bytes);
+		return bytes;
 	}
 
 	/**

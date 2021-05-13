@@ -24,4 +24,9 @@ public @interface DataScope {
 	 * 用户表的别名
 	 */
 	public String userAlias() default "";
+
+	/**
+	 * 用户表的别名
+	 */
+	public String userIdColumn() default "user_id";
 }
