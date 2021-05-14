@@ -476,4 +476,17 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		final LocalDateTime localDateTime = localDateTime(date);
 		return toDate(localDateTime.withHour(hour).withMinute(0).withSecond(0).withNano(0));
 	}
+
+	public static Integer countWeeks(Date start, Date end) {
+		if (start == null || end == null || end.before(start)) {
+			return 0;
+		}
+		int weeks = 1;
+		Date date = addWeeks(start, 1);
+		while (date.before(end)) {
+			date = addWeeks(date, 1);
+			weeks++;
+		}
+		return weeks;
+	}
 }
