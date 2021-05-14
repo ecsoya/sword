@@ -489,4 +489,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		}
 		return weeks;
 	}
+
+	public static Date tryParse(String date, String... formats) {
+		try {
+			return parseDate(date, formats);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }
