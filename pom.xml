@@ -31,6 +31,7 @@
 		<velocity.version>1.7</velocity.version>
 		<swagger.ui.version>2.9.2</swagger.ui.version>
 		<swagger.version>1.6.2</swagger.version>
+		<json.version>2.4</json.version>
 	</properties>
 
 	<!-- 依赖声明 -->
@@ -329,6 +330,12 @@
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger-ui</artifactId>
 				<version>${swagger.ui.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>net.sf.json-lib</groupId>
+			    <artifactId>json-lib</artifactId>
+			    <version>${json.version}</version>
 			</dependency>
 
 		</dependencies>
