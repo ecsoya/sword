@@ -31,7 +31,6 @@
 		<velocity.version>1.7</velocity.version>
 		<swagger.ui.version>2.9.2</swagger.ui.version>
 		<swagger.version>1.6.2</swagger.version>
-		<json.version>2.4</json.version>
 	</properties>
 
 	<!-- 依赖声明 -->
