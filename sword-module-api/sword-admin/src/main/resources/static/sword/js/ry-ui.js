@@ -740,6 +740,17 @@ var table = {
             alertSuccess: function(content) {
             	$.modal.alert(content, modal_status.SUCCESS);
             },
+			alertSuccessCall: function (content,callBack) {
+                layer.confirm(content, {
+                    icon: 1,
+                    title: "系统提示",
+                    btn: ['确认'],
+                    btnclass: ['btn btn-primary'],
+                }, function (index) {
+                    layer.close(index);
+                    callBack(true);
+                });
+            },
             // 警告提示
             alertWarning: function(content) {
             	$.modal.alert(content, modal_status.WARNING);
