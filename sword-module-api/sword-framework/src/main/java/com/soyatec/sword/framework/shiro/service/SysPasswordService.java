@@ -15,6 +15,7 @@ import com.soyatec.sword.common.constant.ShiroConstants;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
 import com.soyatec.sword.common.exception.user.UserPasswordNotMatchException;
 import com.soyatec.sword.common.exception.user.UserPasswordRetryLimitExceedException;
+import com.soyatec.sword.common.password.PasswordMatcher;
 import com.soyatec.sword.common.utils.MessageUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
@@ -66,7 +67,7 @@ public class SysPasswordService {
 	}
 
 	public boolean matches(SysUser user, String newPassword) {
-		return SysPasswordMatcher.matches(user, newPassword);
+		return PasswordMatcher.matches(user, newPassword);
 //		return user.getPassword().equals(encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
 	}
 
@@ -79,7 +80,7 @@ public class SysPasswordService {
 		user.setLoginName(loginName);
 		user.setSalt(salt);
 		user.setPassword(password);
-		return SysPasswordMatcher.encryptPassword(user, password);
+		return PasswordMatcher.encryptPassword(user, password);
 	}
 
 	public static void main(String[] args) {

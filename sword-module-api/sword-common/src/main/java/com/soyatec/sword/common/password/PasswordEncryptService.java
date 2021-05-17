@@ -1,8 +1,8 @@
-package com.soyatec.sword.framework.shiro.service;
+package com.soyatec.sword.common.password;
 
 import com.soyatec.sword.common.core.domain.entity.SysUser;
 
-public interface SysPasswordEncryptService {
+public interface PasswordEncryptService {
 
 	String encryptPassword(SysUser user, String password);
 

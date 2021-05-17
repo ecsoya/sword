@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -354,5 +355,16 @@ public class SysRoleServiceImpl implements ISysRoleService {
 			list.add(ur);
 		}
 		return userRoleMapper.batchUserRole(list);
+	}
+
+	@Override
+	public Long[] selectRoleIdsByRoleKey(String roleKey) {
+		if (StringUtils.isEmpty(roleKey)) {
+			return new Long[0];
+		}
+		SysRole query = new SysRole();
+		query.setRoleKey(roleKey);
+		List<SysRole> list = selectRoleList(query);
+		return list.stream().map(r -> r.getRoleId()).collect(Collectors.toList()).toArray(new Long[list.size()]);
 	}
 }

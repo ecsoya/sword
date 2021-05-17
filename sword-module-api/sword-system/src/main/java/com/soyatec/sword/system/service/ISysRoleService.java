@@ -156,4 +156,6 @@ public interface ISysRoleService {
 	 * @return 结果
 	 */
 	public int insertAuthUsers(Long roleId, String userIds);
+
+	public Long[] selectRoleIdsByRoleKey(String roleKey);
 }

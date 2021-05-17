@@ -1,4 +1,4 @@
-package com.soyatec.sword.framework.shiro.service;
+package com.soyatec.sword.common.password;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
@@ -6,13 +6,13 @@ import java.util.ServiceLoader;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
 import com.soyatec.sword.common.utils.StringUtils;
 
-public class SysPasswordMatcher {
+public class PasswordMatcher {
 
-	private static final ServiceLoader<SysPasswordEncryptService> loader = ServiceLoader
-			.load(SysPasswordEncryptService.class);
+	private static final ServiceLoader<PasswordEncryptService> loader = ServiceLoader
+			.load(PasswordEncryptService.class);
 
-	private static SysPasswordEncryptService getPasswordMatchService() {
-		Iterator<SysPasswordEncryptService> it = loader.iterator();
+	private static PasswordEncryptService getPasswordMatchService() {
+		Iterator<PasswordEncryptService> it = loader.iterator();
 		if (it.hasNext()) {
 			return it.next();
 		}
@@ -20,7 +20,7 @@ public class SysPasswordMatcher {
 	}
 
 	public static boolean matches(SysUser user, String newPassword) {
-		SysPasswordEncryptService service = getPasswordMatchService();
+		PasswordEncryptService service = getPasswordMatchService();
 		if (service != null) {
 			return service.matchesPassword(user, newPassword);
 		}
@@ -28,7 +28,7 @@ public class SysPasswordMatcher {
 	}
 
 	public static String encryptPassword(SysUser user, String password) {
-		SysPasswordEncryptService service = getPasswordMatchService();
+		PasswordEncryptService service = getPasswordMatchService();
 		if (service != null) {
 			return service.encryptPassword(user, password);
 		}
