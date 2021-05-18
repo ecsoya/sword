@@ -295,6 +295,13 @@
 				<version>${sword.version}</version>
 			</dependency>
 
+			<!-- LocalDate LocalDateTime LocalTime support for Spring -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-javatime</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+
 			<!-- swagger2 -->
 			<dependency>
 				<groupId>io.springfox</groupId>

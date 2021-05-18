@@ -38,5 +38,6 @@
   	
   	<module>sword-qrcode</module>
   	<module>sword-upload-local</module>
+  	<module>sword-javatime</module>
   </modules>
 </project>
