@@ -500,7 +500,7 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 600px) {
     .file-preview-thumbnails {
         display: flex;
         justify-content: center;
