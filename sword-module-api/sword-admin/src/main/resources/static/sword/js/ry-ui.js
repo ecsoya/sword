@@ -1775,7 +1775,8 @@ var table = {
 				if (!array) {
 					array = ['待完成', '已完成'];
 				}
-				if (!value) {
+				value = parseInt(value);
+				if (isNaN(value)) {
 					return '';
 				}
 				var labelStyles = ['label-default', 'label-primary',
