@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ import com.soyatec.sword.upload.core.UploadData;
 import com.soyatec.sword.upload.service.IFileUploadService;
 import com.soyatec.sword.upload.uploader.FileUploader;
 
+@Component
 @Service
 public class FileUploadServiceImpl implements IFileUploadService {
 

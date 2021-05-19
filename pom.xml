@@ -231,6 +231,12 @@
 				<artifactId>sword-upload-aliyun</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
+			<!-- 文件上传 本地 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-upload-local</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
 			<!-- 二维码组件 -->
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>

@@ -39,11 +39,6 @@ public class UploadConfig {
 	 */
 	private boolean addDatePath = true;
 
-	/**
-	 * 本地存储，根目录
-	 */
-	private String uploadPath;
-
 	public String getBaseUrl() {
 		return baseUrl;
 	}
@@ -98,15 +93,6 @@ public class UploadConfig {
 		return this;
 	}
 
-	public String getUploadPath() {
-		return uploadPath;
-	}
-
-	public UploadConfig setUploadPath(String uploadPath) {
-		this.uploadPath = uploadPath;
-		return this;
-	}
-
 	public void testCloudValidated() throws FileUploadException {
 		if (StringUtils.isEmpty(baseUrl)) {
 			throw new FileUploadException("Base URL is empty");
@@ -125,16 +111,10 @@ public class UploadConfig {
 		}
 	}
 
-	public void testLocalValidated() throws FileUploadException {
-		if (StringUtils.isEmpty(uploadPath)) {
-			throw new FileUploadException("Upload path is empty");
-		}
-	}
-
 	@Override
 	public String toString() {
 		return "[baseUrl=" + baseUrl + ", endpoint=" + endpoint + ", accessKey=" + accessKey + ", bucket=" + bucket
-				+ ", addDatePath=" + addDatePath + ", uploadPath=" + uploadPath + "]";
+				+ ", addDatePath=" + addDatePath + "]";
 	}
 
 	public static UploadConfig build() {

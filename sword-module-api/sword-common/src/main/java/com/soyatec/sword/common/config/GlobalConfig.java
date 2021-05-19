@@ -77,6 +77,9 @@ public class GlobalConfig {
 	}
 
 	public static String getProfile() {
+//		if (profile != null) {
+//			return new File(profile).getAbsoluteFile().getAbsolutePath();
+//		}
 		return profile;
 	}
 
