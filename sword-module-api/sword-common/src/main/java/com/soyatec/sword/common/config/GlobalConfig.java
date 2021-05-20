@@ -164,4 +164,12 @@ public class GlobalConfig {
 		GlobalConfig.title = title;
 	}
 
+	public static boolean isMessageEnabled() {
+		try {
+			Class.forName("com.soyatec.sword.message.config.MessageConfig");
+			return true;
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
 }

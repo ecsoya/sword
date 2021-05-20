@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.soyatec.sword.common.annotation.Log;
+import com.soyatec.sword.common.config.GlobalConfig;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.enums.BusinessType;
+import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.framework.shiro.util.ShiroUtils;
+import com.soyatec.sword.message.IMessageType;
+import com.soyatec.sword.message.MessageHelper;
 import com.soyatec.sword.system.domain.SysNotice;
 import com.soyatec.sword.system.service.ISysNoticeService;
 
@@ -66,7 +70,17 @@ public class AdminInformController extends BaseController {
 	public AjaxResult addSave(SysNotice inform) {
 		inform.setNoticeType(SysNotice.NOTICE_TYPE_INFORM);
 		inform.setCreateBy(ShiroUtils.getLoginName());
-		return toAjax(noticeService.insertNotice(inform));
+		int rows = noticeService.insertNotice(inform);
+		if (rows > 0 && GlobalConfig.isMessageEnabled()) {
+			AsyncManager.me().execute(new Runnable() {
+
+				@Override
+				public void run() {
+					MessageHelper.send(inform.getNoticeId(), IMessageType.TYPE_INFORM);
+				}
+			});
+		}
+		return toAjax(rows);
 	}
 
 	/**

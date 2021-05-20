@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('用户消息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label style="font: bold;font-weight: bold;">类型：</label>
+                                <select name="type">
+                                    <option value="">所有</option>
+                                    <option value="0">消息</option>
+                                    <option value="1">聊天</option>
+                                    <option value="2">公告</option>
+                                    <option value="3">通知</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="status">
+                                    <option value="">所有</option>
+                                    <option value="0">未读</option>
+                                    <option value="1">已读</option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="markRead()" >
+                    <i class="fa fa-plus"></i> 标记已读
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" >
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-bordered">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-table-export-js" />
+    <script th:inline="javascript">
+        var editFlag = '';
+        var removeFlag = '';
+        var showExport = false;
+        var prefix = ctx + "message";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "用户消息",
+                showExport: showExport,
+                sortName: 'createTime',
+                sortOrder: "desc",
+		        exportOptions: {
+		        	ignoreColumn: [0]  //忽略第一列
+		        },
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: 'ID',
+                    visible: false
+                },
+                {
+                    field: 'content',
+                    title: '消息',
+                    formatter: function(value, row, index) {
+                    	return $.table.tooltip(value);
+                    }
+                },
+                {
+                    field: 'type',
+                    title: '类型',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatStatus(['消息', '聊天', '公告', '通知'], value);
+                    }
+                    
+                },
+                {
+                    field: 'status',
+                    title: '状态',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return $.common.formatStatus(['未读', '已读'], value);
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '时间',
+                    align: 'center',
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="markRead(\'' + row.id + '\')"><i class="fa fa-edit"></i>已读</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }],
+                rowStyle: rowStyle
+            };
+            $.table.init(options);
+        });
+        
+        function rowStyle(row, index) {
+        	if (row.status == 0) {
+        		return {'css': {'font': 'bold', 'font-weight': 'bold'}};
+        	}
+        	return '';
+        }
+        
+        function markRead(ids) {
+        	if (!ids) {
+        		ids = '';
+        	}
+        	$.operate.post(prefix + '/markRead?ids=' + ids, {}, function(){
+        		$.modal.msg('已阅读');
+        	});
+        }
+    </script>
+</body>
+</html>

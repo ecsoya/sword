@@ -24,6 +24,11 @@ public class ServerConfig {
 		return getDomain(request);
 	}
 
+	public String getWsUrl() {
+		final HttpServletRequest request = ServletUtils.getRequest();
+		return getDomain(request).replaceAll("https", "ws").replaceAll("http", "ws") + "/ws";
+	}
+
 	public static String getDomain(HttpServletRequest request) {
 		final StringBuffer url = request.getRequestURL();
 		final String contextPath = request.getServletContext().getContextPath();

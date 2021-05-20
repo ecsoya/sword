@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.soyatec.sword.common.config.GlobalConfig;
+import com.soyatec.sword.common.config.ServerConfig;
 import com.soyatec.sword.common.constant.ShiroConstants;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.AjaxResult;
@@ -49,6 +50,9 @@ public class SysIndexController extends BaseController {
 	@Autowired
 	private GlobalConfig config;
 
+	@Autowired
+	private ServerConfig server;
+
 	// 系统首页
 	@GetMapping("/index")
 	public String index(ModelMap mmap) {
@@ -59,6 +63,7 @@ public class SysIndexController extends BaseController {
 		mmap.put("menus", menus);
 		mmap.put("user", user);
 		mmap.put("config", config);
+		mmap.put("server", server);
 		mmap.put("sideTheme", configService.selectConfigValueByKey("sys.index.sideTheme"));
 		mmap.put("skinName", configService.selectConfigValueByKey("sys.index.skinName"));
 		mmap.put("ignoreFooter", configService.selectConfigValueByKey("sys.index.ignoreFooter"));

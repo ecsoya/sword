@@ -31,13 +31,19 @@
   	<!-- Java邮件验证码服务 -->
   	<module>sword-code-javamail</module>
   	
+  	<!-- 文件上传组件 -->
   	<module>sword-upload</module>
   	<module>sword-upload-tencent</module>
   	<module>sword-upload-aliyun</module>
-  	
-  	
-  	<module>sword-qrcode</module>
   	<module>sword-upload-local</module>
+  	
+  	<!-- 二维码组件 -->
+  	<module>sword-qrcode</module>
+  	
+  	<!-- JavaTime组件 -->
   	<module>sword-javatime</module>
+  	
+  	<!-- WebSocket消息组件 -->
+  	<module>sword-message</module>
   </modules>
 </project>

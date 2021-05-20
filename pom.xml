@@ -309,11 +309,20 @@
 				<version>${sword.version}</version>
 			</dependency>
 
+			<!-- 实时消息服务 -->
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-message</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>com.google.auto.service</groupId>
 				<artifactId>auto-service</artifactId>
 				<version>${auto-service.version}</version>
 			</dependency>
+
+
 
 			<!-- swagger2 -->
 			<dependency>

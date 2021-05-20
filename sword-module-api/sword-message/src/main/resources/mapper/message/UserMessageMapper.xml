@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyatec.sword.message.mapper.UserMessageMapper">
+    
+    <resultMap type="UserMessage" id="UserMessageResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="type"    column="type"    />
+        <result property="messageId"    column="message_id"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectUserMessageVo">
+        select a.id, a.user_id, a.type, a.message_id, a.status, a.del_flag, a.create_time, a.update_time, a.remark
+    </sql>
+    
+    <sql id="selectUserMessageJoins">
+	
+	</sql>
+
+    <select id="selectUserMessageList" parameterType="UserMessage" resultMap="UserMessageResult">
+        <include refid="selectUserMessageVo"/>
+        from t_user_message a
+        <include refid="selectUserMessageJoins"/>
+        where del_flag = 0 
+            <if test="userId != null "> and a.user_id = #{userId}</if>
+            <if test="type != null "> and a.type = #{type}</if>
+            <if test="messageId != null "> and a.message_id = #{messageId}</if>
+            <if test="status != null "> and a.status = #{status}</if>
+    </select>
+    
+    <select id="selectUserMessageById" parameterType="Long" resultMap="UserMessageResult">
+        <include refid="selectUserMessageVo"/>
+        from t_user_message a
+        <include refid="selectUserMessageJoins"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserMessage" parameterType="UserMessage" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="type != null">type,</if>
+            <if test="messageId != null">message_id,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="messageId != null">#{messageId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserMessage" parameterType="UserMessage">
+        update t_user_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="messageId != null">message_id = #{messageId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserMessageById" parameterType="Long">
+        update t_user_message set del_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteUserMessageByIds" parameterType="String">
+        update t_user_message set del_flag = 1 where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+	<select id="selectUserMessageUnreadCount" parameterType="Long" resultType="Integer">
+		select count(1) from t_user_message where status = 0 and del_flag = 0 and user_id=#{userId}
+	</select>
+	
+	<insert id="insertUserMessageBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user_message (user_id, message_id, type, create_time)
+        values 
+        <foreach collection="messages" item="msg" separator=",">
+      		(#{msg.userId},#{msg.messageId},#{msg.type}, now())
+      	</foreach>
+    </insert>
+    
+    <update id="readUserMessageByIds" parameterType="String">
+    	 update t_user_message set status = 1 where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <update id="readUserMessageByUserId" parameterType="Long">
+    	 update t_user_message set status = 1 where user_id = #{userId}
+    </update>
+</mapper>

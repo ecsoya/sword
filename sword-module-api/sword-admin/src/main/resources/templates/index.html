@@ -18,38 +18,69 @@
 <style type="text/css">
 /** 动态主题 skin-primary **/
 .navbar, .skin-primary .navbar {
-	background-color: rgb([[${@config.global('adminColor')}]])
+	background-color: rgb([[${@ config.global ( 'adminColor')
 }
-.skin-primary .navbar-default .nav>li.selected>a,
-.skin-primary .navbar-default .nav>li.selected>a:focus {
+
+]]
+)
+
+
+
+
+
+
+
+
+
+
+}
+.skin-primary .navbar-default .nav>li.selected>a, .skin-primary .navbar-default .nav>li.selected>a:focus
+	{
 	background-color: #1890ff;
-    color: rgba(255,255,255,1);
+	color: rgba(255, 255, 255, 1);
 }
+
 .skin-primary .navbar .nav>li>a {
 	color: #fff
 }
-.skin-primary .navbar .nav>li>a:hover,
-.skin-primary .navbar .nav>li>a:active,
-.skin-primary .navbar .nav>li>a:focus,
-.skin-primary .navbar .nav .open>a,
-.skin-primary .navbar .nav .open>a:hover,
-.skin-primary .navbar .nav .open>a:focus,
-.skin-primary .navbar .nav>.active>a {
+
+.skin-primary .navbar .nav>li>a:hover, .skin-primary .navbar .nav>li>a:active,
+	.skin-primary .navbar .nav>li>a:focus, .skin-primary .navbar .nav .open>a,
+	.skin-primary .navbar .nav .open>a:hover, .skin-primary .navbar .nav .open>a:focus,
+	.skin-primary .navbar .nav>.active>a {
 	background: rgba(0, 0, 0, 0.1);
 	color: #f6f6f6
 }
+
 .skin-primary .navbar .sidebar-toggle {
 	color: #fff
 }
+
 .skin-primary .navbar .sidebar-toggle:hover {
 	color: #f6f6f6;
 	background: rgba(0, 0, 0, 0.1)
 }
+
 .skin-primary .navbar .sidebar-toggle {
 	color: #fff
 }
+
 .skin-primary .navbar .sidebar-toggle:hover {
-	background-color: rgb([[${@config.global('adminColor')}]])
+	background-color: rgb([[${@ config.global ( 'adminColor')
+}
+
+]]
+)
+
+
+
+
+
+
+
+
+
+
 }
 @media ( max-width :767px) {
 	.skin-primary .navbar .dropdown-menu li.divider {
@@ -59,49 +90,216 @@
 		color: #fff
 	}
 	.skin-primary .navbar .dropdown-menu li a:hover {
-		background: rgb([[${@config.global('adminColor')}]])
+		background: rgb([[${@ config.global ( 'adminColor')
 	}
+	]]
+	)
+	
+	
+	
+	
+	
+	
+
+
+
+
+}
+
 }
 .skin-primary .logo {
-	background-color: rgba([[${@config.global('adminColor')}]],0.8);
-	color: #fff;
-	border-bottom: 0 solid transparent
+	background-color: rgba([[${@ config.global ( 'adminColor')
+}
+
+]],
+0
+
+
+
+
+
+
+
+
+.8
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+;
+color
+
+
+
+
+
+
+
+
+:
+
+
+
+
+ 
+
+
+
+
+#fff
+
+
+
+
+
+
+
+
+;
+border-bottom
+
+
+
+
+
+
+
+
+:
+
+
+
+
+ 
+
+
+
+
+0
+
+
+
+
+ 
+
+
+
+
+solid
+
+
+
+
+ 
+
+
+
+
+transparent
+
+
+
+
+
+
+
+
+
+
 }
 .skin-primary .logo:hover {
 	background-color: #357ca5
 }
+
 .skin-primary li.user-header {
-	background-color: rgb([[${@config.global('adminColor')}]])
+	background-color: rgb([[${@ config.global ( 'adminColor')
+}
+
+]]
+)
+
+
+
+
+
+
+
+
+
+
 }
 .skin-primary .content-header {
 	background: transparent
 }
-.skin-primary .wrapper,
-.skin-primary .main-sidebar,
-.skin-primary .left-side {
+
+.skin-primary .wrapper, .skin-primary .main-sidebar, .skin-primary .left-side
+	{
 	background-color: #222d32
 }
-.skin-primary .user-panel>.info,
-.skin-primary .user-panel>.info>a {
+
+.skin-primary .user-panel>.info, .skin-primary .user-panel>.info>a {
 	color: #fff
 }
+
 .skin-primary .nav>li.header {
 	color: #4b646f;
 	background: #1a2226
 }
+
 .skin-primary .nav:not(.navbar-toolbar)>li.active {
 	color: #fff;
 	background: #293846;
-	border-left: 3px solid rgb([[${@config.global('adminColor')}]]);
+	border-left: 3px solid rgb([[${@ config.global ( 'adminColor')
+}
+
+]]
+)
+
+
+
+
+
+
+
+
+;
 }
 .skin-primary .nav>li.active>ul li.active {
 	border-left: none;
 }
-.skin-primary .dropdown-menu > .active > a, .skin-primary .dropdown-menu > .active > a:hover, .skin-primary .dropdown-menu > .active > a:focus {
-    color: #fff !important;
-    text-decoration: none;
-    outline: 0;
-    background-color: rgb([[${@config.global('adminColor')}]]);
+
+.skin-primary .dropdown-menu>.active>a, .skin-primary .dropdown-menu>.active>a:hover,
+	.skin-primary .dropdown-menu>.active>a:focus {
+	color: #fff !important;
+	text-decoration: none;
+	outline: 0;
+	background-color: rgb([[${@ config.global ( 'adminColor')
+}
+
+]]
+)
+
+
+
+
+
+
+
+
+;
 }
 .skin-primary .sidebar a {
 	color: #b8c7ce
@@ -110,18 +308,21 @@
 .skin-primary .sidebar a:hover {
 	text-decoration: none
 }
+
 .skin-primary .sidebar-form {
 	border-radius: 3px;
 	border: 1px solid #374850;
 	margin: 10px 10px
 }
-.skin-primary .sidebar-form input[type="text"],
-.skin-primary .sidebar-form .btn {
+
+.skin-primary .sidebar-form input[type="text"], .skin-primary .sidebar-form .btn
+	{
 	box-shadow: none;
 	background-color: #374850;
 	border: 1px solid transparent;
 	height: 35px
 }
+
 .skin-primary .sidebar-form input[type="text"] {
 	color: #666;
 	border-top-left-radius: 2px;
@@ -130,13 +331,14 @@
 	border-bottom-left-radius: 2px
 }
 
-.skin-primary .sidebar-form input[type="text"]:focus,
-.skin-primary .sidebar-form input[type="text"]:focus+.input-group-btn .btn {
+.skin-primary .sidebar-form input[type="text"]:focus, .skin-primary .sidebar-form input[type="text"]:focus+.input-group-btn .btn
+	{
 	background-color: #fff;
 	color: #666
 }
 
-.skin-primary .sidebar-form input[type="text"]:focus+.input-group-btn .btn {
+.skin-primary .sidebar-form input[type="text"]:focus+.input-group-btn .btn
+	{
 	border-left-color: #fff
 }
 
@@ -149,27 +351,267 @@
 }
 
 .skin-primary.layout-top-nav>.logo {
-	background-color: rgb([[${@config.global('adminColor')}]]);
-	color: #fff;
-	border-bottom: 0 solid transparent
+	background-color: rgb([[${@ config.global ( 'adminColor')
 }
 
+]]
+)
+
+
+
+
+
+
+
+
+;
+color
+
+
+
+
+
+
+
+
+:
+
+
+
+
+ 
+
+
+
+
+#fff
+
+
+
+
+
+
+
+
+;
+border-bottom
+
+
+
+
+
+
+
+
+:
+
+
+
+
+ 
+
+
+
+
+0
+
+
+
+
+ 
+
+
+
+
+solid
+
+
+
+
+ 
+
+
+
+
+transparent
+
+
+
+
+
+
+
+
+
+
+}
 .skin-primary.layout-top-nav>.logo:hover {
-	background-color: rgba([[${@config.global('adminColor')}]], 0.8)
+	background-color: rgba([[${@ config.global ( 'adminColor')
 }
 
+]],
+0
+
+
+
+
+
+
+
+
+.8
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+}
 .skin-primary .content-tabs {
 	border-bottom: 1px solid #e5e5e5;
 }
 
 .skin-primary.layout-top-nav>.logo {
-	background-color: rgb([[${@config.global('adminColor')}]]);
-	color: #fff;
-	border-bottom: 0 solid transparent
+	background-color: rgb([[${@ config.global ( 'adminColor')
 }
 
+]]
+)
+
+
+
+
+
+
+
+
+;
+color
+
+
+
+
+
+
+
+
+:
+
+
+
+
+ 
+
+
+
+
+#fff
+
+
+
+
+
+
+
+
+;
+border-bottom
+
+
+
+
+
+
+
+
+:
+
+
+
+
+ 
+
+
+
+
+0
+
+
+
+
+ 
+
+
+
+
+solid
+
+
+
+
+ 
+
+
+
+
+transparent
+
+
+
+
+
+
+
+
+
+
+}
 .skin-primary.layout-top-nav>.logo:hover {
-	background-color: rgba([[${@config.global('adminColor')}]], 0.8)
+	background-color: rgba([[${@ config.global ( 'adminColor')
+}
+]],
+0
+
+
+
+
+
+
+
+
+.8
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
 }
 </style>
 </head>
@@ -270,6 +712,13 @@
 						<li><a data-toggle="tooltip" data-trigger="hover"
 							data-placement="bottom" title="全屏显示" href="#" id="fullScreen"><i
 								class="fa fa-arrows-alt"></i> 全屏</a></li>
+						<li th:if="${config.isMessageEnabled()}"> <a
+							data-toggle="tooltip" data-trigger="hover"
+							data-placement="bottom" title="系统消息" th:href="@{/message}"
+							data-id="/message" class="menuItem"><i
+								class="fa fa-envelope"></i> 消息 <span class="badge"
+								id="messageBadge"
+								style="display: none; background-color: red; color: white"></span></a></li>
 						<li class="dropdown user-menu"><a href="javascript:void(0)"
 							class="dropdown-toggle" data-hover="dropdown"> <img
 								th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}"
@@ -327,8 +776,10 @@
 			</div>
 
 			<div th:if="${ignoreFooter}" class="footer">
-				<div class="pull-right">Copyright ©[[${config.copyrightYear}]]
-					[[${config.name}]]. All rights reserved. <small>V[[${config.version}]]</small></div>
+				<div class="pull-right">
+					Copyright ©[[${config.copyrightYear}]] [[${config.name}]]. All
+					rights reserved. <small>V[[${config.version}]]</small>
+				</div>
 			</div>
 		</div>
 		<!--右侧部分结束-->
@@ -345,6 +796,7 @@
 	<script th:src="@{/sword/js/common.js?v=4.6.0}"></script>
 	<script th:src="@{/sword/index.js?v=20201208}"></script>
 	<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
+	<th:block th:include="include :: websocket-js" />
 	<script th:inline="javascript">
 window.history.forward(1);
 var ctx = [[@{/}]]; 
@@ -446,7 +898,29 @@ $(function() {
 		});
 	}
 	$("[data-toggle='tooltip']").tooltip();
+	
+	var messageEnabled = [[${config.isMessageEnabled()}]];
+	if (messageEnabled) {
+		//websocket
+		connectWebSocket(function(event){
+			if (!event || event.code=='2') {
+				return;
+			}
+			$.get(ctx + 'message/count', function(count){
+				if (count) {
+					$('#messageBadge').html(count);
+					$('#messageBadge').show();
+				} else {
+					$('#messageBadge').hide();
+				}
+			})
+		})
+	}
 });
+
+function openMessages() {
+	$.modal.openTab('系统消息', ctx + 'message');
+}
 </script>
 </body>
 </html>
