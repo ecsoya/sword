@@ -2,6 +2,7 @@ package com.soyatec.sword.message.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.enums.BusinessType;
 import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.message.domain.UserMessage;
 import com.soyatec.sword.message.service.IUserMessageService;
 
@@ -60,6 +62,24 @@ public class MessageReceivedController extends AbstractMessageController {
 			return toAjax(userMessageService.readUserMessageByUserId(userId));
 		}
 		return toAjax(userMessageService.readUserMessageByIds(userId, ids));
+	}
+
+	@GetMapping("/detail")
+	public String detail(Long id, ModelMap mmap) {
+		Long userId = getUserId();
+		UserMessage message = userMessageService.selectUserMessageById(id);
+		if (message != null) {
+			mmap.put("title", message.getTitle());
+			mmap.put("content", message.getContent());
+			AsyncManager.me().execute(new Runnable() {
+
+				@Override
+				public void run() {
+					userMessageService.readUserMessageByIds(userId, Long.toString(id));
+				}
+			});
+		}
+		return "message/received/detail";
 	}
 
 }

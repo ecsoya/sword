@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.soyatec.sword.common.core.domain.BaseEntity;
 
 /**
@@ -13,6 +14,7 @@ import com.soyatec.sword.common.core.domain.BaseEntity;
  *
  * @author Jin Liu (angryred@qq.com)
  */
+@JsonIgnoreProperties(ignoreUnknown = true, value = { "searchValue" })
 public class SysNotice extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 

@@ -54,7 +54,7 @@ public class UserMessageServiceImpl implements IUserMessageService {
 	 */
 	@Override
 	public UserMessage selectUserMessageById(Long id) {
-		return userMessageMapper.selectUserMessageById(id);
+		return updateMessageContent(userMessageMapper.selectUserMessageById(id));
 	}
 
 	/**
@@ -78,7 +78,9 @@ public class UserMessageServiceImpl implements IUserMessageService {
 				if (notice != null) {
 					if (UserMessage.TYPE_INFORM.equals(type)) {
 						msg.setContent(notice.getNoticeContent());
+						msg.setTitle(notice.getNoticeTitle());
 					} else {
+						msg.setTitle("系统公告");
 						msg.setContent(notice.getNoticeTitle());
 					}
 				}
@@ -86,6 +88,7 @@ public class UserMessageServiceImpl implements IUserMessageService {
 				SwordMessage m = messageService.selectSwordMessageById(messageId);
 				if (m != null) {
 					msg.setContent(m.getContent());
+					msg.setTitle(m.getTitle());
 				}
 			}
 		}

@@ -37,6 +37,8 @@ public class UserMessage extends BaseEntity {
 
 	private String content;
 
+	private String title;
+
 	/** 状态 */
 	private Integer status;
 
@@ -104,5 +106,13 @@ public class UserMessage extends BaseEntity {
 
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }

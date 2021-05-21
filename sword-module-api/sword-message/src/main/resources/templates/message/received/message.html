@@ -84,10 +84,10 @@
                     visible: false
                 },
                 {
-                    field: 'content',
+                    field: 'title',
                     title: '消息',
                     formatter: function(value, row, index) {
-                    	return $.table.tooltip(value);
+                    	return '<a href="javascript:void(0)" onclick="showContent(\'' + row.id + '\')">'+value+'</a> ';
                     }
                 },
                 {
@@ -141,6 +141,10 @@
         	$.operate.post(prefix + '/markRead?ids=' + ids, {}, function(){
         		$.modal.msg('已阅读');
         	});
+        }
+        
+        function showContent(id) {
+        	$.modal.open('消息详情', prefix + '/detail?id=' + id);
         }
     </script>
 </body>

@@ -29,6 +29,8 @@ public class SwordMessage extends BaseEntity {
 	/** 类型 */
 	private Integer type;
 
+	private String title;
+
 	/** 正文 */
 	private String content;
 
@@ -103,5 +105,13 @@ public class SwordMessage extends BaseEntity {
 
 	public void setRead(Integer read) {
 		this.read = read;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }
