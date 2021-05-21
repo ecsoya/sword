@@ -1,14 +1,17 @@
 package com.soyatec.sword.message.service.impl;
 
 import java.util.List;
-import com.soyatec.sword.common.utils.DateUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.soyatec.sword.common.utils.IdWorker;
-import com.soyatec.sword.message.mapper.SwordMessageMapper;
-import com.soyatec.sword.message.domain.SwordMessage;
-import com.soyatec.sword.message.service.ISwordMessageService;
+
 import com.soyatec.sword.common.core.text.Convert;
+import com.soyatec.sword.common.utils.DateUtils;
+import com.soyatec.sword.common.utils.IdWorker;
+import com.soyatec.sword.message.domain.SwordMessage;
+import com.soyatec.sword.message.mapper.SwordMessageMapper;
+import com.soyatec.sword.message.service.ISwordMessageService;
+import com.soyatec.sword.message.service.IUserMessageService;
 
 /**
  * 消息Service业务层处理
@@ -20,6 +23,9 @@ import com.soyatec.sword.common.core.text.Convert;
 public class SwordMessageServiceImpl implements ISwordMessageService {
 	@Autowired
 	private SwordMessageMapper swordMessageMapper;
+
+	@Autowired
+	private IUserMessageService userMessageService;
 
 	/**
 	 * 查询消息

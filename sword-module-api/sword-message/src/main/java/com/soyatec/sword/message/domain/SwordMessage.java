@@ -16,6 +16,10 @@ public class SwordMessage extends BaseEntity {
 
 	public static final Integer TYPE_MESSAGE = 0;
 	public static final Integer TYPE_REPLY = 1;
+
+	public static final Integer STATUS_NONE = 0;
+	public static final Integer STATUS_PUBLISHED = 1;
+
 	/** ID */
 	private Long id;
 

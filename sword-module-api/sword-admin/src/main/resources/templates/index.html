@@ -714,8 +714,8 @@ transparent
 								class="fa fa-arrows-alt"></i> 全屏</a></li>
 						<li th:if="${config.isMessageEnabled()}"> <a
 							data-toggle="tooltip" data-trigger="hover"
-							data-placement="bottom" title="系统消息" th:href="@{/message}"
-							data-id="/message" class="menuItem"><i
+							data-placement="bottom" title="系统消息" th:href="@{/message/received}"
+							data-id="/message/received" class="menuItem"><i
 								class="fa fa-envelope"></i> 消息 <span class="badge"
 								id="messageBadge"
 								style="display: none; background-color: red; color: white"></span></a></li>
@@ -906,7 +906,7 @@ $(function() {
 			if (!event || event.code=='2') {
 				return;
 			}
-			$.get(ctx + 'message/count', function(count){
+			$.get(ctx + 'message/received/count', function(count){
 				if (count) {
 					$('#messageBadge').html(count);
 					$('#messageBadge').show();
