@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.IdWorker;
+import com.soyatec.sword.common.utils.StringUtils;
+import com.soyatec.sword.message.IMessageType;
 import com.soyatec.sword.message.domain.SwordMessage;
 import com.soyatec.sword.message.mapper.SwordMessageMapper;
 import com.soyatec.sword.message.service.ISwordMessageService;
@@ -98,5 +101,23 @@ public class SwordMessageServiceImpl implements ISwordMessageService {
 	@Override
 	public int deleteSwordMessageById(Long id) {
 		return swordMessageMapper.deleteSwordMessageById(id);
+	}
+
+	@Override
+	public CommonResult<?> publishSwordMessa(SwordMessage swordMessage, String userIds) {
+		if (swordMessage == null) {
+			return CommonResult.fail("参数错误");
+		}
+		if (StringUtils.isEmpty(userIds)) {
+			return CommonResult.ajax(insertSwordMessage(swordMessage));
+		}
+		Long[] ids = Convert.toLongArray(userIds);
+		swordMessage.setPublish(ids.length);
+		int rows = insertSwordMessage(swordMessage);
+		if (rows > 0 && SwordMessage.STATUS_PUBLISHED.equals(swordMessage.getStatus())) {
+			return CommonResult
+					.ajax(userMessageService.publishUserMessages(swordMessage.getId(), IMessageType.TYPE_MESSAGE, ids));
+		}
+		return CommonResult.ajax(rows);
 	}
 }

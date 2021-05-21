@@ -35,6 +35,12 @@ public class SwordMessage extends BaseEntity {
 	/** 状态（0正常 1关闭） */
 	private Integer status;
 
+	/** 发布人数 */
+	private Integer publish;
+
+	/** 阅读人数 */
+	private Integer read;
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -81,5 +87,21 @@ public class SwordMessage extends BaseEntity {
 				.append("userId", getUserId()).append("type", getType()).append("content", getContent())
 				.append("status", getStatus()).append("createTime", getCreateTime())
 				.append("updateTime", getUpdateTime()).append("remark", getRemark()).toString();
+	}
+
+	public Integer getPublish() {
+		return publish;
+	}
+
+	public void setPublish(Integer publish) {
+		this.publish = publish;
+	}
+
+	public Integer getRead() {
+		return read;
+	}
+
+	public void setRead(Integer read) {
+		this.read = read;
 	}
 }

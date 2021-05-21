@@ -10,17 +10,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="type"    column="type"    />
         <result property="content"    column="content"    />
         <result property="status"    column="status"    />
+        <result property="publish"    column="publish"    />
+        <result property="status"    column="status"    />
+        <result property="read"    column="read"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
     </resultMap>
 
     <sql id="selectSwordMessageVo">
-        select a.id, a.user_id, a.type, a.content, a.status, a.create_time, a.update_time, a.remark    
+        select a.id, a.user_id, a.type, a.content, a.status, a.publish, a.create_time, a.update_time, a.remark
+        , b.read    
     </sql>
     
     <sql id="selectSwordMessageJoins">
-	
+		left join (select message_id, sum(status) as `read` from t_user_message where `type`=0 group by message_id ) as b on a.id = b.message_id
 	</sql>
 
     <select id="selectSwordMessageList" parameterType="SwordMessage" resultMap="SwordMessageResult">
@@ -29,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectSwordMessageJoins"/>
         <where>  
             <if test="userId != null "> and a.user_id = #{userId}</if>
-            <if test="type != null "> and a.type = #{type}</if>
+            <if test="type != null "> and a.`type` = #{type}</if>
             <if test="content != null  and content != ''"> and a.content = #{content}</if>
             <if test="status != null "> and a.status = #{status}</if>
         </where>
@@ -49,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="type != null">type,</if>
             <if test="content != null">content,</if>
             <if test="status != null">status,</if>
+            <if test="publish != null">publish,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
@@ -58,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="type != null">#{type},</if>
             <if test="content != null">#{content},</if>
             <if test="status != null">#{status},</if>
+            <if test="publish != null">#{publish},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
@@ -71,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="type != null">type = #{type},</if>
             <if test="content != null">content = #{content},</if>
             <if test="status != null">status = #{status},</if>
+            <if test="publish != null">publish = #{publish},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>

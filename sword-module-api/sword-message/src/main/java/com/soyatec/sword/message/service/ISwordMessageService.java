@@ -1,6 +1,8 @@
 package com.soyatec.sword.message.service;
 
 import java.util.List;
+
+import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.message.domain.SwordMessage;
 
 /**
@@ -57,4 +59,6 @@ public interface ISwordMessageService {
 	 * @return 结果
 	 */
 	public int deleteSwordMessageById(Long id);
+
+	public CommonResult<?> publishSwordMessa(SwordMessage swordMessage, String userIds);
 }
