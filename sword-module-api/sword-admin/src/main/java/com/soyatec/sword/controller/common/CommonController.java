@@ -93,9 +93,9 @@ public class CommonController extends BaseController {
 	public void fileDownload(String fileName, Boolean delete, HttpServletResponse response,
 			HttpServletRequest request) {
 		try {
-			if (!FileUtils.checkAllowDownload(fileName)) {
-				throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
-			}
+//			if (!FileUtils.checkAllowDownload(fileName)) {
+//				throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
+//			}
 			final String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
 			final String filePath = GlobalConfig.getDownloadPath() + fileName;
 
@@ -181,9 +181,9 @@ public class CommonController extends BaseController {
 	public void resourceDownload(String resource, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		try {
-			if (!FileUtils.checkAllowDownload(resource)) {
-				throw new Exception(StringUtils.format("资源文件({})非法，不允许下载。 ", resource));
-			}
+//			if (!FileUtils.checkAllowDownload(resource)) {
+//				throw new Exception(StringUtils.format("资源文件({})非法，不允许下载。 ", resource));
+//			}
 			// 本地资源路径
 			final String localPath = GlobalConfig.getProfile();
 			// 数据库资源地址

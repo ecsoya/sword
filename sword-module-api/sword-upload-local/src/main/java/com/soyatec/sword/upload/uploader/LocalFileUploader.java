@@ -83,7 +83,7 @@ public class LocalFileUploader extends AbstractFileUploader {
 		if (serverConfig == null) {
 			return filename;
 		}
-		return serverConfig.getUrl() + filename;
+		return serverConfig.getContextPath() + filename;
 	}
 
 	private final String getPathFileName(String uploadDir, String fileName) throws IOException {
