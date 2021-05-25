@@ -65,6 +65,7 @@ public class MessageSentController extends AbstractMessageController {
 	@ResponseBody
 	public AjaxResult addSave(SwordMessage swordMessage) {
 		swordMessage.setUserId(getUserId());
+		swordMessage.setCreateBy(getUserName());
 		return toAjax(messageService.insertSwordMessage(swordMessage));
 	}
 

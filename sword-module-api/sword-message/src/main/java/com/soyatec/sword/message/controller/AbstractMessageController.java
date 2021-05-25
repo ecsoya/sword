@@ -28,4 +28,7 @@ public class AbstractMessageController extends BaseController {
 		return user;
 	}
 
+	protected String getUserName() {
+		return getSysUser().getUserName();
+	}
 }

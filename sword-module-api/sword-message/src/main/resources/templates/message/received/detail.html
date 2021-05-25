@@ -8,9 +8,10 @@
 		<form class="form-horizontal m" id="form-message-edit">
 			<h4 class="form-header h4">[[${title}]]</h4>
 			<div class="form-group"
-				style="margin: 8px 10px 25px 10px; padding-left: 4px">
+				style="margin: 8px 10px 25px 10px; padding-left: 4px; min-height: 200px;">
 				<div th:utext="${content}"></div>
 			</div>
+			<h5 style="width: 100%;text-align: right;"> <a href="javascript:;">[[${sender}]]</a> [[${date}]]</h5>
 		</form>
 	</div>
 	<th:block th:include="include :: footer" />

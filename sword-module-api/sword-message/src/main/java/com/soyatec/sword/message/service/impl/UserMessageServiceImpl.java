@@ -83,12 +83,16 @@ public class UserMessageServiceImpl implements IUserMessageService {
 						msg.setTitle("系统公告");
 						msg.setContent(notice.getNoticeTitle());
 					}
+					msg.setCreateBy(notice.getCreateBy());
+					msg.setCreateTime(notice.getCreateTime());
 				}
 			} else {
 				SwordMessage m = messageService.selectSwordMessageById(messageId);
 				if (m != null) {
 					msg.setContent(m.getContent());
 					msg.setTitle(m.getTitle());
+					msg.setCreateBy(m.getCreateBy());
+					msg.setCreateTime(m.getCreateTime());
 				}
 			}
 		}
@@ -206,9 +210,9 @@ public class UserMessageServiceImpl implements IUserMessageService {
 			@Override
 			public void run() {
 				if (userIds != null && userIds.length > 0) {
-					messageSender.dispatchMessage(message, userIds);
+					messageSender.asyncDispatchMessage(message, userIds);
 				} else {
-					messageSender.dispatchMessage(message);
+					messageSender.asyncDispatchMessage(message);
 				}
 			}
 		});

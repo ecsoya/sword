@@ -12,6 +12,7 @@ import com.soyatec.sword.common.annotation.Log;
 import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.enums.BusinessType;
+import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.message.domain.UserMessage;
@@ -71,6 +72,8 @@ public class MessageReceivedController extends AbstractMessageController {
 		if (message != null) {
 			mmap.put("title", message.getTitle());
 			mmap.put("content", message.getContent());
+			mmap.put("date", DateUtils.toDefault(message.getCreateTime()));
+			mmap.put("sender", message.getCreateBy());
 			AsyncManager.me().execute(new Runnable() {
 
 				@Override

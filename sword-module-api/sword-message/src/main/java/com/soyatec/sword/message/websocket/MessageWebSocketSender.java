@@ -70,6 +70,19 @@ public class MessageWebSocketSender {
 		});
 	}
 
+	public void asyncDispatchMessage(String message) {
+		log.info("WebSocket.message={}", message);
+		log.debug("WebSocket.online={}", getOnlineCount());
+		webSocketMap.forEach(10, (userId, session) -> {
+			log.debug("WebSocket.sending: {}={}", userId, message);
+			try {
+				session.getAsyncRemote().sendText(message);
+			} catch (Exception e) {
+				log.warn("WebSocket.sendMessageFailed to {}, error={}", userId, e.getLocalizedMessage());
+			}
+		});
+	}
+
 	public void dispatchMessage(String message, Long[] userIds) {
 		if (userIds == null || userIds.length == 0) {
 			return;
@@ -83,6 +96,25 @@ public class MessageWebSocketSender {
 			try {
 				e.getValue().getBasicRemote().sendText(message);
 			} catch (IOException e1) {
+				log.warn("WebSocket.sendMessageFailed to {}, error={}", userId, e1.getLocalizedMessage());
+			}
+		});
+
+	}
+
+	public void asyncDispatchMessage(String message, Long[] userIds) {
+		if (userIds == null || userIds.length == 0) {
+			return;
+		}
+		log.info("WebSocket.message={}", message);
+		log.debug("WebSocket.online={}", getOnlineCount());
+		List<Long> list = Arrays.asList(userIds);
+		webSocketMap.entrySet().stream().filter(e -> list.contains(e.getKey())).parallel().forEach(e -> {
+			Long userId = e.getKey();
+			log.debug("WebSocket.sending: {}={}", userId, message);
+			try {
+				e.getValue().getAsyncRemote().sendText(message);
+			} catch (Exception e1) {
 				log.warn("WebSocket.sendMessageFailed to {}, error={}", userId, e1.getLocalizedMessage());
 			}
 		});
