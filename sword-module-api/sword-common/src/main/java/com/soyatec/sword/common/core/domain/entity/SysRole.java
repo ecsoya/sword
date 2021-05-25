@@ -54,6 +54,9 @@ public class SysRole extends BaseEntity {
 	/** 部门组（数据权限） */
 	private Long[] deptIds;
 
+	/** 权限定制首页 */
+	private String indexPage;
+
 	public SysRole() {
 
 	}
@@ -163,5 +166,13 @@ public class SysRole extends BaseEntity {
 				.append("createBy", getCreateBy()).append("createTime", getCreateTime())
 				.append("updateBy", getUpdateBy()).append("updateTime", getUpdateTime()).append("remark", getRemark())
 				.toString();
+	}
+
+	public String getIndexPage() {
+		return indexPage;
+	}
+
+	public void setIndexPage(String indexPage) {
+		this.indexPage = indexPage;
 	}
 }

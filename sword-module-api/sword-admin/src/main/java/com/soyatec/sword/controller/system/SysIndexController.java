@@ -20,6 +20,7 @@ import com.soyatec.sword.common.constant.ShiroConstants;
 import com.soyatec.sword.common.core.controller.BaseController;
 import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.domain.entity.SysMenu;
+import com.soyatec.sword.common.core.domain.entity.SysRole;
 import com.soyatec.sword.common.core.domain.entity.SysUser;
 import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.CookieUtils;
@@ -133,6 +134,13 @@ public class SysIndexController extends BaseController {
 		mmap.put("version", GlobalConfig.getVersion());
 		// 取身份信息
 		final SysUser user = ShiroUtils.getSysUser();
+		List<SysRole> roles = user.getRoles();
+		for (SysRole sysRole : roles) {
+			String indexPage = sysRole.getIndexPage();
+			if (StringUtils.isNotEmpty(indexPage)) {
+				return indexPage;
+			}
+		}
 		if (!"develop".equals(user.getLoginName()) && StringUtils.isNotEmpty(GlobalConfig.getMainPage())) {
 			return GlobalConfig.getMainPage();
 		}
