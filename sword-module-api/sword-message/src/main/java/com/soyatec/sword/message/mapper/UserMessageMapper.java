@@ -70,4 +70,6 @@ public interface UserMessageMapper {
 	public int readUserMessageByUserId(Long userId);
 
 	public int readUserMessageByIds(String[] ids);
+
+	public void deleteUserMessageByUserId(Long userId);
 }

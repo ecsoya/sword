@@ -256,4 +256,13 @@ public class UserMessageServiceImpl implements IUserMessageService {
 		}
 		return rows;
 	}
+
+	@Override
+	public int removeAllUserMessageByUserId(Long userId) {
+		if (userId == null) {
+			return 0;
+		}
+		userMessageMapper.deleteUserMessageByUserId(userId);
+		return 1;
+	}
 }

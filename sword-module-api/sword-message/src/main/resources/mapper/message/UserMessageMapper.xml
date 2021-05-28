@@ -110,4 +110,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="readUserMessageByUserId" parameterType="Long">
     	 update t_user_message set status = 1 where user_id = #{userId}
     </update>
+    
+    <select id="deleteUserMessageByUserId" parameterType="Long" resultType="Integer">
+    	 update t_user_message set del_flag = 1 where user_id = #{userId}
+    </select>
 </mapper>

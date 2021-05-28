@@ -39,10 +39,13 @@
 
             <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-success" onclick="markRead()" >
-                    <i class="fa fa-plus"></i> 标记已读
+                    <i class="fa fa-check"></i> 已读
                 </a>
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()">
                     <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-info" onclick="clearAll()">
+                    <i class="fa fa-trash"></i> 清空
                 </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" >
                     <i class="fa fa-download"></i> 导出
@@ -145,6 +148,12 @@
         
         function showContent(id) {
         	$.modal.open('消息详情', prefix + '/detail?id=' + id);
+        }
+        
+        function clearAll() {
+        	$.modal.confirm('你确定要删除所有的消息吗？', function(){
+        		$.operate.post(prefix + '/clear');
+        	})
         }
     </script>
 </body>

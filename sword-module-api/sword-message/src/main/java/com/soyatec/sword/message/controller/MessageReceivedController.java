@@ -65,6 +65,13 @@ public class MessageReceivedController extends AbstractMessageController {
 		return toAjax(userMessageService.readUserMessageByIds(userId, ids));
 	}
 
+	@PostMapping("/clear")
+	@ResponseBody
+	public AjaxResult markRead() {
+		Long userId = getUserId();
+		return toAjax(userMessageService.removeAllUserMessageByUserId(userId));
+	}
+
 	@GetMapping("/detail")
 	public String detail(Long id, ModelMap mmap) {
 		Long userId = getUserId();

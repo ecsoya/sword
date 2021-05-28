@@ -67,4 +67,6 @@ public interface IUserMessageService extends IMessageService {
 	public int readUserMessageByIds(Long userId, String ids);
 
 	public int readUserMessageByUserId(Long userId);
+
+	public int removeAllUserMessageByUserId(Long userId);
 }
