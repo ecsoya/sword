@@ -322,6 +322,21 @@ function refreshTab() {
 	target.attr('src', url).ready();
 }
 
+function refreshPrevTab() {
+	var topWindow = $(window.parent.document);
+	var currentId = window.frameElement.getAttribute('data-panel');
+	var target = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow);
+    var url = target.attr('src');
+	target.attr('src', url).ready();
+}
+
+function refreshPrevTable() {
+	var topWindow = $(window.parent.document);
+	var currentId = window.frameElement.getAttribute('data-panel');
+	var target = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;
+	target.$.table.refresh();
+}
+
 // 滚动到指定选项卡
 function scrollToTab(element) {
     var topWindow = $(window.parent.document);

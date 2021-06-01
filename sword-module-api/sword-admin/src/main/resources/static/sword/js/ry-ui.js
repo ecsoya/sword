@@ -959,6 +959,12 @@ var table = {
             openTab: function (title, url, isRefresh) {
             	createMenuItem(url, title, isRefresh);
             },
+            refreshPrevTab: function (title, url, isRefresh) {
+				refreshPrevTab();
+            },
+            refreshPrevTable: function (title, url, isRefresh) {
+				refreshPrevTable();
+            },
             // 选卡页同一页签打开
             parentTab: function (title, url) {
             	var dataId = window.frameElement.getAttribute('data-id');
