@@ -118,7 +118,13 @@ public class MessageWebSocketSender {
 				log.warn("WebSocket.sendMessageFailed to {}, error={}", userId, e1.getLocalizedMessage());
 			}
 		});
+	}
 
+	public Session getSession(Long userId) {
+		if (userId == null) {
+			return null;
+		}
+		return webSocketMap.get(userId);
 	}
 
 	public static synchronized int getOnlineCount() {

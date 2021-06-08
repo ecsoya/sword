@@ -45,5 +45,6 @@
   	
   	<!-- WebSocket消息组件 -->
   	<module>sword-message</module>
+  	<module>sword-chat</module>
   </modules>
 </project>

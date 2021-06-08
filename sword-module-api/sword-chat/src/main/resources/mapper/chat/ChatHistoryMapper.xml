@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyatec.sword.chat.mapper.ChatHistoryMapper">
+    
+    <resultMap type="ChatHistory" id="ChatHistoryResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="chatId"    column="chat_id"    />
+        <result property="message"    column="message"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectChatHistoryVo">
+        select a.id, a.user_id, a.chat_id, a.message, a.status, a.create_time, a.update_time, a.remark    
+    </sql>
+    
+    <sql id="selectChatHistoryJoins">
+	
+	</sql>
+
+    <select id="selectChatHistoryList" parameterType="ChatHistory" resultMap="ChatHistoryResult">
+        <include refid="selectChatHistoryVo"/>
+        from t_chat_history a
+        <include refid="selectChatHistoryJoins"/>
+        <where>  
+            <if test="userId != null "> and a.user_id = #{userId}</if>
+            <if test="chatId != null "> and a.chat_id = #{chatId}</if>
+            <if test="message != null  and message != ''"> and a.message = #{message}</if>
+            <if test="status != null "> and a.status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectChatHistoryById" parameterType="Long" resultMap="ChatHistoryResult">
+        <include refid="selectChatHistoryVo"/>
+        from t_chat_history a
+        <include refid="selectChatHistoryJoins"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChatHistory" parameterType="ChatHistory" useGeneratedKeys="true" keyProperty="id">
+        insert into t_chat_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="chatId != null">chat_id,</if>
+            <if test="message != null">message,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="chatId != null">#{chatId},</if>
+            <if test="message != null">#{message},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChatHistory" parameterType="ChatHistory">
+        update t_chat_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="chatId != null">chat_id = #{chatId},</if>
+            <if test="message != null">message = #{message},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChatHistoryById" parameterType="Long">
+        delete from t_chat_history where id = #{id}
+    </delete>
+
+    <delete id="deleteChatHistoryByIds" parameterType="String">
+        delete from t_chat_history where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
