@@ -74,7 +74,6 @@
 		var removeFlag = [[${@permission.hasPermi('admin:manager:remove')}]];
 		var resetPwdFlag = [[${@permission.hasPermi('admin:manager:resetPwd')}]];
 		var prefix = ctx + "admin/manager";
-
 		$(function() {
 		    queryUserList();
 		});
@@ -96,7 +95,8 @@
 		        },
 		        {
 		            field: 'userId',
-		            title: '用户ID'
+		            title: '用户ID',
+		            visible: false
 		        },
 		        {
 		            field: 'loginName',
@@ -133,9 +133,11 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		                var actions = [];
-		                actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.userId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-		                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.userId + '\')"><i class="fa fa-remove"></i>删除</a> ');
-		                actions.push("<a class='btn btn-default btn-xs " + resetPwdFlag + "' href='javascript:void(0)' onclick='resetPwd(" + row.userId + ")'><i class='fa fa-key'></i>重置密码</a> ");
+		                if ('admin'!=row.loginName){
+			                actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.userId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+			                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.userId + '\')"><i class="fa fa-remove"></i>删除</a> ');
+			                actions.push("<a class='btn btn-default btn-xs " + resetPwdFlag + "' href='javascript:void(0)' onclick='resetPwd(" + row.userId + ")'><i class='fa fa-key'></i>重置密码</a> ");
+		                }
 		                return actions.join('');
 		            }
 		        }]
@@ -180,6 +182,9 @@
 		
 		/* 用户状态显示 */
 		function statusTools(row) {
+			if ('admin'==row.loginName) {
+				return '';
+			}
 		    if (row.status == 1) {
     			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.userId + '\')"></i> ';
     		} else {

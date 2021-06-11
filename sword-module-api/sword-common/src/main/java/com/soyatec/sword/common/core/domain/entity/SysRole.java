@@ -175,4 +175,5 @@ public class SysRole extends BaseEntity {
 	public void setIndexPage(String indexPage) {
 		this.indexPage = indexPage;
 	}
+
 }

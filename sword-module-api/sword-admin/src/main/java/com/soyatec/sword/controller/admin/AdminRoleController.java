@@ -57,7 +57,7 @@ public class AdminRoleController extends BaseController {
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(SysRole role) {
-		role.setDataScope(ADMIN_DATA_SCOPE);
+		role.setCreateBy(ShiroUtils.getLoginName());
 		startPage();
 		final List<SysRole> list = roleService.selectRoleList(role);
 		return getDataTable(list);
@@ -68,7 +68,7 @@ public class AdminRoleController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysRole role) {
-		role.setDataScope(ADMIN_DATA_SCOPE);
+		role.setCreateBy(ShiroUtils.getLoginName());
 		final List<SysRole> list = roleService.selectRoleList(role);
 		final ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
 		return util.exportExcel(list, "角色数据");
@@ -90,7 +90,6 @@ public class AdminRoleController extends BaseController {
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(@Validated SysRole role) {
-		role.setDataScope(ADMIN_DATA_SCOPE);
 		role.setRoleKey(StringUtils.randomStr(6));
 		if (UserConstants.ROLE_NAME_NOT_UNIQUE.equals(roleService.checkRoleNameUnique(role))) {
 			return error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");

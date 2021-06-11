@@ -49,7 +49,7 @@ public class AdminManagerController extends BaseController {
 
 	@RequiresPermissions("admin:manager:view")
 	@GetMapping()
-	public String manager() {
+	public String manager(ModelMap mmap) {
 		return prefix + "/manager";
 	}
 
@@ -60,10 +60,7 @@ public class AdminManagerController extends BaseController {
 		manager.setUserType(UserConstants.SYSTEM_USER_TYPE);
 		manager.setDeptId(MANAGER_DEPT_ID);
 		startPage();
-		final List<SysUser> list = userService.selectUserList(manager).stream()
-				.filter(a -> !org.apache.commons.lang3.StringUtils.equals(a.getLoginName(), "admin"))
-				.collect(Collectors.toList());
-		return getDataTable(list);
+		return getDataTable(userService.selectUserList(manager));
 	}
 
 	@Log(title = "导出管理员", businessType = BusinessType.EXPORT)
@@ -103,8 +100,9 @@ public class AdminManagerController extends BaseController {
 	 */
 	@GetMapping("/add")
 	public String add(ModelMap mmap) {
-		mmap.put("roles", roleService.selectRoleAll().stream().filter(r -> "5".equals(r.getDataScope()))
-				.collect(Collectors.toList()));
+		SysRole role = new SysRole();
+		role.setCreateBy(ShiroUtils.getLoginName());
+		mmap.put("roles", roleService.selectRoleList(role));
 		return prefix + "/add";
 	}
 
@@ -138,8 +136,9 @@ public class AdminManagerController extends BaseController {
 	@GetMapping("/edit/{userId}")
 	public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
 		mmap.put("user", userService.selectUserById(userId));
-		mmap.put("roles", roleService.selectRoleAll().stream().filter(r -> "5".equals(r.getDataScope()))
-				.collect(Collectors.toList()));
+		SysRole role = new SysRole();
+		role.setCreateBy(ShiroUtils.getLoginName());
+		mmap.put("roles", roleService.selectRoleList(role));
 		return prefix + "/edit";
 	}
 
