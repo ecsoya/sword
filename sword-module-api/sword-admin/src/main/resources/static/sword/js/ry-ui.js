@@ -1777,7 +1777,7 @@ var table = {
 				if (r==0) return 0; 
 				return r.toFixed(fixed);
 			},
-			formatStatus: function(array, value) {
+			formatStatus: function(array, value, labelStyles) {
 				if (!array) {
 					array = ['待完成', '已完成'];
 				}
@@ -1785,8 +1785,10 @@ var table = {
 				if (isNaN(value)) {
 					return '';
 				}
-				var labelStyles = ['label-default', 'label-primary',
-        			'label-success', 'label-info', 'label-warning', 'label-danger'];
+				if (!labelStyles) {
+				   labelStyles = ['label-primary', 'label-danger',
+        			'label-success', 'label-info', 'label-warning', 'label-default'];
+        		}
         		var style = labelStyles[value];
         		var label = array[value];
         		return '<span class="label '+style+'">'+label+'</span>';
