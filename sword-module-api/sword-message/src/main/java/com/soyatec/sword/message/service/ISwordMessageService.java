@@ -60,5 +60,5 @@ public interface ISwordMessageService {
 	 */
 	public int deleteSwordMessageById(Long id);
 
-	public CommonResult<?> publishSwordMessa(SwordMessage swordMessage, String userIds);
+	public CommonResult<?> publishSwordMessage(SwordMessage swordMessage, String userIds);
 }

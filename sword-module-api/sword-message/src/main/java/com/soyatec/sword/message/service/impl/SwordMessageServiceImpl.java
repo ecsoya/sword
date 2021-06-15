@@ -104,7 +104,7 @@ public class SwordMessageServiceImpl implements ISwordMessageService {
 	}
 
 	@Override
-	public CommonResult<?> publishSwordMessa(SwordMessage swordMessage, String userIds) {
+	public CommonResult<?> publishSwordMessage(SwordMessage swordMessage, String userIds) {
 		if (swordMessage == null) {
 			return CommonResult.fail("参数错误");
 		}
