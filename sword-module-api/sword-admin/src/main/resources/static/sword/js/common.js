@@ -1,6 +1,6 @@
 /**
  * 通用方法封装处理
- * Copyright (c) 2019 sword 
+ * Copyright (c) 2019 ruoyi 
  */
 $(function() {
 	
@@ -36,23 +36,6 @@ $(function() {
             })
         })
     }
-	
-    // 气泡弹出框特效（移到元素时）
-    $(document).on("mouseenter", '.table [data-toggle="popover"]', function() {
-        var _this = this;
-        $(this).popover("show");
-        $(".popover").on("mouseleave", function() {
-            $(_this).popover('hide');
-        });
-    })
-
-    // 气泡弹出框特效（离开元素时）
-    $(document).on("mouseleave", '.table [data-toggle="popover"]', function() {
-        var _this = this;
-        setTimeout(function() {
-            if (!$(".popover:hover").length) $(_this).popover("hide");
-        }, 100);
-    });
 	
     // 取消回车自动提交表单
     $(document).on("keypress", ":input:not(textarea):not([type=submit])", function(event) {
@@ -322,21 +305,6 @@ function refreshTab() {
 	target.attr('src', url).ready();
 }
 
-function refreshPrevTab() {
-	var topWindow = $(window.parent.document);
-	var currentId = window.frameElement.getAttribute('data-panel');
-	var target = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow);
-    var url = target.attr('src');
-	target.attr('src', url).ready();
-}
-
-function refreshPrevTable() {
-	var topWindow = $(window.parent.document);
-	var currentId = window.frameElement.getAttribute('data-panel');
-	var target = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;
-	target.$.table.refresh();
-}
-
 // 滚动到指定选项卡
 function scrollToTab(element) {
     var topWindow = $(window.parent.document);
@@ -435,24 +403,36 @@ var storage = {
 // 主子表操作封装处理
 var sub = {
     editColumn: function() {
-    	var count = $("#" + table.options.id).bootstrapTable('getData').length;
-    	var params = new Array();
+    	var dataColumns = [];
+		for (var columnIndex = 0; columnIndex < table.options.columns.length; columnIndex++) {
+    		if (table.options.columns[columnIndex].visible != false) {
+    			dataColumns.push(table.options.columns[columnIndex]);
+    		}
+    	}
+		var params = new Array();
+		var data = $("#" + table.options.id).bootstrapTable('getData');
+    	var count = data.length;
     	for (var dataIndex = 0; dataIndex < count; dataIndex++) {
     	    var columns = $('#' + table.options.id + ' tr[data-index="' + dataIndex + '"] td');
     	    var obj = new Object();
     	    for (var i = 0; i < columns.length; i++) {
     	        var inputValue = $(columns[i]).find('input');
     	        var selectValue = $(columns[i]).find('select');
-    	        var key = table.options.columns[i].field;
+    	        var textareaValue = $(columns[i]).find('textarea');
+    	        var key = dataColumns[i].field;
     	        if ($.common.isNotEmpty(inputValue.val())) {
     	            obj[key] = inputValue.val();
     	        } else if ($.common.isNotEmpty(selectValue.val())) {
     	            obj[key] = selectValue.val();
+    	        } else if ($.common.isNotEmpty(textareaValue.val())) {
+    	            obj[key] = textareaValue.val();
     	        } else {
     	            obj[key] = "";
     	        }
     	    }
-    	    params.push({ index: dataIndex, row: obj });
+    	    var item = data[dataIndex];
+    	    var extendObj = $.extend({}, item, obj);
+    	    params.push({ index: dataIndex, row: extendObj });
     	}
     	$("#" + table.options.id).bootstrapTable("updateRow", params);
     },

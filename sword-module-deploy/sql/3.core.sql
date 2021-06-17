@@ -6,8 +6,8 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
-# Database: sword
-# Generation Time: 2021-04-07 02:24:02 +0000
+# Database: sword-survey
+# Generation Time: 2021-06-17 01:40:30 +0000
 # ************************************************************
 
 
@@ -38,6 +38,28 @@ CREATE TABLE `t_sword_article` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章';
+
+
+
+# Dump of table t_sword_message
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `t_sword_message`;
+
+CREATE TABLE `t_sword_message` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `type` int(1) DEFAULT '0' COMMENT '类型',
+  `title` varchar(256) DEFAULT NULL COMMENT '标题',
+  `content` varchar(512) DEFAULT '' COMMENT '正文',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态（0正常 1关闭）',
+  `publish` int(10) NOT NULL DEFAULT '-1' COMMENT '发布人数',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息';
 
 
 
@@ -188,6 +210,26 @@ CREATE TABLE `t_user_article` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户文章';
+
+
+
+# Dump of table t_user_message
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `t_user_message`;
+
+CREATE TABLE `t_user_message` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
+  `message_id` bigint(20) DEFAULT NULL,
+  `type` int(1) NOT NULL DEFAULT '0' COMMENT '类型 0-接收 1-发送',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态 0-未读 1-已读',
+  `del_flag` int(1) NOT NULL DEFAULT '0',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户消息';
 
 
 

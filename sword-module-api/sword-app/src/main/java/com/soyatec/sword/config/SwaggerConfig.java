@@ -12,12 +12,6 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.DocExpansion;
-import springfox.documentation.swagger.web.ModelRendering;
-import springfox.documentation.swagger.web.OperationsSorter;
-import springfox.documentation.swagger.web.TagsSorter;
-import springfox.documentation.swagger.web.UiConfiguration;
-import springfox.documentation.swagger.web.UiConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -39,25 +33,28 @@ public class SwaggerConfig {
 	@Value("${swagger.title:Sword}")
 	private String title;
 
-	@Bean
-	public UiConfiguration uiConfig() {
-		return UiConfigurationBuilder.builder().deepLinking(true).displayOperationId(false)
-				// 隐藏UI上的Models模块
-				.defaultModelsExpandDepth(-1).defaultModelExpandDepth(0).defaultModelRendering(ModelRendering.EXAMPLE)
-				.displayRequestDuration(false).docExpansion(DocExpansion.NONE).filter(false).maxDisplayedTags(null)
-				.operationsSorter(OperationsSorter.ALPHA).showExtensions(false).tagsSorter(TagsSorter.ALPHA)
-				.validatorUrl(null).build();
-	}
-
 	/**
-	 * 创建API
-	 */
-	@Bean
-	public Docket createRestApi() {
-		return new Docket(DocumentationType.SWAGGER_2).enable(enabled).useDefaultResponseMessages(false)
-				.apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-				.paths(PathSelectors.any()).build();
-	}
+     * 创建API
+     */
+    @Bean
+    public Docket createRestApi()
+    {
+        return new Docket(DocumentationType.OAS_30)
+                // 是否启用Swagger
+                .enable(enabled)
+                // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
+                .apiInfo(apiInfo())
+                // 设置哪些接口暴露给Swagger展示
+                .select()
+                // 扫描所有有注解的api，用这种方式更灵活
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                // 扫描指定包中的swagger注解
+                //.apis(RequestHandlerSelectors.basePackage("com.ruoyi.project.tool.swagger"))
+                // 扫描所有 .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
+    }
+
 
 	/**
 	 * 添加摘要信息

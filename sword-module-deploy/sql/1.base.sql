@@ -6,8 +6,8 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: bj-cdb-fmgl4u90.sql.tencentcdb.com (MySQL 5.7.18-txsql-log)
-# Database: sword
-# Generation Time: 2021-04-07 02:33:32 +0000
+# Database: sword-survey
+# Generation Time: 2021-06-17 01:37:25 +0000
 # ************************************************************
 
 
@@ -159,8 +159,8 @@ LOCK TABLES `sys_dept` WRITE;
 
 INSERT INTO `sys_dept` (`dept_id`, `parent_id`, `ancestors`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`)
 VALUES
-	(100,0,'0','开发',0,'AngryRED','15888888888','angryred@qq.com','0','0','admin','2021-01-05 15:07:03','',NULL),
-	(101,0,'0','产品',1,'AngryRED','15888888888','angryred@qq.com','0','0','admin','2021-01-05 15:07:03','',NULL);
+	(100,0,'0','开发',0,'AngryRED','15888888888','angryred@qq.com','0','0','develop','2021-01-05 15:07:03','',NULL),
+	(101,0,'0','产品',1,'AngryRED','15888888888','angryred@qq.com','0','0','develop','2021-01-05 15:07:03','',NULL);
 
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -621,6 +621,7 @@ CREATE TABLE `sys_role` (
   `data_scope` char(1) DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
   `status` char(1) NOT NULL COMMENT '角色状态（0正常 1停用）',
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `index_page` varchar(64) DEFAULT NULL,
   `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
@@ -632,10 +633,10 @@ CREATE TABLE `sys_role` (
 LOCK TABLES `sys_role` WRITE;
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
 
-INSERT INTO `sys_role` (`role_id`, `role_name`, `role_key`, `role_sort`, `data_scope`, `status`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
+INSERT INTO `sys_role` (`role_id`, `role_name`, `role_key`, `role_sort`, `data_scope`, `status`, `del_flag`, `index_page`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
 VALUES
-	(1,'开发者账号','develop',1,'1','0','0','admin','2021-01-05 10:29:45','',NULL,'开发者账号'),
-	(2,'后台管理员','admin',2,'2','0','0','admin','2021-01-05 10:29:45','develop','2021-04-07 10:32:39','后台管理员');
+	(1,'开发者账号','develop',1,'1','0','0',NULL,'admin','2021-01-05 10:29:45','',NULL,'开发者账号'),
+	(2,'后台管理员','admin',2,'2','0','0',NULL,'admin','2021-01-05 10:29:45','develop','2021-04-07 10:32:39','后台管理员');
 
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
 UNLOCK TABLES;

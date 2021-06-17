@@ -433,7 +433,7 @@
 }
 
 .file-uploading {
-    background: url(../img/loading-sm.gif) no-repeat center bottom 10px;
+    background: url(loading-sm.gif) no-repeat center bottom 10px;
     opacity: 0.65;
 }
 
@@ -500,7 +500,7 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
     .file-preview-thumbnails {
         display: flex;
         justify-content: center;

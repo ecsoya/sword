@@ -11,31 +11,16 @@
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet" />
 <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
-<link th:href="@{/css/animate.css}" rel="stylesheet" />
-<link th:href="@{/css/style.css}" rel="stylesheet" />
+<link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+<link th:href="@{/css/style.min.css}" rel="stylesheet" />
 <link th:href="@{/css/skins.css}" rel="stylesheet" />
-<link th:href="@{/sword/css/ry-ui.css?v=4.6.0}" rel="stylesheet" />
+<link th:href="@{/sword/css/ry-ui.css?v=4.6.1}" rel="stylesheet" />
 <style type="text/css">
 /** 动态主题 skin-primary **/
 .navbar, .skin-primary .navbar {
-	background-color: rgb([[${@ config.global ( 'adminColor')
+	background-color: rgb([[${@ config.global ( 'adminColor')}]])
 }
-
-]]
-)
-
-
-
-
-
-
-
-
-
-
-}
-.skin-primary .navbar-default .nav>li.selected>a, .skin-primary .navbar-default .nav>li.selected>a:focus
-	{
+.skin-primary .navbar-default .nav>li.selected>a, .skin-primary .navbar-default .nav>li.selected>a:focus {
 	background-color: #1890ff;
 	color: rgba(255, 255, 255, 1);
 }
@@ -66,21 +51,7 @@
 }
 
 .skin-primary .navbar .sidebar-toggle:hover {
-	background-color: rgb([[${@ config.global ( 'adminColor')
-}
-
-]]
-)
-
-
-
-
-
-
-
-
-
-
+	background-color: rgb([[${@ config.global ( 'adminColor')}]])
 }
 @media ( max-width :767px) {
 	.skin-primary .navbar .dropdown-menu li.divider {
@@ -90,156 +61,20 @@
 		color: #fff
 	}
 	.skin-primary .navbar .dropdown-menu li a:hover {
-		background: rgb([[${@ config.global ( 'adminColor')
+		background: rgb([[${@ config.global ( 'adminColor')}]])
 	}
-	]]
-	)
-	
-	
-	
-	
-	
-	
-
-
-
-
-}
-
 }
 .skin-primary .logo {
-	background-color: rgba([[${@ config.global ( 'adminColor')
-}
-
-]],
-0
-
-
-
-
-
-
-
-
-.8
-
-
-
-
-
-
-
-
-)
-
-
-
-
-
-
-
-
-;
-color
-
-
-
-
-
-
-
-
-:
-
-
-
-
- 
-
-
-
-
-#fff
-
-
-
-
-
-
-
-
-;
-border-bottom
-
-
-
-
-
-
-
-
-:
-
-
-
-
- 
-
-
-
-
-0
-
-
-
-
- 
-
-
-
-
-solid
-
-
-
-
- 
-
-
-
-
-transparent
-
-
-
-
-
-
-
-
-
-
+	background-color: rgba([[${@ config.global ( 'adminColor')}]],0.8);
+    color: #fff;
+    border-bottom: 0 solid transparent
 }
 .skin-primary .logo:hover {
 	background-color: #357ca5
 }
 
 .skin-primary li.user-header {
-	background-color: rgb([[${@ config.global ( 'adminColor')
-}
-
-]]
-)
-
-
-
-
-
-
-
-
-
-
+	background-color: rgb([[${@ config.global ( 'adminColor') } ]])
 }
 .skin-primary .content-header {
 	background: transparent
@@ -262,20 +97,7 @@ transparent
 .skin-primary .nav:not(.navbar-toolbar)>li.active {
 	color: #fff;
 	background: #293846;
-	border-left: 3px solid rgb([[${@ config.global ( 'adminColor')
-}
-
-]]
-)
-
-
-
-
-
-
-
-
-;
+	border-left: 3px solid rgb([[${@ config.global ( 'adminColor')}]]);
 }
 .skin-primary .nav>li.active>ul li.active {
 	border-left: none;
@@ -286,20 +108,7 @@ transparent
 	color: #fff !important;
 	text-decoration: none;
 	outline: 0;
-	background-color: rgb([[${@ config.global ( 'adminColor')
-}
-
-]]
-)
-
-
-
-
-
-
-
-
-;
+	background-color: rgb([[${@ config.global ( 'adminColor') } ]]) ;
 }
 .skin-primary .sidebar a {
 	color: #b8c7ce
@@ -351,267 +160,22 @@ transparent
 }
 
 .skin-primary.layout-top-nav>.logo {
-	background-color: rgb([[${@ config.global ( 'adminColor')
-}
-
-]]
-)
-
-
-
-
-
-
-
-
-;
-color
-
-
-
-
-
-
-
-
-:
-
-
-
-
- 
-
-
-
-
-#fff
-
-
-
-
-
-
-
-
-;
-border-bottom
-
-
-
-
-
-
-
-
-:
-
-
-
-
- 
-
-
-
-
-0
-
-
-
-
- 
-
-
-
-
-solid
-
-
-
-
- 
-
-
-
-
-transparent
-
-
-
-
-
-
-
-
-
-
-}
+	background-color: rgb([[${@ config.global ( 'adminColor') } ]] ) ;
+	color: #fff ;
+	border-bottom: 0 solid transparent }
 .skin-primary.layout-top-nav>.logo:hover {
-	background-color: rgba([[${@ config.global ( 'adminColor')
-}
-
-]],
-0
-
-
-
-
-
-
-
-
-.8
-
-
-
-
-
-
-
-
-)
-
-
-
-
-
-
-
-
-
-
-}
+	background-color: rgba([[${@ config.global ( 'adminColor') } ]], 0.8 )
+ }
 .skin-primary .content-tabs {
 	border-bottom: 1px solid #e5e5e5;
 }
 
 .skin-primary.layout-top-nav>.logo {
-	background-color: rgb([[${@ config.global ( 'adminColor')
-}
-
-]]
-)
-
-
-
-
-
-
-
-
-;
-color
-
-
-
-
-
-
-
-
-:
-
-
-
-
- 
-
-
-
-
-#fff
-
-
-
-
-
-
-
-
-;
-border-bottom
-
-
-
-
-
-
-
-
-:
-
-
-
-
- 
-
-
-
-
-0
-
-
-
-
- 
-
-
-
-
-solid
-
-
-
-
- 
-
-
-
-
-transparent
-
-
-
-
-
-
-
-
-
-
-}
+	background-color: rgb([[${@ config.global ( 'adminColor') } ]] ) ;
+	color : #fff ;
+	border-bottom : 0 solid transparent }
 .skin-primary.layout-top-nav>.logo:hover {
-	background-color: rgba([[${@ config.global ( 'adminColor')
-}
-]],
-0
-
-
-
-
-
-
-
-
-.8
-
-
-
-
-
-
-
-
-)
-
-
-
-
-
-
-
-
-
-
+	background-color: rgba([[${@ config.global ( 'adminColor') } ]], 0.8 )
 }
 </style>
 </head>
@@ -792,8 +356,8 @@ transparent
 	<script th:src="@{/js/jquery.contextMenu.min.js}"></script>
 	<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
 	<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
-	<script th:src="@{/sword/js/ry-ui.js?v=4.6.0}"></script>
-	<script th:src="@{/sword/js/common.js?v=4.6.0}"></script>
+	<script th:src="@{/sword/js/ry-ui.js?v=4.6.1}"></script>
+	<script th:src="@{/sword/js/common.js?v=4.6.1}"></script>
 	<script th:src="@{/sword/index.js?v=20201208}"></script>
 	<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
 	<th:block th:include="include :: websocket-js" />
@@ -855,11 +419,15 @@ function applyPath(url) {
 }
 
 $(function() {
+	var lockPath = storage.get('lockPath');
 	if($.common.equals("history", mode) && window.performance.navigation.type == 1) {
 		var url = storage.get('publicPath');
 	    if ($.common.isNotEmpty(url)) {
 	    	applyPath(url);
 	    }
+	} else if($.common.isNotEmpty(lockPath)) {
+	    applyPath(lockPath);
+	    storage.remove('lockPath');
 	} else {
 		var hash = location.hash;
 	    if ($.common.isNotEmpty(hash)) {
