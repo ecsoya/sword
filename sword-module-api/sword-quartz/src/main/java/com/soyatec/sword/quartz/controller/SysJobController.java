@@ -20,6 +20,7 @@ import com.soyatec.sword.common.core.domain.AjaxResult;
 import com.soyatec.sword.common.core.page.TableDataInfo;
 import com.soyatec.sword.common.enums.BusinessType;
 import com.soyatec.sword.common.exception.job.TaskException;
+import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.poi.ExcelUtil;
 import com.soyatec.sword.quartz.domain.SysJob;
 import com.soyatec.sword.quartz.service.ISysJobService;
@@ -34,7 +35,7 @@ import com.soyatec.sword.quartz.util.CronUtils;
 @RequestMapping("/monitor/job")
 public class SysJobController extends BaseController {
 	private final String prefix = "monitor/job";
-
+	public static final String LOOKUP_RMI = "rmi://";
 	@Autowired
 	private ISysJobService jobService;
 
@@ -49,7 +50,7 @@ public class SysJobController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(SysJob job) {
 		startPage();
-		final List<SysJob> list = jobService.selectJobList(job);
+		List<SysJob> list = jobService.selectJobList(job);
 		return getDataTable(list);
 	}
 
@@ -58,8 +59,8 @@ public class SysJobController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(SysJob job) {
-		final List<SysJob> list = jobService.selectJobList(job);
-		final ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
+		List<SysJob> list = jobService.selectJobList(job);
+		ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
 		return util.exportExcel(list, "定时任务");
 	}
 
@@ -88,7 +89,7 @@ public class SysJobController extends BaseController {
 	@PostMapping("/changeStatus")
 	@ResponseBody
 	public AjaxResult changeStatus(SysJob job) throws SchedulerException {
-		final SysJob newJob = jobService.selectJobById(job.getJobId());
+		SysJob newJob = jobService.selectJobById(job.getJobId());
 		newJob.setStatus(job.getStatus());
 		return toAjax(jobService.changeStatus(newJob));
 	}
@@ -122,7 +123,9 @@ public class SysJobController extends BaseController {
 	@ResponseBody
 	public AjaxResult addSave(@Validated SysJob job) throws SchedulerException, TaskException {
 		if (!CronUtils.isValid(job.getCronExpression())) {
-			return AjaxResult.error("cron表达式不正确");
+			return AjaxResult.error("新增任务'" + job.getJobName() + "'失败，Cron表达式不正确");
+		} else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), LOOKUP_RMI)) {
+			return AjaxResult.error("新增任务'" + job.getJobName() + "'失败，目标字符串不允许'rmi://'调用");
 		}
 		return toAjax(jobService.insertJob(job));
 	}
@@ -145,7 +148,9 @@ public class SysJobController extends BaseController {
 	@ResponseBody
 	public AjaxResult editSave(@Validated SysJob job) throws SchedulerException, TaskException {
 		if (!CronUtils.isValid(job.getCronExpression())) {
-			return AjaxResult.error("cron表达式不正确");
+			return AjaxResult.error("修改任务'" + job.getJobName() + "'失败，Cron表达式不正确");
+		} else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), LOOKUP_RMI)) {
+			return AjaxResult.error("修改任务'" + job.getJobName() + "'失败，目标字符串不允许'rmi://'调用");
 		}
 		return toAjax(jobService.updateJob(job));
 	}

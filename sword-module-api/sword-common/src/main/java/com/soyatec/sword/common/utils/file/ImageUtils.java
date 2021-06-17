@@ -82,6 +82,7 @@ public class ImageUtils {
 			log.error("获取文件路径异常 {}", e);
 			return null;
 		} finally {
+			IOUtils.closeQuietly(in);
 			IOUtils.closeQuietly(baos);
 		}
 	}
