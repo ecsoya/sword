@@ -141,6 +141,16 @@
                     }
 		        },
 		        {
+		            field: 'remark',
+		            title: '备注',
+		            width: '15',
+		            widthUnit: '%',
+		            align: "left",
+		            formatter: function(value, row, index) {
+                    	return $.table.tooltip(value);
+                    }
+		        },
+		        {
 		            title: '操作',
 		            width: '20',
 		            widthUnit: '%',

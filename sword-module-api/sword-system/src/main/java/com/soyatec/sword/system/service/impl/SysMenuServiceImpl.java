@@ -268,7 +268,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	}
 
 	private void addButton(Long parentId, String parentPerms, Long type) {
-		if (parentId == null || type == null) {
+		if (parentId == null || type == null || StringUtils.isEmpty(parentPerms) || parentPerms.indexOf(":") == 0) {
 			return;
 		}
 		final String prefix = parentPerms.substring(0, parentPerms.lastIndexOf(":"));
