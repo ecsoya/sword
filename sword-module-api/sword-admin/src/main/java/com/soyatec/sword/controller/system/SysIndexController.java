@@ -141,10 +141,8 @@ public class SysIndexController extends BaseController {
 				return indexPage;
 			}
 		}
-		if (!"develop".equals(user.getLoginName()) && StringUtils.isNotEmpty(GlobalConfig.getMainPage())) {
-			return GlobalConfig.getMainPage();
-		}
-		return "main_v1";
+		mmap.put("config", config);
+		return "main";
 	}
 
 	// 检查初始密码是否提醒修改

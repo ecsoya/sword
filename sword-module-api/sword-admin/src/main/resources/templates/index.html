@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="renderer" content="webkit">
-<title>[[${config.name}]] - [[${config.title}]]</title>
+<title>[[${config.name}]][[${config.title}]]</title>
 <!-- 避免IE使用兼容模式 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link th:href="@{favicon.ico}" rel="shortcut icon" />
@@ -14,7 +14,7 @@
 <link th:href="@{/css/animate.min.css}" rel="stylesheet" />
 <link th:href="@{/css/style.min.css}" rel="stylesheet" />
 <link th:href="@{/css/skins.css}" rel="stylesheet" />
-<link th:href="@{/sword/css/ry-ui.css?v=4.6.1}" rel="stylesheet" />
+<link th:href="@{/css/ry-ui.css?v=4.6.1}" rel="stylesheet" />
 <style type="text/css">
 /** 动态主题 skin-primary **/
 .navbar, .skin-primary .navbar {
@@ -356,9 +356,9 @@
 	<script th:src="@{/js/jquery.contextMenu.min.js}"></script>
 	<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
 	<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
-	<script th:src="@{/sword/js/ry-ui.js?v=4.6.1}"></script>
-	<script th:src="@{/sword/js/common.js?v=4.6.1}"></script>
-	<script th:src="@{/sword/index.js?v=20201208}"></script>
+	<script th:src="@{/js/sword/ry-ui.js?v=4.6.1}"></script>
+	<script th:src="@{/js/sword/common.js?v=4.6.1}"></script>
+	<script th:src="@{/js/sword/index.js?v=20201208}"></script>
 	<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
 	<th:block th:include="include :: websocket-js" />
 	<script th:inline="javascript">

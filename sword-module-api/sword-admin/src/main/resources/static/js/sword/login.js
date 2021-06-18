@@ -1,4 +1,3 @@
-var a = '2';
 $(function() {
 	validateKickout();
     validateRule();
