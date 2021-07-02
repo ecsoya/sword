@@ -33,6 +33,10 @@ public class LocalFileUploader extends AbstractFileUploader {
 	private ServerConfig serverConfig;
 
 	@Override
+	protected void testUploadConfig(UploadConfig config) throws FileUploadException {
+	}
+
+	@Override
 	protected List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException {
 		log.info("LocalFileUploader, config={}", config);
 		if (config == null) {

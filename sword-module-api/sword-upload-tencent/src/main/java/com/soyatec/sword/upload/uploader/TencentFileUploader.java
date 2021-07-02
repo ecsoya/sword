@@ -25,6 +25,11 @@ public class TencentFileUploader extends AbstractFileUploader {
 	private static final Logger log = LoggerFactory.getLogger(TencentFileUploader.class);
 
 	@Override
+	protected void testUploadConfig(UploadConfig config) throws FileUploadException {
+		config.testCloudValidated();
+	}
+
+	@Override
 	protected List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException {
 		log.info("TencentFileUploader, config={}", config);
 
