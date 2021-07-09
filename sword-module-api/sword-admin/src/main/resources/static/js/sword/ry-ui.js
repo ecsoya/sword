@@ -671,6 +671,13 @@ var table = {
                 table.set(tableId);
             	var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
             	$("#" + currentId)[0].reset();
+            	//重置select2
+            	$("#" + currentId).find('select').each(function(){
+            		var id = $(this).attr('data-select2-id');
+            		if (id) {
+            			$('#' + id).val(null).trigger('change');
+            		}
+            	})
             	if (table.options.type == table_type.bootstrapTable) {
                     if($.common.isEmpty(tableId)){
                         $("#" + table.options.id).bootstrapTable('refresh');

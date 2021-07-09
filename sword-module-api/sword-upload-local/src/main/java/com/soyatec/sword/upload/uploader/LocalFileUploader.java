@@ -11,12 +11,11 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.soyatec.sword.common.config.GlobalConfig;
-import com.soyatec.sword.common.config.ServerConfig;
 import com.soyatec.sword.common.constant.Constants;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.upload.core.FileUploadException;
@@ -29,8 +28,8 @@ public class LocalFileUploader extends AbstractFileUploader {
 
 	private static Logger log = LoggerFactory.getLogger(LocalFileUploader.class);
 
-	@Autowired(required = false)
-	private ServerConfig serverConfig;
+	@Value("${server.servlet.context-path:/}")
+	private String contextPath;
 
 	@Override
 	protected void testUploadConfig(UploadConfig config) throws FileUploadException {
@@ -74,7 +73,7 @@ public class LocalFileUploader extends AbstractFileUploader {
 						Files.write(target.toPath(), bytes);
 					}
 				}
-				result.add(getURL(getPathFileName(uploadPath, fileName)));
+				result.add(getURL(config, getPathFileName(uploadPath, fileName)));
 			} catch (final Exception e) {
 				log.warn("LocalFileUploader, uploadFailed={}, error={}", fileName, e.getLocalizedMessage());
 				continue;
@@ -83,11 +82,8 @@ public class LocalFileUploader extends AbstractFileUploader {
 		return result;
 	}
 
-	private String getURL(String filename) {
-		if (serverConfig == null) {
-			return filename;
-		}
-		return serverConfig.getContextPath() + filename;
+	private String getURL(UploadConfig config, String filename) {
+		return contextPath + filename;
 	}
 
 	private final String getPathFileName(String uploadDir, String fileName) throws IOException {
