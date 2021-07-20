@@ -79,7 +79,11 @@ function login() {
         },
         success: function(r) {
             if (r.code == 0) {
-                location.href = ctx + 'index';
+            	if (path) {
+            		location.href = ctx + path;
+            	} else {
+                	location.href = ctx + 'index';
+                }
             } else {
             	$.modal.closeLoading();
             	$('.imgcode').click();

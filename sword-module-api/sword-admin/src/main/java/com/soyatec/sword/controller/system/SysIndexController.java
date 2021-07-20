@@ -56,7 +56,8 @@ public class SysIndexController extends BaseController {
 
 	// 系统首页
 	@GetMapping("/index")
-	public String index(ModelMap mmap) {
+	public String index(String path, ModelMap mmap) {
+		mmap.put("path", path);
 		// 取身份信息
 		final SysUser user = ShiroUtils.getSysUser();
 		// 根据用户id取出菜单

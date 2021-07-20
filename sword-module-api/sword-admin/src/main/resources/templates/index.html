@@ -364,6 +364,7 @@
 	<script th:inline="javascript">
 window.history.forward(1);
 var ctx = [[@{/}]]; 
+var path = [[${path}]];
 var lockscreen = [[${session.lockscreen}]]; 
 if(lockscreen){window.top.location=ctx+"lockscreen";}
 // 皮肤缓存
@@ -420,7 +421,9 @@ function applyPath(url) {
 
 $(function() {
 	var lockPath = storage.get('lockPath');
-	if($.common.equals("history", mode) && window.performance.navigation.type == 1) {
+	if ($.common.isNotEmpty(path)) {
+		applyPath(path);
+	} else if($.common.equals("history", mode) && window.performance.navigation.type == 1) {
 		var url = storage.get('publicPath');
 	    if ($.common.isNotEmpty(url)) {
 	    	applyPath(url);
