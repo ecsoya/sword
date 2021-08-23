@@ -1,5 +1,7 @@
 package com.soyatec.sword.token.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +62,7 @@ public class TokenRequestController {
 				if (value == null) {
 					continue;
 				}
-				sb.append(key).append("=").append(value.toString().trim()).append("&");
+				sb.append(key).append("=").append(encode(value.toString().trim())).append("&");
 			}
 			if (sb.length() > 0) {
 				sb.deleteCharAt(sb.length() - 1);
@@ -70,5 +72,13 @@ public class TokenRequestController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private static String encode(String value) {
+		try {
+			return URLEncoder.encode(value, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			return value;
+		}
 	}
 }
