@@ -21,9 +21,11 @@ import com.soyatec.sword.record.domain.UserDepositRecord;
 import com.soyatec.sword.record.domain.UserWithdrawalRecord;
 import com.soyatec.sword.record.service.IUserDepositRecordService;
 import com.soyatec.sword.record.service.IUserWithdrawalRecordService;
+import com.soyatec.sword.udun.config.UdunWalletProperties;
 import com.soyatec.sword.udun.constants.CoinType;
 import com.soyatec.sword.udun.domain.UTrade;
 import com.soyatec.sword.udun.domain.WalletNotify;
+import com.soyatec.sword.udun.utils.HttpUtil;
 import com.soyatec.sword.utils.MathUtils;
 import com.soyatec.sword.wallet.domain.UserWalletAccount;
 import com.soyatec.sword.wallet.service.IUserWalletAccountService;
@@ -31,6 +33,9 @@ import com.soyatec.sword.wallet.service.IUserWalletAccountService;
 @Service
 public class UdunWalletCallbackService implements IWalletCallbackService<WalletNotify> {
 
+	@Autowired
+	private UdunWalletProperties properties;
+	
 	@Autowired
 	private IUserDepositRecordService userDepositRecordService;
 	
@@ -267,6 +272,16 @@ public class UdunWalletCallbackService implements IWalletCallbackService<WalletN
 		} catch (Exception e) {
 			return CommonResult.fail("NotJSON");
 		}
+	}
+
+	public CommonResult<?> checkSignature(String timestamp, String nonce, String body, String sign) {
+		try {
+			if (HttpUtil.checkSign(properties.getMerchantKey(), timestamp, nonce, body, sign)) {
+				return CommonResult.success();
+			}
+		} catch (Exception e) {
+		}
+		return CommonResult.fail("签名错误");
 	}
 
 }

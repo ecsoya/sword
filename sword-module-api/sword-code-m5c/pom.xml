@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.soyatec.sword</groupId>
 		<artifactId>sword-module-api</artifactId>
-		<version>2.0.4-SNAPSHOT</version>
+		<version>2.0.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>sword-code-m5c</artifactId>
 	<name>sword-code-m5c</name>
