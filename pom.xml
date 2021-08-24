@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.soyatec.sword</groupId>
 	<artifactId>sword</artifactId>
-	<version>2.0.3-SNAPSHOT</version>
+	<version>2.0.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>sword</name>
 	<description>Sword Spring Boot Development</description>
@@ -293,12 +293,22 @@
 			</dependency>
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-mining-udun</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
 				<artifactId>sword-mining-wallet</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.soyatec.sword</groupId>
 				<artifactId>sword-mining-wallet-zbx</artifactId>
+				<version>${sword.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.soyatec.sword</groupId>
+				<artifactId>sword-mining-wallet-udun</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 

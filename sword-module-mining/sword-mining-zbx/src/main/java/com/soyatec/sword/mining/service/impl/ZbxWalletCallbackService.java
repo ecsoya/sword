@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soyatec.sword.business.service.IWalletCallbackService;
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.MessageUtils;
@@ -13,7 +14,6 @@ import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.constants.IConstants;
 import com.soyatec.sword.exceptions.TransactionException;
-import com.soyatec.sword.mining.service.IWalletCallbackService;
 import com.soyatec.sword.order.domain.UserDepositOrder;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 import com.soyatec.sword.order.service.IUserDepositOrderService;
@@ -28,7 +28,7 @@ import com.soyatec.sword.wallet.service.IUserWalletAccountService;
 import com.soyatec.sword.zbx.domain.ZbxOrderRawData;
 
 @Service
-public class WalletCallbackServiceImpl implements IWalletCallbackService {
+public class ZbxWalletCallbackService implements IWalletCallbackService<ZbxOrderRawData> {
 
 	@Autowired
 	private IUserWalletAccountService userWalletAccountService;
