@@ -4,18 +4,12 @@ import java.math.BigDecimal;
 
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.wallet.domain.Address;
-import com.soyatec.sword.wallet.domain.Ticker;
 import com.soyatec.sword.wallet.domain.WithdrawalResponse;
 
 /**
  * @author Jin Liu (jin.liu@soyatec.com)
  */
-public interface IWalletDelegateService {
-
-	/**
-	 * 获取最新交易价格详情
-	 */
-	CommonResult<Ticker> getTicker(String symbol);
+public interface IWalletBusinessService {
 
 	/**
 	 * 创建充值地址
@@ -24,7 +18,7 @@ public interface IWalletDelegateService {
 
 	/**
 	 * 检测提币地址是否合法
-	 * @param address TODO
+	 * 
 	 */
 	CommonResult<?> checkWithdrawalAddress(String symbol, String chain, String address);
 

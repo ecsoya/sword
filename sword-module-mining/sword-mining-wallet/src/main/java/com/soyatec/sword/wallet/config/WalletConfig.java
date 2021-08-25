@@ -20,6 +20,10 @@ import com.soyatec.sword.common.utils.StringUtils;
 @ConfigurationProperties("wallet.ticker")
 public class WalletConfig {
 
+	private String priceUrl = "https://api.gateio.ws/api/v4/spot/tickers";
+
+	private String market = "currency_pair";
+
 	private Map<String, String> historyFiles;
 
 	private Map<String, Map<Date, BigDecimal>> histories;
@@ -96,6 +100,22 @@ public class WalletConfig {
 				continue;
 			}
 		}
+	}
+
+	public String getPriceUrl() {
+		return priceUrl;
+	}
+
+	public void setPriceUrl(String priceUrl) {
+		this.priceUrl = priceUrl;
+	}
+
+	public String getMarket() {
+		return market;
+	}
+
+	public void setMarket(String market) {
+		this.market = market;
 	}
 
 }

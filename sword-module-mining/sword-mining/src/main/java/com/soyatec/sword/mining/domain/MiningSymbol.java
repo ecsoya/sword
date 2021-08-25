@@ -23,12 +23,17 @@ public class MiningSymbol extends BaseEntity {
 	public static final Integer ENABLED = 0;
 	public static final Integer DISABLED = 1;
 
+	public static final Integer TYPE_BITCOIN = 0;
+	public static final Integer TYPE_MONEY = 1;
+
 	/** 名称 */
 	private String symbol;
 
 	/** 链码 */
 	@Excel(name = "链码")
 	private String chain;
+
+	private Integer type;
 
 	/** 提币手续费 */
 	@Excel(name = "提币手续费")
@@ -173,5 +178,13 @@ public class MiningSymbol extends BaseEntity {
 
 	public void setWithdrawalAuditLimation(BigDecimal withdrawalAuditLimation) {
 		this.withdrawalAuditLimation = withdrawalAuditLimation;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 }

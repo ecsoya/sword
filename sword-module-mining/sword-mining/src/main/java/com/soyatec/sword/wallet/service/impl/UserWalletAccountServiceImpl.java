@@ -162,16 +162,30 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			chain = IMiningConstants.CHAIN_DEFAULT;
 		}
 
+		MiningSymbol miningSymbol = symbolService.selectMiningSymbolById(symbol);
+		if (miningSymbol == null) {
+			return null;
+		}
+
 		UserWalletAccount account = userWalletAccountMapper.selectUserWalletAccount(userId, symbol);
 		if (account == null) {
 			account = new UserWalletAccount();
 			account.setUserId(userId);
 			account.setSymbol(symbol);
-			account.setAddress(walletService.getDepositAddressValue(symbol, chain));
+			if (MiningSymbol.TYPE_BITCOIN.equals(miningSymbol.getType())) {
+				account.setAddress(walletService.getDepositAddressValue(symbol, chain));
+			} else {
+				account.setAddress(IdWorker.get32UUID());
+			}
 			account.setAddressUrl(generateQrcodeUrl(account.getAddress()));
 			insertUserWalletAccount(account);
 		} else if (StringUtils.isEmpty(account.getAddress())) {
-			final String address = walletService.getDepositAddressValue(symbol, chain);
+			String address = null;
+			if (MiningSymbol.TYPE_BITCOIN.equals(miningSymbol.getType())) {
+				address = walletService.getDepositAddressValue(symbol, chain);
+			} else {
+				address = IdWorker.get32UUID();
+			}
 			if (StringUtils.isNotEmpty(address)) {
 				account.setAddress(address);
 				account.setAddressUrl(generateQrcodeUrl(account.getAddress()));

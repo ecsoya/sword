@@ -24,7 +24,7 @@ import com.soyatec.sword.common.utils.http.HttpUtils;
 import com.soyatec.sword.wallet.domain.Address;
 import com.soyatec.sword.wallet.domain.Ticker;
 import com.soyatec.sword.wallet.domain.WithdrawalResponse;
-import com.soyatec.sword.wallet.service.IWalletDelegateService;
+import com.soyatec.sword.wallet.service.IWalletBusinessService;
 import com.soyatec.sword.zbx.config.ZbxWalletConfig;
 import com.soyatec.sword.zbx.domain.ZbxDepositAddress;
 import com.soyatec.sword.zbx.domain.ZbxResponse;
@@ -32,13 +32,12 @@ import com.soyatec.sword.zbx.domain.ZbxTicker;
 import com.soyatec.sword.zbx.utils.HttpUtil;
 
 @Service
-public class ZbxService implements IWalletDelegateService {
+public class ZbxService implements IWalletBusinessService {
 
 	private static final Logger log = LoggerFactory.getLogger(ZbxService.class);
 	@Autowired
 	private ZbxWalletConfig apiConfig;
 
-	@Override
 	public CommonResult<Ticker> getTicker(String symbol) {
 		if (StringUtils.isEmpty(symbol)) {
 			return CommonResult.fail("参数错误");

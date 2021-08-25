@@ -33,10 +33,6 @@ public class UdunWalletProperties {
 	private String callbackUrl;
 
 	private String addressLocation;
-	
-	private String priceUrl = "https://api.gateio.ws/api/v4/spot/tickers";
-
-	private String market = "currency_pair";
 
 	private UdunWalletAddress addresses;
 
@@ -151,22 +147,6 @@ public class UdunWalletProperties {
 
 	public void setAddresses(UdunWalletAddress addresses) {
 		this.addresses = addresses;
-	}
-
-	public String getPriceUrl() {
-		return priceUrl;
-	}
-
-	public void setPriceUrl(String priceUrl) {
-		this.priceUrl = priceUrl;
-	}
-
-	public String getMarket() {
-		return market;
-	}
-
-	public void setMarket(String market) {
-		this.market = market;
 	}
 
 }

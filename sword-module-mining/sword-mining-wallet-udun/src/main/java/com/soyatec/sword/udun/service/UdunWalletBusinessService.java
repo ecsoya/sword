@@ -6,12 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.soyatec.sword.common.core.domain.CommonResult;
-import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.StringUtils;
-import com.soyatec.sword.common.utils.http.HttpUtils;
 import com.soyatec.sword.udun.config.UdunWalletAddress;
 import com.soyatec.sword.udun.config.UdunWalletProperties;
 import com.soyatec.sword.udun.constants.CoinType;
@@ -19,64 +15,15 @@ import com.soyatec.sword.udun.domain.UAddress;
 import com.soyatec.sword.udun.http.ResponseMessage;
 import com.soyatec.sword.udun.http.client.UdunWalletClient;
 import com.soyatec.sword.wallet.domain.Address;
-import com.soyatec.sword.wallet.domain.Ticker;
 import com.soyatec.sword.wallet.domain.WithdrawalResponse;
-import com.soyatec.sword.wallet.service.IWalletDelegateService;
+import com.soyatec.sword.wallet.service.IWalletBusinessService;
 
 @Service
-public class UdunWalletService implements IWalletDelegateService {
+public class UdunWalletBusinessService implements IWalletBusinessService {
 	@Autowired
 	private UdunWalletClient udunClient;
 	@Autowired
 	private UdunWalletProperties properties;
-
-	@Override
-	public CommonResult<Ticker> getTicker(String symbol) {
-		String priceUrl = properties.getPriceUrl();
-		String name = properties.getMarket();
-		if (StringUtils.isEmpty(name) || StringUtils.isEmpty(priceUrl)) {
-			return CommonResult.fail("配置错误");
-		}
-		String market = symbol.toUpperCase() + "_USDT";
-		String value = HttpUtils.sendGet(priceUrl, name + "=" + market);
-		if (StringUtils.isEmpty(value)) {
-			return CommonResult.fail("请求失败");
-		}
-		try {
-			JSONArray array = JSON.parseArray(value);
-			if (array.isEmpty()) {
-				return CommonResult.fail("网络错误");
-			}
-			JSONObject json = (JSONObject) array.get(0);
-			if (json == null) {
-				return CommonResult.fail("数据错误");
-			}
-			Ticker ticker = new Ticker();
-			ticker.setSymbol(symbol);
-			ticker.setDate(DateUtils.getNowDate());
-			ticker.setPrice(parse(json.getString("last")));
-			ticker.setLow(parse(json.getString("low_24h")));
-			ticker.setHigh(parse(json.getString("high_24h")));
-			ticker.setRate(parse(json.getString("change_percentage")));
-			ticker.setAsk(parse(json.getString("lowest_ask")));
-			ticker.setBid(parse(json.getString("highest_bid")));
-
-			return CommonResult.build(ticker);
-		} catch (Exception e) {
-			return CommonResult.fail("数据错误");
-		}
-	}
-
-	private static BigDecimal parse(String value) {
-		if (StringUtils.isEmpty(value)) {
-			return BigDecimal.ZERO;
-		}
-		try {
-			return new BigDecimal(value);
-		} catch (Exception e) {
-			return BigDecimal.ZERO;
-		}
-	}
 
 	@Override
 	public CommonResult<Address> getDepositAddress(String symbol, String chain) {
