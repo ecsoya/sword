@@ -1,4 +1,4 @@
-package com.soyatec.sword.wallet.service;
+package com.soyatec.sword.wallet.mapper;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -6,19 +6,19 @@ import java.util.List;
 import com.soyatec.sword.wallet.domain.UserWalletRecord;
 
 /**
- * 用户钱包记录Service接口
+ * 用户钱包记录Mapper接口
  *
  * @author Jin Liu (angryred@qq.com)
  * @date 2021-01-05
  */
-public interface IUserWalletRecordService {
+public interface UserWalletRecord1Mapper {
 	/**
 	 * 查询用户钱包记录
 	 *
 	 * @param id 用户钱包记录ID
 	 * @return 用户钱包记录
 	 */
-	public UserWalletRecord selectUserWalletRecordById(Long id, Integer type);
+	public UserWalletRecord selectUserWalletRecordById(Long id);
 
 	/**
 	 * 查询用户钱包记录列表
@@ -43,6 +43,22 @@ public interface IUserWalletRecordService {
 	 * @return 结果
 	 */
 	public int updateUserWalletRecord(UserWalletRecord userWalletRecord);
+
+	/**
+	 * 删除用户钱包记录
+	 *
+	 * @param id 用户钱包记录ID
+	 * @return 结果
+	 */
+	public int deleteUserWalletRecordById(Long id);
+
+	/**
+	 * 批量删除用户钱包记录
+	 *
+	 * @param ids 需要删除的数据ID
+	 * @return 结果
+	 */
+	public int deleteUserWalletRecordByIds(String[] ids);
 
 	public BigDecimal selectUserWalletRecordAmount(UserWalletRecord record);
 }

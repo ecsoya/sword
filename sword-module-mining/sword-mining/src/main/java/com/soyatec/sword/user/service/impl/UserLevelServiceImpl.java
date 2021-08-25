@@ -66,7 +66,9 @@ public class UserLevelServiceImpl implements IUserLevelService {
 	 */
 	@Override
 	public int updateUserLevel(UserLevel userLevel) {
-		userLevel.setUpdateTime(DateUtils.getNowDate());
+		if (userLevel.getUpdateTime() == null) {
+			userLevel.setUpdateTime(DateUtils.getNowDate());
+		}
 		return userLevelMapper.updateUserLevel(userLevel);
 	}
 

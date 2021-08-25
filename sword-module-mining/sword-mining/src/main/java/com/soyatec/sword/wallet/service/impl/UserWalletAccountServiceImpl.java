@@ -348,6 +348,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 					record.setId(r.getId());
 					record.setStatus(IConstants.STATUS_FINISHED);
 					record.setRemark("已解冻【" + payBack + "】");
+					record.setType(r.getKind());
 					userWalletRecordService.updateUserWalletRecord(record);
 				});
 			}
@@ -401,6 +402,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 				finish.setId(record.getId());
 				finish.setStatus(IConstants.STATUS_FINISHED);
 				finish.setRemark("Release Frozen Amount");
+				finish.setType(record.getType());
 				userWalletRecordService.updateUserWalletRecord(finish);
 			}
 			return true;
@@ -629,6 +631,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			final UserWalletRecord finish = new UserWalletRecord();
 			finish.setId(record.getId());
 			finish.setStatus(IConstants.STATUS_FINISHED);
+			finish.setType(record.getType());
 			rows = userWalletRecordService.updateUserWalletRecord(finish);
 			if (rows <= 0) {
 				throw new TransactionException("finishRecord");
@@ -677,6 +680,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			final UserWalletRecord finish = new UserWalletRecord();
 			finish.setId(record.getId());
 			finish.setStatus(IConstants.STATUS_FINISHED);
+			finish.setType(record.getType());
 			return userWalletRecordService.updateUserWalletRecord(finish) > 0;
 		}
 		boolean isLocked = false;

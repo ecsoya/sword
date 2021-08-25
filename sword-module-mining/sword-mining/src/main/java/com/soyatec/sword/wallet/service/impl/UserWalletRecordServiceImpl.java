@@ -6,11 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.soyatec.sword.common.core.text.Convert;
 import com.soyatec.sword.common.utils.DateUtils;
 import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.utils.MathUtils;
 import com.soyatec.sword.wallet.domain.UserWalletRecord;
+import com.soyatec.sword.wallet.mapper.UserWalletRecord0Mapper;
+import com.soyatec.sword.wallet.mapper.UserWalletRecord1Mapper;
+import com.soyatec.sword.wallet.mapper.UserWalletRecord2Mapper;
 import com.soyatec.sword.wallet.mapper.UserWalletRecordMapper;
 import com.soyatec.sword.wallet.service.IUserWalletRecordService;
 
@@ -24,6 +26,12 @@ import com.soyatec.sword.wallet.service.IUserWalletRecordService;
 public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	@Autowired
 	private UserWalletRecordMapper userWalletRecordMapper;
+	@Autowired
+	private UserWalletRecord0Mapper userWalletRecordMapper0;
+	@Autowired
+	private UserWalletRecord1Mapper userWalletRecordMapper1;
+	@Autowired
+	private UserWalletRecord2Mapper userWalletRecordMapper2;
 
 	/**
 	 * 查询用户钱包记录
@@ -32,7 +40,14 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	 * @return 用户钱包记录
 	 */
 	@Override
-	public UserWalletRecord selectUserWalletRecordById(Long id) {
+	public UserWalletRecord selectUserWalletRecordById(Long id, Integer type) {
+		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+			return userWalletRecordMapper0.selectUserWalletRecordById(id);
+		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+			return userWalletRecordMapper1.selectUserWalletRecordById(id);
+		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+			return userWalletRecordMapper2.selectUserWalletRecordById(id);
+		}
 		return userWalletRecordMapper.selectUserWalletRecordById(id);
 	}
 
@@ -44,6 +59,14 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	 */
 	@Override
 	public List<UserWalletRecord> selectUserWalletRecordList(UserWalletRecord userWalletRecord) {
+		Integer type = userWalletRecord.getType();
+		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+			return userWalletRecordMapper0.selectUserWalletRecordList(userWalletRecord);
+		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+			return userWalletRecordMapper1.selectUserWalletRecordList(userWalletRecord);
+		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+			return userWalletRecordMapper2.selectUserWalletRecordList(userWalletRecord);
+		}
 		return userWalletRecordMapper.selectUserWalletRecordList(userWalletRecord);
 	}
 
@@ -61,6 +84,14 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 		if (userWalletRecord.getCreateTime() == null) {
 			userWalletRecord.setCreateTime(DateUtils.getNowDate());
 		}
+		Integer type = userWalletRecord.getType();
+		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+			return userWalletRecordMapper0.insertUserWalletRecord(userWalletRecord);
+		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+			return userWalletRecordMapper1.insertUserWalletRecord(userWalletRecord);
+		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+			return userWalletRecordMapper2.insertUserWalletRecord(userWalletRecord);
+		}
 		return userWalletRecordMapper.insertUserWalletRecord(userWalletRecord);
 	}
 
@@ -73,33 +104,27 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	@Override
 	public int updateUserWalletRecord(UserWalletRecord userWalletRecord) {
 		userWalletRecord.setUpdateTime(DateUtils.getNowDate());
+		Integer type = userWalletRecord.getType();
+		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+			return userWalletRecordMapper0.insertUserWalletRecord(userWalletRecord);
+		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+			return userWalletRecordMapper1.insertUserWalletRecord(userWalletRecord);
+		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+			return userWalletRecordMapper2.insertUserWalletRecord(userWalletRecord);
+		}
 		return userWalletRecordMapper.updateUserWalletRecord(userWalletRecord);
-	}
-
-	/**
-	 * 删除用户钱包记录对象
-	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
-	 */
-	@Override
-	public int deleteUserWalletRecordByIds(String ids) {
-		return userWalletRecordMapper.deleteUserWalletRecordByIds(Convert.toStrArray(ids));
-	}
-
-	/**
-	 * 删除用户钱包记录信息
-	 *
-	 * @param id 用户钱包记录ID
-	 * @return 结果
-	 */
-	@Override
-	public int deleteUserWalletRecordById(Long id) {
-		return userWalletRecordMapper.deleteUserWalletRecordById(id);
 	}
 
 	@Override
 	public BigDecimal selectUserWalletRecordAmount(UserWalletRecord record) {
+		Integer type = record.getType();
+		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+			return userWalletRecordMapper0.selectUserWalletRecordAmount(record);
+		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+			return userWalletRecordMapper1.selectUserWalletRecordAmount(record);
+		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+			return userWalletRecordMapper2.selectUserWalletRecordAmount(record);
+		}
 		return MathUtils.nullToZero(userWalletRecordMapper.selectUserWalletRecordAmount(record));
 	}
 }
