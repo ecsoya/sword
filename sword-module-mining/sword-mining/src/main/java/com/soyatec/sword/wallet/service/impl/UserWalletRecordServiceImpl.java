@@ -106,11 +106,11 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 		userWalletRecord.setUpdateTime(DateUtils.getNowDate());
 		Integer type = userWalletRecord.getType();
 		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
-			return userWalletRecordMapper0.insertUserWalletRecord(userWalletRecord);
+			return userWalletRecordMapper0.updateUserWalletRecord(userWalletRecord);
 		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
-			return userWalletRecordMapper1.insertUserWalletRecord(userWalletRecord);
+			return userWalletRecordMapper1.updateUserWalletRecord(userWalletRecord);
 		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
-			return userWalletRecordMapper2.insertUserWalletRecord(userWalletRecord);
+			return userWalletRecordMapper2.updateUserWalletRecord(userWalletRecord);
 		}
 		return userWalletRecordMapper.updateUserWalletRecord(userWalletRecord);
 	}
