@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectMiningSymbolVo"/>
         <where>  
             <if test="chain != null  and chain != ''"> and chain = #{chain}</if>
-            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="type != null"> and type = #{type}</if>
             <if test="withdrawalFee != null "> and withdrawal_fee = #{withdrawalFee}</if>
             <if test="withdrawalFeeSymbol != null and withdrawalFeeSymbol != ''"> and withdrawal_fee_symbol = #{withdrawalFeeSymbol}</if>
             <if test="withdrawalMinimum != null "> and withdrawal_minimum = #{withdrawalMinimum}</if>
@@ -118,8 +118,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
     
-    <select id="selectMiningSymbols" resultType="String">
-    	select symbol from t_mining_symbol order by symbol
+    <select id="selectMiningSymbols" parameterType="Integer" resultType="String">
+    	select symbol from t_mining_symbol
+    	<where>
+    		<if test="type != null">and type = #{type}</if>
+    	</where>
+    	order by symbol
     </select>
 
 	<select id="selectMiningSymbolChain" parameterType="String" resultType="String">

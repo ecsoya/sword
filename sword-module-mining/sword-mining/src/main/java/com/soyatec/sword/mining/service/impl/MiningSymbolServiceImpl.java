@@ -96,7 +96,13 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 
 	@Override
 	public List<String> selectMiningSymbols() {
-		return miningSymbolMapper.selectMiningSymbols();
+		return selectMiningSymbols(false);
+	}
+
+	@Override
+	public List<String> selectMiningSymbols(boolean onlyBitcoin) {
+		Integer type = onlyBitcoin ? MiningSymbol.TYPE_BITCOIN : null;
+		return miningSymbolMapper.selectMiningSymbols(type);
 	}
 
 	@Override

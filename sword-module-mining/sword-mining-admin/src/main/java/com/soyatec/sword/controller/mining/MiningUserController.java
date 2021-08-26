@@ -92,7 +92,7 @@ public class MiningUserController extends BaseController {
 	@RequiresPermissions("mining:user:view")
 	public String index(ModelMap mmap) {
 		mmap.put("levels", levelService.selectMiningLevelList(new MiningLevel()));
-		mmap.put("accounts", symbolService.selectMiningSymbols());
+		mmap.put("accounts", symbolService.selectMiningSymbols(true));
 		return prefix + "/user";
 	}
 

@@ -61,5 +61,7 @@ public interface IMiningSymbolService {
 
 	List<String> selectMiningSymbols();
 
+	List<String> selectMiningSymbols(boolean onlyBitcoin);
+
 	public String selectMiningSymbolChain(String symbol);
 }
