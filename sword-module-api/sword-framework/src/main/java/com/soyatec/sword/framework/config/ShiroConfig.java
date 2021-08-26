@@ -313,8 +313,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/open/**", "anon");
 		filterChainDefinitionMap.put("/api/open/**", "anon");
 		// Swagger
-		filterChainDefinitionMap.put("/v2/**", "anon");
-		filterChainDefinitionMap.put("/swagger-ui.html/**", "anon");
+		filterChainDefinitionMap.put("/v3/**", "anon");
+		filterChainDefinitionMap.put("/swagger-ui/**", "anon");
 		filterChainDefinitionMap.put("/webjars/**", "anon");
 		filterChainDefinitionMap.put("/swagger-resources/**", "anon");
 
