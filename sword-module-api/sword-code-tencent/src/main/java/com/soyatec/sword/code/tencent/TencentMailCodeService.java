@@ -12,7 +12,7 @@ import com.tencentcloudapi.ses.v20201002.models.SendEmailResponse;
 import com.tencentcloudapi.ses.v20201002.models.Template;
 
 @Component
-public class TencentCodeService {
+public class TencentMailCodeService {
 
 	@Autowired
 	private TencentCodeProperties config;

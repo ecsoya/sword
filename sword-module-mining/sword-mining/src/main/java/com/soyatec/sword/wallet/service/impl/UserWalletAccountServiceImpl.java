@@ -215,7 +215,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (account == null) {
 			throw new LockableException();
 		}
-		return tryLock(account.getUserId());
+		return lockService.tryLock("lock-wallet-account:" + account.getUserId() + ":" + account.getSymbol());
 	}
 
 	private boolean tryLock(Long userId) throws LockableException {
@@ -229,7 +229,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		if (account == null || account.getUserId() == null) {
 			return false;
 		}
-		return releaseLock(account.getUserId());
+		return lockService.releaseLock("lock-wallet-account:" + account.getUserId() + ":" + account.getSymbol());
 	}
 
 	private boolean releaseLock(Long userId) {
@@ -294,6 +294,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			update.setFrozenAmount(MathUtils.plus(amount, walletAccount.getFrozenAmount()));
 			userWalletAccountMapper.updateUserWalletAccount(update);
 			return true;
+		} catch (LockableException e) {
+			return false;
 		} finally {
 			if (locked) {
 				releaseLock(walletAccount);
@@ -353,6 +355,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 				});
 			}
 			return true;
+		} catch (LockableException e) {
+			return false;
 		} finally {
 			if (isLocked) {
 				releaseLock(userId);
@@ -406,6 +410,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 				userWalletRecordService.updateUserWalletRecord(finish);
 			}
 			return true;
+		} catch (LockableException e) {
+			return false;
 		} finally {
 			if (isLocked) {
 				releaseLock(userId);
@@ -450,6 +456,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			update.setAmount(walletAmount.subtract(amount));
 			userWalletAccountMapper.updateUserWalletAccount(update);
 			return true;
+		} catch (LockableException e) {
+			return false;
 		} finally {
 			if (isLocked) {
 				releaseLock(walletAccount);
@@ -494,6 +502,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			update.setAmount(MathUtils.plus(lockAccount.getAmount(), amount));
 			userWalletAccountMapper.updateUserWalletAccount(update);
 			return true;
+		} catch (LockableException e) {
+			return false;
 		} finally {
 			if (isLocked) {
 				releaseLock(walletAccount);
@@ -563,6 +573,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			}
 			userWalletAccountMapper.updateUserWalletAccount(update);
 			return true;
+		} catch (LockableException e) {
+			return false;
 		} finally {
 			if (isLocked) {
 				releaseLock(account);
@@ -636,6 +648,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			if (rows <= 0) {
 				throw new TransactionException("finishRecord");
 			}
+		} catch (LockableException e) {
+			return 0;
 		} finally {
 			if (isLocked) {
 				releaseLock(userId);
@@ -710,6 +724,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			if (rows <= 0) {
 				throw new TransactionException("finishRecord");
 			}
+		} catch (LockableException e) {
+			return false;
 		} finally {
 			if (isLocked) {
 				releaseLock(userId);
@@ -770,6 +786,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			if (rows <= 0) {
 				throw new TransactionException("account");
 			}
+		} catch (LockableException e) {
+			return 0;
 		} finally {
 			if (isLocked) {
 				releaseLock(userId);

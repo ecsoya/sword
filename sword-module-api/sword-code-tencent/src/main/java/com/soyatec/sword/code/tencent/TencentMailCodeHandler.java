@@ -12,17 +12,17 @@ import com.tencentcloudapi.ses.v20201002.models.SendEmailResponse;
 
 @Component
 @AutoService(IMailCodeHandlerRegistry.class)
-public class TencentCodeHandler implements SendMailCodeHandler, IMailCodeHandlerRegistry {
+public class TencentMailCodeHandler implements SendMailCodeHandler, IMailCodeHandlerRegistry {
 
 	@Autowired
 	private TencentCodeProperties config;
 
 	@Autowired
-	private TencentCodeService servie;
+	private TencentMailCodeService servie;
 
 	@Override
 	public SendMailCodeHandler get() {
-		return SpringUtils.getBean(TencentCodeHandler.class);
+		return SpringUtils.getBean(TencentMailCodeHandler.class);
 	}
 
 	@Override

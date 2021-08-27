@@ -23,6 +23,21 @@ public class TencentCodeProperties extends CodeProperties {
 
 	private Long htmlTemplateId;
 
+	/**
+	 * 短信
+	 */
+	private Long templateId;
+
+	/**
+	 * 短信
+	 */
+	private String sdkAppId;
+
+	/**
+	 * 短信签名
+	 */
+	private String signName;
+
 	public String getFrom() {
 		return from;
 	}
@@ -77,5 +92,29 @@ public class TencentCodeProperties extends CodeProperties {
 
 	public void setHtmlTemplateId(Long htmlTemplateId) {
 		this.htmlTemplateId = htmlTemplateId;
+	}
+
+	public Long getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(Long templateId) {
+		this.templateId = templateId;
+	}
+
+	public String getSdkAppId() {
+		return sdkAppId;
+	}
+
+	public void setSdkAppId(String sdkAppId) {
+		this.sdkAppId = sdkAppId;
+	}
+
+	public String getSignName() {
+		return signName;
+	}
+
+	public void setSignName(String signName) {
+		this.signName = signName;
 	}
 }
