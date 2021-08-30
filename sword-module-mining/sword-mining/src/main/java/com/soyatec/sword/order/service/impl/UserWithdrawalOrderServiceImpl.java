@@ -349,13 +349,16 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		final WithdrawalResponse data = dispatched.getData();
 		if (data != null) {
 			final int status = data.getStatus();
+			BigDecimal walletFee = data.getFees();
 			if (WithdrawalResponse.STATUS_SUCCESS.equals(status)) {
 				// 内部转账
-				addWithdrawalRecord(userId, order.getAmount(), order.getFee(), orderNo, symbol, true, "交易所内部转账"); //$NON-NLS-1$
+				addWithdrawalRecord(userId, order.getAmount(), order.getFee(), walletFee, orderNo, symbol, true,
+						"交易所内部转账"); //$NON-NLS-1$
 				return result(id, UserWithdrawalOrder.STATUS_SUCCESS, UserWithdrawalOrder.FEEDBACK_NONE, "提现成功", true); //$NON-NLS-1$
 			} else if (WithdrawalResponse.STATUS_FAILURE.equals(status)) {
 				// 转账失败
-				addWithdrawalRecord(userId, order.getAmount(), order.getFee(), orderNo, symbol, false, "交易所转账失败"); //$NON-NLS-1$
+				addWithdrawalRecord(userId, order.getAmount(), order.getFee(), walletFee, orderNo, symbol, false,
+						"交易所转账失败"); //$NON-NLS-1$
 				return result(id, UserWithdrawalOrder.STATUS_FAILURE, UserWithdrawalOrder.FEEDBACK_NONE, "提现失败", false); //$NON-NLS-1$
 			}
 			// 等待回调
@@ -364,8 +367,8 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return result(id, UserWithdrawalOrder.STATUS_CONFIRM, UserWithdrawalOrder.FEEDBACK_NONE, "转账成功，等待确认", true);
 	}
 
-	private boolean addWithdrawalRecord(Long userId, BigDecimal amount, BigDecimal fee, String orderNo, String symbol,
-			boolean success, String remark) {
+	private boolean addWithdrawalRecord(Long userId, BigDecimal amount, BigDecimal fee, BigDecimal walletFee,
+			String orderNo, String symbol, boolean success, String remark) {
 		// 1. 扣款
 		final boolean unfreezed = userWalletAccountService.unfreezeAmount(userId, symbol, amount, orderNo, !success);
 		if (!unfreezed) {
@@ -375,6 +378,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		final UserWithdrawalRecord record = new UserWithdrawalRecord();
 		record.setUserId(userId);
 		record.setFee(fee);
+		record.setWalletFee(walletFee);
 		record.setOrderNo(orderNo);
 		record.setType(UserWithdrawalRecord.TYPE_WALLET);
 		record.setSymbol(symbol);
