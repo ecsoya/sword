@@ -18,7 +18,7 @@ public interface IUserWalletRecordService {
 	 * @param id 用户钱包记录ID
 	 * @return 用户钱包记录
 	 */
-	public UserWalletRecord selectUserWalletRecordById(Long id, Integer type);
+	public UserWalletRecord selectUserWalletRecordById(Long id, Integer kind);
 
 	/**
 	 * 查询用户钱包记录列表
@@ -45,4 +45,6 @@ public interface IUserWalletRecordService {
 	public int updateUserWalletRecord(UserWalletRecord userWalletRecord);
 
 	public BigDecimal selectUserWalletRecordAmount(UserWalletRecord record);
+
+	public UserWalletRecord selectUserWalletRecordOne(UserWalletRecord query);
 }

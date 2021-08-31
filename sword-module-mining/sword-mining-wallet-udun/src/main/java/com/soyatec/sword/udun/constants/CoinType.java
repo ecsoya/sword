@@ -2,29 +2,12 @@ package com.soyatec.sword.udun.constants;
 
 public enum CoinType {
 
-	Bitcoin("0", "BTC", "0"),
-	Litecoin("2", "LTC", "2"),
-	Dogecoin("3", "DOGE", "3"),
-	Ethereum("60", "ETH", "60"),
-	EthereumClassic("61", "ETC", "61"),
-	Ripple("144", "XRP", "144"),
-	Bitcoincash("145", "BCH", "145"),
-	EOS("194", "EOS", "194"),
-	TRX("195", "TRX", "195"),
-	NEO("888", "NEO", "888"),
-	XNE("208", "XNE", "208"),
-	TEC("206", "TEC", "206"),
-	GCA("500", "GCA", "500"),
-	GCB("501", "GCB", "501"),
-	GalaxyChain("502", "GCC", "502"),
-	DASH("5", "DASH", "5"),
-	ZEC("133", "ZEC", "133"),
-	QTUM("2301", "QTUM", "2301"),
-	TECO("506", "TECO", "506"),
-	CNYT("509", "CNYT", "509"),
-	STO("99", "STO", "99"),
-	CNT("520", "CNT", "520"),
-	FIL("2307", "FIL", "2307"),
+	Bitcoin("0", "BTC", "0"), Litecoin("2", "LTC", "2"), Dogecoin("3", "DOGE", "3"), Ethereum("60", "ETH", "60"),
+	EthereumClassic("61", "ETC", "61"), Ripple("144", "XRP", "144"), Bitcoincash("145", "BCH", "145"),
+	EOS("194", "EOS", "194"), TRX("195", "TRX", "195"), NEO("888", "NEO", "888"), XNE("208", "XNE", "208"),
+	TEC("206", "TEC", "206"), GCA("500", "GCA", "500"), GCB("501", "GCB", "501"), GalaxyChain("502", "GCC", "502"),
+	DASH("5", "DASH", "5"), ZEC("133", "ZEC", "133"), QTUM("2301", "QTUM", "2301"), TECO("506", "TECO", "506"),
+	CNYT("509", "CNYT", "509"), STO("99", "STO", "99"), CNT("520", "CNT", "520"), FIL("2307", "FIL", "2307"),
 	TRCUSD("195", "USDT", "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
 
 	private String code;

@@ -8,7 +8,7 @@ public interface IWalletCallbackService<T> {
 	 * 处理充提订单
 	 */
 	CommonResult<?> processOrder(T rawData);
-	
+
 	/**
 	 * 解析数据
 	 */

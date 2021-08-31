@@ -40,12 +40,12 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	 * @return 用户钱包记录
 	 */
 	@Override
-	public UserWalletRecord selectUserWalletRecordById(Long id, Integer type) {
-		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+	public UserWalletRecord selectUserWalletRecordById(Long id, Integer kind) {
+		if (UserWalletRecord.KIND_AMOUNT.equals(kind)) {
 			return userWalletRecordMapper0.selectUserWalletRecordById(id);
-		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+		} else if (UserWalletRecord.KIND_FROZEN.equals(kind)) {
 			return userWalletRecordMapper1.selectUserWalletRecordById(id);
-		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+		} else if (UserWalletRecord.KIND_LOCKED.equals(kind)) {
 			return userWalletRecordMapper2.selectUserWalletRecordById(id);
 		}
 		return userWalletRecordMapper.selectUserWalletRecordById(id);
@@ -59,12 +59,12 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	 */
 	@Override
 	public List<UserWalletRecord> selectUserWalletRecordList(UserWalletRecord userWalletRecord) {
-		Integer type = userWalletRecord.getType();
-		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+		Integer kind = userWalletRecord.getKind();
+		if (UserWalletRecord.KIND_AMOUNT.equals(kind)) {
 			return userWalletRecordMapper0.selectUserWalletRecordList(userWalletRecord);
-		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+		} else if (UserWalletRecord.KIND_FROZEN.equals(kind)) {
 			return userWalletRecordMapper1.selectUserWalletRecordList(userWalletRecord);
-		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+		} else if (UserWalletRecord.KIND_LOCKED.equals(kind)) {
 			return userWalletRecordMapper2.selectUserWalletRecordList(userWalletRecord);
 		}
 		return userWalletRecordMapper.selectUserWalletRecordList(userWalletRecord);
@@ -84,12 +84,12 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 		if (userWalletRecord.getCreateTime() == null) {
 			userWalletRecord.setCreateTime(DateUtils.getNowDate());
 		}
-		Integer type = userWalletRecord.getType();
-		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+		Integer kind = userWalletRecord.getKind();
+		if (UserWalletRecord.KIND_AMOUNT.equals(kind)) {
 			return userWalletRecordMapper0.insertUserWalletRecord(userWalletRecord);
-		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+		} else if (UserWalletRecord.KIND_FROZEN.equals(kind)) {
 			return userWalletRecordMapper1.insertUserWalletRecord(userWalletRecord);
-		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+		} else if (UserWalletRecord.KIND_LOCKED.equals(kind)) {
 			return userWalletRecordMapper2.insertUserWalletRecord(userWalletRecord);
 		}
 		return userWalletRecordMapper.insertUserWalletRecord(userWalletRecord);
@@ -104,12 +104,12 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	@Override
 	public int updateUserWalletRecord(UserWalletRecord userWalletRecord) {
 		userWalletRecord.setUpdateTime(DateUtils.getNowDate());
-		Integer type = userWalletRecord.getType();
-		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+		Integer kind = userWalletRecord.getKind();
+		if (UserWalletRecord.KIND_AMOUNT.equals(kind)) {
 			return userWalletRecordMapper0.updateUserWalletRecord(userWalletRecord);
-		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+		} else if (UserWalletRecord.KIND_FROZEN.equals(kind)) {
 			return userWalletRecordMapper1.updateUserWalletRecord(userWalletRecord);
-		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+		} else if (UserWalletRecord.KIND_LOCKED.equals(kind)) {
 			return userWalletRecordMapper2.updateUserWalletRecord(userWalletRecord);
 		}
 		return userWalletRecordMapper.updateUserWalletRecord(userWalletRecord);
@@ -117,14 +117,30 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 
 	@Override
 	public BigDecimal selectUserWalletRecordAmount(UserWalletRecord record) {
-		Integer type = record.getType();
-		if (UserWalletRecord.KIND_AMOUNT.equals(type)) {
+		Integer kind = record.getKind();
+		if (UserWalletRecord.KIND_AMOUNT.equals(kind)) {
 			return userWalletRecordMapper0.selectUserWalletRecordAmount(record);
-		} else if (UserWalletRecord.KIND_FROZEN.equals(type)) {
+		} else if (UserWalletRecord.KIND_FROZEN.equals(kind)) {
 			return userWalletRecordMapper1.selectUserWalletRecordAmount(record);
-		} else if (UserWalletRecord.KIND_LOCKED.equals(type)) {
+		} else if (UserWalletRecord.KIND_LOCKED.equals(kind)) {
 			return userWalletRecordMapper2.selectUserWalletRecordAmount(record);
 		}
 		return MathUtils.nullToZero(userWalletRecordMapper.selectUserWalletRecordAmount(record));
+	}
+
+	@Override
+	public UserWalletRecord selectUserWalletRecordOne(UserWalletRecord query) {
+		if (query == null) {
+			return null;
+		}
+		Integer kind = query.getKind();
+		if (UserWalletRecord.KIND_AMOUNT.equals(kind)) {
+			return userWalletRecordMapper0.selectUserWalletRecordOne(query);
+		} else if (UserWalletRecord.KIND_FROZEN.equals(kind)) {
+			return userWalletRecordMapper1.selectUserWalletRecordOne(query);
+		} else if (UserWalletRecord.KIND_LOCKED.equals(kind)) {
+			return userWalletRecordMapper2.selectUserWalletRecordOne(query);
+		}
+		return null;
 	}
 }

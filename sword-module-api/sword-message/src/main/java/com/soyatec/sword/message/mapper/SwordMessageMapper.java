@@ -1,6 +1,7 @@
 package com.soyatec.sword.message.mapper;
 
 import java.util.List;
+
 import com.soyatec.sword.message.domain.SwordMessage;
 
 /**

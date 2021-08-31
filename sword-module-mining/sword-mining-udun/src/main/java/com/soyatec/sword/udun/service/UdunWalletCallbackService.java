@@ -35,22 +35,22 @@ public class UdunWalletCallbackService implements IWalletCallbackService<WalletN
 
 	@Autowired
 	private UdunWalletProperties properties;
-	
+
 	@Autowired
 	private IUserDepositRecordService userDepositRecordService;
-	
+
 	@Autowired
 	private IUserDepositOrderService userDepositOrderService;
 
 	@Autowired
 	private IUserWalletAccountService userWalletAccountService;
-	
+
 	@Autowired
 	private IUserWithdrawalRecordService userWithdrawalRecordService;
-	
+
 	@Autowired
 	private IUserWithdrawalOrderService userWithdrawalOrderService;
-	
+
 	@Override
 	public CommonResult<?> processOrder(WalletNotify data) {
 		if (data == null) {

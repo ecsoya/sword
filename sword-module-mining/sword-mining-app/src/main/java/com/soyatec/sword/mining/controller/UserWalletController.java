@@ -106,7 +106,7 @@ public class UserWalletController extends BaseController {
 	@ApiOperation(value = "查询钱包记录三", notes = "此API查询钱包各种余额变动的所有记录，成功与否都会查询")
 	@GetMapping("/details")
 	public TableDataInfo details(@ApiParam(required = true) String symbol, @ApiParam("起始时间 yyyy-MM-dd") Date start,
-			@ApiParam("结束时间 yyyy-MM-dd") Date end, @ApiParam(value = "0-可用余额，1-冻结余额（质押余额）2-锁定余额，留空为所有") Integer kind,
+			@ApiParam("结束时间 yyyy-MM-dd") Date end, @ApiParam(value = "0-可用余额，1-冻结余额（质押余额）2-锁定余额，留空为可用余额") Integer kind,
 			@ApiParam(value = "0-收入，1-支出，2-后台设定，留空为所有") Integer type) {
 		if (start != null) {
 			start = DateUtils.getStartOf(start);
@@ -120,6 +120,9 @@ public class UserWalletController extends BaseController {
 		query.setSymbol(symbol);
 		query.setUserId(userId);
 		query.setTimeParams(start, end);
+		if (kind == null) {
+			kind = 0;
+		}
 		query.setKind(kind);
 		query.setType(type);
 

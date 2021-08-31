@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.soyatec.sword</groupId>
     <artifactId>sword-module-mining</artifactId>
-    <version>2.0.9-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
   <artifactId>sword-mining</artifactId>

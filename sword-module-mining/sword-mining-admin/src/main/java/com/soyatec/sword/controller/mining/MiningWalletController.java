@@ -156,6 +156,9 @@ public class MiningWalletController extends BaseController {
 	public TableDataInfo record(UserWalletRecord record, Date start, Date end) {
 		record.setTimeParams(start, end);
 		startPage();
+		if (record.getKind() == null) {
+			record.setKind(UserWalletRecord.KIND_AMOUNT); // 默认为可用余额
+		}
 		final List<UserWalletRecord> list = walletRecordService.selectUserWalletRecordList(record);
 		final TableDataInfo table = getDataTable(list);
 		if (StringUtils.isNotEmpty(record.getLoginName()) && StringUtils.isNotEmpty(record.getSymbol())) {

@@ -119,8 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <select id="lockUserWalletAccountById" parameterType="Long" resultMap="UserWalletAccountResult">
-        <include refid="selectUserWalletAccountVo"/>
-        where id = #{id} for update
+        select * from t_user_wallet_account where id = #{id} for update
     </select>
     
     <select id="selectUserAccountAmount" resultType="BigDecimal">

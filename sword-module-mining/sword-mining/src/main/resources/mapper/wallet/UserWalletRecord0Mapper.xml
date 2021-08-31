@@ -130,4 +130,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        <if test="params.orderNoLike != null  and params.orderNoLike != ''"> and order_no like concat(#{params.orderNoLike}, '%')</if>
         </where>
 	</select>
+	
+	<select id="selectUserWalletRecordOne" parameterType="UserWalletRecord" resultMap="UserWalletRecordResult">
+        <include refid="selectUserWalletRecordVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="symbol != null  and symbol != ''"> and symbol = #{symbol}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="kind != null "> and kind = #{kind}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="params != null and params.orderNoLike != null  and params.orderNoLike != ''"> and order_no like concat(#{params.orderNoLike}, '%')</if>
+            <if test="days != null "> and days = #{days}</if>
+        </where>
+        limit 1
+    </select>
 </mapper>

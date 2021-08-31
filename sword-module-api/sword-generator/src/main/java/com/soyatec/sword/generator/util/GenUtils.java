@@ -194,7 +194,7 @@ public class GenUtils {
 		}
 		int index = text.indexOf("\n");
 		if (index != -1) {
-			return text.substring(0,index);
+			return text.substring(0, index);
 		}
 		return RegExUtils.replaceAll(text, "(?:表|蜜蜂Plus)", "");
 	}

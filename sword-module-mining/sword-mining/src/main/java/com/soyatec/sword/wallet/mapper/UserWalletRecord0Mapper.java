@@ -61,4 +61,6 @@ public interface UserWalletRecord0Mapper {
 	public int deleteUserWalletRecordByIds(String[] ids);
 
 	public BigDecimal selectUserWalletRecordAmount(UserWalletRecord record);
+
+	public UserWalletRecord selectUserWalletRecordOne(UserWalletRecord query);
 }
