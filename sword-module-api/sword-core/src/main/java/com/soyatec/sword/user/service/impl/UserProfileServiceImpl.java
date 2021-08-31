@@ -250,6 +250,11 @@ public class UserProfileServiceImpl implements IUserProfileService {
 	}
 
 	@Override
+	public List<UserProfile> fuzzySearchUserListByMobile(String mobile) {
+		return userProfileMapper.fuzzySearchUserListByMobile(mobile);
+	}
+
+	@Override
 	public List<UserProfile> selectUserProfileList(List<Long> userIds) {
 		if (userIds == null || userIds.isEmpty()) {
 			return Collections.emptyList();

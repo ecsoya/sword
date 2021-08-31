@@ -109,6 +109,11 @@ public class SelectDataInfo implements Serializable {
 		public void setText(String text) {
 			this.text = text;
 		}
+
+		@Override
+		public String toString() {
+			return String.format("%s=%s", id, text);
+		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

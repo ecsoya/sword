@@ -119,11 +119,11 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	public BigDecimal selectUserWalletRecordAmount(UserWalletRecord record) {
 		Integer kind = record.getKind();
 		if (UserWalletRecord.KIND_AMOUNT.equals(kind)) {
-			return userWalletRecordMapper0.selectUserWalletRecordAmount(record);
+			return MathUtils.nullToZero(userWalletRecordMapper0.selectUserWalletRecordAmount(record));
 		} else if (UserWalletRecord.KIND_FROZEN.equals(kind)) {
-			return userWalletRecordMapper1.selectUserWalletRecordAmount(record);
+			return MathUtils.nullToZero(userWalletRecordMapper1.selectUserWalletRecordAmount(record));
 		} else if (UserWalletRecord.KIND_LOCKED.equals(kind)) {
-			return userWalletRecordMapper2.selectUserWalletRecordAmount(record);
+			return MathUtils.nullToZero(userWalletRecordMapper2.selectUserWalletRecordAmount(record));
 		}
 		return MathUtils.nullToZero(userWalletRecordMapper.selectUserWalletRecordAmount(record));
 	}

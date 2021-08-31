@@ -57,4 +57,6 @@ public interface IUserProfileService {
 	List<UserProfile> fuzzySearchUserList(String loginName);
 
 	List<UserProfile> selectUserProfileList(List<Long> userIds);
+
+	List<UserProfile> fuzzySearchUserListByMobile(String mobile);
 }

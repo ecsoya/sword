@@ -60,8 +60,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="fuzzySearchUserList" parameterType="String" resultMap="UserProfileResult">
-		select user_id, login_name, phonenumber, email, create_time from sys_user where user_type = 01 and user_id > 3 
+		select user_id, login_name, phonenumber as mobile, email, create_time from sys_user where user_type = 01 and user_id > 3 
 		<if test="loginName != null and login_name !=''">and login_name like concat('%', #{loginName}, '%')</if>
+	</select>
+
+	<select id="fuzzySearchUserListByMobile" parameterType="String" resultMap="UserProfileResult">
+		select user_id, login_name, phonenumber as mobile, email, create_time from sys_user where user_type = 01 and user_id > 3 
+		<if test="mobile != null and mobile !=''">and mobile like concat('%', #{mobile}, '%')</if>
 	</select>
 	
 	<select id="selectUserProfileList" resultMap="UserProfileResult">

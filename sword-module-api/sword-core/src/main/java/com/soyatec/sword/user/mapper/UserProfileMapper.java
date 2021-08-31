@@ -37,4 +37,6 @@ public interface UserProfileMapper {
 
 	List<UserProfile> selectUserProfileList(@Param("userIds") List<Long> userIds);
 
+	List<UserProfile> fuzzySearchUserListByMobile(String mobile);
+
 }
