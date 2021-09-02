@@ -2,6 +2,7 @@ package com.soyatec.sword.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import org.springframework.util.NumberUtils;
 
@@ -179,4 +180,36 @@ public class MathUtils {
 			return null;
 		}
 	}
+
+	public static String toString(BigDecimal value, Integer decimal, String suffix) {
+		if (value == null) {
+			return "";
+		}
+		if (decimal == null || decimal < 0) {
+			decimal = 0;
+		}
+		String pattern = "0";
+		if (decimal > 0) {
+			pattern += ".";
+			while (decimal > 0) {
+				pattern += "0";
+				decimal--;
+			}
+		}
+		DecimalFormat format = new DecimalFormat(pattern);
+		String result = format.format(value.doubleValue());
+		return suffix != null ? result + suffix : result;
+	}
+
+	public static String toString(BigDecimal value, Integer decimal) {
+		return toString(value, decimal, null);
+	}
+
+	public static BigDecimal subtract(BigDecimal value, BigDecimal subtrahend) {
+		if (value == null || subtrahend == null) {
+			return BigDecimal.ZERO;
+		}
+		return value.subtract(subtrahend);
+	}
+
 }

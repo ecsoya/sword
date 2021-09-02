@@ -64,6 +64,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="params.begin$AttrName != null and params.begin$AttrName != '' and params.end$AttrName != null and params.end$AttrName != ''"> and a.$columnName between #{params.begin$AttrName} and #{params.end$AttrName}</if>
 #end
 #end
+#if($column.column_name=='create_time')
+			<if test="params != null and params.startTime != null "> and create_time &gt;= #{params.startTime}</if>
+            <if test="params != null and params.endTime != null "> and create_time &lt;= #{params.endTime}</if>
+#end
 #end
         </where>
 #if($table.tree)
