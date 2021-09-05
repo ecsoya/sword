@@ -107,7 +107,7 @@ public class UserWalletController extends BaseController {
 	@GetMapping("/details")
 	public TableDataInfo details(@ApiParam(required = true) String symbol, @ApiParam("起始时间 yyyy-MM-dd") Date start,
 			@ApiParam("结束时间 yyyy-MM-dd") Date end, @ApiParam(value = "0-可用余额，1-冻结余额（质押余额）2-锁定余额，留空为可用余额") Integer kind,
-			@ApiParam(value = "0-收入，1-支出，2-后台设定，留空为所有") Integer type) {
+			@ApiParam(value = "0-收入，1-支出，2-后台设定，留空为所有") Integer type, @ApiParam(value = "具体的类型，查看备注") Integer details) {
 		if (start != null) {
 			start = DateUtils.getStartOf(start);
 		}
@@ -125,6 +125,7 @@ public class UserWalletController extends BaseController {
 		}
 		query.setKind(kind);
 		query.setType(type);
+		query.setDetails(details);
 
 		final List<UserWalletRecord> list = walletDetailService.selectUserWalletRecordList(query);
 		return getDataTable(list);

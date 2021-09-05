@@ -13,6 +13,7 @@ import com.soyatec.sword.common.utils.MessageUtils;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.async.AsyncManager;
 import com.soyatec.sword.constants.IConstants;
+import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.exceptions.TransactionException;
 import com.soyatec.sword.order.domain.UserDepositOrder;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
@@ -211,7 +212,8 @@ public class ZbxWalletCallbackService implements IWalletCallbackService<ZbxOrder
 		}
 
 		// 2.更新钱包
-		final boolean deposited = userWalletAccountService.increaseAmount(account, amount, orderNo, "External Deposit");
+		final boolean deposited = userWalletAccountService.increaseAmount(account, amount, orderNo, "【充值】",
+				IMiningConstants.DETAILS_DEPOSIT);
 		if (!deposited) {
 			throw new TransactionException("内部错误【钱包】");
 		}

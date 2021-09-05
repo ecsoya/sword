@@ -219,7 +219,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	@Override
 	@Transactional
 	public boolean freezeAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, Integer freezeDays,
-			String remark) {
+			String remark, Integer details) {
 		if (walletAccount == null || MathUtils.isEmpty(amount) || StringUtils.isEmpty(orderNo)) {
 			return false;
 		}
@@ -238,6 +238,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		record.setUserId(userId);
 		record.setStatus(IConstants.STATUS_NONE);
 		record.setRemark(remark);
+		record.setDetails(details);
 		if (freezeDays != null) {
 			record.setDays(freezeDays);
 		} else {
@@ -344,6 +345,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			amountRecord.setKind(UserWalletRecord.KIND_AMOUNT);
 			amountRecord.setStatus(UserWalletRecord.STATUS_FINISHED);
 			amountRecord.setRemark("Release Frozen Amount");
+			amountRecord.setDetails(record.getDetails());
 			userWalletRecordService.insertUserWalletRecord(amountRecord);
 
 			final UserWalletRecord finish = new UserWalletRecord();
@@ -358,7 +360,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	@Override
 	@Transactional
-	public boolean decreaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, String remark) {
+	public boolean decreaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, String remark,
+			Integer details) {
 		if (walletAccount == null || MathUtils.isEmpty(amount) || StringUtils.isEmpty(orderNo)) {
 			return false;
 		}
@@ -378,6 +381,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		record.setUserId(userId);
 		record.setOrderNo(orderNo);
 		record.setRemark(remark);
+		record.setDetails(details);
 		final int rows = userWalletRecordService.insertUserWalletRecord(record);
 		if (rows <= 0) {
 			return false;
@@ -395,7 +399,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 
 	@Override
 	@Transactional
-	public boolean increaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, String remark) {
+	public boolean increaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, String remark,
+			Integer details) {
 		if (walletAccount == null || MathUtils.isInvalid(amount) || StringUtils.isEmpty(orderNo)) {
 			return false;
 		}
@@ -410,6 +415,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		record.setKind(UserWalletRecord.KIND_AMOUNT);
 		record.setUserId(userId);
 		record.setOrderNo(orderNo);
+		record.setDetails(details);
 		if (StringUtils.isEmpty(remark)) {
 			record.setRemark("Deposit");
 		} else {
@@ -433,7 +439,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	@Override
 	@Transactional
 	public boolean updateAccount(UserWalletAccount account, Integer type, Integer kind, BigDecimal amount,
-			String orderNo, String remark, Integer days) {
+			String orderNo, String remark, Integer days, Integer details) {
 		if (account == null || type == null || kind == null || MathUtils.isInvalid(amount)
 				|| StringUtils.isEmpty(orderNo)) {
 			return false;
@@ -460,6 +466,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		record.setOrderNo(orderNo);
 		record.setRemark(remark);
 		record.setDays(days);
+		record.setDetails(details);
 		final int rows = userWalletRecordService.insertUserWalletRecord(record);
 		if (rows <= 0) {
 			return false;
@@ -556,7 +563,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		}
 		// 3. 打钱到可用余额
 		if (!updateAccount(account, UserWalletRecord.TYPE_IN, UserWalletRecord.KIND_AMOUNT, amount, record.getOrderNo(),
-				"Release Locked Balance", null)) {
+				"【线性释放】（锁定余额）", null, record.getDetails())) {
 			throw new TransactionException("releaseAmount");
 		}
 		return 1;
@@ -620,7 +627,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		}
 		// 3. 打钱到可用余额
 		if (!updateAccount(account, UserWalletRecord.TYPE_IN, UserWalletRecord.KIND_AMOUNT, releaseAmount,
-				record.getOrderNo() + "_" + days, "Release Locked Balance", null)) {
+				record.getOrderNo() + "_" + days, "【释放锁定余额】（第" + days + "天）", null, record.getDetails())) {
 			throw new TransactionException("releaseAmount");
 		}
 		return true;
@@ -691,7 +698,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	@Override
 	@Transactional
 	public CommonResult<?> exchangeAmount(Long userId, String fromSymbol, String toSymbol, BigDecimal price,
-			boolean positivePrice, BigDecimal amount) {
+			boolean positivePrice, BigDecimal amount, Integer details) {
 		if (userId == null || StringUtils.isEmpty(fromSymbol) || StringUtils.isEmpty(toSymbol)) {
 			return CommonResult.fail("兑换失败");
 		}
@@ -712,7 +719,7 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		}
 		final String timeId = IdWorker.getTimeId();
 		if (!updateAccount(fromAccount, UserWalletAccount.TYPE_OUT, UserWalletAccount.KIND_AMOUNT, amount, timeId,
-				"币种兑换", null)) {
+				"币种兑换", null, IMiningConstants.DETAILS_EXCHANGE)) {
 			return CommonResult.fail("兑换失败");
 		}
 		final UserWalletAccount toAccount = selectUserWalletAccount(userId, toSymbol);
@@ -721,10 +728,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 				: amount.divide(price, 6, RoundingMode.HALF_UP);
 
 		if (!updateAccount(toAccount, UserWalletAccount.TYPE_IN, UserWalletAccount.KIND_AMOUNT, toAmount, timeId,
-				"币种兑换", null)) {
+				"币种兑换", null, details)) {
 			// 回退
 			updateAccount(fromAccount, UserWalletAccount.TYPE_IN, UserWalletAccount.KIND_AMOUNT, amount, timeId, "币种兑换",
-					null);
+					null, details);
 			return CommonResult.fail("兑换失败");
 		}
 		return CommonResult.success();

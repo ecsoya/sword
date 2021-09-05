@@ -17,13 +17,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="status"    column="status"    />
         <result property="orderNo"    column="order_no"    />
         <result property="days"    column="days"    />
+        <result property="details"    column="details"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
     </resultMap>
 
     <sql id="selectUserWalletRecordVo">
-        select a.id, a.user_id, b.login_name, b.email, c.address, a.symbol, a.amount, a.type, a.kind, a.status, a.order_no, a.days, a.create_time, a.update_time, a.remark from t_user_wallet_record_0 a
+        select a.id, a.user_id, b.login_name, b.email, c.address, a.symbol, a.amount, a.type, a.kind, a.status, a.order_no, a.days, a.details, a.create_time, a.update_time, a.remark from t_user_wallet_record_0 a
         left join (select user_id as bid, login_name, email from sys_user) as b on a.user_id = b.bid
         left join (select user_id as cid, address, symbol as csymbol from t_user_wallet_account) as c on a.user_id = c.cid and a.symbol = c.csymbol
     </sql>
@@ -42,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="email != null  and email != ''"> and email = #{email}</if>
             <if test="params.orderNoLike != null  and params.orderNoLike != ''"> and order_no like concat(#{params.orderNoLike}, '%')</if>
             <if test="days != null "> and days = #{days}</if>
+            <if test="details != null "> and details = #{details}</if>
         </where>
     </select>
     
@@ -61,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null">status,</if>
             <if test="orderNo != null">order_no,</if>
             <if test="days != null">days,</if>
+            <if test="details != null">details,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
@@ -74,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null">#{status},</if>
             <if test="orderNo != null">#{orderNo},</if>
             <if test="days != null">#{days},</if>
+            <if test="details != null">#{details},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
@@ -91,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null">status = #{status},</if>
             <if test="orderNo != null">order_no = #{orderNo},</if>
             <if test="days != null">days = #{days},</if>
+            <if test="details != null">details = #{details},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
@@ -121,6 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null "> and status = #{status}</if>
             <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
             <if test="days != null "> and days = #{days}</if>
+            <if test="details != null "> and details = #{details}</if>
 			<if test="params != null and params.orderNos != null and params.orderNos.size > 0">
 	        	and order_no in 
 	        	<foreach item="id" collection="params.orderNos" open="(" separator="," close=")">
@@ -143,6 +149,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
             <if test="params != null and params.orderNoLike != null  and params.orderNoLike != ''"> and order_no like concat(#{params.orderNoLike}, '%')</if>
             <if test="days != null "> and days = #{days}</if>
+            <if test="details != null "> and details = #{details}</if>
         </where>
         limit 1
     </select>

@@ -67,6 +67,8 @@ public class UserWalletRecord extends BaseEntity implements IConstants {
 	@Excel(name = "冻结天数")
 	private Integer days;
 
+	private Integer details;
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -170,5 +172,13 @@ public class UserWalletRecord extends BaseEntity implements IConstants {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public Integer getDetails() {
+		return details;
+	}
+
+	public void setDetails(Integer details) {
+		this.details = details;
 	}
 }

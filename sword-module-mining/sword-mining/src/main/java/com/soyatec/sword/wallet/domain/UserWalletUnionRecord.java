@@ -48,6 +48,8 @@ public class UserWalletUnionRecord extends BaseEntity {
 	@Excel(name = "状态 0-未同步 1-已同步")
 	private Integer kind;
 
+	private Integer details;
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -118,5 +120,13 @@ public class UserWalletUnionRecord extends BaseEntity {
 				.append("userId", getUserId()).append("orderNo", getOrderNo()).append("type", getType())
 				.append("symbol", getSymbol()).append("amount", getAmount()).append("status", getStatus())
 				.append("kind", getKind()).append("createTime", getCreateTime()).toString();
+	}
+
+	public Integer getDetails() {
+		return details;
+	}
+
+	public void setDetails(Integer details) {
+		this.details = details;
 	}
 }

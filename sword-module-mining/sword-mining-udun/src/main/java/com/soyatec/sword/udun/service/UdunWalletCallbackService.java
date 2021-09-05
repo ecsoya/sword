@@ -12,6 +12,7 @@ import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.common.utils.IdWorker;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.common.utils.bean.BeanUtils;
+import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.exceptions.TransactionException;
 import com.soyatec.sword.order.domain.UserDepositOrder;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
@@ -206,7 +207,8 @@ public class UdunWalletCallbackService implements IWalletCallbackService<WalletN
 		}
 
 		// 2.钱包
-		boolean deposited = userWalletAccountService.increaseAmount(account, amount, orderNo, null);
+		boolean deposited = userWalletAccountService.increaseAmount(account, amount, orderNo, "【充值】",
+				IMiningConstants.DETAILS_DEPOSIT);
 		if (!deposited) {
 			throw new TransactionException("内部错误【钱包】");
 		}

@@ -71,9 +71,10 @@ public interface IUserWalletAccountService {
 
 	/**
 	 * 冻结资产
+	 * @param details TODO
 	 */
 	public boolean freezeAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, Integer freezeDays,
-			String remark);
+			String remark, Integer details);
 
 	/**
 	 * 资金解冻
@@ -87,21 +88,24 @@ public interface IUserWalletAccountService {
 
 	/**
 	 * 消费
+	 * @param details TODO
 	 */
-	public boolean decreaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, String remark);
+	public boolean decreaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, String remark, Integer details);
 
 	public UserWalletAccount selectUserWalletAccountByAddress(String address, String symbol);
 
 	/**
 	 * 充值
+	 * @param details TODO
 	 */
-	public boolean increaseAmount(UserWalletAccount account, BigDecimal amount, String orderNo, String remark);
+	public boolean increaseAmount(UserWalletAccount account, BigDecimal amount, String orderNo, String remark, Integer details);
 
 	/**
 	 * 更新钱包
+	 * @param details TODO
 	 */
 	public boolean updateAccount(UserWalletAccount account, Integer type, Integer kind, BigDecimal amount,
-			String orderNo, String remark, Integer days);
+			String orderNo, String remark, Integer days, Integer details);
 
 	/**
 	 * 释放锁定账户到余额
@@ -123,9 +127,10 @@ public interface IUserWalletAccountService {
 
 	/**
 	 * 内部换算
+	 * @param details TODO
 	 */
 	public CommonResult<?> exchangeAmount(Long userId, String fromSymbol, String toSymbol, BigDecimal price,
-			boolean positivePrice, BigDecimal amount);
+			boolean positivePrice, BigDecimal amount, Integer details);
 
 	/**
 	 * 将冻结余额解冻到可用余额

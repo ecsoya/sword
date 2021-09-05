@@ -22,4 +22,11 @@ public interface IMiningConstants {
 	String PARAM_CHAIN_ERC20 = "eth";
 	String PARAM_CHAIN_OMNI = "btc";
 
+	// 钱包记录details类型
+	Integer DETAILS_UNKNOWN = 0;
+	Integer DETAILS_DEPOSIT = 1;
+	Integer DETAILS_WITHDRAWAL = 2;
+	Integer DETAILS_BUY = 3;
+	Integer DETAILS_ACTIVATE = 4;
+	Integer DETAILS_EXCHANGE = 5;
 }
