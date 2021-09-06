@@ -141,7 +141,8 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 			return null;
 		}
 		UserWalletAccount account = userWalletAccountMapper.selectUserWalletAccount(userId, symbol);
-		if (account == null) {
+		if (account == null || StringUtils.isEmpty(account.getAddress())
+				|| StringUtils.isEmpty(account.getAddressUrl())) {
 			account = updateUserWalletAccountAddress(userId, symbol, symbolService.selectMiningSymbolChain(symbol));
 		}
 		return account;
@@ -186,6 +187,9 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 				account.setAddressUrl(generateQrcodeUrl(account.getAddress()));
 				updateUserWalletAccount(account);
 			}
+		} else if (StringUtils.isEmpty(account.getAddressUrl())) {
+			account.setAddressUrl(generateQrcodeUrl(account.getAddress()));
+			updateUserWalletAccount(account);
 		}
 		return account;
 	}
