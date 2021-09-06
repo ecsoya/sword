@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.soyatec.sword</groupId>
     <artifactId>sword</artifactId>
-    <version>2.1.4-SNAPSHOT</version>
+    <version>v2.1.4</version>
     <relativePath>..</relativePath>
   </parent>
   <artifactId>sword-module-api</artifactId>
