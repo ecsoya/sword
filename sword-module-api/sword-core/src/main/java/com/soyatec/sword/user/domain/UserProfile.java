@@ -2,6 +2,8 @@ package com.soyatec.sword.user.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class UserProfile {
 
 	private Long userId;
@@ -16,6 +18,7 @@ public class UserProfile {
 
 	private String avatar;
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 
 	private Integer status;
