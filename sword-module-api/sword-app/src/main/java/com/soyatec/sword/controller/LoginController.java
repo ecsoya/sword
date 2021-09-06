@@ -204,7 +204,7 @@ public class LoginController extends BaseController {
 	@ApiOperation("加载同邮箱账号")
 	@GetMapping("/accounts")
 	public CommonResult<List<String>> accounts() {
-		return userService.selectUserAccountsFromEmail(SwordUtils.getUserId());
+		return userService.selectUserAccountsFromEmail(SwordUtils.getUserId(), UserConstants.REGISTER_USER_TYPE);
 	}
 
 	@ApiOperation("切换账号")

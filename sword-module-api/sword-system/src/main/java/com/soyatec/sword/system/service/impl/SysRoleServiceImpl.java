@@ -364,7 +364,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 		}
 		SysRole query = new SysRole();
 		query.setRoleKey(roleKey);
-		List<SysRole> list = selectRoleList(query);
+		List<SysRole> list = roleMapper.selectRoleList(query);
 		return list.stream().map(r -> r.getRoleId()).collect(Collectors.toList()).toArray(new Long[list.size()]);
 	}
 }

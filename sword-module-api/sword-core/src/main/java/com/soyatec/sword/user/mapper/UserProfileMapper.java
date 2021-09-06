@@ -25,7 +25,7 @@ public interface UserProfileMapper {
 
 	String selectUserLoginNameByUserId(Long userId);
 
-	List<String> selectUserAccountsFromEmail(Long userId);
+	List<String> selectUserAccountsFromEmail(@Param("userId") Long userId, @Param("userType") String userType);
 
 	String selectUserMobileById(Long userId);
 

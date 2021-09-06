@@ -44,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectUserAccountsFromEmail" parameterType="Long" resultType="String">
 		select login_name from sys_user where email = (select email from sys_user where user_id = #{userId}) and login_name != (select login_name from sys_user where user_id = #{userId})
+		<if test="userType != null and userType !=''">and user_type = #{userType}</if>
 	</select>
 	
 	

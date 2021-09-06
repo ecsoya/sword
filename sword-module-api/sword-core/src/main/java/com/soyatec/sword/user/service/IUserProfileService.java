@@ -41,8 +41,9 @@ public interface IUserProfileService {
 
 	/**
 	 * 查询邮箱关联账号
+	 * @param userType TODO
 	 */
-	CommonResult<List<String>> selectUserAccountsFromEmail(Long userId);
+	CommonResult<List<String>> selectUserAccountsFromEmail(Long userId, String userType);
 
 	AjaxResult updateUserMobile(Long userId, String mobile);
 

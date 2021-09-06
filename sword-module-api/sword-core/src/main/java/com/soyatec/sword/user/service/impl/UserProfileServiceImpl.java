@@ -198,11 +198,11 @@ public class UserProfileServiceImpl implements IUserProfileService {
 	}
 
 	@Override
-	public CommonResult<List<String>> selectUserAccountsFromEmail(Long userId) {
+	public CommonResult<List<String>> selectUserAccountsFromEmail(Long userId, String userType) {
 		if (userId == null) {
 			return CommonResult.fail(MessageUtils.message("UserServiceImpl.27"));
 		}
-		return CommonResult.build(userProfileMapper.selectUserAccountsFromEmail(userId));
+		return CommonResult.build(userProfileMapper.selectUserAccountsFromEmail(userId, userType));
 	}
 
 	@Override
