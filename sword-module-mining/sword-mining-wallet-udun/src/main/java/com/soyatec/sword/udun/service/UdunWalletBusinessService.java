@@ -102,6 +102,9 @@ public class UdunWalletBusinessService implements IWalletBusinessService {
 		}
 		String data = transfer.getData();
 		WithdrawalResponse res = JSON.parseObject(data, WithdrawalResponse.class);
+		if (res != null && "usdt".equalsIgnoreCase(symbol) && res.getFees() != null) {
+			res.setFeesSymbol("trx");
+		}
 		return CommonResult.success(res);
 	}
 

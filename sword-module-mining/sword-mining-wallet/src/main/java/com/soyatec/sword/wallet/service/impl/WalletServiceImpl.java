@@ -104,7 +104,17 @@ public class WalletServiceImpl implements IWalletService {
 		if (delegateService == null || delegateService == this) {
 			return CommonResult.fail("钱包尚未实现");
 		}
-		return delegateService.withdrawal(orderNo, symbol, chain, address, null, amount);
+		CommonResult<WithdrawalResponse> withdrawal = delegateService.withdrawal(orderNo, symbol, chain, address, null,
+				amount);
+		if (withdrawal.isSuccess(true) && "usdt".equals(symbol)) {
+			WithdrawalResponse data = withdrawal.getData();
+			BigDecimal fees = data.getFees();
+			String feesSymbol = data.getFeesSymbol();
+			if (fees != null && !symbol.equals(feesSymbol)) {
+				data.setFees(exchangeToUsdt(feesSymbol, fees));
+			}
+		}
+		return withdrawal;
 	}
 
 	@Override

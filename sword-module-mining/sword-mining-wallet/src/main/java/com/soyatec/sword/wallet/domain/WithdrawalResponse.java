@@ -12,6 +12,7 @@ public class WithdrawalResponse {
 	private String memo;
 
 	private BigDecimal fees; // 手续费
+	private String feesSymbol;
 
 	private BigDecimal amount; // 数量
 
@@ -85,5 +86,13 @@ public class WithdrawalResponse {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	public String getFeesSymbol() {
+		return feesSymbol;
+	}
+
+	public void setFeesSymbol(String feesSymbol) {
+		this.feesSymbol = feesSymbol;
 	}
 }
