@@ -86,7 +86,7 @@ public class UdunWalletBusinessService implements IWalletBusinessService {
 
 	@Override
 	public CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
-			String memo, BigDecimal amount) {
+			String memo, BigDecimal amount, boolean auto) {
 		if (StringUtils.isEmpty(orderNo) || StringUtils.isEmpty(symbol) || StringUtils.isEmpty(address)
 				|| amount == null || amount.doubleValue() <= 0) {
 			return CommonResult.fail("参数错误");
@@ -96,7 +96,7 @@ public class UdunWalletBusinessService implements IWalletBusinessService {
 			return CommonResult.fail("币种错误");
 		}
 		ResponseMessage<String> transfer = transfer(orderNo, amount, coinType.getCode(), coinType.getSubCoinType(),
-				address, memo);
+				address, memo, auto);
 		if (transfer == null || !transfer.isSuccess()) {
 			return CommonResult.fail(transfer.getMessage());
 		}
@@ -109,11 +109,12 @@ public class UdunWalletBusinessService implements IWalletBusinessService {
 	}
 
 	private ResponseMessage<String> transfer(String orderId, BigDecimal amount, String mainCoinType, String coinType,
-			String address, String memo) {
+			String address, String memo, boolean auto) {
 		String callbackUrl = properties.getCallbackUrl();
 		try {
-			ResponseMessage<String> resp = udunClient.transfer(orderId, amount, mainCoinType, coinType, address,
-					callbackUrl, memo);
+			ResponseMessage<String> resp = auto
+					? udunClient.autoTransfer(orderId, amount, mainCoinType, coinType, address, callbackUrl, memo)
+					: udunClient.transfer(orderId, amount, mainCoinType, coinType, address, callbackUrl, memo);
 			return resp;
 		} catch (Exception e) {
 			e.printStackTrace();

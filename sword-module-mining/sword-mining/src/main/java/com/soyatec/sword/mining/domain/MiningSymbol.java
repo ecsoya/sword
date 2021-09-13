@@ -68,6 +68,9 @@ public class MiningSymbol extends BaseEntity {
 	// 提币免审额度
 	private BigDecimal withdrawalAuditLimation;
 
+	// 提币钱包二次审核
+	private Integer withdrawalWalletAudit;
+
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
 	}
@@ -186,5 +189,13 @@ public class MiningSymbol extends BaseEntity {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public Integer getWithdrawalWalletAudit() {
+		return withdrawalWalletAudit;
+	}
+
+	public void setWithdrawalWalletAudit(Integer withdrawalWalletAudit) {
+		this.withdrawalWalletAudit = withdrawalWalletAudit;
 	}
 }

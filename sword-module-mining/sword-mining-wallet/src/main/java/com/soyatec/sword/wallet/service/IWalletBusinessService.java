@@ -24,8 +24,10 @@ public interface IWalletBusinessService {
 
 	/**
 	 * 提币请求
+	 * 
+	 * @param auto auto withdrawal without confirm
 	 */
 	CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
-			String memo, BigDecimal amount);
+			String memo, BigDecimal amount, boolean auto);
 
 }

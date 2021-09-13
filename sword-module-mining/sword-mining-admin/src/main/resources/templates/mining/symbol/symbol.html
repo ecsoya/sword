@@ -109,6 +109,14 @@
                     }
                 },
                 {
+                    field: 'withdrawalWalletAudit',
+                    title: '钱包二次审核',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                    	return statusWalletAuditTools(row);
+                    }
+                },
+                {
                     field: 'remark',
                     title: '备注'
                 },
@@ -178,6 +186,35 @@
     	function enableManualAudit(symbol) {
     		$.modal.confirm("确认要开启提币人工审核吗？", function() {
     			$.operate.post(prefix + "/changeManualAudit", { "symbol": symbol, "withdrawalManualAudit": 0 }, function(){
+    			});
+    	    })
+    	}
+
+    	function statusWalletAuditTools(row) {
+    		if (editFlag == 'hidden') {
+    			if (row.withdrawalWalletAudit == 0) {
+        			return '开启';
+        		} else {
+        			return '关闭';
+        		}
+    		} else
+    	    if (row.withdrawalWalletAudit == 1) {
+    			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enableWalletAudit(\'' + row.symbol + '\')"></i> ';
+    		} else {
+    			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disableWalletAudit(\'' + row.symbol + '\')"></i> ';
+    		}
+    	}
+    	
+    	function disableWalletAudit(symbol) {
+    		$.modal.confirm("确认要停用提币钱包二次审核吗？", function() {
+    			$.operate.post(prefix + "/changeWalletAudit", { "symbol": symbol, "withdrawalWalletAudit": 1 }, function(){
+    			});
+    	    })
+    	}
+
+    	function enableWalletAudit(symbol) {
+    		$.modal.confirm("确认要开启提币钱包二次审核吗？", function() {
+    			$.operate.post(prefix + "/changeWalletAudit", { "symbol": symbol, "withdrawalWalletAudit": 0 }, function(){
     			});
     	    })
     	}

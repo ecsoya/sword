@@ -89,7 +89,7 @@ public class ZbxService implements IWalletBusinessService {
 
 	@Override
 	public CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
-			String memo, BigDecimal amount) {
+			String memo, BigDecimal amount, boolean auto) {
 		if (StringUtils.isEmpty(orderNo) || StringUtils.isEmpty(symbol) || StringUtils.isEmpty(address)
 				|| amount == null) {
 			return CommonResult.fail("参数错误");

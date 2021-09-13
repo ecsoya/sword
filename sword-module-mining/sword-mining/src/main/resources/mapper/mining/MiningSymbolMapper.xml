@@ -20,10 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="withdrawalTotally"    column="withdrawal_totally"    />
         <result property="withdrawalManualAudit"    column="withdrawal_manual_audit"    />
         <result property="withdrawalAuditLimation"    column="withdrawal_audit_limation"    />
+        <result property="withdrawalWalletAudit"    column="withdrawal_wallet_audit"    />
     </resultMap>
 
     <sql id="selectMiningSymbolVo">
-        select symbol, chain, type, withdrawal_fee, withdrawal_fee_symbol, create_time, withdrawal_minimum, withdrawal_enabled, update_time, withdrawal_maximum, withdrawal_daily, remark, withdrawal_totally, withdrawal_manual_audit, withdrawal_audit_limation from t_mining_symbol
+        select symbol, chain, type, withdrawal_fee, withdrawal_fee_symbol, create_time, withdrawal_minimum, withdrawal_enabled, update_time, withdrawal_maximum, withdrawal_daily, remark, withdrawal_totally, withdrawal_manual_audit, withdrawal_audit_limation, withdrawal_wallet_audit from t_mining_symbol
     </sql>
 
     <select id="selectMiningSymbolList" parameterType="MiningSymbol" resultMap="MiningSymbolResult">
@@ -40,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="withdrawalTotally != null "> and withdrawal_totally = #{withdrawalTotally}</if>
             <if test="withdrawalManualAudit != null "> and withdrawal_manual_audit = #{withdrawalManualAudit}</if>
             <if test="withdrawalAuditLimation != null "> and withdrawal_audit_limation = #{withdrawalAuditLimation}</if>
+            <if test="withdrawalWalletAudit != null "> and withdrawal_wallet_audit = #{withdrawalWalletAudit}</if>
         </where>
     </select>
     
@@ -66,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="withdrawalTotally != null">withdrawal_totally,</if>
             <if test="withdrawalManualAudit != null">withdrawal_manual_audit,</if>
             <if test="withdrawalAuditLimation != null">withdrawal_audit_limation,</if>
+            <if test="withdrawalWalletAudit != null">withdrawal_wallet_audit,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="symbol != null">#{symbol},</if>
@@ -83,6 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="withdrawalTotally != null">#{withdrawalTotally},</if>
             <if test="withdrawalManualAudit != null">#{withdrawalManualAudit},</if>
             <if test="withdrawalAuditLimation != null">#{withdrawalManualAudit},</if>
+            <if test="withdrawalWalletAudit != null">#{withdrawalWalletAudit},</if>
          </trim>
     </insert>
 
@@ -103,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="withdrawalTotally != null">withdrawal_totally = #{withdrawalTotally},</if>
             <if test="withdrawalManualAudit != null">withdrawal_manual_audit = #{withdrawalManualAudit},</if>
             <if test="withdrawalAuditLimation != null">withdrawal_audit_limation = #{withdrawalAuditLimation},</if>
+            <if test="withdrawalWalletAudit != null">withdrawal_wallet_audit = #{withdrawalWalletAudit},</if>
         </trim>
         where symbol = #{symbol}
     </update>

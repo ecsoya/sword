@@ -100,12 +100,12 @@ public class WalletServiceImpl implements IWalletService {
 
 	@Override
 	public CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
-			String memo, BigDecimal amount) {
+			String memo, BigDecimal amount, boolean auto) {
 		if (delegateService == null || delegateService == this) {
 			return CommonResult.fail("钱包尚未实现");
 		}
 		CommonResult<WithdrawalResponse> withdrawal = delegateService.withdrawal(orderNo, symbol, chain, address, null,
-				amount);
+				amount, true);
 		if (withdrawal.isSuccess(true) && "usdt".equals(symbol)) {
 			WithdrawalResponse data = withdrawal.getData();
 			BigDecimal fees = data.getFees();

@@ -101,4 +101,18 @@ public class MiningSymbolController extends BaseController {
 		return toAjax(miningSymbolService.updateMiningSymbol(miningSymbol));
 	}
 
+	/**
+	 * 修改保存币种
+	 */
+	@RequiresPermissions("mining:symbol:edit")
+	@Log(title = "启停提币钱包二次审核", businessType = BusinessType.UPDATE)
+	@PostMapping("/changeWalletAudit")
+	@ResponseBody
+	public AjaxResult changeWalletlAudit(String symbol, Integer withdrawalWalletAudit) {
+		final MiningSymbol miningSymbol = new MiningSymbol();
+		miningSymbol.setSymbol(symbol);
+		miningSymbol.setWithdrawalWalletAudit(withdrawalWalletAudit);
+		return toAjax(miningSymbolService.updateMiningSymbol(miningSymbol));
+	}
+
 }

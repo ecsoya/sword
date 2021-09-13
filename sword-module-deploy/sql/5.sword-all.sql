@@ -6147,12 +6147,12 @@ CREATE TABLE `t_mining_symbol` (
   `withdrawal_totally` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币总合计',
   `withdrawal_manual_audit` int(1) NOT NULL DEFAULT '0' COMMENT '提币审核开关',
   `withdrawal_audit_limation` double(20,6) NOT NULL DEFAULT '0.000000' COMMENT '提币免审额度',
+  `withdrawal_wallet_audit` int(11) NOT NULL DEFAULT '0' COMMENT '提币钱包审核',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `remark` varchar(256) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`symbol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='币种';
-
 LOCK TABLES `t_mining_symbol` WRITE;
 /*!40000 ALTER TABLE `t_mining_symbol` DISABLE KEYS */;
 

@@ -54,19 +54,22 @@ DROP TABLE IF EXISTS `t_mining_symbol`;
 CREATE TABLE `t_mining_symbol` (
   `symbol` varchar(20) NOT NULL DEFAULT '' COMMENT '名称',
   `chain` varchar(128) NOT NULL DEFAULT '' COMMENT '链码',
+  `type` int(11) NOT NULL DEFAULT '0' COMMENT '类型',
   `withdrawal_fee` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币手续费',
+  `withdrawal_fee_symbol` varchar(20) DEFAULT NULL COMMENT '提币手续费单位',
   `withdrawal_enabled` int(1) NOT NULL DEFAULT '0' COMMENT '开关',
   `withdrawal_minimum` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币最小',
   `withdrawal_maximum` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币最多',
   `withdrawal_daily` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币日合计',
   `withdrawal_totally` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '提币总合计',
-  `withdrawal_manual_audit` int(1) NOT NULL DEFAULT '0' COMMENT '提币人工审核',
+  `withdrawal_manual_audit` int(1) NOT NULL DEFAULT '0' COMMENT '提币审核开关',
+  `withdrawal_audit_limation` double(20,6) NOT NULL DEFAULT '0.000000' COMMENT '提币免审额度',
+  `withdrawal_wallet_audit` int(11) NOT NULL DEFAULT '0' COMMENT '提币钱包审核',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `remark` varchar(256) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`symbol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='币种';
-
 
 
 # Dump of table t_user_binary_tree
