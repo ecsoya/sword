@@ -168,7 +168,7 @@ public class MiningUserController extends BaseController {
 	@Log(title = "更新用户信息", businessType = BusinessType.UPDATE, isSaveRequestData = true)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(Long userId, String email, String password, String walletPassword) {
+	public AjaxResult editSave(Long userId, String email, String mobile, String password, String walletPassword) {
 		if (userId == null) {
 			return AjaxResult.error();
 		}

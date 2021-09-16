@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.soyatec.sword.wallet.domain.UserWalletAccount;
 
 public class MiningUser {
@@ -21,6 +22,7 @@ public class MiningUser {
 
 	private Integer status;
 
+	@JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss")
 	private Date createTime;
 
 	private Long levelId;
