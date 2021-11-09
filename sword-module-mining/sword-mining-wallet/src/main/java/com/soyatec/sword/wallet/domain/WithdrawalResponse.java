@@ -6,6 +6,7 @@ public class WithdrawalResponse {
 	public static final Integer STATUS_WAITING = 0;
 	public static final Integer STATUS_FAILURE = 1;
 	public static final Integer STATUS_SUCCESS = 2;
+	public static final Integer STATUS_MANUAL = 3;
 
 	private String address;
 

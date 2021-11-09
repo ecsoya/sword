@@ -364,6 +364,12 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 						"交易所转账失败"); //$NON-NLS-1$
 				return result(id, UserWithdrawalOrder.STATUS_FAILURE, UserWithdrawalOrder.FEEDBACK_NONE, "提现失败", false); //$NON-NLS-1$
 			}
+			// 线下转账
+			else if (WithdrawalResponse.STATUS_MANUAL.equals(status)) {
+				// 等待回调
+				return result(id, UserWithdrawalOrder.STATUS_MANUAL_START, UserWithdrawalOrder.FEEDBACK_NONE, "提币申请",
+						true);
+			}
 			// 等待回调
 			return result(id, UserWithdrawalOrder.STATUS_CONFIRM, UserWithdrawalOrder.FEEDBACK_NONE, "转账成功，等待确认", true);
 		}

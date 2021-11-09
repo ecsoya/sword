@@ -174,4 +174,12 @@ public class MiningWalletController extends BaseController {
 		}
 		return table;
 	}
+
+	@RequiresPermissions("mining:wallet:withdrawal:view")
+	@GetMapping("/withdrawal/manualRecord")
+	public String manualRecord(Long id, ModelMap mmap) {
+		mmap.put("order", userWithdrawalOrderService.selectUserWithdrawalOrderById(id));
+		return prefix + "/manualRecord";
+	}
+
 }

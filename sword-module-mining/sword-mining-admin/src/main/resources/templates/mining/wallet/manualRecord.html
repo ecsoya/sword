@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="include :: header('新增用户实名')" />
+<th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-certificate-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">用户名：</label>
+				<div class="col-sm-8">
+					<select name="userId" id="userId" class="form-control" required></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">国家：</label>
+				<div class="col-sm-8">
+					<select name="country" class="form-control">
+						<option value="CHN">中国</option>
+						<option value="HKG">香港</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">类型：</label>
+				<div class="col-sm-8">
+					<select name="type" class="form-control">
+						<option value="0">身份证</option>
+						<option value="1">护照</option>
+						<option value="2">其它</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">实名：</label>
+				<div class="col-sm-8">
+					<input name="realName" class="form-control" type="text" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">号码：</label>
+				<div class="col-sm-8">
+					<input name="identityNumber" class="form-control" type="text"
+						required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">正面照片：</label>
+				<div class="col-sm-8">
+					<img width="100" height="75" id="frontImageUrl"></img> <input
+						type="hidden" name="frontImageUrl"> <input type="file"
+						alt="上传" onchange="uploadFile(this, 'frontImageUrl')">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">背面照片：</label>
+				<div class="col-sm-8">
+					<img width="100" height="75" id="backImageUrl"></img> <input
+						type="hidden" name="backImageUrl"> <input type="file"
+						alt="上传" onchange="uploadFile(this, 'backImageUrl')">
+
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">手持照片：</label>
+				<div class="col-sm-8">
+					<img width="100" height="75" id="holdingImageUrl"></img> <input
+						type="hidden" name="holdingImageUrl"> <input type="file"
+						alt="上传" onchange="uploadFile(this, 'holdingImageUrl')">
+
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">状态：</label>
+				<div class="col-sm-8">
+					<div class="radio-box">
+						<input type="radio" name="status" value="2" checked required>
+						<label th:for="status" th:text="通过"></label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" name="status" value="0" required> <label
+							th:for="status" th:text="审核"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input name="remark" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: select2-js" />
+	<script th:inline="javascript">
+		var prefix = ctx + "mining/certificate"
+
+		$(function() {
+			buildSelect2('userId', '请选择用户', prefix + '/users', true);
+		})
+		
+		function uploadFile(obj, id){
+	        var formData = new FormData();
+	    　　 formData.append("file", obj.files[0]);
+	        $.ajax({
+	            url: ctx + 'common/upload',
+	            type: 'POST',
+	            data: formData,
+	            processData: false,
+	            contentType: false, 
+	            dataType: 'json',
+	            success:function (res) {
+	            	$("#" + id).attr('src', res.url);
+	            	$('input[name="'+id+'"]').val(res.url);
+	            },error:function (res) {
+	            	console.log(res)
+	            }
+	        });
+    	}
+
+		$("#form-certificate-add").validate({
+			focusCleanup : true
+		});
+
+		function submitHandler() {
+			if ($.validate.form()) {
+				$.operate.save(prefix + "/add", $('#form-certificate-add')
+						.serialize());
+			}
+		}
+	</script>
+</body>
+</html>

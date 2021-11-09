@@ -1835,7 +1835,7 @@ var table = {
 				   labelStyles = ['label-primary', 'label-danger',
         			'label-success', 'label-info', 'label-warning', 'label-default'];
         		}
-        		var style = labelStyles[value];
+        		var style = labelStyles[value % labelStyles.length];
         		var label = array[value];
         		return '<span class="label '+style+'">'+label+'</span>';
 			},

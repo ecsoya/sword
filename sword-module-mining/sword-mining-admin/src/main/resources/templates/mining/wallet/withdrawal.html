@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org"
-	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
 <head>
-<th:block th:include="include :: header('提现订单列表')" />
+	<th:block th:include="include :: header('提现订单列表')" />
 </head>
+
 <body class="gray-bg">
 	<div class="container-div">
 		<div class="row">
@@ -19,14 +20,12 @@
 							</li>
 							<li><label>提现金额：</label> <input type="text" name="amount" />
 							</li>
-							<li><label>提现币种：</label> <select name="symbol"
-								onchange="$.table.search()">
+							<li><label>提现币种：</label> <select name="symbol" onchange="$.table.search()">
 									<option value="">全部</option>
-									<option th:each="s : ${symbols}"
-										th:text="${s.symbol.toUpperCase()}" th:value="${s.symbol}"></option>
-							</select></li>
-							<li><label>状态：</label> <select name="status"
-								onchange="$.table.search()">
+									<option th:each="s : ${symbols}" th:text="${s.symbol.toUpperCase()}"
+										th:value="${s.symbol}"></option>
+								</select></li>
+							<li><label>状态：</label> <select name="status" onchange="$.table.search()">
 									<option value="">所有</option>
 									<option value="0">待审核</option>
 									<option value="1">取消</option>
@@ -34,15 +33,18 @@
 									<option value="3">失败</option>
 									<option value="4">确认</option>
 									<option value="5">到账</option>
-							</select></li>
-							<li class="select-time"><label>创建时间： </label> <input
-								type="text" class="time-input" id="startTime" placeholder="开始时间"
-								name="start" /> <span>-</span> <input type="text"
-								class="time-input" id="endTime" placeholder="结束时间" name="end" /></li>
-							<li><a class="btn btn-primary btn-rounded btn-sm"
-								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm"
-								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+									<option value="60">待转账（手工）</option>
+									<option value="61">已取消（手工）</option>
+									<option value="62">已到账（手工）</option>
+									<option value="63">已失败（手工）</option>
+								</select></li>
+							<li class="select-time"><label>创建时间： </label> <input type="text" class="time-input"
+									id="startTime" placeholder="开始时间" name="start" /> <span>-</span> <input type="text"
+									class="time-input" id="endTime" placeholder="结束时间" name="end" /></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+										class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+										class="fa fa-refresh"></i>&nbsp;重置</a>
 							</li>
 						</ul>
 					</div>
@@ -51,11 +53,9 @@
 
 			<div class="btn-group-sm" id="toolbar" role="group">
 				<a class="btn btn-primary multiple disabled" onclick="checkPassed()"
-					shiro:hasPermission="mining:wallet:withdrawal:edit"> <i
-					class="fa fa-check"></i> 审核通过
+					shiro:hasPermission="mining:wallet:withdrawal:edit"> <i class="fa fa-check"></i> 审核通过
 				</a> <a class="btn btn-danger multiple disabled" onclick="checkDenied()"
-					shiro:hasPermission="mining:wallet:withdrawal:edit"> <i
-					class="fa fa-remove"></i> 审核拒绝
+					shiro:hasPermission="mining:wallet:withdrawal:edit"> <i class="fa fa-remove"></i> 审核拒绝
 				</a>
 
 				<div class=" btn select-list">
@@ -71,176 +71,186 @@
 	<th:block th:include="include :: footer" />
 	<th:block th:include="include :: bootstrap-table-export-js" />
 	<script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('mining:wallet:withdrawal:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('mining:wallet:withdrawal:remove')}]];
-        var showExport = 'hidden' != [[${@permission.hasPermi('mining:wallet:withdrawal:export')}]];
+		var editFlag = [[${@permission.hasPermi('mining:wallet:withdrawal:edit')}]];
+		var removeFlag = [[${@permission.hasPermi('mining:wallet:withdrawal:remove')}]];
+		var showExport = 'hidden' != [[${@permission.hasPermi('mining:wallet:withdrawal:export')}]];
 
-        var prefix = ctx + "mining/wallet/withdrawal";
+		var prefix = ctx + "mining/wallet/withdrawal";
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
-                modalName: "提现订单",
-                sortName: "createTime",
-                sortOrder: "desc",
-                footerStyle: footerStyle,
-                showFooter: true,
-                showExport: showExport,
-		        exportOptions: {
-		        	ignoreColumn: [0]  //忽略第一列和最后一列
-		        },
-                columns: [{
-                    checkbox: true
-                },
-                {
-                    field: 'id',
-                    title: 'ID',
-                    visible: false
-                },
-                {
-                    field: 'orderNo',
-                    title: '订单ID',
-                    footerFormatter:function (value) {
-    			        return "合计";
-    			    }
-                },
-                {
-                    field: 'loginName',
-                    title: '用户名'
-                },
-                {
-                    field: 'email',
-                    title: '邮箱'
-                },
-                {
-                    field: 'mobile',
-                    title: '手机'
-                },
-                {
-                    field: 'address',
-                    title: '提现地址'
-                },
-                {
-                    field: 'amount',
-                    title: '提现金额',
-                    formatter: function(value, rows, index) {
-                    	return $.common.formatNumber(value);
-                    }
-                },
-                {
-                    field: 'fee',
-                    title: '手续费',
-                    formatter: function(value, rows, index) {
-                    	return $.common.formatNumber(value);
-                    }
-                },
-                {
-                    field: 'withdrawal',
-                    title: '实际提现',
-                    formatter: function(value, rows, index) {
-                    	return $.common.formatNumber(value);
-                    },
-                    footerFormatter:function (value) {
-				    	var sumBalance = 0;
-				        for (var i in value) {
-				        	sumBalance += parseFloat(value[i].withdrawal);
-				        }
-				        return $.common.formatNumber(sumBalance);
-				    }
-                },
-                
-                {
-                    field: 'symbol',
-                    title: '提现币种',
-                    formatter: function(value, rows, index) {
-                    	return value.toUpperCase();
-                    }
-                },
-                {
-                    field: 'status',
-                    title: '状态',
-                    formatter: function(value, rows, index) {
-                    	return $.common.formatStatus(['待审核', '取消', '成功', '失败', '确认', '到账'], value);
-                    }
-                },
-                {
-                    field: 'createTime',
-                    title: '创建时间',
-                },
-                {
-                    field: 'remark',
-                    title: '备注'
-                },
-                {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        var actions = [];
-                        if (row.status == 0) {
-	                        actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="checkPassed(\'' + row.orderNo + '\')"><i class="fa fa-check"></i> 通过</a> ');
-    	                    actions.push('<a class="btn btn-danger btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="checkDenied(\'' + row.orderNo + '\')"><i class="fa fa-remove"></i> 拒绝</a>');
-                        }
-                        return actions.join('');
-                    }
-                }],
-                responseHandler: function(res) {
-                	if (res.code == web_status.SUCCESS && res.params) {
-                		$("#tableParams").html('');
-                		$.each(res.params, function(name, value) {
-                			$('#tableParams').append('<li><label>'+name+'：</label> <label class="text-danger" style="text-align: center">'+value+'</label></li>');
-                		});
-                	}
-                }
-            };
-            $.table.init(options);
-        });
-        
-        function footerStyle(column) {
-        	return {
-//         	    userBalance: {
-//         	        classes: 'class'
-//         	    },
-        	    withdrawal: {
-        	        css: { color: 'red', 'font-weight': 'normal' }
-        	    }
-        	}[column.field]
-          }
-        
-        function checkPassed(id) {
-        	var ids;
-        	if (!id) {
-        		var selected = $.table.selectColumns('orderNo');
-        		if (!selected || selected.length == 0) {
-        			return;
-        		}
-        		ids = $.common.join(selected);
-        	} else {
-        		ids = id;
-        	}
-        	$.modal.confirm('你确定要审核通过这些提现订单吗？', function(){
-        		$.operate.post(prefix + '/checkPassed?ids=' + ids);
-        	})
-        }
+		$(function () {
+			var options = {
+				url: prefix + "/list",
+				createUrl: prefix + "/add",
+				updateUrl: prefix + "/edit/{id}",
+				removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+				modalName: "提现订单",
+				sortName: "createTime",
+				sortOrder: "desc",
+				footerStyle: footerStyle,
+				showFooter: true,
+				showExport: showExport,
+				exportOptions: {
+					ignoreColumn: [0]  //忽略第一列和最后一列
+				},
+				columns: [{
+					checkbox: true
+				},
+				{
+					field: 'id',
+					title: 'ID',
+					visible: false
+				},
+				{
+					field: 'orderNo',
+					title: '订单ID',
+					footerFormatter: function (value) {
+						return "合计";
+					}
+				},
+				{
+					field: 'loginName',
+					title: '用户名'
+				},
+				{
+					field: 'email',
+					title: '邮箱'
+				},
+				{
+					field: 'mobile',
+					title: '手机'
+				},
+				{
+					field: 'address',
+					title: '提现地址'
+				},
+				{
+					field: 'amount',
+					title: '提现金额',
+					formatter: function (value, rows, index) {
+						return $.common.formatNumber(value);
+					}
+				},
+				{
+					field: 'fee',
+					title: '手续费',
+					formatter: function (value, rows, index) {
+						return $.common.formatNumber(value);
+					}
+				},
+				{
+					field: 'withdrawal',
+					title: '实际提现',
+					formatter: function (value, rows, index) {
+						return $.common.formatNumber(value);
+					},
+					footerFormatter: function (value) {
+						var sumBalance = 0;
+						for (var i in value) {
+							sumBalance += parseFloat(value[i].withdrawal);
+						}
+						return $.common.formatNumber(sumBalance);
+					}
+				},
 
-        function checkDenied(id) {
-        	var ids;
-        	if (!id) {
-        		var selected = $.table.selectColumns('orderNo');
-        		if (!selected || selected.length == 0) {
-        			return;
-        		}
-        		ids = $.common.join(selected);
-        	} else {
-        		ids = id;
-        	}
-        	$.modal.prompt("审核拒绝？给个理由先", function(msg) {
-       			$.operate.post(prefix + "/checkDenied?ids=" + ids +'&remark=' + msg);
-		    })
-        }
-    </script>
+				{
+					field: 'symbol',
+					title: '提现币种',
+					formatter: function (value, rows, index) {
+						return value.toUpperCase();
+					}
+				},
+				{
+					field: 'status',
+					title: '状态',
+					formatter: function (value, rows, index) {
+						if (value >= 60) {
+							value = (value - 60) + 6;
+						}
+						return $.common.formatStatus(['待审核', '取消', '成功', '失败', '确认', '到账', '待转账（手工）', '已取消（手工）', '已到账（手工）', '已失败（手工）'], value);
+					}
+				},
+				{
+					field: 'createTime',
+					title: '创建时间',
+				},
+				{
+					field: 'remark',
+					title: '备注'
+				},
+				{
+					title: '操作',
+					align: 'center',
+					formatter: function (value, row, index) {
+						var actions = [];
+						if (row.status == 0) {
+							actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="checkPassed(\'' + row.orderNo + '\')"><i class="fa fa-check"></i> 通过</a> ');
+							actions.push('<a class="btn btn-danger btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="checkDenied(\'' + row.orderNo + '\')"><i class="fa fa-remove"></i> 拒绝</a>');
+						} else if (row.status == 60) {
+							actions.push('<a class="btn btn-info btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="addManualRecord(\'' + row.id + '\')"><i class="fa fa-check"></i> 核销</a> ');
+						}
+						return actions.join('');
+					}
+				}],
+				responseHandler: function (res) {
+					if (res.code == web_status.SUCCESS && res.params) {
+						$("#tableParams").html('');
+						$.each(res.params, function (name, value) {
+							$('#tableParams').append('<li><label>' + name + '：</label> <label class="text-danger" style="text-align: center">' + value + '</label></li>');
+						});
+					}
+				}
+			};
+			$.table.init(options);
+		});
+
+		function footerStyle(column) {
+			return {
+				//         	    userBalance: {
+				//         	        classes: 'class'
+				//         	    },
+				withdrawal: {
+					css: {color: 'red', 'font-weight': 'normal'}
+				}
+			}[column.field]
+		}
+
+		function checkPassed(id) {
+			var ids;
+			if (!id) {
+				var selected = $.table.selectColumns('orderNo');
+				if (!selected || selected.length == 0) {
+					return;
+				}
+				ids = $.common.join(selected);
+			} else {
+				ids = id;
+			}
+			$.modal.confirm('你确定要审核通过这些提现订单吗？', function () {
+				$.operate.post(prefix + '/checkPassed?ids=' + ids);
+			})
+		}
+
+		function checkDenied(id) {
+			var ids;
+			if (!id) {
+				var selected = $.table.selectColumns('orderNo');
+				if (!selected || selected.length == 0) {
+					return;
+				}
+				ids = $.common.join(selected);
+			} else {
+				ids = id;
+			}
+			$.modal.prompt("审核拒绝？给个理由先", function (msg) {
+				$.operate.post(prefix + "/checkDenied?ids=" + ids + '&remark=' + msg);
+			})
+		}
+		
+		function addManualRecord(id) {
+			$.modal.open('手工核销', prefix + '/manualRecord?id=' + id);
+		}
+	</script>
 </body>
+
 </html>

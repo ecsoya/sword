@@ -7,16 +7,13 @@
 		<artifactId>sword-module-mining</artifactId>
 		<version>2.1.9-SNAPSHOT</version>
 	</parent>
-	<artifactId>sword-mining-admin</artifactId>
-	<name>sword-mining-admin</name>
+	<artifactId>sword-mining-wallet-local</artifactId>
+	<name>sword-mining-wallet-local</name>
 	<dependencies>
+		<!-- 通用工具 -->
 		<dependency>
 			<groupId>com.soyatec.sword</groupId>
-			<artifactId>sword-admin</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.soyatec.sword</groupId>
-			<artifactId>sword-mining</artifactId>
+			<artifactId>sword-mining-wallet</artifactId>
 		</dependency>
 	</dependencies>
 </project>
