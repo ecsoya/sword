@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Objects;
-import com.soyatec.sword.business.service.IWalletBusinessService;
+import com.soyatec.sword.business.service.IWalletAddressService;
 import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.mining.domain.MiningSymbol;
@@ -18,9 +18,9 @@ import com.soyatec.sword.wallet.domain.UserWalletAccount;
 import com.soyatec.sword.wallet.service.IUserWalletAccountService;
 
 @Service
-public class WalletBusinessServiceImpl implements IWalletBusinessService {
+public class WalletAddressServiceImpl implements IWalletAddressService {
 
-	private static final Logger log = LoggerFactory.getLogger(IWalletBusinessService.class);
+	private static final Logger log = LoggerFactory.getLogger(IWalletAddressService.class);
 
 	@Autowired
 	private IUserWalletAccountService walletAccountService;

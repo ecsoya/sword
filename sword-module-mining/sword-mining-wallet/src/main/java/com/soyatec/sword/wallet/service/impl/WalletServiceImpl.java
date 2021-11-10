@@ -124,4 +124,10 @@ public class WalletServiceImpl implements IWalletService {
 		}
 		return delegateService.checkWithdrawalAddress(symbol, chain, address);
 	}
+
+	@Override
+	public boolean isLocal() {
+		return delegateService != null
+				&& "LocalWalletBusinessService".equals(delegateService.getClass().getSimpleName());
+	}
 }

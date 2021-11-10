@@ -23,6 +23,7 @@ import com.soyatec.sword.common.utils.StringUtils;
 import com.soyatec.sword.mining.domain.MiningSymbol;
 import com.soyatec.sword.mining.service.IMiningSymbolService;
 import com.soyatec.sword.order.domain.UserDepositOrder;
+import com.soyatec.sword.order.domain.UserWithdrawalManual;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 import com.soyatec.sword.order.service.IUserDepositOrderService;
 import com.soyatec.sword.order.service.IUserWithdrawalOrderService;
@@ -31,6 +32,7 @@ import com.soyatec.sword.wallet.domain.UserWalletAccount;
 import com.soyatec.sword.wallet.domain.UserWalletRecord;
 import com.soyatec.sword.wallet.service.IUserWalletAccountService;
 import com.soyatec.sword.wallet.service.IUserWalletRecordService;
+import com.soyatec.sword.wallet.service.IWalletService;
 
 @Controller
 @RequestMapping("/mining/wallet")
@@ -56,10 +58,14 @@ public class MiningWalletController extends BaseController {
 	@Autowired
 	private IUserWalletAccountService walletAccountService;
 
+	@Autowired
+	private IWalletService walletService;
+
 	@RequiresPermissions("mining:wallet:withdrawal:view")
 	@GetMapping("/withdrawal")
 	public String withdrawal(ModelMap mmap) {
 		mmap.put("symbols", symbolService.selectMiningSymbolList(new MiningSymbol()));
+		mmap.put("local", walletService.isLocal());
 		return prefix + "/withdrawal";
 	}
 
@@ -182,4 +188,15 @@ public class MiningWalletController extends BaseController {
 		return prefix + "/manualRecord";
 	}
 
+	@RequiresPermissions("mining:wallet:withdrawal:edit")
+	@Log(title = "手工核销提现订单", businessType = BusinessType.UPDATE)
+	@PostMapping("/withdrawal/manualRecord")
+	@ResponseBody
+	public AjaxResult manualRecord(UserWithdrawalManual manual) {
+		final CommonResult<?> result = userWithdrawalOrderService.manualWithdrawalRecord(manual);
+		if (result.isSuccess()) {
+			return AjaxResult.success();
+		}
+		return AjaxResult.error(result.getInfo());
+	}
 }

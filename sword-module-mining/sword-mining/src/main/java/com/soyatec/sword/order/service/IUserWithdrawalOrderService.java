@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.soyatec.sword.common.core.domain.CommonResult;
 import com.soyatec.sword.exceptions.TransactionException;
+import com.soyatec.sword.order.domain.UserWithdrawalManual;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 
 /**
@@ -95,5 +96,10 @@ public interface IUserWithdrawalOrderService {
 	public BigDecimal selectUserWithdrawalAmount(String symbol);
 
 	public BigDecimal selectUserWithdrawalFeeAmount(String symbol);
+
+	/**
+	 * 后台手工核销提币订单
+	 */
+	public CommonResult<?> manualWithdrawalRecord(UserWithdrawalManual manual);
 
 }

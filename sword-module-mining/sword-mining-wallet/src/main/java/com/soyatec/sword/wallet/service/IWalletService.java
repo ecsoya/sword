@@ -13,4 +13,5 @@ public interface IWalletService extends IWalletBusinessService, IWalletTickerSer
 
 	public BigDecimal exchangeFromUsdt(String symbol, BigDecimal value);
 
+	public boolean isLocal();
 }

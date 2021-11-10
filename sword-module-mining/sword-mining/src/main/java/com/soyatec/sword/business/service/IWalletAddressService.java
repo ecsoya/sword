@@ -1,6 +1,6 @@
 package com.soyatec.sword.business.service;
 
-public interface IWalletBusinessService {
+public interface IWalletAddressService {
 
 	int updateWalletAddress();
 

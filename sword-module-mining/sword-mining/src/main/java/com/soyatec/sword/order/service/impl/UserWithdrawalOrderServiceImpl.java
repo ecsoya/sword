@@ -19,6 +19,7 @@ import com.soyatec.sword.constants.IMiningConstants;
 import com.soyatec.sword.exceptions.TransactionException;
 import com.soyatec.sword.mining.domain.MiningSymbol;
 import com.soyatec.sword.mining.service.IMiningSymbolService;
+import com.soyatec.sword.order.domain.UserWithdrawalManual;
 import com.soyatec.sword.order.domain.UserWithdrawalOrder;
 import com.soyatec.sword.order.mapper.UserWithdrawalOrderMapper;
 import com.soyatec.sword.order.service.IUserWithdrawalOrderService;
@@ -378,6 +379,11 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 
 	private boolean addWithdrawalRecord(Long userId, BigDecimal amount, BigDecimal fee, BigDecimal walletFee,
 			String orderNo, String symbol, boolean success, String remark) {
+		return addWithdrawalRecord(userId, amount, fee, walletFee, orderNo, symbol, success, remark, null);
+	}
+
+	private boolean addWithdrawalRecord(Long userId, BigDecimal amount, BigDecimal fee, BigDecimal walletFee,
+			String orderNo, String symbol, boolean success, String remark, String txId) {
 		// 1. 扣款
 		final boolean unfreezed = userWalletAccountService.unfreezeAmount(userId, symbol, amount, orderNo, !success);
 		if (!unfreezed) {
@@ -394,6 +400,7 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		record.setAmount(amount);
 		record.setStatus(IConstants.STATUS_FINISHED);
 		record.setRemark(remark);
+		record.setTxId(txId);
 		if (userWithdrawalRecordService.insertUserWithdrawalRecord(record) <= 0) {
 			throw new TransactionException("内部错误");
 		}
@@ -464,5 +471,39 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 			return BigDecimal.ZERO;
 		}
 		return MathUtils.nullToZero(userWithdrawalOrderMapper.selectUserWithdrawalFeeAmount(symbol));
+	}
+
+	@Override
+	public CommonResult<?> manualWithdrawalRecord(UserWithdrawalManual manual) {
+		if (manual == null || StringUtils.isEmpty(manual.getId()) || manual.getStatus() == null) {
+			return CommonResult.fail("参数错误");
+		}
+		Long id = manual.getId();
+		UserWithdrawalOrder order = userWithdrawalOrderMapper.selectUserWithdrawalOrderById(id);
+		if (order == null) {
+			return CommonResult.fail("获取订单失败，请刷新后再试");
+		}
+		if (!UserWithdrawalManual.STATUS_MANUAL_START.equals(order.getStatus())) {
+			return CommonResult.success("订单已处理");
+		}
+		Integer status = manual.getStatus();
+		String txId = manual.getTxId();
+		if (UserWithdrawalManual.STATUS_MANUAL_SUCCESS.equals(status) && StringUtils.isEmpty(txId)) {
+			return CommonResult.fail("交易单号不能为空");
+		}
+		String remark = manual.getRemark();
+		UserWithdrawalOrder update = new UserWithdrawalOrder();
+		update.setId(id);
+		update.setStatus(status);
+		update.setRemark(remark);
+
+		int rows = userWithdrawalOrderMapper.updateUserWithdrawalOrder(update);
+		if (rows <= 0) {
+			return CommonResult.fail("内部错误，请刷新后再试");
+		}
+		addWithdrawalRecord(order.getUserId(), order.getAmount(), order.getFee(), order.getWithdrawal(),
+				order.getOrderNo(), order.getSymbol(), UserWithdrawalManual.STATUS_MANUAL_SUCCESS.equals(status),
+				remark, txId);
+		return CommonResult.success();
 	}
 }

@@ -24,10 +24,10 @@ public class UserWithdrawalOrder extends BaseEntity {
 	public static final Integer STATUS_CONFIRM = 4;
 	public static final Integer STATUS_NOTIFIED = 5;
 	// 手动提币状态
-	public static final Integer STATUS_MANUAL_START = 60;
-	public static final Integer STATUS_MANUAL_CANCEL = 61;
-	public static final Integer STATUS_MANUAL_SUCCESS = 62;
-	public static final Integer STATUS_MANUAL_FAILURE = 62;
+	public static final Integer STATUS_MANUAL_START = UserWithdrawalManual.STATUS_MANUAL_START;
+	public static final Integer STATUS_MANUAL_CANCEL = UserWithdrawalManual.STATUS_MANUAL_CANCEL;
+	public static final Integer STATUS_MANUAL_SUCCESS = UserWithdrawalManual.STATUS_MANUAL_SUCCESS;
+	public static final Integer STATUS_MANUAL_FAILURE = UserWithdrawalManual.STATUS_MANUAL_FAILURE;
 
 	public static final Integer FEEDBACK_NONE = 0;
 	public static final Integer FEEDBACK_FAILURE = 1;

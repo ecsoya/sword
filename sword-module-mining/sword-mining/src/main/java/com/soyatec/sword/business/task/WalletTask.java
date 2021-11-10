@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.soyatec.sword.business.service.IWalletBusinessService;
+import com.soyatec.sword.business.service.IWalletAddressService;
 
 @Component("walletTask")
 public class WalletTask {
@@ -13,10 +13,10 @@ public class WalletTask {
 	private static final Logger log = LoggerFactory.getLogger(WalletTask.class);
 
 	@Autowired
-	private IWalletBusinessService walletBusinessService;
+	private IWalletAddressService walletAddressService;
 
 	public void updateWallet() {
 		log.info("WalletTask.updateWallet()");
-		walletBusinessService.updateWalletAddress();
+		walletAddressService.updateWalletAddress();
 	}
 }
