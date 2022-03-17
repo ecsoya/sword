@@ -418,30 +418,6 @@
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>public</id>
-			<name>aliyun nexus</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>public</id>
-			<name>aliyun nexus</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 	<modules>
 		<module>sword-module-api</module>
 		<module>sword-module-mining</module>
@@ -449,16 +425,6 @@
 	<organization>
 		<name>Soyatec</name>
 	</organization>
-	<distributionManagement>
-		<repository>
-			<id>rdc-releases</id>
-			<url>https://repo.rdc.aliyun.com/repository/42210-release-mI5S4B/</url>
-		</repository>
-		<snapshotRepository>
-			<id>rdc-snapshots</id>
-			<url>https://repo.rdc.aliyun.com/repository/42210-snapshot-BITvCn/</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<scm>
 		<developerConnection>AngryRED (angryred@qq.com)</developerConnection>
