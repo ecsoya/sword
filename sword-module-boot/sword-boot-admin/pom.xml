@@ -3,30 +3,30 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.soyatec.sword</groupId>
+		<groupId>com.github.ecsoya</groupId>
 		<artifactId>sword-module-boot</artifactId>
-		<version>2.1.9-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>sword-boot-admin</artifactId>
 	<name>sword-boot-admin</name>
 	<dependencies>
 		<dependency>
-			<groupId>com.soyatec.sword</groupId>
+			<groupId>com.github.ecsoya</groupId>
 			<artifactId>sword-admin</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.soyatec.sword</groupId>
+			<groupId>com.github.ecsoya</groupId>
 			<artifactId>sword-mining</artifactId>
 		</dependency>
 
 		<!-- 邮件验证码 -->
 		<dependency>
-			<groupId>com.soyatec.sword</groupId>
+			<groupId>com.github.ecsoya</groupId>
 			<artifactId>sword-code-javamail</artifactId>
 		</dependency>
 		<!-- SendCloud邮件验证码 -->
 		<dependency>
-			<groupId>com.soyatec.sword</groupId>
+			<groupId>com.github.ecsoya</groupId>
 			<artifactId>sword-code-sendcloud</artifactId>
 		</dependency>
 		<dependency>
@@ -60,34 +60,34 @@
 						<version>2.4.1</version>
 						<configuration>
 							<layout>ZIP</layout>
-							<mainClass>com.soyatec.sword.swordAdminApplication</mainClass>
+							<mainClass>com.github.ecsoya.swordAdminApplication</mainClass>
 							<includes>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-common</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-core</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-framework</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-quartz</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-system</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-mining-wallet</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-udun</artifactId>
 								</include>
 							</includes>
@@ -161,38 +161,38 @@
 						<version>2.4.1</version>
 						<configuration>
 							<layout>ZIP</layout>
-							<mainClass>com.soyatec.sword.swordAdminApplication</mainClass>
+							<mainClass>com.github.ecsoya.swordAdminApplication</mainClass>
 							<includes>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-common</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-core</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-framework</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-quartz</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-sendcloud</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-system</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-mining-wallet</artifactId>
 								</include>
 								<include>
-									<groupId>com.soyatec.sword</groupId>
+									<groupId>com.github.ecsoya</groupId>
 									<artifactId>sword-udun</artifactId>
 								</include>
 							</includes>

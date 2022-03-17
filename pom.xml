@@ -2,9 +2,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.soyatec.sword</groupId>
+	<groupId>com.github.ecsoya</groupId>
 	<artifactId>sword</artifactId>
-	<version>2.1.9-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>sword</name>
 	<description>Sword Spring Boot Development</description>
@@ -159,179 +159,179 @@
 
 			<!-- 定时任务 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-quartz</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 
 			<!-- 代码生成 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-generator</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 
 			<!-- 核心模块 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-framework</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 
 			<!-- 系统模块 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-system</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 验证码模块 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-code</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 美联短信 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-code-m5c</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- SendCloud发送邮件 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-code-sendcloud</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- Tencent发送邮件 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-code-tencent</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- JavaMail发送邮件 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-code-javamail</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 文件上传 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-upload</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 文件上传 腾讯云 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-upload-tencent</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 文件上传 阿里云 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-upload-aliyun</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 文件上传 本地 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-upload-local</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 二维码组件 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-qrcode</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 
 			<!-- 通用工具 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-common</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 
 			<!-- 核心业务 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-core</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 后台 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-admin</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining-admin</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 前端API -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-app</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining-app</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<!-- 挖矿业务 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining-zbx</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining-udun</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining-local</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining-wallet</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining-wallet-zbx</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining-wallet-udun</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-mining-wallet-local</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 
 			<!-- LocalDate LocalDateTime LocalTime support for Spring -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-javatime</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
 
 			<!-- 实时消息服务 -->
 			<dependency>
-				<groupId>com.soyatec.sword</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>sword-message</artifactId>
 				<version>${sword.version}</version>
 			</dependency>
