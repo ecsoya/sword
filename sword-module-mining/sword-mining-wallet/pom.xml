@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.github.ecsoya.sword</groupId>
     <artifactId>sword-module-mining</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
   <artifactId>sword-mining-wallet</artifactId>

@@ -1,7 +1,25 @@
+# Maven build on JitPack [![](https://jitpack.io/v/ecsoya/sword.svg)](https://jitpack.io/#ecsoya/sword)
+
+### Step 1. Add the JitPack repository to your build file
+
+```
+<repositories>
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
+</repositories>
+```
+
+### Step2. Add the dependency
+```
+<dependency>
+	<groupId>com.github.ecsoya.sword</groupId>
+	<artifactId>sword</artifactId>
+	<version>Tag</version>
+</dependency>
+```
 ### Sword框架说明
-
-[![](https://jitpack.io/v/ecsoya/sword.svg)](https://jitpack.io/#ecsoya/sword)
-
 1. sword-module-api 通用工具集
 
 	* sword-admin 后台模块，集成了后台的主要功能
