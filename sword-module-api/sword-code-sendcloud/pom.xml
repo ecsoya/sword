@@ -3,16 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.github.ecsoya</groupId>
+		<groupId>com.github.ecsoya.sword</groupId>
 		<artifactId>sword-module-api</artifactId>
-		<version>1.0.3-SNAPSHOT</version>
+		<version>1.0.3</version>
 	</parent>
 	<artifactId>sword-code-sendcloud</artifactId>
 	<name>sword-code-sendcloud</name>
 	<description>SendCloud邮箱发送验证码</description>
 	<dependencies>
 		<dependency>
-			<groupId>com.github.ecsoya</groupId>
+			<groupId>com.github.ecsoya.sword</groupId>
 			<artifactId>sword-code</artifactId>
 		</dependency>
 		

@@ -3,16 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.github.ecsoya</groupId>
+		<groupId>com.github.ecsoya.sword</groupId>
 		<artifactId>sword-module-mining</artifactId>
-		<version>1.0.3-SNAPSHOT</version>
+		<version>1.0.3</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>sword-mining-wallet-zbx</artifactId>
 	<dependencies>
 		<!-- 通用工具 -->
 		<dependency>
-			<groupId>com.github.ecsoya</groupId>
+			<groupId>com.github.ecsoya.sword</groupId>
 			<artifactId>sword-mining-wallet</artifactId>
 		</dependency>
 	</dependencies>

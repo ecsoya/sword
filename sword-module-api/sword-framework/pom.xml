@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<artifactId>sword-module-api</artifactId>
-		<groupId>com.github.ecsoya</groupId>
-		<version>1.0.3-SNAPSHOT</version>
+		<groupId>com.github.ecsoya.sword</groupId>
+		<version>1.0.3</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -68,7 +68,7 @@
 
 		<!-- 系统模块 -->
 		<dependency>
-			<groupId>com.github.ecsoya</groupId>
+			<groupId>com.github.ecsoya.sword</groupId>
 			<artifactId>sword-system</artifactId>
 		</dependency>
 

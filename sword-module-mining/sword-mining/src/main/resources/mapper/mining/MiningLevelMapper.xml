@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.soyatec.sword.mining.mapper.MiningLevelMapper">
+<mapper namespace="com.github.ecsoya.sword.mining.mapper.MiningLevelMapper">
     
    <resultMap type="MiningLevel" id="MiningLevelResult">
         <result property="id"    column="id"    />

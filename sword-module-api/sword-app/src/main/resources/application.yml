@@ -16,7 +16,7 @@ server:
   
 logging:
   level:
-    com.soyatec.sword: debug
+    com.github.ecsoya.sword: debug
     org.springframework: warn
 user:
   password:
@@ -44,7 +44,7 @@ spring:
     restart:
       enabled: true
 mybatis:
-  typeAliasesPackage: com.soyatec.sword.**.domain
+  typeAliasesPackage: com.github.ecsoya.sword.**.domain
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   configLocation: classpath:mybatis/mybatis-config.xml
 pagehelper:

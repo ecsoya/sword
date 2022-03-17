@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.soyatec.sword.wallet.mapper.UserWalletAddressMapper">
+<mapper namespace="com.github.ecsoya.sword.wallet.mapper.UserWalletAddressMapper">
     
      <resultMap type="UserWalletAddress" id="UserWalletAddressResult">
         <result property="id"    column="id"    />

@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.github.ecsoya</groupId>
+		<groupId>com.github.ecsoya.sword</groupId>
 		<artifactId>sword-module-api</artifactId>
-		<version>1.0.3-SNAPSHOT</version>
+		<version>1.0.3</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>sword-admin</artifactId>
@@ -48,22 +48,22 @@
 
 		<!-- 核心模块 -->
 		<dependency>
-			<groupId>com.github.ecsoya</groupId>
+			<groupId>com.github.ecsoya.sword</groupId>
 			<artifactId>sword-framework</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.github.ecsoya</groupId>
+			<groupId>com.github.ecsoya.sword</groupId>
 			<artifactId>sword-core</artifactId>
 		</dependency>
 
 		<!-- 定时任务 -->
 		<dependency>
-			<groupId>com.github.ecsoya</groupId>
+			<groupId>com.github.ecsoya.sword</groupId>
 			<artifactId>sword-quartz</artifactId>
 		</dependency>
 		<!-- 二维码 -->
 		<dependency>
-			<groupId>com.github.ecsoya</groupId>
+			<groupId>com.github.ecsoya.sword</groupId>
 			<artifactId>sword-qrcode</artifactId>
 		</dependency>
 
