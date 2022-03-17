@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>sword-module-api</artifactId>
 		<groupId>com.github.ecsoya</groupId>
-		<version>1.0.2-SNAPSHOT</version>
+		<version>1.0.2</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
