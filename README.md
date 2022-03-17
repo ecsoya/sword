@@ -1,5 +1,7 @@
 ### Sword框架说明
 
+[![](https://jitpack.io/v/ecsoya/sword.svg)](https://jitpack.io/#ecsoya/sword)
+
 1. sword-module-api 通用工具集
 
 	* sword-admin 后台模块，集成了后台的主要功能
