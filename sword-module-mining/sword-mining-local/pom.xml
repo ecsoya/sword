@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.github.ecsoya</groupId>
 		<artifactId>sword-module-mining</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.3-SNAPSHOT</version>
 	</parent>
 	<artifactId>sword-mining-local</artifactId>
 	<name>sword-mining-local</name>
