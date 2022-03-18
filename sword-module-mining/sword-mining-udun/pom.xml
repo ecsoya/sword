@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.github.ecsoya.sword</groupId>
     <artifactId>sword-module-mining</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5-SNAPSHOT</version>
   </parent>
   <artifactId>sword-mining-udun</artifactId>
   <name>sword-mining-udun</name>
