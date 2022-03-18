@@ -11,9 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.github.ecsoya.sword.code.service.IMailService;
-import com.github.ecsoya.sword.code.service.IMobileService;
-import com.github.ecsoya.sword.common.config.GlobalConfig;
 import com.github.ecsoya.sword.common.core.domain.AjaxResult;
 import com.github.ecsoya.sword.common.core.domain.entity.SysUser;
 import com.github.ecsoya.sword.common.core.text.Convert;
@@ -41,10 +38,10 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 	@Autowired
 	private SysOperNotifyMapper sysOperNotifyMapper;
 
-	@Autowired(required = false)
-	private IMailService mailService;
-	@Autowired(required = false)
-	private IMobileService mobileService;
+//	@Autowired(required = false)
+//	private IMailService mailService;
+//	@Autowired(required = false)
+//	private IMobileService mobileService;
 
 	@Autowired
 	private ISysUserService userService;
@@ -166,50 +163,50 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 		if (admin == null) {
 			return;
 		}
-		log.info("Notify: url={}, admin={}", url, admin.getLoginName());
-		final SysOperNotify emailNotify = selectNotifiesByType(SysOperNotify.TYPE_EMAIL, url);
-		if (emailNotify != null) {
-			sendNotifyByEmail(emailNotify, operLog);
-		}
-
-		final SysOperNotify mobileNotify = selectNotifiesByType(SysOperNotify.TYPE_MOBILE, url);
-		if (mobileNotify != null) {
-			sendNotifyByMobile(mobileNotify, operLog);
-		}
+//		log.info("Notify: url={}, admin={}", url, admin.getLoginName());
+//		final SysOperNotify emailNotify = selectNotifiesByType(SysOperNotify.TYPE_EMAIL, url);
+//		if (emailNotify != null) {
+//			sendNotifyByEmail(emailNotify, operLog);
+//		}
+//
+//		final SysOperNotify mobileNotify = selectNotifiesByType(SysOperNotify.TYPE_MOBILE, url);
+//		if (mobileNotify != null) {
+//			sendNotifyByMobile(mobileNotify, operLog);
+//		}
 	}
 
-	private void sendNotifyByMobile(SysOperNotify notify, SysOperLog operLog) {
-		if (notify == null || operLog == null) {
-			return;
-		}
-		final SysUser admin = getAdmin(operLog);
-		if (admin == null) {
-			return;
-		}
-		final String content = formatTemplate(notify, operLog);
-		final String mobile = admin.getPhonenumber();
-		log.debug("Notify: mobile={}, content={}", mobile, content);
-		if (GlobalConfig.isNotifyEnabled() && mobileService != null) {
-			mobileService.sendMessage(mobile, content);
-		}
-	}
-
-	private void sendNotifyByEmail(SysOperNotify notify, SysOperLog operLog) {
-		if (notify == null || operLog == null) {
-			return;
-		}
-		final SysUser admin = getAdmin(operLog);
-		if (admin == null) {
-			return;
-		}
-		final String content = formatTemplate(notify, operLog);
-		final String email = admin.getEmail();
-		final String subject = notify.getSubject();
-		log.debug("Notify: email={}, subject={}, content={}", email, subject, content);
-		if (GlobalConfig.isNotifyEnabled() && mailService != null) {
-			mailService.sendEmail(email, subject, content);
-		}
-	}
+//	private void sendNotifyByMobile(SysOperNotify notify, SysOperLog operLog) {
+//		if (notify == null || operLog == null) {
+//			return;
+//		}
+//		final SysUser admin = getAdmin(operLog);
+//		if (admin == null) {
+//			return;
+//		}
+//		final String content = formatTemplate(notify, operLog);
+//		final String mobile = admin.getPhonenumber();
+//		log.debug("Notify: mobile={}, content={}", mobile, content);
+//		if (GlobalConfig.isNotifyEnabled() && mobileService != null) {
+//			mobileService.sendMessage(mobile, content);
+//		}
+//	}
+//
+//	private void sendNotifyByEmail(SysOperNotify notify, SysOperLog operLog) {
+//		if (notify == null || operLog == null) {
+//			return;
+//		}
+//		final SysUser admin = getAdmin(operLog);
+//		if (admin == null) {
+//			return;
+//		}
+//		final String content = formatTemplate(notify, operLog);
+//		final String email = admin.getEmail();
+//		final String subject = notify.getSubject();
+//		log.debug("Notify: email={}, subject={}, content={}", email, subject, content);
+//		if (GlobalConfig.isNotifyEnabled() && mailService != null) {
+//			mailService.sendEmail(email, subject, content);
+//		}
+//	}
 
 	private SysUser getAdmin(SysOperLog operLog) {
 		if (operLog == null) {

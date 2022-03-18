@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>sword-module-api</artifactId>
-        <groupId>com.github.ecsoya.sword</groupId>
-        <version>1.0.4-SNAPSHOT</version>
-        <relativePath>..</relativePath>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>sword-module-api</artifactId>
+		<groupId>com.github.ecsoya.sword</groupId>
+		<version>1.0.4</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sword-generator</artifactId>
+	<artifactId>sword-generator</artifactId>
 
-    <description>
+	<description>
         generator代码生成
     </description>
 
-    <dependencies>
+	<dependencies>
 
-        <!--velocity代码生成使用模板 -->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-        </dependency>
+		<!--velocity代码生成使用模板 -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-engine-core</artifactId>
+		</dependency>
+		<!-- 通用工具 -->
+		<dependency>
+			<groupId>com.github.ecsoya.sword</groupId>
+			<artifactId>sword-common</artifactId>
+		</dependency>
 
-        <!-- 通用工具-->
-        <dependency>
-            <groupId>com.github.ecsoya.sword</groupId>
-            <artifactId>sword-common</artifactId>
-        </dependency>
-
-        <dependency>
-        	<groupId>org.springframework.boot</groupId>
-        	<artifactId>spring-boot-configuration-processor</artifactId>
-        	<optional>true</optional>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
 
 </project>
