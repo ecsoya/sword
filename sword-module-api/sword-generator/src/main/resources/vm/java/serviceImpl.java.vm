@@ -3,11 +3,11 @@ package ${packageName}.service.impl;
 import java.util.List;
 #if($table.tree)
 import java.util.ArrayList;
-import com.soyatec.sword.common.core.domain.Ztree;
+import com.github.ecsoya.sword.common.core.domain.Ztree;
 #end
 #foreach ($column in $columns)
 #if($column.javaField == 'createTime' || $column.javaField == 'updateTime')
-import com.soyatec.sword.common.utils.DateUtils;
+import com.github.ecsoya.sword.common.utils.DateUtils;
 #break
 #end
 #end
@@ -15,17 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 #if($table.sub)
 import java.util.ArrayList;
-import com.soyatec.sword.common.utils.StringUtils;
+import com.github.ecsoya.sword.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 import ${packageName}.domain.${subClassName};
 #end
 #if(${pkColumn.javaField} == 'id')
-import com.soyatec.sword.common.utils.IdWorker;
+import com.github.ecsoya.sword.common.utils.IdWorker;
 #end
 import ${packageName}.mapper.${ClassName}Mapper;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
-import com.soyatec.sword.common.core.text.Convert;
+import com.github.ecsoya.sword.common.core.text.Convert;
 
 /**
  * ${functionName}Service业务层处理

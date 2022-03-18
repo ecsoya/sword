@@ -6,9 +6,9 @@ import ${import};
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 #if($table.crud || $table.sub)
-import com.soyatec.sword.common.core.domain.BaseEntity;
+import com.github.ecsoya.sword.common.core.domain.BaseEntity;
 #elseif($table.tree)
-import com.soyatec.sword.common.core.domain.TreeEntity;
+import com.github.ecsoya.sword.common.core.domain.TreeEntity;
 #end
 
 /**
