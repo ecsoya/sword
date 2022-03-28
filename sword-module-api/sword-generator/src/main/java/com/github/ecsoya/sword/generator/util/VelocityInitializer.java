@@ -25,6 +25,7 @@ public class VelocityInitializer {
 			// 定义字符集
 			p.setProperty(RuntimeConstants.ENCODING_DEFAULT, Constants.UTF8);
 			// p.setProperty(RuntimeConstants.OUTPUT_ENCODING, Constants.UTF8);
+			p.setProperty("directive.foreach.counter.name", "velocityCount");
 			p.setProperty("directive.foreach.counter.initial.value", "0");
 			// 初始化Velocity引擎，指定配置Properties
 			Velocity.init(p);
