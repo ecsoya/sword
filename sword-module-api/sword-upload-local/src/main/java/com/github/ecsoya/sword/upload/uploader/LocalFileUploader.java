@@ -21,21 +21,39 @@ import com.github.ecsoya.sword.common.utils.StringUtils;
 import com.github.ecsoya.sword.upload.core.FileUploadException;
 import com.github.ecsoya.sword.upload.core.UploadConfig;
 import com.github.ecsoya.sword.upload.core.UploadData;
-import com.github.ecsoya.sword.upload.uploader.AbstractFileUploader;
 
+/**
+ * The Class LocalFileUploader.
+ */
 @Component
 @Service
 public class LocalFileUploader extends AbstractFileUploader {
 
+	/** The log. */
 	private static Logger log = LoggerFactory.getLogger(LocalFileUploader.class);
 
+	/** The context path. */
 	@Value("${server.servlet.context-path:/}")
 	private String contextPath;
 
+	/**
+	 * Test upload config.
+	 *
+	 * @param config the config
+	 * @throws FileUploadException the file upload exception
+	 */
 	@Override
 	protected void testUploadConfig(UploadConfig config) throws FileUploadException {
 	}
 
+	/**
+	 * Do upload.
+	 *
+	 * @param files  the files
+	 * @param config the config
+	 * @return the list
+	 * @throws FileUploadException the file upload exception
+	 */
 	@Override
 	protected List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException {
 		log.info("LocalFileUploader, config={}", config);
@@ -83,10 +101,25 @@ public class LocalFileUploader extends AbstractFileUploader {
 		return result;
 	}
 
+	/**
+	 * Gets the url.
+	 *
+	 * @param config   the config
+	 * @param filename the filename
+	 * @return the url
+	 */
 	private String getURL(UploadConfig config, String filename) {
 		return contextPath + filename;
 	}
 
+	/**
+	 * Gets the path file name.
+	 *
+	 * @param uploadDir the upload dir
+	 * @param fileName  the file name
+	 * @return the path file name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private final String getPathFileName(String uploadDir, String fileName) throws IOException {
 		int dirLastIndex = GlobalConfig.getProfile().length() + 1;
 		String currentDir = StringUtils.substring(uploadDir, dirLastIndex);

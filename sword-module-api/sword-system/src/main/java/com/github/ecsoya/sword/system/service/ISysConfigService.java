@@ -5,75 +5,92 @@ import java.util.List;
 import com.github.ecsoya.sword.system.domain.SysConfig;
 
 /**
- * 参数配置 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysConfigService.
  */
 public interface ISysConfigService {
+
 	/**
-	 * 查询参数配置信息
+	 * Select config by id.
 	 *
-	 * @param configId 参数配置ID
-	 * @return 参数配置信息
+	 * @param configId the config id
+	 * @return the sys config
 	 */
 	public SysConfig selectConfigById(Long configId);
 
 	/**
-	 * 根据键名查询参数配置信息
+	 * Select config value by key.
 	 *
-	 * @param configKey 参数键名
-	 * @return 参数键值
+	 * @param configKey the config key
+	 * @return the string
 	 */
 	public String selectConfigValueByKey(String configKey);
 
+	/**
+	 * Select config by key.
+	 *
+	 * @param configKey the config key
+	 * @return the sys config
+	 */
 	public SysConfig selectConfigByKey(String configKey);
 
 	/**
-	 * 查询参数配置列表
+	 * Select config list.
 	 *
-	 * @param config 参数配置信息
-	 * @return 参数配置集合
+	 * @param config the config
+	 * @return the list
 	 */
 	public List<SysConfig> selectConfigList(SysConfig config);
 
 	/**
-	 * 新增参数配置
+	 * Insert config.
 	 *
-	 * @param config 参数配置信息
-	 * @return 结果
+	 * @param config the config
+	 * @return the int
 	 */
 	public int insertConfig(SysConfig config);
 
 	/**
-	 * 修改参数配置
+	 * Update config.
 	 *
-	 * @param config 参数配置信息
-	 * @return 结果
+	 * @param config the config
+	 * @return the int
 	 */
 	public int updateConfig(SysConfig config);
 
 	/**
-	 * 批量删除参数配置信息
+	 * Delete config by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteConfigByIds(String ids);
 
 	/**
-	 * 清空缓存数据
+	 * Clear cache.
 	 */
 	public void clearCache();
 
 	/**
-	 * 校验参数键名是否唯一
+	 * Check config key unique.
 	 *
-	 * @param config 参数信息
-	 * @return 结果
+	 * @param config the config
+	 * @return the string
 	 */
 	public String checkConfigKeyUnique(SysConfig config);
 
+	/**
+	 * Select config with key.
+	 *
+	 * @param configKey the config key
+	 * @return the sys config
+	 */
 	public SysConfig selectConfigWithKey(String configKey);
 
+	/**
+	 * Check boolean config value.
+	 *
+	 * @param configKey the config key
+	 * @return true, if successful
+	 */
 	public boolean checkBooleanConfigValue(String configKey);
 }

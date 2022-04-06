@@ -5,40 +5,39 @@ import java.util.List;
 import com.github.ecsoya.sword.system.domain.SysRoleDept;
 
 /**
- * 角色与部门关联表 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface SysRoleDeptMapper.
  */
 public interface SysRoleDeptMapper {
+
 	/**
-	 * 通过角色ID删除角色和部门关联
+	 * Delete role dept by role id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 结果
+	 * @param roleId the role id
+	 * @return the int
 	 */
 	public int deleteRoleDeptByRoleId(Long roleId);
 
 	/**
-	 * 批量删除角色部门关联信息
+	 * Delete role dept.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteRoleDept(Long[] ids);
 
 	/**
-	 * 查询部门使用数量
+	 * Select count role dept by dept id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 结果
+	 * @param deptId the dept id
+	 * @return the int
 	 */
 	public int selectCountRoleDeptByDeptId(Long deptId);
 
 	/**
-	 * 批量新增角色部门信息
+	 * Batch role dept.
 	 *
-	 * @param roleDeptList 角色部门列表
-	 * @return 结果
+	 * @param roleDeptList the role dept list
+	 * @return the int
 	 */
 	public int batchRoleDept(List<SysRoleDept> roleDeptList);
 }

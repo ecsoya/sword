@@ -1,37 +1,120 @@
 package com.github.ecsoya.sword.udun.constants;
 
+/**
+ * The Enum CoinType.
+ */
 public enum CoinType {
 
-	Bitcoin("0", "BTC", "0"), Litecoin("2", "LTC", "2"), Dogecoin("3", "DOGE", "3"), Ethereum("60", "ETH", "60"),
-	EthereumClassic("61", "ETC", "61"), Ripple("144", "XRP", "144"), Bitcoincash("145", "BCH", "145"),
-	EOS("194", "EOS", "194"), TRX("195", "TRX", "195"), NEO("888", "NEO", "888"), XNE("208", "XNE", "208"),
-	TEC("206", "TEC", "206"), GCA("500", "GCA", "500"), GCB("501", "GCB", "501"), GalaxyChain("502", "GCC", "502"),
-	DASH("5", "DASH", "5"), ZEC("133", "ZEC", "133"), QTUM("2301", "QTUM", "2301"), TECO("506", "TECO", "506"),
-	CNYT("509", "CNYT", "509"), STO("99", "STO", "99"), CNT("520", "CNT", "520"), FIL("2307", "FIL", "2307"),
+	/** The Bitcoin. */
+	Bitcoin("0", "BTC", "0"),
+	/** The Litecoin. */
+	Litecoin("2", "LTC", "2"),
+	/** The Dogecoin. */
+	Dogecoin("3", "DOGE", "3"),
+	/** The Ethereum. */
+	Ethereum("60", "ETH", "60"),
+
+	/** The Ethereum classic. */
+	EthereumClassic("61", "ETC", "61"),
+	/** The Ripple. */
+	Ripple("144", "XRP", "144"),
+	/** The Bitcoincash. */
+	Bitcoincash("145", "BCH", "145"),
+
+	/** The eos. */
+	EOS("194", "EOS", "194"),
+	/** The trx. */
+	TRX("195", "TRX", "195"),
+	/** The neo. */
+	NEO("888", "NEO", "888"),
+	/** The xne. */
+	XNE("208", "XNE", "208"),
+
+	/** The tec. */
+	TEC("206", "TEC", "206"),
+	/** The gca. */
+	GCA("500", "GCA", "500"),
+	/** The gcb. */
+	GCB("501", "GCB", "501"),
+	/** The Galaxy chain. */
+	GalaxyChain("502", "GCC", "502"),
+
+	/** The dash. */
+	DASH("5", "DASH", "5"),
+	/** The zec. */
+	ZEC("133", "ZEC", "133"),
+	/** The qtum. */
+	QTUM("2301", "QTUM", "2301"),
+	/** The teco. */
+	TECO("506", "TECO", "506"),
+
+	/** The cnyt. */
+	CNYT("509", "CNYT", "509"),
+	/** The sto. */
+	STO("99", "STO", "99"),
+	/** The cnt. */
+	CNT("520", "CNT", "520"),
+	/** The fil. */
+	FIL("2307", "FIL", "2307"),
+
+	/** The trcusd. */
 	TRCUSD("195", "USDT", "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
 
+	/** The code. */
 	private String code;
+
+	/** The unit. */
 	private String unit;
+
+	/** The sub coin type. */
 	private String subCoinType;
 
+	/**
+	 * Instantiates a new coin type.
+	 *
+	 * @param code        the code
+	 * @param unit        the unit
+	 * @param subCoinType the sub coin type
+	 */
 	CoinType(String code, String unit, String subCoinType) {
 		this.code = code;
 		this.unit = unit;
 		this.subCoinType = subCoinType;
 	}
 
+	/**
+	 * Gets the code.
+	 *
+	 * @return the code
+	 */
 	public String getCode() {
 		return this.code;
 	}
 
+	/**
+	 * Gets the unit.
+	 *
+	 * @return the unit
+	 */
 	public String getUnit() {
 		return this.unit;
 	}
 
+	/**
+	 * Gets the sub coin type.
+	 *
+	 * @return the sub coin type
+	 */
 	public String getSubCoinType() {
 		return subCoinType;
 	}
 
+	/**
+	 * Of code.
+	 *
+	 * @param code the code
+	 * @return the coin type
+	 */
 	public static CoinType ofCode(int code) {
 		switch (code) {
 		case 0:
@@ -84,6 +167,12 @@ public enum CoinType {
 		return null;
 	}
 
+	/**
+	 * Of symbol.
+	 *
+	 * @param symbol the symbol
+	 * @return the coin type
+	 */
 	public static CoinType ofSymbol(String symbol) {
 		if ("TRCUSD".equalsIgnoreCase(symbol) || "USDT".equalsIgnoreCase(symbol)) {
 			return TRCUSD;
@@ -97,6 +186,12 @@ public enum CoinType {
 		return null;
 	}
 
+	/**
+	 * Gets the.
+	 *
+	 * @param coinType the coin type
+	 * @return the coin type
+	 */
 	public static CoinType get(String coinType) {
 		if (coinType == null) {
 			return null;
@@ -116,6 +211,12 @@ public enum CoinType {
 		return null;
 	}
 
+	/**
+	 * Parses the int.
+	 *
+	 * @param value the value
+	 * @return the integer
+	 */
 	private static Integer parseInt(String value) {
 		try {
 			return Integer.parseInt(value);

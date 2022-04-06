@@ -6,21 +6,32 @@ import java.util.List;
 import com.github.ecsoya.sword.wallet.domain.UserWalletUnionRecord;
 
 /**
- * 钱包记录，联合查询Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2020-12-18
+ * The Interface IUserWalletUnionRecordService.
  */
 public interface IUserWalletUnionRecordService {
 
 	/**
-	 * 仅查询成功的充值和提币记录
+	 * Select wallet record list by user id.
+	 *
+	 * @param userId the user id
+	 * @param symbol the symbol
+	 * @param start  the start
+	 * @param end    the end
+	 * @param kind   the kind
+	 * @return the list
 	 */
 	public List<UserWalletUnionRecord> selectWalletRecordListByUserId(Long userId, String symbol, Date start, Date end,
 			Integer kind);
 
 	/**
-	 * 查询所有的充值和提币订单
+	 * Select wallet order list by user id.
+	 *
+	 * @param userId the user id
+	 * @param symbol the symbol
+	 * @param start  the start
+	 * @param end    the end
+	 * @param kind   the kind
+	 * @return the list
 	 */
 	public List<UserWalletUnionRecord> selectWalletOrderListByUserId(Long userId, String symbol, Date start, Date end,
 			Integer kind);

@@ -7,8 +7,17 @@ import java.util.Set;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 import com.github.ecsoya.sword.common.utils.security.EncryptUtil;
 
+/**
+ * The Class HttpUtil.
+ */
 public class HttpUtil {
 
+	/**
+	 * Param to url.
+	 *
+	 * @param data the data
+	 * @return the string
+	 */
 	public static String paramToUrl(Map<String, Object> data) {
 		final Set<String> keySet = data.keySet();
 		final String[] keyArray = keySet.toArray(new String[keySet.size()]);
@@ -23,6 +32,13 @@ public class HttpUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Gets the signature.
+	 *
+	 * @param data      the data
+	 * @param secretKey the secret key
+	 * @return the signature
+	 */
 	public static String getSignature(final Map<String, Object> data, String secretKey) {
 		try {
 			final Set<String> keySet = data.keySet();

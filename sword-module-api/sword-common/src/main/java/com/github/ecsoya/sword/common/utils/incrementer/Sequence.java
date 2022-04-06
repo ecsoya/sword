@@ -24,65 +24,71 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 分布式高效有序ID生产黑科技(sequence)
- * <p>
- * 优化开源项目：https://gitee.com/yu120/sequence
- * </p>
- *
- * @author hubin
- * @since 2016-08-18
+ * The Class Sequence.
  */
 public class Sequence {
+
+	/** The Constant AT. */
 	private static final String AT = "@";
+
+	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(Sequence.class);
-	/**
-	 * 时间起始标记点，作为基准，一般取系统的最近时间（一旦确定不能变动）
-	 */
+
+	/** The twepoch. */
 	private final long twepoch = 1288834974657L;
-	/**
-	 * 机器标识位数
-	 */
+
+	/** The worker id bits. */
 	private final long workerIdBits = 5L;
+
+	/** The datacenter id bits. */
 	private final long datacenterIdBits = 5L;
+
+	/** The max worker id. */
 	private final long maxWorkerId = -1L ^ (-1L << workerIdBits);
+
+	/** The max datacenter id. */
 	private final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
-	/**
-	 * 毫秒内自增位
-	 */
+
+	/** The sequence bits. */
 	private final long sequenceBits = 12L;
+
+	/** The worker id shift. */
 	private final long workerIdShift = sequenceBits;
+
+	/** The datacenter id shift. */
 	private final long datacenterIdShift = sequenceBits + workerIdBits;
-	/**
-	 * 时间戳左移动位
-	 */
+
+	/** The timestamp left shift. */
 	private final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
+
+	/** The sequence mask. */
 	private final long sequenceMask = -1L ^ (-1L << sequenceBits);
 
+	/** The worker id. */
 	private final long workerId;
 
-	/**
-	 * 数据标识 ID 部分
-	 */
+	/** The datacenter id. */
 	private final long datacenterId;
-	/**
-	 * 并发控制
-	 */
+
+	/** The sequence. */
 	private long sequence = 0L;
-	/**
-	 * 上次生产 ID 时间戳
-	 */
+
+	/** The last timestamp. */
 	private long lastTimestamp = -1L;
 
+	/**
+	 * Instantiates a new sequence.
+	 */
 	public Sequence() {
 		this.datacenterId = getDatacenterId(maxDatacenterId);
 		this.workerId = getMaxWorkerId(datacenterId, maxWorkerId);
 	}
 
 	/**
-	 * 有参构造器
+	 * Instantiates a new sequence.
 	 *
-	 * @param workerId     工作机器 ID
-	 * @param datacenterId 序列号
+	 * @param workerId     the worker id
+	 * @param datacenterId 数据标识 ID 部分.
 	 */
 	public Sequence(long workerId, long datacenterId) {
 		this.workerId = workerId;
@@ -90,7 +96,11 @@ public class Sequence {
 	}
 
 	/**
-	 * 获取 maxWorkerId
+	 * Gets the max worker id.
+	 *
+	 * @param datacenterId the datacenter id
+	 * @param maxWorkerId  the max worker id
+	 * @return the max worker id
 	 */
 	protected static long getMaxWorkerId(long datacenterId, long maxWorkerId) {
 		final StringBuilder mpid = new StringBuilder();
@@ -109,7 +119,10 @@ public class Sequence {
 	}
 
 	/**
-	 * 数据标识id部分
+	 * Gets the datacenter id.
+	 *
+	 * @param maxDatacenterId the max datacenter id
+	 * @return the datacenter id
 	 */
 	protected static long getDatacenterId(long maxDatacenterId) {
 		long id = 0L;
@@ -133,9 +146,9 @@ public class Sequence {
 	}
 
 	/**
-	 * 获取下一个 ID
+	 * Next id.
 	 *
-	 * @return 下一个 ID
+	 * @return the long
 	 */
 	public synchronized long nextId() {
 		long timestamp = timeGen();
@@ -178,6 +191,12 @@ public class Sequence {
 				| (workerId << workerIdShift) | sequence;
 	}
 
+	/**
+	 * Til next millis.
+	 *
+	 * @param lastTimestamp the last timestamp
+	 * @return the long
+	 */
 	protected long tilNextMillis(long lastTimestamp) {
 		long timestamp = timeGen();
 		while (timestamp <= lastTimestamp) {
@@ -186,6 +205,11 @@ public class Sequence {
 		return timestamp;
 	}
 
+	/**
+	 * Time gen.
+	 *
+	 * @return the long
+	 */
 	protected long timeGen() {
 		return System.currentTimeMillis();
 	}

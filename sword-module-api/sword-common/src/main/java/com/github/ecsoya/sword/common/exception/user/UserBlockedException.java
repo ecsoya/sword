@@ -1,13 +1,16 @@
 package com.github.ecsoya.sword.common.exception.user;
 
 /**
- * 用户锁定异常类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class UserBlockedException.
  */
 public class UserBlockedException extends UserException {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instantiates a new user blocked exception.
+	 */
 	public UserBlockedException() {
 		super("user.blocked", null);
 	}

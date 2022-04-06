@@ -2,15 +2,26 @@ package com.github.ecsoya.sword.business.service;
 
 import com.github.ecsoya.sword.common.core.domain.CommonResult;
 
+/**
+ * The Interface IWalletCallbackService.
+ *
+ * @param <T> the generic type
+ */
 public interface IWalletCallbackService<T> {
 
 	/**
-	 * 处理充提订单
+	 * Process order.
+	 *
+	 * @param rawData the raw data
+	 * @return the common result
 	 */
 	CommonResult<?> processOrder(T rawData);
 
 	/**
-	 * 解析数据
+	 * Parses the raw data.
+	 *
+	 * @param body the body
+	 * @return the common result
 	 */
 	default CommonResult<T> parseRawData(String body) {
 		return CommonResult.fail("Not Implemented");

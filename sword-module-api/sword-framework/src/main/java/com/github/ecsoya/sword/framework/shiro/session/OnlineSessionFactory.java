@@ -14,12 +14,17 @@ import com.github.ecsoya.sword.common.utils.ServletUtils;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
- * 自定义sessionFactory会话
- *
- * @author Jin Liu (angryred@qq.com)
+ * A factory for creating OnlineSession objects.
  */
 @Component
 public class OnlineSessionFactory implements SessionFactory {
+
+	/**
+	 * Creates a new OnlineSession object.
+	 *
+	 * @param initData the init data
+	 * @return the session
+	 */
 	@Override
 	public Session createSession(SessionContext initData) {
 		final OnlineSession session = new OnlineSession();

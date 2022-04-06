@@ -16,21 +16,20 @@ import com.github.ecsoya.sword.record.service.IUserDepositRecordService;
 import com.github.ecsoya.sword.utils.MathUtils;
 
 /**
- * 用户充值Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-06
+ * The Class UserDepositRecordServiceImpl.
  */
 @Service
 public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
+
+	/** The user deposit record mapper. */
 	@Autowired
 	private UserDepositRecordMapper userDepositRecordMapper;
 
 	/**
-	 * 查询用户充值
+	 * Select user deposit record by id.
 	 *
-	 * @param id 用户充值ID
-	 * @return 用户充值
+	 * @param id the id
+	 * @return the user deposit record
 	 */
 	@Override
 	public UserDepositRecord selectUserDepositRecordById(Long id) {
@@ -38,10 +37,10 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 	}
 
 	/**
-	 * 查询用户充值列表
+	 * Select user deposit record list.
 	 *
-	 * @param userDepositRecord 用户充值
-	 * @return 用户充值
+	 * @param userDepositRecord the user deposit record
+	 * @return the list
 	 */
 	@Override
 	public List<UserDepositRecord> selectUserDepositRecordList(UserDepositRecord userDepositRecord) {
@@ -49,10 +48,10 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 	}
 
 	/**
-	 * 新增用户充值
+	 * Insert user deposit record.
 	 *
-	 * @param userDepositRecord 用户充值
-	 * @return 结果
+	 * @param userDepositRecord the user deposit record
+	 * @return the int
 	 */
 	@Override
 	public int insertUserDepositRecord(UserDepositRecord userDepositRecord) {
@@ -66,10 +65,10 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 	}
 
 	/**
-	 * 修改用户充值
+	 * Update user deposit record.
 	 *
-	 * @param userDepositRecord 用户充值
-	 * @return 结果
+	 * @param userDepositRecord the user deposit record
+	 * @return the int
 	 */
 	@Override
 	public int updateUserDepositRecord(UserDepositRecord userDepositRecord) {
@@ -78,10 +77,10 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 	}
 
 	/**
-	 * 删除用户充值对象
+	 * Delete user deposit record by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserDepositRecordByIds(String ids) {
@@ -89,16 +88,22 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 	}
 
 	/**
-	 * 删除用户充值信息
+	 * Delete user deposit record by id.
 	 *
-	 * @param id 用户充值ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserDepositRecordById(Long id) {
 		return userDepositRecordMapper.deleteUserDepositRecordById(id);
 	}
 
+	/**
+	 * Select user deposit record by tx id.
+	 *
+	 * @param txId the tx id
+	 * @return the user deposit record
+	 */
 	@Override
 	public UserDepositRecord selectUserDepositRecordByTxId(String txId) {
 		if (StringUtils.isEmpty(txId)) {
@@ -107,6 +112,12 @@ public class UserDepositRecordServiceImpl implements IUserDepositRecordService {
 		return userDepositRecordMapper.selectUserDepositRecordByTxId(txId);
 	}
 
+	/**
+	 * Select user deposit amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserDepositAmount(String symbol) {
 		return MathUtils.nullToZero(userDepositRecordMapper.selectUserDepositAmount(symbol));

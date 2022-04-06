@@ -21,19 +21,24 @@ import com.github.ecsoya.sword.mining.domain.MiningSymbol;
 import com.github.ecsoya.sword.mining.service.IMiningSymbolService;
 
 /**
- * 币种Controller
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-18
+ * The Class MiningSymbolController.
  */
 @Controller
 @RequestMapping("/mining/symbol")
 public class MiningSymbolController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "mining/symbol";
 
+	/** The mining symbol service. */
 	@Autowired
 	private IMiningSymbolService miningSymbolService;
 
+	/**
+	 * Symbol.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("mining:symbol:view")
 	@GetMapping()
 	public String symbol() {
@@ -41,7 +46,10 @@ public class MiningSymbolController extends BaseController {
 	}
 
 	/**
-	 * 查询币种列表
+	 * List.
+	 *
+	 * @param miningSymbol the mining symbol
+	 * @return the table data info
 	 */
 	@RequiresPermissions("mining:symbol:list")
 	@PostMapping("/list")
@@ -53,7 +61,11 @@ public class MiningSymbolController extends BaseController {
 	}
 
 	/**
-	 * 修改币种
+	 * Edits the.
+	 *
+	 * @param symbol the symbol
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{symbol}")
 	public String edit(@PathVariable("symbol") String symbol, ModelMap mmap) {
@@ -63,7 +75,10 @@ public class MiningSymbolController extends BaseController {
 	}
 
 	/**
-	 * 修改保存币种
+	 * Edits the save.
+	 *
+	 * @param miningSymbol the mining symbol
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:symbol:edit")
 	@Log(title = "修改提币设置", businessType = BusinessType.UPDATE)
@@ -74,7 +89,11 @@ public class MiningSymbolController extends BaseController {
 	}
 
 	/**
-	 * 修改保存币种
+	 * Change status.
+	 *
+	 * @param symbol            the symbol
+	 * @param withdrawalEnabled the withdrawal enabled
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:symbol:edit")
 	@Log(title = "启停提币开关", businessType = BusinessType.UPDATE)
@@ -88,7 +107,11 @@ public class MiningSymbolController extends BaseController {
 	}
 
 	/**
-	 * 修改保存币种
+	 * Change manual audit.
+	 *
+	 * @param symbol                the symbol
+	 * @param withdrawalManualAudit the withdrawal manual audit
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:symbol:edit")
 	@Log(title = "启停提币人工审核", businessType = BusinessType.UPDATE)
@@ -102,7 +125,11 @@ public class MiningSymbolController extends BaseController {
 	}
 
 	/**
-	 * 修改保存币种
+	 * Change walletl audit.
+	 *
+	 * @param symbol                the symbol
+	 * @param withdrawalWalletAudit the withdrawal wallet audit
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:symbol:edit")
 	@Log(title = "启停提币钱包二次审核", businessType = BusinessType.UPDATE)

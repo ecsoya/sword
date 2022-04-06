@@ -24,31 +24,31 @@ import org.slf4j.LoggerFactory;
 import com.github.ecsoya.sword.common.constant.Constants;
 
 /**
- * 通用http发送方法
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class HttpUtils.
  */
 public class HttpUtils {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(HttpUtils.class);
 
 	/**
-	 * 向指定 URL 发送GET方法的请求
+	 * Send get.
 	 *
-	 * @param url   发送请求的 URL
-	 * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
-	 * @return 所代表远程资源的响应结果
+	 * @param url   the url
+	 * @param param the param
+	 * @return the string
 	 */
 	public static String sendGet(String url, String param) {
 		return sendGet(url, param, Constants.UTF8);
 	}
 
 	/**
-	 * 向指定 URL 发送GET方法的请求
+	 * Send get.
 	 *
-	 * @param url         发送请求的 URL
-	 * @param param       请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
-	 * @param contentType 编码类型
-	 * @return 所代表远程资源的响应结果
+	 * @param url         the url
+	 * @param param       the param
+	 * @param contentType the content type
+	 * @return the string
 	 */
 	public static String sendGet(String url, String param, String contentType) {
 		final StringBuilder result = new StringBuilder();
@@ -89,11 +89,11 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 向指定 URL 发送POST方法的请求
+	 * Send post.
 	 *
-	 * @param url   发送请求的 URL
-	 * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
-	 * @return 所代表远程资源的响应结果
+	 * @param url   the url
+	 * @param param the param
+	 * @return the string
 	 */
 	public static String sendPost(String url, String param) {
 		PrintWriter out = null;
@@ -143,6 +143,13 @@ public class HttpUtils {
 		return result.toString();
 	}
 
+	/**
+	 * Send SSL post.
+	 *
+	 * @param url   the url
+	 * @param param the param
+	 * @return the string
+	 */
 	public static String sendSSLPost(String url, String param) {
 		final StringBuilder result = new StringBuilder();
 		final String urlNameString = url + "?" + param;
@@ -186,22 +193,54 @@ public class HttpUtils {
 		return result.toString();
 	}
 
+	/**
+	 * The Class TrustAnyTrustManager.
+	 */
 	private static class TrustAnyTrustManager implements X509TrustManager {
+
+		/**
+		 * Check client trusted.
+		 *
+		 * @param chain    the chain
+		 * @param authType the auth type
+		 */
 		@Override
 		public void checkClientTrusted(X509Certificate[] chain, String authType) {
 		}
 
+		/**
+		 * Check server trusted.
+		 *
+		 * @param chain    the chain
+		 * @param authType the auth type
+		 */
 		@Override
 		public void checkServerTrusted(X509Certificate[] chain, String authType) {
 		}
 
+		/**
+		 * Gets the accepted issuers.
+		 *
+		 * @return the accepted issuers
+		 */
 		@Override
 		public X509Certificate[] getAcceptedIssuers() {
 			return new X509Certificate[] {};
 		}
 	}
 
+	/**
+	 * The Class TrustAnyHostnameVerifier.
+	 */
 	private static class TrustAnyHostnameVerifier implements HostnameVerifier {
+
+		/**
+		 * Verify.
+		 *
+		 * @param hostname the hostname
+		 * @param session  the session
+		 * @return true, if successful
+		 */
 		@Override
 		public boolean verify(String hostname, SSLSession session) {
 			return true;

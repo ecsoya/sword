@@ -15,31 +15,57 @@ import com.github.ecsoya.sword.common.utils.StringUtils;
 import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 import com.google.auto.service.AutoService;
 
+/**
+ * The Class M5cSendMobileCodeHandler.
+ */
 @Component
 @AutoService(IMobileCodeHandlerRegistry.class)
 public class M5cSendMobileCodeHandler implements SendMobileCodeHandler, IMobileCodeHandlerRegistry {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(SendMobileCodeHandler.class);
 
+	/** The Constant CHINESE_MOBILE_REGEX. */
 	private static final String CHINESE_MOBILE_REGEX = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$";
+
+	/** The Constant DEFAULT_TEMPLATE. */
 	private static final String DEFAULT_TEMPLATE = "亲爱的用户，您的短信验证码为：{}，请勿告诉他人，5分钟内有效！";
 
+	/** The properties. */
 	@Autowired
 	private M5cProperties properties;
 
+	/** The mobile service. */
 	@Autowired
 	private M5cMobileService mobileService;
 
+	/**
+	 * Gets the.
+	 *
+	 * @return the send mobile code handler
+	 */
 	@Override
 	public SendMobileCodeHandler get() {
 		return SpringUtils.getBean(M5cSendMobileCodeHandler.class);
 	}
 
+	/**
+	 * Gets the priority.
+	 *
+	 * @return the priority
+	 */
 	@Override
 	public int getPriority() {
 		return properties.getPriority();
 	}
 
+	/**
+	 * Send code.
+	 *
+	 * @param mobile the mobile
+	 * @param code   the code
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendCode(String mobile, String code) {
 		if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(code)) {
@@ -53,6 +79,13 @@ public class M5cSendMobileCodeHandler implements SendMobileCodeHandler, IMobileC
 		return sendMessage(mobile, message);
 	}
 
+	/**
+	 * Send message.
+	 *
+	 * @param mobile  the mobile
+	 * @param message the message
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendMessage(String mobile, String message) {
 		if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(message)) {
@@ -69,6 +102,12 @@ public class M5cSendMobileCodeHandler implements SendMobileCodeHandler, IMobileC
 		return CommonResult.fail(result.getError());
 	}
 
+	/**
+	 * Checks if is chinese mobile.
+	 *
+	 * @param mobile the mobile
+	 * @return true, if is chinese mobile
+	 */
 	private boolean isChineseMobile(String mobile) {
 		if (StringUtils.isEmpty(mobile)) {
 			return false;

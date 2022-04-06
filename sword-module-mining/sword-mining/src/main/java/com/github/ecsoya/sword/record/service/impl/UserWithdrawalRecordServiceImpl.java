@@ -17,21 +17,20 @@ import com.github.ecsoya.sword.record.service.IUserWithdrawalRecordService;
 import com.github.ecsoya.sword.utils.MathUtils;
 
 /**
- * 用户提现Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-06
+ * The Class UserWithdrawalRecordServiceImpl.
  */
 @Service
 public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordService {
+
+	/** The user withdrawal record mapper. */
 	@Autowired
 	private UserWithdrawalRecordMapper userWithdrawalRecordMapper;
 
 	/**
-	 * 查询用户提现
+	 * Select user withdrawal record by id.
 	 *
-	 * @param id 用户提现ID
-	 * @return 用户提现
+	 * @param id the id
+	 * @return the user withdrawal record
 	 */
 	@Override
 	public UserWithdrawalRecord selectUserWithdrawalRecordById(Long id) {
@@ -39,10 +38,10 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 	}
 
 	/**
-	 * 查询用户提现列表
+	 * Select user withdrawal record list.
 	 *
-	 * @param userWithdrawalRecord 用户提现
-	 * @return 用户提现
+	 * @param userWithdrawalRecord the user withdrawal record
+	 * @return the list
 	 */
 	@Override
 	public List<UserWithdrawalRecord> selectUserWithdrawalRecordList(UserWithdrawalRecord userWithdrawalRecord) {
@@ -50,10 +49,10 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 	}
 
 	/**
-	 * 新增用户提现
+	 * Insert user withdrawal record.
 	 *
-	 * @param userWithdrawalRecord 用户提现
-	 * @return 结果
+	 * @param userWithdrawalRecord the user withdrawal record
+	 * @return the int
 	 */
 	@Override
 	public int insertUserWithdrawalRecord(UserWithdrawalRecord userWithdrawalRecord) {
@@ -67,10 +66,10 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 	}
 
 	/**
-	 * 修改用户提现
+	 * Update user withdrawal record.
 	 *
-	 * @param userWithdrawalRecord 用户提现
-	 * @return 结果
+	 * @param userWithdrawalRecord the user withdrawal record
+	 * @return the int
 	 */
 	@Override
 	public int updateUserWithdrawalRecord(UserWithdrawalRecord userWithdrawalRecord) {
@@ -79,10 +78,10 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 	}
 
 	/**
-	 * 删除用户提现对象
+	 * Delete user withdrawal record by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWithdrawalRecordByIds(String ids) {
@@ -90,16 +89,23 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 	}
 
 	/**
-	 * 删除用户提现信息
+	 * Delete user withdrawal record by id.
 	 *
-	 * @param id 用户提现ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWithdrawalRecordById(Long id) {
 		return userWithdrawalRecordMapper.deleteUserWithdrawalRecordById(id);
 	}
 
+	/**
+	 * Update user withdrawal record height by tx id.
+	 *
+	 * @param txId   the tx id
+	 * @param height the height
+	 * @return the int
+	 */
 	@Override
 	public int updateUserWithdrawalRecordHeightByTxId(String txId, Long height) {
 		if (StringUtils.isEmpty(txId) || height == null || height.longValue() < 0) {
@@ -108,16 +114,36 @@ public class UserWithdrawalRecordServiceImpl implements IUserWithdrawalRecordSer
 		return userWithdrawalRecordMapper.updateUserWithdrawalRecordHeightByTxId(txId, height);
 	}
 
+	/**
+	 * Select user withdrawal amount by date.
+	 *
+	 * @param symbol the symbol
+	 * @param start  the start
+	 * @param end    the end
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserWithdrawalAmountByDate(String symbol, Date start, Date end) {
 		return userWithdrawalRecordMapper.selectUserWithdrawalAmountByDate(symbol, start, end);
 	}
 
+	/**
+	 * Select user withdrawal amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserWithdrawalAmount(String symbol) {
 		return MathUtils.nullToZero(userWithdrawalRecordMapper.selectUserWithdrawalAmountByDate(symbol, null, null));
 	}
 
+	/**
+	 * Select user withdrawal fee amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserWithdrawalFeeAmount(String symbol) {
 		return MathUtils.nullToZero(userWithdrawalRecordMapper.selectUserWithdrawalFeeAmount(symbol));

@@ -24,24 +24,36 @@ import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 import com.github.ecsoya.sword.system.service.ISysDictDataService;
 
 /**
- * 数据字典信息
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysDictDataController.
  */
 @Controller
 @RequestMapping("/system/dict/data")
 public class SysDictDataController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/dict/data";
 
+	/** The dict data service. */
 	@Autowired
 	private ISysDictDataService dictDataService;
 
+	/**
+	 * Dict data.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:dict:view")
 	@GetMapping()
 	public String dictData() {
 		return prefix + "/data";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param dictData the dict data
+	 * @return the table data info
+	 */
 	@PostMapping("/list")
 	@RequiresPermissions("system:dict:list")
 	@ResponseBody
@@ -51,6 +63,12 @@ public class SysDictDataController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param dictData the dict data
+	 * @return the ajax result
+	 */
 	@Log(title = "字典数据", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("system:dict:export")
 	@PostMapping("/export")
@@ -62,7 +80,11 @@ public class SysDictDataController extends BaseController {
 	}
 
 	/**
-	 * 新增字典类型
+	 * Adds the.
+	 *
+	 * @param dictType the dict type
+	 * @param mmap     the mmap
+	 * @return the string
 	 */
 	@GetMapping("/add/{dictType}")
 	public String add(@PathVariable("dictType") String dictType, ModelMap mmap) {
@@ -71,7 +93,10 @@ public class SysDictDataController extends BaseController {
 	}
 
 	/**
-	 * 新增保存字典类型
+	 * Adds the save.
+	 *
+	 * @param dict the dict
+	 * @return the ajax result
 	 */
 	@Log(title = "字典数据", businessType = BusinessType.INSERT)
 	@RequiresPermissions("system:dict:add")
@@ -83,7 +108,11 @@ public class SysDictDataController extends BaseController {
 	}
 
 	/**
-	 * 修改字典类型
+	 * Edits the.
+	 *
+	 * @param dictCode the dict code
+	 * @param mmap     the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{dictCode}")
 	public String edit(@PathVariable("dictCode") Long dictCode, ModelMap mmap) {
@@ -92,7 +121,10 @@ public class SysDictDataController extends BaseController {
 	}
 
 	/**
-	 * 修改保存字典类型
+	 * Edits the save.
+	 *
+	 * @param dict the dict
+	 * @return the ajax result
 	 */
 	@Log(title = "字典数据", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("system:dict:edit")
@@ -103,6 +135,12 @@ public class SysDictDataController extends BaseController {
 		return toAjax(dictDataService.updateDictData(dict));
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@Log(title = "字典数据", businessType = BusinessType.DELETE)
 	@RequiresPermissions("system:dict:remove")
 	@PostMapping("/remove")

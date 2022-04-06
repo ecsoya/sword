@@ -6,62 +6,72 @@ import java.util.List;
 import com.github.ecsoya.sword.order.domain.UserDepositOrder;
 
 /**
- * 充值订单Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface IUserDepositOrderService.
  */
 public interface IUserDepositOrderService {
+
 	/**
-	 * 查询充值订单
+	 * Select user deposit order by id.
 	 *
-	 * @param id 充值订单ID
-	 * @return 充值订单
+	 * @param id the id
+	 * @return the user deposit order
 	 */
 	public UserDepositOrder selectUserDepositOrderById(Long id);
 
 	/**
-	 * 查询充值订单列表
+	 * Select user deposit order list.
 	 *
-	 * @param userDepositOrder 充值订单
-	 * @return 充值订单集合
+	 * @param userDepositOrder the user deposit order
+	 * @return the list
 	 */
 	public List<UserDepositOrder> selectUserDepositOrderList(UserDepositOrder userDepositOrder);
 
 	/**
-	 * 新增充值订单
+	 * Insert user deposit order.
 	 *
-	 * @param userDepositOrder 充值订单
-	 * @return 结果
+	 * @param userDepositOrder the user deposit order
+	 * @return the int
 	 */
 	public int insertUserDepositOrder(UserDepositOrder userDepositOrder);
 
 	/**
-	 * 修改充值订单
+	 * Update user deposit order.
 	 *
-	 * @param userDepositOrder 充值订单
-	 * @return 结果
+	 * @param userDepositOrder the user deposit order
+	 * @return the int
 	 */
 	public int updateUserDepositOrder(UserDepositOrder userDepositOrder);
 
 	/**
-	 * 批量删除充值订单
+	 * Delete user deposit order by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserDepositOrderByIds(String ids);
 
 	/**
-	 * 删除充值订单信息
+	 * Delete user deposit order by id.
 	 *
-	 * @param id 充值订单ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserDepositOrderById(Long id);
 
+	/**
+	 * Select user deposit amount.
+	 *
+	 * @param order the order
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserDepositAmount(UserDepositOrder order);
 
+	/**
+	 * Select user deposit amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserDepositAmount(String symbol);
 
 }

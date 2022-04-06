@@ -18,16 +18,22 @@ import com.github.ecsoya.sword.utils.SwordUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * The Class AdviseController.
+ */
 @RestController
 @RequestMapping("/user/advise")
 @Api(tags = { "反馈" }, description = "用户反馈")
 public class AdviseController extends BaseController {
 
+	/** The advise service. */
 	@Autowired
 	private IUserAdviseService adviseService;
 
 	/**
-	 * 查询用户的所有的反馈
+	 * List.
+	 *
+	 * @return the common result
 	 */
 	@ApiOperation("查询用户的所有的反馈")
 	@GetMapping("/list")
@@ -36,6 +42,13 @@ public class AdviseController extends BaseController {
 		return CommonResult.build(adviseService.selectUserAdviseListByUserId(userId));
 	}
 
+	/**
+	 * Adds the.
+	 *
+	 * @param title       the title
+	 * @param description the description
+	 * @return the common result
+	 */
 	@ApiOperation("添加用户反馈")
 	@PostMapping("/add")
 	public CommonResult<?> add(String title, String description) {
@@ -53,6 +66,13 @@ public class AdviseController extends BaseController {
 		return CommonResult.ajax(rows);
 	}
 
+	/**
+	 * Reply.
+	 *
+	 * @param parentId    the parent id
+	 * @param description the description
+	 * @return the common result
+	 */
 	@ApiOperation("回复用户反馈")
 	@PostMapping("/reply")
 	@RepeatSubmit

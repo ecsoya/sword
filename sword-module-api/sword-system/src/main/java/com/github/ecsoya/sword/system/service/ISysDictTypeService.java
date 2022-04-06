@@ -7,93 +7,91 @@ import com.github.ecsoya.sword.common.core.domain.entity.SysDictData;
 import com.github.ecsoya.sword.common.core.domain.entity.SysDictType;
 
 /**
- * 字典 业务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysDictTypeService.
  */
 public interface ISysDictTypeService {
+
 	/**
-	 * 根据条件分页查询字典类型
+	 * Select dict type list.
 	 *
-	 * @param dictType 字典类型信息
-	 * @return 字典类型集合信息
+	 * @param dictType the dict type
+	 * @return the list
 	 */
 	public List<SysDictType> selectDictTypeList(SysDictType dictType);
 
 	/**
-	 * 根据所有字典类型
+	 * Select dict type all.
 	 *
-	 * @return 字典类型集合信息
+	 * @return the list
 	 */
 	public List<SysDictType> selectDictTypeAll();
 
 	/**
-	 * 根据字典类型查询字典数据
+	 * Select dict data by type.
 	 *
-	 * @param dictType 字典类型
-	 * @return 字典数据集合信息
+	 * @param dictType the dict type
+	 * @return the list
 	 */
 	public List<SysDictData> selectDictDataByType(String dictType);
 
 	/**
-	 * 根据字典类型ID查询信息
+	 * Select dict type by id.
 	 *
-	 * @param dictId 字典类型ID
-	 * @return 字典类型
+	 * @param dictId the dict id
+	 * @return the sys dict type
 	 */
 	public SysDictType selectDictTypeById(Long dictId);
 
 	/**
-	 * 根据字典类型查询信息
+	 * Select dict type by type.
 	 *
-	 * @param dictType 字典类型
-	 * @return 字典类型
+	 * @param dictType the dict type
+	 * @return the sys dict type
 	 */
 	public SysDictType selectDictTypeByType(String dictType);
 
 	/**
-	 * 批量删除字典类型
+	 * Delete dict type by ids.
 	 *
-	 * @param ids 需要删除的数据
-	 * @return 结果
-	 * @throws Exception 异常
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteDictTypeByIds(String ids);
 
 	/**
-	 * 清空缓存数据
+	 * Clear cache.
 	 */
 	public void clearCache();
 
 	/**
-	 * 新增保存字典类型信息
+	 * Insert dict type.
 	 *
-	 * @param dictType 字典类型信息
-	 * @return 结果
+	 * @param dictType the dict type
+	 * @return the int
 	 */
 	public int insertDictType(SysDictType dictType);
 
 	/**
-	 * 修改保存字典类型信息
+	 * Update dict type.
 	 *
-	 * @param dictType 字典类型信息
-	 * @return 结果
+	 * @param dictType the dict type
+	 * @return the int
 	 */
 	public int updateDictType(SysDictType dictType);
 
 	/**
-	 * 校验字典类型称是否唯一
+	 * Check dict type unique.
 	 *
-	 * @param dictType 字典类型
-	 * @return 结果
+	 * @param dictType the dict type
+	 * @return the string
 	 */
 	public String checkDictTypeUnique(SysDictType dictType);
 
 	/**
-	 * 查询字典类型树
+	 * Select dict tree.
 	 *
-	 * @param dictType 字典类型
-	 * @return 所有字典类型
+	 * @param dictType the dict type
+	 * @return the list
 	 */
 	public List<Ztree> selectDictTree(SysDictType dictType);
 }

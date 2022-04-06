@@ -17,18 +17,33 @@ import com.github.ecsoya.sword.service.IMailCodeService;
 import com.github.ecsoya.sword.service.IMobileCodeService;
 import com.github.ecsoya.sword.system.service.ISysUserService;
 
+/**
+ * The Class CodeController.
+ */
 @RestController
 @RequestMapping("/open/code")
 public class CodeController extends BaseController {
 
+	/** The mail code service. */
 	@Autowired(required = false)
 	private IMailCodeService mailCodeService;
+
+	/** The mobile code service. */
 	@Autowired(required = false)
 	private IMobileCodeService mobileCodeService;
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/**
+	 * Delivery by username.
+	 *
+	 * @param username the username
+	 * @param subject  the subject
+	 * @param template the template
+	 * @return the ajax result
+	 */
 	@PostMapping("/deliveryByUsername")
 	@RepeatSubmit
 	public AjaxResult deliveryByUsername(String username, String subject, String template) {
@@ -52,8 +67,11 @@ public class CodeController extends BaseController {
 	}
 
 	/**
+	 * Verify by username.
 	 *
-	 * 验证邮箱、短信验证码
+	 * @param username the username
+	 * @param code     the code
+	 * @return the ajax result
 	 */
 	@GetMapping("/verifyByUsername")
 	@RepeatSubmit

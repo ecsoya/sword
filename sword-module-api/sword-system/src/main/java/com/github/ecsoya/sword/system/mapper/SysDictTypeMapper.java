@@ -5,79 +5,78 @@ import java.util.List;
 import com.github.ecsoya.sword.common.core.domain.entity.SysDictType;
 
 /**
- * 字典表 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface SysDictTypeMapper.
  */
 public interface SysDictTypeMapper {
+
 	/**
-	 * 根据条件分页查询字典类型
+	 * Select dict type list.
 	 *
-	 * @param dictType 字典类型信息
-	 * @return 字典类型集合信息
+	 * @param dictType the dict type
+	 * @return the list
 	 */
 	public List<SysDictType> selectDictTypeList(SysDictType dictType);
 
 	/**
-	 * 根据所有字典类型
+	 * Select dict type all.
 	 *
-	 * @return 字典类型集合信息
+	 * @return the list
 	 */
 	public List<SysDictType> selectDictTypeAll();
 
 	/**
-	 * 根据字典类型ID查询信息
+	 * Select dict type by id.
 	 *
-	 * @param dictId 字典类型ID
-	 * @return 字典类型
+	 * @param dictId the dict id
+	 * @return the sys dict type
 	 */
 	public SysDictType selectDictTypeById(Long dictId);
 
 	/**
-	 * 根据字典类型查询信息
+	 * Select dict type by type.
 	 *
-	 * @param dictType 字典类型
-	 * @return 字典类型
+	 * @param dictType the dict type
+	 * @return the sys dict type
 	 */
 	public SysDictType selectDictTypeByType(String dictType);
 
 	/**
-	 * 通过字典ID删除字典信息
+	 * Delete dict type by id.
 	 *
-	 * @param dictId 字典ID
-	 * @return 结果
+	 * @param dictId the dict id
+	 * @return the int
 	 */
 	public int deleteDictTypeById(Long dictId);
 
 	/**
-	 * 批量删除字典类型
+	 * Delete dict type by ids.
 	 *
-	 * @param ids 需要删除的数据
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteDictTypeByIds(Long[] ids);
 
 	/**
-	 * 新增字典类型信息
+	 * Insert dict type.
 	 *
-	 * @param dictType 字典类型信息
-	 * @return 结果
+	 * @param dictType the dict type
+	 * @return the int
 	 */
 	public int insertDictType(SysDictType dictType);
 
 	/**
-	 * 修改字典类型信息
+	 * Update dict type.
 	 *
-	 * @param dictType 字典类型信息
-	 * @return 结果
+	 * @param dictType the dict type
+	 * @return the int
 	 */
 	public int updateDictType(SysDictType dictType);
 
 	/**
-	 * 校验字典类型称是否唯一
+	 * Check dict type unique.
 	 *
-	 * @param dictType 字典类型
-	 * @return 结果
+	 * @param dictType the dict type
+	 * @return the sys dict type
 	 */
 	public SysDictType checkDictTypeUnique(String dictType);
 }

@@ -16,30 +16,37 @@ import com.github.ecsoya.sword.wallet.service.IUserWalletAccountService;
 import com.github.ecsoya.sword.wallet.service.IUserWalletService;
 
 /**
- * 用户钱包Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Class UserWalletServiceImpl.
  */
 @Service
 public class UserWalletServiceImpl implements IUserWalletService {
+
+	/** The user wallet mapper. */
 	@Autowired
 	private UserWalletMapper userWalletMapper;
 
+	/** The wallet account service. */
 	@Autowired
 	private IUserWalletAccountService walletAccountService;
 
 	/**
-	 * 查询用户钱包
+	 * Select user wallet by id.
 	 *
-	 * @param userId 用户钱包ID
-	 * @return 用户钱包
+	 * @param userId the user id
+	 * @return the user wallet
 	 */
 	@Override
 	public UserWallet selectUserWalletById(Long userId) {
 		return selectUserWalletById(userId, false);
 	}
 
+	/**
+	 * Select user wallet by id.
+	 *
+	 * @param userId       the user id
+	 * @param withAccounts the with accounts
+	 * @return the user wallet
+	 */
 	@Override
 	public UserWallet selectUserWalletById(Long userId, boolean withAccounts) {
 		if (userId == null) {
@@ -53,10 +60,10 @@ public class UserWalletServiceImpl implements IUserWalletService {
 	}
 
 	/**
-	 * 查询用户钱包列表
+	 * Select user wallet list.
 	 *
-	 * @param userWallet 用户钱包
-	 * @return 用户钱包
+	 * @param userWallet the user wallet
+	 * @return the list
 	 */
 	@Override
 	public List<UserWallet> selectUserWalletList(UserWallet userWallet) {
@@ -64,10 +71,10 @@ public class UserWalletServiceImpl implements IUserWalletService {
 	}
 
 	/**
-	 * 新增用户钱包
+	 * Insert user wallet.
 	 *
-	 * @param userWallet 用户钱包
-	 * @return 结果
+	 * @param userWallet the user wallet
+	 * @return the int
 	 */
 	@Override
 	public int insertUserWallet(UserWallet userWallet) {
@@ -76,10 +83,10 @@ public class UserWalletServiceImpl implements IUserWalletService {
 	}
 
 	/**
-	 * 修改用户钱包
+	 * Update user wallet.
 	 *
-	 * @param userWallet 用户钱包
-	 * @return 结果
+	 * @param userWallet the user wallet
+	 * @return the int
 	 */
 	@Override
 	public int updateUserWallet(UserWallet userWallet) {
@@ -88,10 +95,10 @@ public class UserWalletServiceImpl implements IUserWalletService {
 	}
 
 	/**
-	 * 删除用户钱包对象
+	 * Delete user wallet by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWalletByIds(String ids) {
@@ -99,16 +106,24 @@ public class UserWalletServiceImpl implements IUserWalletService {
 	}
 
 	/**
-	 * 删除用户钱包信息
+	 * Delete user wallet by id.
 	 *
-	 * @param userId 用户钱包ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWalletById(Long userId) {
 		return userWalletMapper.deleteUserWalletById(userId);
 	}
 
+	/**
+	 * Creates the user wallet by user id.
+	 *
+	 * @param userId         the user id
+	 * @param password       the password
+	 * @param createAccounts the create accounts
+	 * @return the int
+	 */
 	@Override
 	public int createUserWalletByUserId(Long userId, String password, boolean createAccounts) {
 		if (userId == null) {
@@ -133,6 +148,13 @@ public class UserWalletServiceImpl implements IUserWalletService {
 		return 1;
 	}
 
+	/**
+	 * Verify user wallet password.
+	 *
+	 * @param userId   the user id
+	 * @param password the password
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> verifyUserWalletPassword(Long userId, String password) {
 		if (userId == null || StringUtils.isEmpty(password)) {
@@ -148,6 +170,14 @@ public class UserWalletServiceImpl implements IUserWalletService {
 		return CommonResult.fail(MessageUtils.message("UserWalletPasswordServiceImpl.2")); //$NON-NLS-1$
 	}
 
+	/**
+	 * Change user wallet password.
+	 *
+	 * @param userId      the user id
+	 * @param oldPassword the old password
+	 * @param newPassword the new password
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> changeUserWalletPassword(Long userId, String oldPassword, String newPassword) {
 		UserWallet wallet = selectUserWalletById(userId);
@@ -172,6 +202,13 @@ public class UserWalletServiceImpl implements IUserWalletService {
 		}
 	}
 
+	/**
+	 * Reset user wallet password.
+	 *
+	 * @param userId   the user id
+	 * @param password the password
+	 * @return the int
+	 */
 	@Override
 	public int resetUserWalletPassword(Long userId, String password) {
 		if (userId == null || StringUtils.isEmpty(password) || password.length() < 6) {

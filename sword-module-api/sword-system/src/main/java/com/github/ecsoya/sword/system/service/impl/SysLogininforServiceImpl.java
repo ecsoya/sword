@@ -11,20 +11,19 @@ import com.github.ecsoya.sword.system.mapper.SysLogininforMapper;
 import com.github.ecsoya.sword.system.service.ISysLogininforService;
 
 /**
- * 系统访问日志情况信息 服务层处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysLogininforServiceImpl.
  */
 @Service
 public class SysLogininforServiceImpl implements ISysLogininforService {
 
+	/** The logininfor mapper. */
 	@Autowired
 	private SysLogininforMapper logininforMapper;
 
 	/**
-	 * 新增系统登录日志
+	 * Insert logininfor.
 	 *
-	 * @param logininfor 访问日志对象
+	 * @param logininfor the logininfor
 	 */
 	@Override
 	public void insertLogininfor(SysLogininfor logininfor) {
@@ -32,10 +31,10 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
 	}
 
 	/**
-	 * 查询系统登录日志集合
+	 * Select logininfor list.
 	 *
-	 * @param logininfor 访问日志对象
-	 * @return 登录记录集合
+	 * @param logininfor the logininfor
+	 * @return the list
 	 */
 	@Override
 	public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor) {
@@ -43,10 +42,10 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
 	}
 
 	/**
-	 * 批量删除系统登录日志
+	 * Delete logininfor by ids.
 	 *
-	 * @param ids 需要删除的数据
-	 * @return
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteLogininforByIds(String ids) {
@@ -54,7 +53,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
 	}
 
 	/**
-	 * 清空系统登录日志
+	 * Clean logininfor.
 	 */
 	@Override
 	public void cleanLogininfor() {

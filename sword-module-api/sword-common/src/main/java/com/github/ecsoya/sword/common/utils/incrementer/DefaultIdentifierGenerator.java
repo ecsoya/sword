@@ -16,28 +16,45 @@
 package com.github.ecsoya.sword.common.utils.incrementer;
 
 /**
- * 默认生成器
- *
- * @author sd-wangtaicheng@sdcncsi.com.cn nieqiuqiu
- * @date 2019-10-15
- * @since 3.3.0
+ * The Class DefaultIdentifierGenerator.
  */
 public class DefaultIdentifierGenerator implements IdentifierGenerator {
 
+	/** The sequence. */
 	private final Sequence sequence;
 
+	/**
+	 * Instantiates a new default identifier generator.
+	 */
 	public DefaultIdentifierGenerator() {
 		this.sequence = new Sequence();
 	}
 
+	/**
+	 * Instantiates a new default identifier generator.
+	 *
+	 * @param workerId     the worker id
+	 * @param dataCenterId the data center id
+	 */
 	public DefaultIdentifierGenerator(long workerId, long dataCenterId) {
 		this.sequence = new Sequence(workerId, dataCenterId);
 	}
 
+	/**
+	 * Instantiates a new default identifier generator.
+	 *
+	 * @param sequence the sequence
+	 */
 	public DefaultIdentifierGenerator(Sequence sequence) {
 		this.sequence = sequence;
 	}
 
+	/**
+	 * Next id.
+	 *
+	 * @param entity the entity
+	 * @return the long
+	 */
 	@Override
 	public Long nextId(Object entity) {
 		return sequence.nextId();

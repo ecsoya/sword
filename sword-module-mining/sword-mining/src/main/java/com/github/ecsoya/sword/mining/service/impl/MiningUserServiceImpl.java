@@ -15,18 +15,30 @@ import com.github.ecsoya.sword.system.service.ISysConfigService;
 import com.github.ecsoya.sword.utils.MathUtils;
 import com.github.ecsoya.sword.wallet.service.IUserWalletAccountService;
 
+/**
+ * The Class MiningUserServiceImpl.
+ */
 @Service
 public class MiningUserServiceImpl implements IMiningUserService {
 
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
+	/** The mining user mapper. */
 	@Autowired
 	private MiningUserMapper miningUserMapper;
 
+	/** The account service. */
 	@Autowired
 	private IUserWalletAccountService accountService;
 
+	/**
+	 * Select mining user list.
+	 *
+	 * @param query the query
+	 * @return the list
+	 */
 	@Override
 	public List<MiningUser> selectMiningUserList(MiningUser query) {
 		if (query == null) {
@@ -47,6 +59,11 @@ public class MiningUserServiceImpl implements IMiningUserService {
 		return list;
 	}
 
+	/**
+	 * Select register user counts by date.
+	 *
+	 * @return the list
+	 */
 	@Override
 	public List<DateCount> selectRegisterUserCountsByDate() {
 		return miningUserMapper.selectRegisterUserCountsByDate();

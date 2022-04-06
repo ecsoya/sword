@@ -6,116 +6,113 @@ import java.util.Map;
 import com.github.ecsoya.sword.generator.domain.GenTable;
 
 /**
- * 业务 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface IGenTableService.
  */
 public interface IGenTableService {
+
 	/**
-	 * 查询业务列表
+	 * Select gen table list.
 	 *
-	 * @param genTable 业务信息
-	 * @return 业务集合
+	 * @param genTable the gen table
+	 * @return the list
 	 */
 	public List<GenTable> selectGenTableList(GenTable genTable);
 
 	/**
-	 * 查询据库列表
+	 * Select db table list.
 	 *
-	 * @param genTable 业务信息
-	 * @return 数据库表集合
+	 * @param genTable the gen table
+	 * @return the list
 	 */
 	public List<GenTable> selectDbTableList(GenTable genTable);
 
 	/**
-	 * 查询据库列表
+	 * Select db table list by names.
 	 *
-	 * @param tableNames 表名称组
-	 * @return 数据库表集合
+	 * @param tableNames the table names
+	 * @return the list
 	 */
 	public List<GenTable> selectDbTableListByNames(String[] tableNames);
 
 	/**
-	 * 查询所有表信息
+	 * Select gen table all.
 	 *
-	 * @return 表信息集合
+	 * @return the list
 	 */
 	public List<GenTable> selectGenTableAll();
 
 	/**
-	 * 查询业务信息
+	 * Select gen table by id.
 	 *
-	 * @param id 业务ID
-	 * @return 业务信息
+	 * @param id the id
+	 * @return the gen table
 	 */
 	public GenTable selectGenTableById(Long id);
 
 	/**
-	 * 修改业务
+	 * Update gen table.
 	 *
-	 * @param genTable 业务信息
-	 * @return 结果
+	 * @param genTable the gen table
 	 */
 	public void updateGenTable(GenTable genTable);
 
 	/**
-	 * 删除业务信息
+	 * Delete gen table by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
 	 */
 	public void deleteGenTableByIds(String ids);
 
 	/**
-	 * 导入表结构
+	 * Import gen table.
 	 *
-	 * @param tableList 导入表列表
-	 * @param operName  操作人员
+	 * @param tableList the table list
+	 * @param operName  the oper name
 	 */
 	public void importGenTable(List<GenTable> tableList, String operName);
 
 	/**
-	 * 预览代码
+	 * Preview code.
 	 *
-	 * @param tableId 表编号
-	 * @return 预览数据列表
+	 * @param tableId the table id
+	 * @return the map
 	 */
 	public Map<String, String> previewCode(Long tableId);
 
 	/**
-	 * 生成代码（下载方式）
+	 * Download code.
 	 *
-	 * @param tableName 表名称
-	 * @return 数据
+	 * @param tableName the table name
+	 * @return the byte[]
 	 */
 	public byte[] downloadCode(String tableName);
 
 	/**
-	 * 生成代码（自定义路径）
+	 * Generator code.
 	 *
-	 * @param tableName 表名称
+	 * @param tableName the table name
 	 */
 	public void generatorCode(String tableName);
 
 	/**
-	 * 同步数据库
+	 * Synch db.
 	 *
-	 * @param tableName 表名称
+	 * @param tableName the table name
 	 */
 	public void synchDb(String tableName);
 
 	/**
-	 * 批量生成代码（下载方式）
+	 * Download code.
 	 *
-	 * @param tableNames 表数组
-	 * @return 数据
+	 * @param tableNames the table names
+	 * @return the byte[]
 	 */
 	public byte[] downloadCode(String[] tableNames);
 
 	/**
-	 * 修改保存参数校验
+	 * Validate edit.
 	 *
-	 * @param genTable 业务信息
+	 * @param genTable the gen table
 	 */
 	public void validateEdit(GenTable genTable);
 }

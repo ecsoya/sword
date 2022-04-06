@@ -27,32 +27,35 @@ import com.github.ecsoya.sword.user.mapper.UserReferrerMapper;
 import com.github.ecsoya.sword.user.service.IUserReferrerService;
 
 /**
- * 用户直推Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Class UserReferrerServiceImpl.
  */
 @Service
 public class UserReferrerServiceImpl implements IUserReferrerService {
 
+	/** The user referrer mapper. */
 	@Autowired
 	private UserReferrerMapper userReferrerMapper;
 
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
+	/** The base url. */
 	private String baseUrl;
 
+	/**
+	 * Inits the.
+	 */
 	@PostConstruct
 	public void init() {
 		baseUrl = configService.selectConfigValueByKey(IMiningConstants.USER_REFERRAL_LINK_URL);
 	}
 
 	/**
-	 * 查询用户直推
+	 * Select user referrer by id.
 	 *
-	 * @param userId 用户直推ID
-	 * @return 用户直推
+	 * @param userId the user id
+	 * @return the user referrer
 	 */
 	@Override
 	public UserReferrer selectUserReferrerById(Long userId) {
@@ -72,10 +75,10 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	}
 
 	/**
-	 * 查询用户直推列表
+	 * Select user referrer list.
 	 *
-	 * @param userReferrer 用户直推
-	 * @return 用户直推
+	 * @param userReferrer the user referrer
+	 * @return the list
 	 */
 	@Override
 	public List<UserReferrer> selectUserReferrerList(UserReferrer userReferrer) {
@@ -83,10 +86,10 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	}
 
 	/**
-	 * 新增用户直推
+	 * Insert user referrer.
 	 *
-	 * @param userReferrer 用户直推
-	 * @return 结果
+	 * @param userReferrer the user referrer
+	 * @return the int
 	 */
 	@Override
 	public int insertUserReferrer(UserReferrer userReferrer) {
@@ -95,10 +98,10 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	}
 
 	/**
-	 * 修改用户直推
+	 * Update user referrer.
 	 *
-	 * @param userReferrer 用户直推
-	 * @return 结果
+	 * @param userReferrer the user referrer
+	 * @return the int
 	 */
 	@Override
 	public int updateUserReferrer(UserReferrer userReferrer) {
@@ -110,10 +113,10 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	}
 
 	/**
-	 * 删除用户直推对象
+	 * Delete user referrer by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserReferrerByIds(String ids) {
@@ -121,21 +124,32 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 	}
 
 	/**
-	 * 删除用户直推信息
+	 * Delete user referrer by id.
 	 *
-	 * @param userId 用户直推ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserReferrerById(Long userId) {
 		return userReferrerMapper.deleteUserReferrerById(userId);
 	}
 
+	/**
+	 * Select user referrer by code.
+	 *
+	 * @param code the code
+	 * @return the user referrer
+	 */
 	@Override
 	public UserReferrer selectUserReferrerByCode(String code) {
 		return userReferrerMapper.selectUserReferrerByCode(code);
 	}
 
+	/**
+	 * Select unfinished user referrers.
+	 *
+	 * @return the list
+	 */
 	@Override
 	public List<UserReferrer> selectUnfinishedUserReferrers() {
 		final UserReferrer query = new UserReferrer();
@@ -143,11 +157,24 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return selectUserReferrerList(query);
 	}
 
+	/**
+	 * Refresh user referrer by id.
+	 *
+	 * @param userId the user id
+	 * @return the user referrer
+	 */
 	@Override
 	public UserReferrer refreshUserReferrerById(Long userId) {
 		return refreshQrcode(selectUserReferrerById(userId), null);
 	}
 
+	/**
+	 * Refresh qrcode.
+	 *
+	 * @param referrer the referrer
+	 * @param leftOnly the left only
+	 * @return the user referrer
+	 */
 	private UserReferrer refreshQrcode(UserReferrer referrer, Boolean leftOnly) {
 		if (referrer == null) {
 			return null;
@@ -190,11 +217,22 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return referrer;
 	}
 
+	/**
+	 * Select all user ids.
+	 *
+	 * @return the list
+	 */
 	@Override
 	public List<Long> selectAllUserIds() {
 		return userReferrerMapper.selectAllUserIds();
 	}
 
+	/**
+	 * Select referral user ids by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	@Override
 	public List<Long> selectReferralUserIdsByUserId(Long userId) {
 		if (userId == null) {
@@ -203,6 +241,12 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return userReferrerMapper.selectReferralUserIdsByUserId(userId);
 	}
 
+	/**
+	 * Select user referrer list for update.
+	 *
+	 * @param baseUrl the base url
+	 * @return the list
+	 */
 	@Override
 	public List<UserReferrer> selectUserReferrerListForUpdate(String baseUrl) {
 		if (baseUrl == null) {
@@ -211,6 +255,14 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return userReferrerMapper.selectUserReferrerListForUpdate(baseUrl);
 	}
 
+	/**
+	 * Select referral count by user id.
+	 *
+	 * @param userId the user id
+	 * @param start  the start
+	 * @param end    the end
+	 * @return the long
+	 */
 	@Override
 	public Long selectReferralCountByUserId(Long userId, Date start, Date end) {
 		if (userId == null) {
@@ -219,6 +271,13 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return userReferrerMapper.selectReferralCountByUserId(userId, start, end);
 	}
 
+	/**
+	 * Force update referrer code.
+	 *
+	 * @param userId the user id
+	 * @param left   the left
+	 * @return the int
+	 */
 	@Override
 	public int forceUpdateReferrerCode(Long userId, boolean left) {
 		if (userId == null) {
@@ -242,6 +301,9 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return updateUserReferrer(referrer);
 	}
 
+	/**
+	 * Update all qrcode code.
+	 */
 	@Override
 	public void updateAllQrcodeCode() {
 		final String baseUrl = configService.selectConfigValueByKey(IMiningConstants.USER_REFERRAL_LINK_URL);
@@ -268,6 +330,12 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		});
 	}
 
+	/**
+	 * Compute right code enabled.
+	 *
+	 * @param userId the user id
+	 * @return the integer
+	 */
 	@Override
 	public Integer computeRightCodeEnabled(Long userId) {
 		if (userId == null) {
@@ -287,6 +355,12 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return UserReferrer.DISABLED;
 	}
 
+	/**
+	 * Compute left code enabled.
+	 *
+	 * @param userId the user id
+	 * @return the integer
+	 */
 	@Override
 	public Integer computeLeftCodeEnabled(Long userId) {
 		if (userId == null) {
@@ -295,6 +369,12 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return UserReferrer.ENABLED;
 	}
 
+	/**
+	 * Update user referrer code enabled.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	@Override
 	public int updateUserReferrerCodeEnabled(Long userId) {
 		if (userId == null) {
@@ -317,11 +397,23 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return updateUserReferrer(update);
 	}
 
+	/**
+	 * Select all.
+	 *
+	 * @return the list
+	 */
 	@Override
 	public List<UserReferrer> selectAll() {
 		return selectUserReferrerList(new UserReferrer());
 	}
 
+	/**
+	 * Select umbrella user ids.
+	 *
+	 * @param userId   the user id
+	 * @param allUsers the all users
+	 * @return the list
+	 */
 	@Override
 	public List<Long> selectUmbrellaUserIds(Long userId, List<UserReferrer> allUsers) {
 		if (userId == null || allUsers == null || allUsers.isEmpty()) {
@@ -349,6 +441,13 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return results;
 	}
 
+	/**
+	 * Find user referrer.
+	 *
+	 * @param userId   the user id
+	 * @param allUsers the all users
+	 * @return the user referrer
+	 */
 	private UserReferrer findUserReferrer(Long userId, List<UserReferrer> allUsers) {
 		if (userId == null || allUsers == null || allUsers.isEmpty()) {
 			return null;
@@ -356,6 +455,13 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return allUsers.stream().filter(u -> userId.equals(u.getUserId())).findFirst().orElse(null);
 	}
 
+	/**
+	 * Select umbrella user ids depth firstly.
+	 *
+	 * @param userId   the user id
+	 * @param allUsers the all users
+	 * @return the list
+	 */
 	@Override
 	public List<Long> selectUmbrellaUserIdsDepthFirstly(Long userId, List<UserReferrer> allUsers) {
 		if (userId == null || allUsers == null || allUsers.isEmpty()) {
@@ -371,6 +477,13 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return results;
 	}
 
+	/**
+	 * Find referral list.
+	 *
+	 * @param userId   the user id
+	 * @param allUsers the all users
+	 * @return the list
+	 */
 	private List<UserReferrer> findReferralList(Long userId, List<UserReferrer> allUsers) {
 		if (userId == null || allUsers == null || allUsers.isEmpty()) {
 			return Collections.emptyList();
@@ -378,6 +491,12 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return allUsers.stream().filter(u -> userId.equals(u.getReferralId())).collect(Collectors.toList());
 	}
 
+	/**
+	 * Select user referrer list by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	@Override
 	public List<UserProfile> selectUserReferrerListByUserId(Long userId) {
 		if (userId == null) {
@@ -386,6 +505,12 @@ public class UserReferrerServiceImpl implements IUserReferrerService {
 		return userReferrerMapper.selectUserReferrerListByUserId(userId);
 	}
 
+	/**
+	 * Select user referrer info list.
+	 *
+	 * @param query the query
+	 * @return the list
+	 */
 	@Override
 	public List<UserReferrerInfo> selectUserReferrerInfoList(UserReferrerInfo query) {
 		return userReferrerMapper.selectUserReferrerInfoList(query);

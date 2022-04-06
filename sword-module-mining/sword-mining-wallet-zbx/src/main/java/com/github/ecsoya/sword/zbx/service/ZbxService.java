@@ -31,13 +31,25 @@ import com.github.ecsoya.sword.zbx.domain.ZbxResponse;
 import com.github.ecsoya.sword.zbx.domain.ZbxTicker;
 import com.github.ecsoya.sword.zbx.utils.HttpUtil;
 
+/**
+ * The Class ZbxService.
+ */
 @Service
 public class ZbxService implements IWalletBusinessService {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(ZbxService.class);
+
+	/** The api config. */
 	@Autowired
 	private ZbxWalletConfig apiConfig;
 
+	/**
+	 * Gets the ticker.
+	 *
+	 * @param symbol the symbol
+	 * @return the ticker
+	 */
 	public CommonResult<Ticker> getTicker(String symbol) {
 		if (StringUtils.isEmpty(symbol)) {
 			return CommonResult.fail("参数错误");
@@ -66,6 +78,13 @@ public class ZbxService implements IWalletBusinessService {
 		return CommonResult.fail();
 	}
 
+	/**
+	 * Gets the deposit address.
+	 *
+	 * @param symbol the symbol
+	 * @param chain  the chain
+	 * @return the deposit address
+	 */
 	@Override
 	public CommonResult<Address> getDepositAddress(String symbol, String chain) {
 		if (StringUtils.isEmpty(symbol)) {
@@ -87,6 +106,18 @@ public class ZbxService implements IWalletBusinessService {
 		return CommonResult.fail(post.getInfo());
 	}
 
+	/**
+	 * Withdrawal.
+	 *
+	 * @param orderNo the order no
+	 * @param symbol  the symbol
+	 * @param chain   the chain
+	 * @param address the address
+	 * @param memo    the memo
+	 * @param amount  the amount
+	 * @param auto    the auto
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
 			String memo, BigDecimal amount, boolean auto) {
@@ -105,6 +136,12 @@ public class ZbxService implements IWalletBusinessService {
 		return post(url, getSignedParams(values), WithdrawalResponse.class);
 	}
 
+	/**
+	 * Gets the signed params.
+	 *
+	 * @param params the params
+	 * @return the signed params
+	 */
 	private Map<String, Object> getSignedParams(Map<String, Object> params) {
 		final Map<String, Object> signingParams = new HashMap<String, Object>();
 		signingParams.put("accessKey", apiConfig.getAccessKey());
@@ -133,6 +170,15 @@ public class ZbxService implements IWalletBusinessService {
 		return signingParams;
 	}
 
+	/**
+	 * Post.
+	 *
+	 * @param <T>    the generic type
+	 * @param url    the url
+	 * @param params the params
+	 * @param type   the type
+	 * @return the common result
+	 */
 	private <T> CommonResult<T> post(String url, Map<String, Object> params, Class<T> type) {
 		final String paramToUrl = HttpUtil.paramToUrl(params);
 		log.debug("发送请求：url=" + url + "?" + paramToUrl);
@@ -147,6 +193,14 @@ public class ZbxService implements IWalletBusinessService {
 		}
 	}
 
+	/**
+	 * Parses the.
+	 *
+	 * @param <T>  the generic type
+	 * @param type the type
+	 * @param json the json
+	 * @return the common result
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private <T> CommonResult<T> parse(Class<T> type, String json) {
 		log.debug("发送请求返回：" + json);
@@ -169,6 +223,14 @@ public class ZbxService implements IWalletBusinessService {
 		}
 	}
 
+	/**
+	 * Check withdrawal address.
+	 *
+	 * @param symbol  the symbol
+	 * @param chain   the chain
+	 * @param address the address
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> checkWithdrawalAddress(String symbol, String chain, String address) {
 		if (StringUtils.isEmpty(symbol) || StringUtils.isEmpty(address)) {

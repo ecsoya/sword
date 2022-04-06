@@ -23,24 +23,36 @@ import com.github.ecsoya.sword.system.domain.SysOperLog;
 import com.github.ecsoya.sword.system.service.ISysOperLogService;
 
 /**
- * 操作日志记录
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysOperlogController.
  */
 @Controller
 @RequestMapping("/monitor/operlog")
 public class SysOperlogController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "monitor/operlog";
 
+	/** The oper log service. */
 	@Autowired
 	private ISysOperLogService operLogService;
 
+	/**
+	 * Operlog.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("monitor:operlog:view")
 	@GetMapping()
 	public String operlog() {
 		return prefix + "/operlog";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param operLog the oper log
+	 * @return the table data info
+	 */
 	@RequiresPermissions("monitor:operlog:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -51,6 +63,12 @@ public class SysOperlogController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param operLog the oper log
+	 * @return the ajax result
+	 */
 	@Log(title = "操作日志", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("monitor:operlog:export")
 	@PostMapping("/export")
@@ -62,6 +80,12 @@ public class SysOperlogController extends BaseController {
 		return util.exportExcel(list, "操作日志");
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("monitor:operlog:remove")
 	@PostMapping("/remove")
 	@ResponseBody
@@ -69,6 +93,13 @@ public class SysOperlogController extends BaseController {
 		return toAjax(operLogService.deleteOperLogByIds(ids));
 	}
 
+	/**
+	 * Detail.
+	 *
+	 * @param operId the oper id
+	 * @param mmap   the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("monitor:operlog:detail")
 	@GetMapping("/detail/{operId}")
 	public String detail(@PathVariable("operId") Long operId, ModelMap mmap) {
@@ -76,6 +107,11 @@ public class SysOperlogController extends BaseController {
 		return prefix + "/detail";
 	}
 
+	/**
+	 * Clean.
+	 *
+	 * @return the ajax result
+	 */
 	@Log(title = "操作日志", businessType = BusinessType.CLEAN)
 	@RequiresPermissions("monitor:operlog:remove")
 	@PostMapping("/clean")

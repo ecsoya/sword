@@ -6,18 +6,25 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import com.github.ecsoya.sword.common.utils.html.EscapeUtil;
 
 /**
- * XSS过滤处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class XssHttpServletRequestWrapper.
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
+
 	/**
-	 * @param request
+	 * Instantiates a new xss http servlet request wrapper.
+	 *
+	 * @param request the request
 	 */
 	public XssHttpServletRequestWrapper(HttpServletRequest request) {
 		super(request);
 	}
 
+	/**
+	 * Gets the parameter values.
+	 *
+	 * @param name the name
+	 * @return the parameter values
+	 */
 	@Override
 	public String[] getParameterValues(String name) {
 		final String[] values = super.getParameterValues(name);

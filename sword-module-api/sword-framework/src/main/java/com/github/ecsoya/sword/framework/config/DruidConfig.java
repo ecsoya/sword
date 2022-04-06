@@ -28,12 +28,17 @@ import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 import com.github.ecsoya.sword.framework.config.properties.DruidProperties;
 
 /**
- * druid 配置多数据源
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class DruidConfig.
  */
 @Configuration
 public class DruidConfig {
+
+	/**
+	 * Master data source.
+	 *
+	 * @param druidProperties the druid properties
+	 * @return the data source
+	 */
 	@Bean
 	@ConfigurationProperties("spring.datasource.druid.master")
 	public DataSource masterDataSource(DruidProperties druidProperties) {
@@ -41,6 +46,12 @@ public class DruidConfig {
 		return druidProperties.dataSource(dataSource);
 	}
 
+	/**
+	 * Slave data source.
+	 *
+	 * @param druidProperties the druid properties
+	 * @return the data source
+	 */
 	@Bean
 	@ConfigurationProperties("spring.datasource.druid.slave")
 	@ConditionalOnProperty(prefix = "spring.datasource.druid.slave", name = "enabled", havingValue = "true")
@@ -49,6 +60,12 @@ public class DruidConfig {
 		return druidProperties.dataSource(dataSource);
 	}
 
+	/**
+	 * Data source.
+	 *
+	 * @param masterDataSource the master data source
+	 * @return the dynamic data source
+	 */
 	@Bean(name = "dynamicDataSource")
 	@Primary
 	public DynamicDataSource dataSource(DataSource masterDataSource) {
@@ -59,11 +76,11 @@ public class DruidConfig {
 	}
 
 	/**
-	 * 设置数据源
+	 * Sets the data source.
 	 *
-	 * @param targetDataSources 备选数据源集合
-	 * @param sourceName        数据源名称
-	 * @param beanName          bean名称
+	 * @param targetDataSources the target data sources
+	 * @param sourceName        the source name
+	 * @param beanName          the bean name
 	 */
 	public void setDataSource(Map<Object, Object> targetDataSources, String sourceName, String beanName) {
 		try {
@@ -74,7 +91,10 @@ public class DruidConfig {
 	}
 
 	/**
-	 * 去除监控页面底部的广告
+	 * Removes the druid filter registration bean.
+	 *
+	 * @param properties the properties
+	 * @return the filter registration bean
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean

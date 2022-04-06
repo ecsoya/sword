@@ -20,20 +20,22 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 钱包地址接口
- *
- * @author ecsoya
+ * The Class UserAddressController.
  */
 @RestController
 @RequestMapping("/user/address")
 @Api(tags = { "提币地址" }, description = "增、删、改、查")
 public class UserAddressController extends BaseController {
 
+	/** The user address service. */
 	@Autowired
 	private IUserWalletAddressService userAddressService;
 
 	/**
-	 * 查询所有钱包地址
+	 * List.
+	 *
+	 * @param symbol the symbol
+	 * @return the common result
 	 */
 	@ApiOperation("提币地址列表")
 	@GetMapping("/list")
@@ -42,6 +44,14 @@ public class UserAddressController extends BaseController {
 		return CommonResult.build(userAddressService.selectUserWalletAddressByUserId(userId, symbol));
 	}
 
+	/**
+	 * Adds the.
+	 *
+	 * @param name    the name
+	 * @param symbol  the symbol
+	 * @param address the address
+	 * @return the common result
+	 */
 	@ApiOperation("添加提币地址")
 	@PostMapping("/add")
 	@RepeatSubmit
@@ -58,8 +68,12 @@ public class UserAddressController extends BaseController {
 	}
 
 	/**
-	 * 更新提现或转账地址
+	 * Edits the.
 	 *
+	 * @param name    the name
+	 * @param id      the id
+	 * @param address the address
+	 * @return the common result
 	 */
 	@ApiOperation("更新提币地址")
 	@PostMapping("/edit")
@@ -76,8 +90,10 @@ public class UserAddressController extends BaseController {
 	}
 
 	/**
-	 * 删除提现或转账地址
+	 * Removes the.
 	 *
+	 * @param ids the ids
+	 * @return the common result
 	 */
 	@ApiOperation("删除提币地址")
 	@PostMapping("/remove")

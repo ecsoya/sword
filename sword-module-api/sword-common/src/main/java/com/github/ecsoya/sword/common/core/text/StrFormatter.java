@@ -3,28 +3,28 @@ package com.github.ecsoya.sword.common.core.text;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * 字符串格式化
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class StrFormatter.
  */
 public class StrFormatter {
+
+	/** The Constant EMPTY_JSON. */
 	public static final String EMPTY_JSON = "{}";
+
+	/** The Constant C_BACKSLASH. */
 	public static final char C_BACKSLASH = '\\';
+
+	/** The Constant C_DELIM_START. */
 	public static final char C_DELIM_START = '{';
+
+	/** The Constant C_DELIM_END. */
 	public static final char C_DELIM_END = '}';
 
 	/**
-	 * 格式化字符串<br>
-	 * 此方法只是简单将占位符 {} 按照顺序替换为参数<br>
-	 * 如果想输出 {} 使用 \\转义 { 即可，如果想输出 {} 之前的 \ 使用双转义符 \\\\ 即可<br>
-	 * 例：<br>
-	 * 通常使用：format("this is {} for {}", "a", "b") -> this is a for b<br>
-	 * 转义{}： format("this is \\{} for {}", "a", "b") -> this is \{} for a<br>
-	 * 转义\： format("this is \\\\{} for {}", "a", "b") -> this is \a for b<br>
+	 * Format.
 	 *
-	 * @param strPattern 字符串模板
-	 * @param argArray   参数列表
-	 * @return 结果
+	 * @param strPattern the str pattern
+	 * @param argArray   the arg array
+	 * @return the string
 	 */
 	public static String format(final String strPattern, final Object... argArray) {
 		if (StringUtils.isEmpty(strPattern) || StringUtils.isEmpty(argArray)) {

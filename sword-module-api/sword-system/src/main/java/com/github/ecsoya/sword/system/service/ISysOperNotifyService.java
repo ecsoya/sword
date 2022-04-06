@@ -6,59 +6,62 @@ import com.github.ecsoya.sword.system.domain.SysOperLog;
 import com.github.ecsoya.sword.system.domain.SysOperNotify;
 
 /**
- * 敏感操作通知Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-04-06
+ * The Interface ISysOperNotifyService.
  */
 public interface ISysOperNotifyService {
+
 	/**
-	 * 查询敏感操作通知
+	 * Select sys oper notify by id.
 	 *
-	 * @param id 敏感操作通知ID
-	 * @return 敏感操作通知
+	 * @param id the id
+	 * @return the sys oper notify
 	 */
 	public SysOperNotify selectSysOperNotifyById(Long id);
 
 	/**
-	 * 查询敏感操作通知列表
+	 * Select sys oper notify list.
 	 *
-	 * @param sysOperNotify 敏感操作通知
-	 * @return 敏感操作通知集合
+	 * @param sysOperNotify the sys oper notify
+	 * @return the list
 	 */
 	public List<SysOperNotify> selectSysOperNotifyList(SysOperNotify sysOperNotify);
 
 	/**
-	 * 新增敏感操作通知
+	 * Insert sys oper notify.
 	 *
-	 * @param sysOperNotify 敏感操作通知
-	 * @return 结果
+	 * @param sysOperNotify the sys oper notify
+	 * @return the int
 	 */
 	public int insertSysOperNotify(SysOperNotify sysOperNotify);
 
 	/**
-	 * 修改敏感操作通知
+	 * Update sys oper notify.
 	 *
-	 * @param sysOperNotify 敏感操作通知
-	 * @return 结果
+	 * @param sysOperNotify the sys oper notify
+	 * @return the int
 	 */
 	public int updateSysOperNotify(SysOperNotify sysOperNotify);
 
 	/**
-	 * 批量删除敏感操作通知
+	 * Delete sys oper notify by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteSysOperNotifyByIds(String ids);
 
 	/**
-	 * 删除敏感操作通知信息
+	 * Delete sys oper notify by id.
 	 *
-	 * @param id 敏感操作通知ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteSysOperNotifyById(Long id);
 
+	/**
+	 * Notify by oper log.
+	 *
+	 * @param operLog the oper log
+	 */
 	public void notifyByOperLog(SysOperLog operLog);
 }

@@ -5,63 +5,78 @@ import java.util.List;
 import com.github.ecsoya.sword.mining.domain.MiningSymbol;
 
 /**
- * 币种Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-08
+ * The Interface IMiningSymbolService.
  */
 public interface IMiningSymbolService {
+
 	/**
-	 * 查询币种
+	 * Select mining symbol by id.
 	 *
-	 * @param symbol 币种ID
-	 * @return 币种
+	 * @param symbol the symbol
+	 * @return the mining symbol
 	 */
 	public MiningSymbol selectMiningSymbolById(String symbol);
 
 	/**
-	 * 查询币种列表
+	 * Select mining symbol list.
 	 *
-	 * @param miningSymbol 币种
-	 * @return 币种集合
+	 * @param miningSymbol the mining symbol
+	 * @return the list
 	 */
 	public List<MiningSymbol> selectMiningSymbolList(MiningSymbol miningSymbol);
 
 	/**
-	 * 新增币种
+	 * Insert mining symbol.
 	 *
-	 * @param miningSymbol 币种
-	 * @return 结果
+	 * @param miningSymbol the mining symbol
+	 * @return the int
 	 */
 	public int insertMiningSymbol(MiningSymbol miningSymbol);
 
 	/**
-	 * 修改币种
+	 * Update mining symbol.
 	 *
-	 * @param miningSymbol 币种
-	 * @return 结果
+	 * @param miningSymbol the mining symbol
+	 * @return the int
 	 */
 	public int updateMiningSymbol(MiningSymbol miningSymbol);
 
 	/**
-	 * 批量删除币种
+	 * Delete mining symbol by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteMiningSymbolByIds(String ids);
 
 	/**
-	 * 删除币种信息
+	 * Delete mining symbol by id.
 	 *
-	 * @param symbol 币种ID
-	 * @return 结果
+	 * @param symbol the symbol
+	 * @return the int
 	 */
 	public int deleteMiningSymbolById(String symbol);
 
+	/**
+	 * Select mining symbols.
+	 *
+	 * @return the list
+	 */
 	List<String> selectMiningSymbols();
 
+	/**
+	 * Select mining symbols.
+	 *
+	 * @param onlyBitcoin the only bitcoin
+	 * @return the list
+	 */
 	List<String> selectMiningSymbols(boolean onlyBitcoin);
 
+	/**
+	 * Select mining symbol chain.
+	 *
+	 * @param symbol the symbol
+	 * @return the string
+	 */
 	public String selectMiningSymbolChain(String symbol);
 }

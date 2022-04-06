@@ -5,79 +5,78 @@ import java.util.List;
 import com.github.ecsoya.sword.generator.domain.GenTable;
 
 /**
- * 业务 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface GenTableMapper.
  */
 public interface GenTableMapper {
+
 	/**
-	 * 查询业务列表
+	 * Select gen table list.
 	 *
-	 * @param genTable 业务信息
-	 * @return 业务集合
+	 * @param genTable the gen table
+	 * @return the list
 	 */
 	public List<GenTable> selectGenTableList(GenTable genTable);
 
 	/**
-	 * 查询据库列表
+	 * Select db table list.
 	 *
-	 * @param genTable 业务信息
-	 * @return 数据库表集合
+	 * @param genTable the gen table
+	 * @return the list
 	 */
 	public List<GenTable> selectDbTableList(GenTable genTable);
 
 	/**
-	 * 查询据库列表
+	 * Select db table list by names.
 	 *
-	 * @param tableNames 表名称组
-	 * @return 数据库表集合
+	 * @param tableNames the table names
+	 * @return the list
 	 */
 	public List<GenTable> selectDbTableListByNames(String[] tableNames);
 
 	/**
-	 * 查询所有表信息
+	 * Select gen table all.
 	 *
-	 * @return 表信息集合
+	 * @return the list
 	 */
 	public List<GenTable> selectGenTableAll();
 
 	/**
-	 * 查询表ID业务信息
+	 * Select gen table by id.
 	 *
-	 * @param id 业务ID
-	 * @return 业务信息
+	 * @param id the id
+	 * @return the gen table
 	 */
 	public GenTable selectGenTableById(Long id);
 
 	/**
-	 * 查询表名称业务信息
+	 * Select gen table by name.
 	 *
-	 * @param tableName 表名称
-	 * @return 业务信息
+	 * @param tableName the table name
+	 * @return the gen table
 	 */
 	public GenTable selectGenTableByName(String tableName);
 
 	/**
-	 * 新增业务
+	 * Insert gen table.
 	 *
-	 * @param genTable 业务信息
-	 * @return 结果
+	 * @param genTable the gen table
+	 * @return the int
 	 */
 	public int insertGenTable(GenTable genTable);
 
 	/**
-	 * 修改业务
+	 * Update gen table.
 	 *
-	 * @param genTable 业务信息
-	 * @return 结果
+	 * @param genTable the gen table
+	 * @return the int
 	 */
 	public int updateGenTable(GenTable genTable);
 
 	/**
-	 * 批量删除业务
+	 * Delete gen table by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteGenTableByIds(Long[] ids);
 }

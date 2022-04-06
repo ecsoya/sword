@@ -5,70 +5,96 @@ import java.util.List;
 import com.github.ecsoya.sword.user.domain.UserBinaryTree;
 
 /**
- * 用户双区树Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface IUserBinaryTreeService.
  */
 public interface IUserBinaryTreeService {
+
 	/**
-	 * 查询用户双区树
+	 * Select user binary tree by id.
 	 *
-	 * @param userId 用户双区树ID
-	 * @return 用户双区树
+	 * @param userId the user id
+	 * @return the user binary tree
 	 */
 	public UserBinaryTree selectUserBinaryTreeById(Long userId);
 
 	/**
-	 * 查询用户双区树列表
+	 * Select user binary tree list.
 	 *
-	 * @param userBinaryTree 用户双区树
-	 * @return 用户双区树集合
+	 * @param userBinaryTree the user binary tree
+	 * @return the list
 	 */
 	public List<UserBinaryTree> selectUserBinaryTreeList(UserBinaryTree userBinaryTree);
 
 	/**
-	 * 新增用户双区树
+	 * Insert user binary tree.
 	 *
-	 * @param userBinaryTree 用户双区树
-	 * @return 结果
+	 * @param userBinaryTree the user binary tree
+	 * @return the int
 	 */
 	public int insertUserBinaryTree(UserBinaryTree userBinaryTree);
 
 	/**
-	 * 修改用户双区树
+	 * Update user binary tree.
 	 *
-	 * @param userBinaryTree 用户双区树
-	 * @return 结果
+	 * @param userBinaryTree the user binary tree
+	 * @return the int
 	 */
 	public int updateUserBinaryTree(UserBinaryTree userBinaryTree);
 
 	/**
-	 * 批量删除用户双区树
+	 * Delete user binary tree by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserBinaryTreeByIds(String ids);
 
 	/**
-	 * 删除用户双区树信息
+	 * Delete user binary tree by id.
 	 *
-	 * @param userId 用户双区树ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int deleteUserBinaryTreeById(Long userId);
 
 	/**
-	 * 加锁更新所有未完成的树
+	 * Update user binary trees.
+	 *
+	 * @return the int
 	 */
 	public int updateUserBinaryTrees();
 
+	/**
+	 * Select all.
+	 *
+	 * @return the list
+	 */
 	public List<UserBinaryTree> selectAll();
 
+	/**
+	 * Select umbrella binary tree list.
+	 *
+	 * @param userId   the user id
+	 * @param treeList the tree list
+	 * @return the list
+	 */
 	public List<UserBinaryTree> selectUmbrellaBinaryTreeList(Long userId, List<UserBinaryTree> treeList);
 
+	/**
+	 * Select umbrella binary tree ids.
+	 *
+	 * @param userId   the user id
+	 * @param treeList the tree list
+	 * @return the list
+	 */
 	public List<Long> selectUmbrellaBinaryTreeIds(Long userId, List<UserBinaryTree> treeList);
 
+	/**
+	 * Select user binary tree by user id.
+	 *
+	 * @param userId   the user id
+	 * @param treeList the tree list
+	 * @return the user binary tree
+	 */
 	public UserBinaryTree selectUserBinaryTreeByUserId(Long userId, List<UserBinaryTree> treeList);
 }

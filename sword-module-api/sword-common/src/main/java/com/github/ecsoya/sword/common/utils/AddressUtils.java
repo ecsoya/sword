@@ -10,19 +10,27 @@ import com.github.ecsoya.sword.common.constant.Constants;
 import com.github.ecsoya.sword.common.utils.http.HttpUtils;
 
 /**
- * 获取地址类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class AddressUtils.
  */
 public class AddressUtils {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
 
+	/** The Constant IP_URL. */
 	// IP地址查询
 	public static final String IP_URL = "http://whois.pconline.com.cn/ipJson.jsp";
 
+	/** The Constant UNKNOWN. */
 	// 未知地址
 	public static final String UNKNOWN = "XX XX";
 
+	/**
+	 * Gets the real address by IP.
+	 *
+	 * @param ip the ip
+	 * @return the real address by IP
+	 */
 	public static String getRealAddressByIP(String ip) {
 		final String address = UNKNOWN;
 		// 内网不查询
@@ -47,6 +55,11 @@ public class AddressUtils {
 		return address;
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		System.out.println(HttpUtils.sendGet(IP_URL, "ip=42.91.172.170&json=true", Constants.GBK));
 	}

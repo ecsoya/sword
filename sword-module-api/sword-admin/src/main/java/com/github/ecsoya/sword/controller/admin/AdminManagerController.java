@@ -30,29 +30,44 @@ import com.github.ecsoya.sword.system.service.ISysRoleService;
 import com.github.ecsoya.sword.system.service.ISysUserService;
 
 /**
- * 用户信息
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class AdminManagerController.
  */
 @Controller
 @RequestMapping("/admin/manager")
 public class AdminManagerController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "admin/manager";
 
+	/** The Constant MANAGER_DEPT_ID. */
 	private static final Long MANAGER_DEPT_ID = 101l;
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/** The role service. */
 	@Autowired
 	private ISysRoleService roleService;
 
+	/**
+	 * Manager.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("admin:manager:view")
 	@GetMapping()
 	public String manager(ModelMap mmap) {
 		return prefix + "/manager";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param manager the manager
+	 * @return the table data info
+	 */
 	@RequiresPermissions("admin:manager:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -63,6 +78,12 @@ public class AdminManagerController extends BaseController {
 		return getDataTable(userService.selectUserList(manager));
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param manager the manager
+	 * @return the ajax result
+	 */
 	@Log(title = "导出管理员", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("admin:manager:export")
 	@PostMapping("/export")
@@ -75,6 +96,14 @@ public class AdminManagerController extends BaseController {
 		return util.exportExcel(list, "用户数据");
 	}
 
+	/**
+	 * Import data.
+	 *
+	 * @param file          the file
+	 * @param updateSupport the update support
+	 * @return the ajax result
+	 * @throws Exception the exception
+	 */
 	@Log(title = "导入管理员", businessType = BusinessType.IMPORT)
 	@RequiresPermissions("admin:manager:import")
 	@PostMapping("/importData")
@@ -87,6 +116,11 @@ public class AdminManagerController extends BaseController {
 		return AjaxResult.success(message);
 	}
 
+	/**
+	 * Import template.
+	 *
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("admin:manager:view")
 	@GetMapping("/importTemplate")
 	@ResponseBody
@@ -96,7 +130,10 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 新增用户
+	 * Adds the.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add(ModelMap mmap) {
@@ -107,7 +144,10 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 新增保存用户
+	 * Adds the save.
+	 *
+	 * @param manager the manager
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:manager:add")
 	@Log(title = "添加管理员", businessType = BusinessType.INSERT)
@@ -131,7 +171,11 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 修改用户
+	 * Edits the.
+	 *
+	 * @param userId the user id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{userId}")
 	public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
@@ -143,7 +187,10 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 修改保存用户
+	 * Edits the save.
+	 *
+	 * @param manager the manager
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:manager:edit")
 	@Log(title = "更新管理员", businessType = BusinessType.UPDATE)
@@ -161,6 +208,13 @@ public class AdminManagerController extends BaseController {
 		return toAjax(userService.updateUser(manager));
 	}
 
+	/**
+	 * Reset pwd.
+	 *
+	 * @param userId the user id
+	 * @param mmap   the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("admin:manager:resetPwd")
 	@GetMapping("/resetPwd/{userId}")
 	public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap) {
@@ -168,6 +222,12 @@ public class AdminManagerController extends BaseController {
 		return prefix + "/resetPwd";
 	}
 
+	/**
+	 * Reset pwd save.
+	 *
+	 * @param manager the manager
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("admin:manager:resetPwd")
 	@Log(title = "重置管理员密码", businessType = BusinessType.UPDATE)
 	@PostMapping("/resetPwd")
@@ -187,7 +247,11 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 进入授权角色页
+	 * Auth role.
+	 *
+	 * @param userId the user id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/authRole/{userId}")
 	public String authRole(@PathVariable("userId") Long userId, ModelMap mmap) {
@@ -201,7 +265,11 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 用户授权角色
+	 * Insert auth role.
+	 *
+	 * @param userId  the user id
+	 * @param roleIds the role ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:manager:add")
 	@Log(title = "用户管理", businessType = BusinessType.GRANT)
@@ -212,6 +280,12 @@ public class AdminManagerController extends BaseController {
 		return success();
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("admin:manager:remove")
 	@Log(title = "用户管理", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
@@ -225,7 +299,10 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 校验用户名
+	 * Check login name unique.
+	 *
+	 * @param manager the manager
+	 * @return the string
 	 */
 	@PostMapping("/checkLoginNameUnique")
 	@ResponseBody
@@ -234,7 +311,10 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 校验手机号码
+	 * Check phone unique.
+	 *
+	 * @param manager the manager
+	 * @return the string
 	 */
 	@PostMapping("/checkPhoneUnique")
 	@ResponseBody
@@ -243,7 +323,10 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 校验email邮箱
+	 * Check email unique.
+	 *
+	 * @param manager the manager
+	 * @return the string
 	 */
 	@PostMapping("/checkEmailUnique")
 	@ResponseBody
@@ -252,7 +335,10 @@ public class AdminManagerController extends BaseController {
 	}
 
 	/**
-	 * 用户状态修改
+	 * Change status.
+	 *
+	 * @param manager the manager
+	 * @return the ajax result
 	 */
 	@Log(title = "用户管理", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("admin:manager:edit")

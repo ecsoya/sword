@@ -5,18 +5,15 @@ import java.io.File;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 文件类型工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class FileTypeUtils.
  */
 public class FileTypeUtils {
+
 	/**
-	 * 获取文件类型
-	 * <p>
-	 * 例如: sword.txt, 返回: txt
+	 * Gets the file type.
 	 *
-	 * @param file 文件名
-	 * @return 后缀（不含".")
+	 * @param file the file
+	 * @return the file type
 	 */
 	public static String getFileType(File file) {
 		if (null == file) {
@@ -26,12 +23,10 @@ public class FileTypeUtils {
 	}
 
 	/**
-	 * 获取文件类型
-	 * <p>
-	 * 例如: sword.txt, 返回: txt
+	 * Gets the file type.
 	 *
-	 * @param fileName 文件名
-	 * @return 后缀（不含".")
+	 * @param fileName the file name
+	 * @return the file type
 	 */
 	public static String getFileType(String fileName) {
 		final int separatorIndex = fileName.lastIndexOf(".");
@@ -42,10 +37,10 @@ public class FileTypeUtils {
 	}
 
 	/**
-	 * 获取文件类型
+	 * Gets the file extend name.
 	 *
-	 * @param photoByte 文件字节码
-	 * @return 后缀（不含".")
+	 * @param photoByte the photo byte
+	 * @return the file extend name
 	 */
 	public static String getFileExtendName(byte[] photoByte) {
 		String strFileExtendName = "JPG";

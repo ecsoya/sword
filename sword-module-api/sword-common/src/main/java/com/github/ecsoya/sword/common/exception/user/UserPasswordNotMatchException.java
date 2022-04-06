@@ -1,13 +1,16 @@
 package com.github.ecsoya.sword.common.exception.user;
 
 /**
- * 用户密码不正确或不符合规范异常类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class UserPasswordNotMatchException.
  */
 public class UserPasswordNotMatchException extends UserException {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instantiates a new user password not match exception.
+	 */
 	public UserPasswordNotMatchException() {
 		super("user.password.not.match", null);
 	}

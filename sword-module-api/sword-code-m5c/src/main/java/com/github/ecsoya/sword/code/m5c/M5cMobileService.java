@@ -14,27 +14,25 @@ import org.springframework.stereotype.Service;
 import com.github.ecsoya.sword.common.utils.security.Md5Utils;
 
 /**
- * username 用户名 password_md5 密码 mobile 手机号 apikey apikey秘钥 content 短信内容
- * startTime UNIX时间戳，不写为立刻发送，http://tool.chinaz.com/Tools/unixtime.aspx
- * （UNIX时间戳网站）
- *
- * success:msgid 提交成功。 error:msgid 提交失败 error:Missing username 用户名为空
- * error:Missing password 密码为空 error:Missing apikey APIKEY为空 error:Missing
- * recipient 手机号码为空 error:Missing message content 短信内容为空 error:Account is
- * blocked 帐号被禁用 error:Unrecognized encoding 编码未能识别 error:APIKEY or password_md5
- * error APIKEY或密码错误 error:Unauthorized IP address 未授权 IP 地址 error:Account
- * balance is insufficient 余额不足
- *
- * @author ecsoya
+ * The Class M5cMobileService.
  */
 @Service
 public class M5cMobileService {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(M5cMobileService.class);
 
+	/** The properties. */
 	@Autowired
 	private M5cProperties properties;
 
+	/**
+	 * Send message.
+	 *
+	 * @param mobile  the mobile
+	 * @param content the content
+	 * @return the m 5 c result
+	 */
 	public M5cResult sendMessage(String mobile, String content) {
 		log.info("M5cMobileService: {}={}", mobile, content);
 		// 连接超时及读取超时设置

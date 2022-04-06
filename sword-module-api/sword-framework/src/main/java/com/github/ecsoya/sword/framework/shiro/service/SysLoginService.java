@@ -25,20 +25,27 @@ import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 import com.github.ecsoya.sword.system.service.ISysUserService;
 
 /**
- * 登录校验方法
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysLoginService.
  */
 @Component
 public class SysLoginService {
+
+	/** The password service. */
 	@Autowired
 	private SysPasswordService passwordService;
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
 	/**
-	 * 登录
+	 * Login.
+	 *
+	 * @param username        the username
+	 * @param password        the password
+	 * @param userTypes       the user types
+	 * @param withoutPassword the without password
+	 * @return the sys user
 	 */
 	public SysUser login(String username, String password, List<String> userTypes, boolean withoutPassword) {
 		// 验证码校验
@@ -117,17 +124,9 @@ public class SysLoginService {
 	}
 
 	/**
-	 * private boolean maybeEmail(String username) { if
-	 * (!username.matches(UserConstants.EMAIL_PATTERN)) { return false; } return
-	 * true; }
+	 * Record login info. 记录登录信息
 	 *
-	 * private boolean maybeMobilePhoneNumber(String username) { if
-	 * (!username.matches(UserConstants.MOBILE_PHONE_NUMBER_PATTERN)) { return
-	 * false; } return true; }
-	 */
-
-	/**
-	 * 记录登录信息
+	 * @param user the user
 	 */
 	public void recordLoginInfo(SysUser user) {
 		user.setLoginIp(ShiroUtils.getIp());

@@ -33,33 +33,36 @@ import com.github.ecsoya.sword.wallet.service.IUserWalletRecordService;
 import com.github.ecsoya.sword.wallet.service.IWalletService;
 
 /**
- * 用户钱包账号Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Class UserWalletAccountServiceImpl.
  */
 @Service
 public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
+
+	/** The user wallet account mapper. */
 	@Autowired
 	private UserWalletAccountMapper userWalletAccountMapper;
 
+	/** The user wallet record service. */
 	@Autowired
 	private IUserWalletRecordService userWalletRecordService;
 
+	/** The wallet service. */
 	@Autowired
 	private IWalletService walletService;
 
+	/** The symbol service. */
 	@Autowired
 	private IMiningSymbolService symbolService;
 
+	/** The certificate service. */
 	@Autowired
 	private IUserCertificateService certificateService;
 
 	/**
-	 * 查询用户钱包账号
+	 * Select user wallet account by id.
 	 *
-	 * @param id 用户钱包账号ID
-	 * @return 用户钱包账号
+	 * @param id the id
+	 * @return the user wallet account
 	 */
 	@Override
 	public UserWalletAccount selectUserWalletAccountById(Long id) {
@@ -67,10 +70,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	}
 
 	/**
-	 * 查询用户钱包账号列表
+	 * Select user wallet account list.
 	 *
-	 * @param userWalletAccount 用户钱包账号
-	 * @return 用户钱包账号
+	 * @param userWalletAccount the user wallet account
+	 * @return the list
 	 */
 	@Override
 	public List<UserWalletAccount> selectUserWalletAccountList(UserWalletAccount userWalletAccount) {
@@ -84,10 +87,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	}
 
 	/**
-	 * 新增用户钱包账号
+	 * Insert user wallet account.
 	 *
-	 * @param userWalletAccount 用户钱包账号
-	 * @return 结果
+	 * @param userWalletAccount the user wallet account
+	 * @return the int
 	 */
 	@Override
 	public int insertUserWalletAccount(UserWalletAccount userWalletAccount) {
@@ -102,10 +105,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	}
 
 	/**
-	 * 修改用户钱包账号
+	 * Update user wallet account.
 	 *
-	 * @param userWalletAccount 用户钱包账号
-	 * @return 结果
+	 * @param userWalletAccount the user wallet account
+	 * @return the int
 	 */
 	@Override
 	public int updateUserWalletAccount(UserWalletAccount userWalletAccount) {
@@ -114,10 +117,10 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	}
 
 	/**
-	 * 删除用户钱包账号对象
+	 * Delete user wallet account by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWalletAccountByIds(String ids) {
@@ -125,16 +128,23 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 	}
 
 	/**
-	 * 删除用户钱包账号信息
+	 * Delete user wallet account by id.
 	 *
-	 * @param id 用户钱包账号ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWalletAccountById(Long id) {
 		return userWalletAccountMapper.deleteUserWalletAccountById(id);
 	}
 
+	/**
+	 * Select user wallet account.
+	 *
+	 * @param userId the user id
+	 * @param symbol the symbol
+	 * @return the user wallet account
+	 */
 	@Override
 	public UserWalletAccount selectUserWalletAccount(Long userId, String symbol) {
 		if (userId == null || StringUtils.isEmpty(symbol)) {
@@ -148,6 +158,14 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return account;
 	}
 
+	/**
+	 * Update user wallet account address.
+	 *
+	 * @param userId the user id
+	 * @param symbol the symbol
+	 * @param chain  the chain
+	 * @return the user wallet account
+	 */
 	@Override
 	public UserWalletAccount updateUserWalletAccountAddress(Long userId, String symbol, String chain) {
 		final CommonResult<?> checked = certificateService.checkUserCertificate(userId, UserCertificate.KIND_WALLET);
@@ -194,6 +212,12 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return account;
 	}
 
+	/**
+	 * Update user wallet account by user id.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	@Override
 	public int updateUserWalletAccountByUserId(Long userId) {
 		List<MiningSymbol> list = symbolService.selectMiningSymbolList(new MiningSymbol());
@@ -203,6 +227,12 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return 1;
 	}
 
+	/**
+	 * Generate qrcode url.
+	 *
+	 * @param address the address
+	 * @return the string
+	 */
 	private String generateQrcodeUrl(String address) {
 		if (StringUtils.isEmpty(address)) {
 			return null;
@@ -210,6 +240,12 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return QrcodeUtils.generate(address);
 	}
 
+	/**
+	 * Select user wallet account list by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	@Override
 	public List<UserWalletAccount> selectUserWalletAccountListByUserId(Long userId) {
 		if (userId == null) {
@@ -220,6 +256,17 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return selectUserWalletAccountList(query);
 	}
 
+	/**
+	 * Freeze amount.
+	 *
+	 * @param walletAccount the wallet account
+	 * @param amount        the amount
+	 * @param orderNo       the order no
+	 * @param freezeDays    the freeze days
+	 * @param remark        the remark
+	 * @param details       the details
+	 * @return true, if successful
+	 */
 	@Override
 	@Transactional
 	public boolean freezeAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, Integer freezeDays,
@@ -265,6 +312,16 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return true;
 	}
 
+	/**
+	 * Unfreeze amount.
+	 *
+	 * @param userId  the user id
+	 * @param symbol  the symbol
+	 * @param amount  the amount
+	 * @param orderNo the order no
+	 * @param payBack the pay back
+	 * @return true, if successful
+	 */
 	@Override
 	@Transactional
 	public boolean unfreezeAmount(Long userId, String symbol, BigDecimal amount, String orderNo, boolean payBack) {
@@ -315,6 +372,12 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return true;
 	}
 
+	/**
+	 * Unfreeze to amount.
+	 *
+	 * @param record the record
+	 * @return true, if successful
+	 */
 	@Override
 	@Transactional
 	public boolean unfreezeToAmount(UserWalletRecord record) {
@@ -362,6 +425,16 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return true;
 	}
 
+	/**
+	 * Decrease amount.
+	 *
+	 * @param walletAccount the wallet account
+	 * @param amount        the amount
+	 * @param orderNo       the order no
+	 * @param remark        the remark
+	 * @param details       the details
+	 * @return true, if successful
+	 */
 	@Override
 	@Transactional
 	public boolean decreaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, String remark,
@@ -401,6 +474,16 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return true;
 	}
 
+	/**
+	 * Increase amount.
+	 *
+	 * @param walletAccount the wallet account
+	 * @param amount        the amount
+	 * @param orderNo       the order no
+	 * @param remark        the remark
+	 * @param details       the details
+	 * @return true, if successful
+	 */
 	@Override
 	@Transactional
 	public boolean increaseAmount(UserWalletAccount walletAccount, BigDecimal amount, String orderNo, String remark,
@@ -440,6 +523,19 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return true;
 	}
 
+	/**
+	 * Update account.
+	 *
+	 * @param account the account
+	 * @param type    the type
+	 * @param kind    the kind
+	 * @param amount  the amount
+	 * @param orderNo the order no
+	 * @param remark  the remark
+	 * @param days    the days
+	 * @param details the details
+	 * @return true, if successful
+	 */
 	@Override
 	@Transactional
 	public boolean updateAccount(UserWalletAccount account, Integer type, Integer kind, BigDecimal amount,
@@ -502,6 +598,14 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return true;
 	}
 
+	/**
+	 * Select user account with balance.
+	 *
+	 * @param userId  the user id
+	 * @param symbol  the symbol
+	 * @param balance the balance
+	 * @return the user wallet account
+	 */
 	@Override
 	public UserWalletAccount selectUserAccountWithBalance(Long userId, String symbol, BigDecimal balance) {
 		final UserWalletAccount account = selectUserWalletAccount(userId, symbol);
@@ -511,6 +615,13 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return account;
 	}
 
+	/**
+	 * Select user wallet account by address.
+	 *
+	 * @param address the address
+	 * @param symbol  the symbol
+	 * @return the user wallet account
+	 */
 	@Override
 	public UserWalletAccount selectUserWalletAccountByAddress(String address, String symbol) {
 		if (StringUtils.isEmpty(address)) {
@@ -523,6 +634,12 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return list.isEmpty() ? null : list.get(0);
 	}
 
+	/**
+	 * Release locked amount.
+	 *
+	 * @param record the record
+	 * @return the int
+	 */
 	@Override
 	@Transactional(rollbackFor = TransactionException.class)
 	public int releaseLockedAmount(UserWalletRecord record) {
@@ -573,6 +690,17 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return 1;
 	}
 
+	/**
+	 * Release locked amount.
+	 *
+	 * @param userId        the user id
+	 * @param symbol        the symbol
+	 * @param orderNo       the order no
+	 * @param lockedAmount  the locked amount
+	 * @param releaseAmount the release amount
+	 * @return true, if successful
+	 * @throws TransactionException the transaction exception
+	 */
 	@Override
 	@Transactional
 	public boolean releaseLockedAmount(Long userId, String symbol, String orderNo, BigDecimal lockedAmount,
@@ -637,6 +765,15 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return true;
 	}
 
+	/**
+	 * Admin set account by user id.
+	 *
+	 * @param userId the user id
+	 * @param symbol the symbol
+	 * @param kind   the kind
+	 * @param value  the value
+	 * @return the int
+	 */
 	@Override
 	@Transactional
 	public int adminSetAccountByUserId(Long userId, String symbol, Integer kind, BigDecimal value) {
@@ -684,6 +821,14 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return 1;
 	}
 
+	/**
+	 * Change user wallet account withdrawal enabled.
+	 *
+	 * @param userId  the user id
+	 * @param symbol  the symbol
+	 * @param enabled the enabled
+	 * @return the int
+	 */
 	@Override
 	public int changeUserWalletAccountWithdrawalEnabled(Long userId, String symbol, Integer enabled) {
 		if (enabled == null) {
@@ -699,6 +844,18 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return updateUserWalletAccount(update);
 	}
 
+	/**
+	 * Exchange amount.
+	 *
+	 * @param userId        the user id
+	 * @param fromSymbol    the from symbol
+	 * @param toSymbol      the to symbol
+	 * @param price         the price
+	 * @param positivePrice the positive price
+	 * @param amount        the amount
+	 * @param details       the details
+	 * @return the common result
+	 */
 	@Override
 	@Transactional
 	public CommonResult<?> exchangeAmount(Long userId, String fromSymbol, String toSymbol, BigDecimal price,
@@ -741,6 +898,13 @@ public class UserWalletAccountServiceImpl implements IUserWalletAccountService {
 		return CommonResult.success();
 	}
 
+	/**
+	 * Select user account amount.
+	 *
+	 * @param symbol the symbol
+	 * @param kind   the kind
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserAccountAmount(String symbol, Integer kind) {
 		if (StringUtils.isEmpty(symbol) || kind == null) {

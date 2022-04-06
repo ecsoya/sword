@@ -13,21 +13,20 @@ import com.github.ecsoya.sword.common.utils.DateUtils;
 import com.github.ecsoya.sword.common.utils.IdWorker;
 
 /**
- * 聊天记录Service业务层处理
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-06-03
+ * The Class ChatHistoryServiceImpl.
  */
 @Service
 public class ChatHistoryServiceImpl implements IChatHistoryService {
+
+	/** The chat history mapper. */
 	@Autowired
 	private ChatHistoryMapper chatHistoryMapper;
 
 	/**
-	 * 查询聊天记录
-	 * 
-	 * @param id 聊天记录ID
-	 * @return 聊天记录
+	 * Select chat history by id.
+	 *
+	 * @param id the id
+	 * @return the chat history
 	 */
 	@Override
 	public ChatHistory selectChatHistoryById(Long id) {
@@ -35,10 +34,10 @@ public class ChatHistoryServiceImpl implements IChatHistoryService {
 	}
 
 	/**
-	 * 查询聊天记录列表
-	 * 
-	 * @param chatHistory 聊天记录
-	 * @return 聊天记录
+	 * Select chat history list.
+	 *
+	 * @param chatHistory the chat history
+	 * @return the list
 	 */
 	@Override
 	public List<ChatHistory> selectChatHistoryList(ChatHistory chatHistory) {
@@ -46,10 +45,10 @@ public class ChatHistoryServiceImpl implements IChatHistoryService {
 	}
 
 	/**
-	 * 新增聊天记录
-	 * 
-	 * @param chatHistory 聊天记录
-	 * @return 结果
+	 * Insert chat history.
+	 *
+	 * @param chatHistory the chat history
+	 * @return the int
 	 */
 	@Override
 	public int insertChatHistory(ChatHistory chatHistory) {
@@ -63,10 +62,10 @@ public class ChatHistoryServiceImpl implements IChatHistoryService {
 	}
 
 	/**
-	 * 修改聊天记录
-	 * 
-	 * @param chatHistory 聊天记录
-	 * @return 结果
+	 * Update chat history.
+	 *
+	 * @param chatHistory the chat history
+	 * @return the int
 	 */
 	@Override
 	public int updateChatHistory(ChatHistory chatHistory) {
@@ -75,10 +74,10 @@ public class ChatHistoryServiceImpl implements IChatHistoryService {
 	}
 
 	/**
-	 * 删除聊天记录对象
-	 * 
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * Delete chat history by ids.
+	 *
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteChatHistoryByIds(String ids) {
@@ -86,10 +85,10 @@ public class ChatHistoryServiceImpl implements IChatHistoryService {
 	}
 
 	/**
-	 * 删除聊天记录信息
-	 * 
-	 * @param id 聊天记录ID
-	 * @return 结果
+	 * Delete chat history by id.
+	 *
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteChatHistoryById(Long id) {

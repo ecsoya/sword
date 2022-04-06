@@ -4,18 +4,18 @@ import com.github.ecsoya.sword.common.exception.base.BaseException;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * sql操作工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SqlUtil.
  */
 public class SqlUtil {
-	/**
-	 * 仅支持字母、数字、下划线、空格、逗号、小数点（支持多个字段排序）
-	 */
+
+	/** The sql pattern. */
 	public static String SQL_PATTERN = "[a-zA-Z0-9_\\ \\,\\.]+";
 
 	/**
-	 * 检查字符，防止注入绕过
+	 * Escape order by sql.
+	 *
+	 * @param value the value
+	 * @return the string
 	 */
 	public static String escapeOrderBySql(String value) {
 		if (StringUtils.isNotEmpty(value) && !isValidOrderBySql(value)) {
@@ -25,7 +25,10 @@ public class SqlUtil {
 	}
 
 	/**
-	 * 验证 order by 语法是否符合规范
+	 * Checks if is valid order by sql.
+	 *
+	 * @param value the value
+	 * @return true, if is valid order by sql
 	 */
 	public static boolean isValidOrderBySql(String value) {
 		return value.matches(SQL_PATTERN);

@@ -38,24 +38,30 @@ import com.github.ecsoya.sword.system.service.ISysMenuService;
 import com.github.ecsoya.sword.system.service.ISysRoleService;
 
 /**
- * 自定义Realm 处理登录 权限
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class UserRealm.
  */
 public class UserRealm extends AuthorizingRealm {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(UserRealm.class);
 
+	/** The menu service. */
 	@Autowired
 	private ISysMenuService menuService;
 
+	/** The role service. */
 	@Autowired
 	private ISysRoleService roleService;
 
+	/** The login service. */
 	@Autowired
 	private SysLoginService loginService;
 
 	/**
-	 * 授权
+	 * Do get authorization info.
+	 *
+	 * @param arg0 the arg 0
+	 * @return the authorization info
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
@@ -81,7 +87,11 @@ public class UserRealm extends AuthorizingRealm {
 	}
 
 	/**
-	 * 登录认证
+	 * Do get authentication info.
+	 *
+	 * @param token the token
+	 * @return the authentication info
+	 * @throws AuthenticationException the authentication exception
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
@@ -124,7 +134,9 @@ public class UserRealm extends AuthorizingRealm {
 	}
 
 	/**
-	 * 清理指定用户授权信息缓存
+	 * Clear cached authorization info.
+	 *
+	 * @param principal the principal
 	 */
 	public void clearCachedAuthorizationInfo(Object principal) {
 		final SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
@@ -132,7 +144,7 @@ public class UserRealm extends AuthorizingRealm {
 	}
 
 	/**
-	 * 清理所有用户授权信息缓存
+	 * Clear all cached authorization info.
 	 */
 	public void clearAllCachedAuthorizationInfo() {
 		final Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();

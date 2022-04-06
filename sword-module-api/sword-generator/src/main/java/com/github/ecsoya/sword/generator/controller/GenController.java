@@ -32,28 +32,38 @@ import com.github.ecsoya.sword.generator.service.IGenTableColumnService;
 import com.github.ecsoya.sword.generator.service.IGenTableService;
 
 /**
- * 代码生成 操作处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class GenController.
  */
 @Controller
 @RequestMapping("/tool/gen")
 public class GenController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "tool/gen";
 
+	/** The gen table service. */
 	@Autowired
 	private IGenTableService genTableService;
 
+	/** The gen table column service. */
 	@Autowired
 	private IGenTableColumnService genTableColumnService;
 
+	/**
+	 * Gen.
+	 *
+	 * @return the string
+	 */
 	@GetMapping()
 	public String gen() {
 		return prefix + "/gen";
 	}
 
 	/**
-	 * 查询代码生成列表
+	 * Gen list.
+	 *
+	 * @param genTable the gen table
+	 * @return the table data info
 	 */
 	@PostMapping("/list")
 	@ResponseBody
@@ -64,7 +74,10 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 查询数据库列表
+	 * Data list.
+	 *
+	 * @param genTable the gen table
+	 * @return the table data info
 	 */
 	@PostMapping("/db/list")
 	@ResponseBody
@@ -75,7 +88,10 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 查询数据表字段列表
+	 * Column list.
+	 *
+	 * @param genTableColumn the gen table column
+	 * @return the table data info
 	 */
 	@PostMapping("/column/list")
 	@ResponseBody
@@ -88,7 +104,9 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 导入表结构
+	 * Import table.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/importTable")
 	public String importTable() {
@@ -96,7 +114,10 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 导入表结构（保存）
+	 * Import table save.
+	 *
+	 * @param tables the tables
+	 * @return the ajax result
 	 */
 	@Log(title = "代码生成", businessType = BusinessType.IMPORT)
 	@PostMapping("/importTable")
@@ -110,7 +131,11 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 修改代码生成业务
+	 * Edits the.
+	 *
+	 * @param tableId the table id
+	 * @param mmap    the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{tableId}")
 	public String edit(@PathVariable("tableId") Long tableId, ModelMap mmap) {
@@ -136,7 +161,10 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 修改保存代码生成业务
+	 * Edits the save.
+	 *
+	 * @param genTable the gen table
+	 * @return the ajax result
 	 */
 	@Log(title = "代码生成", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
@@ -147,6 +175,12 @@ public class GenController extends BaseController {
 		return AjaxResult.success();
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@Log(title = "代码生成", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
 	@ResponseBody
@@ -156,7 +190,11 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 预览代码
+	 * Preview.
+	 *
+	 * @param tableId the table id
+	 * @return the ajax result
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@GetMapping("/preview/{tableId}")
 	@ResponseBody
@@ -166,7 +204,11 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 生成代码（下载方式）
+	 * Download.
+	 *
+	 * @param response  the response
+	 * @param tableName the table name
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Log(title = "代码生成", businessType = BusinessType.GENCODE)
 	@GetMapping("/download/{tableName}")
@@ -176,7 +218,10 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 生成代码（自定义路径）
+	 * Gen code.
+	 *
+	 * @param tableName the table name
+	 * @return the ajax result
 	 */
 	@Log(title = "代码生成", businessType = BusinessType.GENCODE)
 	@GetMapping("/genCode/{tableName}")
@@ -187,7 +232,10 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 同步数据库
+	 * Synch db.
+	 *
+	 * @param tableName the table name
+	 * @return the ajax result
 	 */
 	@Log(title = "代码生成", businessType = BusinessType.UPDATE)
 	@GetMapping("/synchDb/{tableName}")
@@ -198,7 +246,11 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 批量生成代码
+	 * Batch gen code.
+	 *
+	 * @param response the response
+	 * @param tables   the tables
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Log(title = "代码生成", businessType = BusinessType.GENCODE)
 	@GetMapping("/batchGenCode")
@@ -210,7 +262,11 @@ public class GenController extends BaseController {
 	}
 
 	/**
-	 * 生成zip文件
+	 * Gen code.
+	 *
+	 * @param response the response
+	 * @param data     the data
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	private void genCode(HttpServletResponse response, byte[] data) throws IOException {
 		response.reset();

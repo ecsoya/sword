@@ -10,122 +10,121 @@ import com.github.ecsoya.sword.common.core.domain.entity.SysRole;
 import com.github.ecsoya.sword.common.core.domain.entity.SysUser;
 
 /**
- * 菜单 业务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysMenuService.
  */
 public interface ISysMenuService {
+
 	/**
-	 * 根据用户ID查询菜单
+	 * Select menus by user.
 	 *
-	 * @param user 用户信息
-	 * @return 菜单列表
+	 * @param user the user
+	 * @return the list
 	 */
 	public List<SysMenu> selectMenusByUser(SysUser user);
 
 	/**
-	 * 查询系统菜单列表
+	 * Select menu list.
 	 *
-	 * @param menu   菜单信息
-	 * @param userId 用户ID
-	 * @return 菜单列表
+	 * @param menu   the menu
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<SysMenu> selectMenuList(SysMenu menu, Long userId);
 
 	/**
-	 * 查询菜单集合
+	 * Select menu all.
 	 *
-	 * @param userId 用户ID
-	 * @return 所有菜单信息
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<SysMenu> selectMenuAll(Long userId);
 
 	/**
-	 * 根据用户ID查询权限
+	 * Select perms by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 权限列表
+	 * @param userId the user id
+	 * @return the sets the
 	 */
 	public Set<String> selectPermsByUserId(Long userId);
 
 	/**
-	 * 根据角色ID查询菜单
+	 * Role menu tree data.
 	 *
-	 * @param role   角色对象
-	 * @param userId 用户ID
-	 * @return 菜单列表
+	 * @param role   the role
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<Ztree> roleMenuTreeData(SysRole role, Long userId);
 
 	/**
-	 * 查询所有菜单信息
+	 * Menu tree data.
 	 *
-	 * @param userId 用户ID
-	 * @return 菜单列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<Ztree> menuTreeData(Long userId);
 
 	/**
-	 * 查询系统所有权限
+	 * Select perms all.
 	 *
-	 * @param userId 用户ID
-	 * @return 权限列表
+	 * @param userId the user id
+	 * @return the map
 	 */
 	public Map<String, String> selectPermsAll(Long userId);
 
 	/**
-	 * 删除菜单管理信息
+	 * Delete menu by id.
 	 *
-	 * @param menuId 菜单ID
-	 * @return 结果
+	 * @param menuId the menu id
+	 * @return the int
 	 */
 	public int deleteMenuById(Long menuId);
 
 	/**
-	 * 根据菜单ID查询信息
+	 * Select menu by id.
 	 *
-	 * @param menuId 菜单ID
-	 * @return 菜单信息
+	 * @param menuId the menu id
+	 * @return the sys menu
 	 */
 	public SysMenu selectMenuById(Long menuId);
 
 	/**
-	 * 查询菜单数量
+	 * Select count menu by parent id.
 	 *
-	 * @param parentId 菜单父ID
-	 * @return 结果
+	 * @param parentId the parent id
+	 * @return the int
 	 */
 	public int selectCountMenuByParentId(Long parentId);
 
 	/**
-	 * 查询菜单使用数量
+	 * Select count role menu by menu id.
 	 *
-	 * @param menuId 菜单ID
-	 * @return 结果
+	 * @param menuId the menu id
+	 * @return the int
 	 */
 	public int selectCountRoleMenuByMenuId(Long menuId);
 
 	/**
-	 * 新增保存菜单信息
+	 * Insert menu.
 	 *
-	 * @param menu 菜单信息
-	 * @return 结果
+	 * @param menu the menu
+	 * @return the int
 	 */
 	public int insertMenu(SysMenu menu);
 
 	/**
-	 * 修改保存菜单信息
+	 * Update menu.
 	 *
-	 * @param menu 菜单信息
-	 * @return 结果
+	 * @param menu the menu
+	 * @return the int
 	 */
 	public int updateMenu(SysMenu menu);
 
 	/**
-	 * 校验菜单名称是否唯一
+	 * Check menu name unique.
 	 *
-	 * @param menu 菜单信息
-	 * @return 结果
+	 * @param menu the menu
+	 * @return the string
 	 */
 	public String checkMenuNameUnique(SysMenu menu);
 

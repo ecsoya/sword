@@ -1,23 +1,16 @@
 package com.github.ecsoya.sword.common.enums;
 
 /**
- * 操作人类别
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Enum OperatorType.
  */
 public enum OperatorType {
-	/**
-	 * 其它
-	 */
+
+	/** The other. */
 	OTHER,
 
-	/**
-	 * 后台用户
-	 */
+	/** The manage. */
 	MANAGE,
 
-	/**
-	 * 手机端用户
-	 */
+	/** The mobile. */
 	MOBILE
 }

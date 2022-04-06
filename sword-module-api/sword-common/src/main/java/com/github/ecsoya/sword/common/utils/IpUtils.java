@@ -6,11 +6,16 @@ import java.net.UnknownHostException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 获取IP方法
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class IpUtils.
  */
 public class IpUtils {
+
+	/**
+	 * Gets the ip addr.
+	 *
+	 * @param request the request
+	 * @return the ip addr
+	 */
 	public static String getIpAddr(HttpServletRequest request) {
 		if (request == null) {
 			return "unknown";
@@ -36,11 +41,23 @@ public class IpUtils {
 		return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
 	}
 
+	/**
+	 * Internal ip.
+	 *
+	 * @param ip the ip
+	 * @return true, if successful
+	 */
 	public static boolean internalIp(String ip) {
 		final byte[] addr = textToNumericFormatV4(ip);
 		return internalIp(addr) || "127.0.0.1".equals(ip);
 	}
 
+	/**
+	 * Internal ip.
+	 *
+	 * @param addr the addr
+	 * @return true, if successful
+	 */
 	private static boolean internalIp(byte[] addr) {
 		if (StringUtils.isNull(addr) || addr.length < 2) {
 			return true;
@@ -74,10 +91,10 @@ public class IpUtils {
 	}
 
 	/**
-	 * 将IPv4地址转换成字节
+	 * Text to numeric format V 4.
 	 *
-	 * @param text IPv4地址
-	 * @return byte 字节
+	 * @param text the text
+	 * @return the byte[]
 	 */
 	public static byte[] textToNumericFormatV4(String text) {
 		if (text.length() == 0) {
@@ -147,6 +164,11 @@ public class IpUtils {
 		return bytes;
 	}
 
+	/**
+	 * Gets the host ip.
+	 *
+	 * @return the host ip
+	 */
 	public static String getHostIp() {
 		try {
 			return InetAddress.getLocalHost().getHostAddress();
@@ -155,6 +177,11 @@ public class IpUtils {
 		return "127.0.0.1";
 	}
 
+	/**
+	 * Gets the host name.
+	 *
+	 * @return the host name
+	 */
 	public static String getHostName() {
 		try {
 			return InetAddress.getLocalHost().getHostName();

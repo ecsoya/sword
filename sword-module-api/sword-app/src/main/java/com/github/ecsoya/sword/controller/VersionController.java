@@ -15,11 +15,21 @@ import com.github.ecsoya.sword.version.domain.SwordVersion;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * The Class VersionController.
+ */
 @RestController
 @RequestMapping("/open/version")
 @Api(tags = { "版本" }, description = "版本验证")
 public class VersionController extends BaseController {
 
+	/**
+	 * Latest version.
+	 *
+	 * @param request the request
+	 * @param current the current
+	 * @return the common result
+	 */
 	@ApiOperation("APP版本查询")
 	@GetMapping("/latest")
 	public CommonResult<SwordVersion> latestVersion(HttpServletRequest request, Long current) {

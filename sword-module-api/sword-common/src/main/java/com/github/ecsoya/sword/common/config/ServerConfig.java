@@ -7,33 +7,47 @@ import org.springframework.stereotype.Component;
 import com.github.ecsoya.sword.common.utils.ServletUtils;
 
 /**
- * 服务相关配置
- *
- * @author Jin Liu (angryred@qq.com)
- *
+ * The Class ServerConfig.
  */
 @Component
 public class ServerConfig {
+
 	/**
-	 * 获取完整的请求路径，包括：域名，端口，上下文访问路径
+	 * Gets the url.
 	 *
-	 * @return 服务地址
+	 * @return the url
 	 */
 	public String getUrl() {
 		final HttpServletRequest request = ServletUtils.getRequest();
 		return getDomain(request);
 	}
 
+	/**
+	 * Gets the context path.
+	 *
+	 * @return the context path
+	 */
 	public String getContextPath() {
 		final HttpServletRequest request = ServletUtils.getRequest();
 		return request.getServletContext().getContextPath();
 	}
 
+	/**
+	 * Gets the ws url.
+	 *
+	 * @return the ws url
+	 */
 	public String getWsUrl() {
 		final HttpServletRequest request = ServletUtils.getRequest();
 		return getDomain(request).replaceAll("https", "wss").replaceAll("http", "ws") + "/ws";
 	}
 
+	/**
+	 * Gets the domain.
+	 *
+	 * @param request the request
+	 * @return the domain
+	 */
 	public static String getDomain(HttpServletRequest request) {
 		final StringBuffer url = request.getRequestURL();
 		final String contextPath = request.getServletContext().getContextPath();

@@ -13,25 +13,31 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import com.github.ecsoya.sword.common.core.text.StrFormatter;
 
 /**
- * 字符串工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class StringUtils.
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
-	/** 空字符串 */
+
+	/** The Constant NULLSTR. */
 	private static final String NULLSTR = "";
 
-	/** 下划线 */
+	/** The Constant SEPARATOR. */
 	private static final char SEPARATOR = '_';
 
-	/** 随机字符 */
+	/** The Constant RANDOM_HOLDER. */
 	private static final String RANDOM_HOLDER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-	/** 邮箱验证器 */
+	/** The Constant MAIL_REGEX. */
 	private static final String MAIL_REGEX = "^([a-z0-9A-Z_]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 
+	/** The random. */
 	private static SecureRandom random = new SecureRandom();
 
+	/**
+	 * Random str.
+	 *
+	 * @param length the length
+	 * @return the string
+	 */
 	public static String randomStr(int length) {
 		final Random random = new Random();
 		final StringBuffer sb = new StringBuffer();
@@ -42,6 +48,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return sb.toString();
 	}
 
+	/**
+	 * Random num.
+	 *
+	 * @param length the length
+	 * @return the string
+	 */
 	public static String randomNum(int length) {
 		String num = "";
 		for (int i = 0; i < length; i++) {
@@ -50,6 +62,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return num;
 	}
 
+	/**
+	 * Random salt.
+	 *
+	 * @param numBytes the num bytes
+	 * @return the byte[]
+	 */
 	public static byte[] randomSalt(int numBytes) {
 		byte[] bytes = new byte[numBytes];
 		random.nextBytes(bytes);
@@ -57,142 +75,153 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 * 获取参数不为空值
+	 * Nvl.
 	 *
-	 * @param value defaultValue 要判断的value
-	 * @return value 返回值
+	 * @param <T>          the generic type
+	 * @param value        the value
+	 * @param defaultValue the default value
+	 * @return the t
 	 */
 	public static <T> T nvl(T value, T defaultValue) {
 		return value != null ? value : defaultValue;
 	}
 
 	/**
-	 * * 判断一个Collection是否为空， 包含List，Set，Queue
+	 * Checks if is empty.
 	 *
-	 * @param coll 要判断的Collection
-	 * @return true：为空 false：非空
+	 * @param coll the coll
+	 * @return true, if is empty
 	 */
 	public static boolean isEmpty(Collection<?> coll) {
 		return isNull(coll) || coll.isEmpty();
 	}
 
+	/**
+	 * Checks if is empty.
+	 *
+	 * @param obj the obj
+	 * @return true, if is empty
+	 */
 	public static boolean isEmpty(Object obj) {
 		return obj == null || obj.equals("");
 	}
 
 	/**
-	 * * 判断一个Collection是否非空，包含List，Set，Queue
+	 * Checks if is not empty.
 	 *
-	 * @param coll 要判断的Collection
-	 * @return true：非空 false：空
+	 * @param coll the coll
+	 * @return true, if is not empty
 	 */
 	public static boolean isNotEmpty(Collection<?> coll) {
 		return !isEmpty(coll);
 	}
 
 	/**
-	 * * 判断一个对象数组是否为空
+	 * Checks if is empty.
 	 *
-	 * @param objects 要判断的对象数组
-	 ** @return true：为空 false：非空
+	 * @param objects the objects
+	 * @return true, if is empty
 	 */
 	public static boolean isEmpty(Object[] objects) {
 		return isNull(objects) || (objects.length == 0);
 	}
 
 	/**
-	 * * 判断一个对象数组是否非空
+	 * Checks if is not empty.
 	 *
-	 * @param objects 要判断的对象数组
-	 * @return true：非空 false：空
+	 * @param objects the objects
+	 * @return true, if is not empty
 	 */
 	public static boolean isNotEmpty(Object[] objects) {
 		return !isEmpty(objects);
 	}
 
 	/**
-	 * * 判断一个Map是否为空
+	 * Checks if is empty.
 	 *
-	 * @param map 要判断的Map
-	 * @return true：为空 false：非空
+	 * @param map the map
+	 * @return true, if is empty
 	 */
 	public static boolean isEmpty(Map<?, ?> map) {
 		return isNull(map) || map.isEmpty();
 	}
 
 	/**
-	 * * 判断一个Map是否为空
+	 * Checks if is not empty.
 	 *
-	 * @param map 要判断的Map
-	 * @return true：非空 false：空
+	 * @param map the map
+	 * @return true, if is not empty
 	 */
 	public static boolean isNotEmpty(Map<?, ?> map) {
 		return !isEmpty(map);
 	}
 
 	/**
-	 * * 判断一个字符串是否为空串
+	 * Checks if is empty.
 	 *
-	 * @param str String
-	 * @return true：为空 false：非空
+	 * @param str the str
+	 * @return true, if is empty
 	 */
 	public static boolean isEmpty(String str) {
 		return isNull(str) || NULLSTR.equals(str.trim());
 	}
 
 	/**
-	 * * 判断一个字符串是否为非空串
+	 * Checks if is not empty.
 	 *
-	 * @param str String
-	 * @return true：非空串 false：空串
+	 * @param str the str
+	 * @return true, if is not empty
 	 */
 	public static boolean isNotEmpty(String str) {
 		return !isEmpty(str);
 	}
 
 	/**
-	 * * 判断一个对象是否为空
+	 * Checks if is null.
 	 *
-	 * @param object Object
-	 * @return true：为空 false：非空
+	 * @param object the object
+	 * @return true, if is null
 	 */
 	public static boolean isNull(Object object) {
 		return object == null;
 	}
 
 	/**
-	 * * 判断一个对象是否非空
+	 * Checks if is not null.
 	 *
-	 * @param object Object
-	 * @return true：非空 false：空
+	 * @param object the object
+	 * @return true, if is not null
 	 */
 	public static boolean isNotNull(Object object) {
 		return !isNull(object);
 	}
 
 	/**
-	 * * 判断一个对象是否是数组类型（Java基本型别的数组）
+	 * Checks if is array.
 	 *
-	 * @param object 对象
-	 * @return true：是数组 false：不是数组
+	 * @param object the object
+	 * @return true, if is array
 	 */
 	public static boolean isArray(Object object) {
 		return isNotNull(object) && object.getClass().isArray();
 	}
 
 	/**
-	 * 去空格
+	 * Trim.
+	 *
+	 * @param str the str
+	 * @return the string
 	 */
 	public static String trim(String str) {
 		return (str == null ? "" : str.trim());
 	}
 
 	/**
-	 * 截取字符串
+	 * Substring.
 	 *
-	 * @param str   字符串
-	 * @param start 开始
-	 * @return 结果
+	 * @param str   the str
+	 * @param start the start
+	 * @return the string
 	 */
 	public static String substring(final String str, int start) {
 		if (str == null) {
@@ -214,12 +243,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 * 截取字符串
+	 * Substring.
 	 *
-	 * @param str   字符串
-	 * @param start 开始
-	 * @param end   结束
-	 * @return 结果
+	 * @param str   the str
+	 * @param start the start
+	 * @param end   the end
+	 * @return the string
 	 */
 	public static String substring(final String str, int start, int end) {
 		if (str == null) {
@@ -252,17 +281,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 * 格式化文本, {} 表示占位符<br>
-	 * 此方法只是简单将占位符 {} 按照顺序替换为参数<br>
-	 * 如果想输出 {} 使用 \\转义 { 即可，如果想输出 {} 之前的 \ 使用双转义符 \\\\ 即可<br>
-	 * 例：<br>
-	 * 通常使用：format("this is {} for {}", "a", "b") -> this is a for b<br>
-	 * 转义{}： format("this is \\{} for {}", "a", "b") -> this is \{} for a<br>
-	 * 转义\： format("this is \\\\{} for {}", "a", "b") -> this is \a for b<br>
+	 * Format.
 	 *
-	 * @param template 文本模板，被替换的部分用 {} 表示
-	 * @param params   参数值
-	 * @return 格式化后的文本
+	 * @param template the template
+	 * @param params   the params
+	 * @return the string
 	 */
 	public static String format(String template, Object... params) {
 		if (isEmpty(params) || isEmpty(template)) {
@@ -271,6 +294,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return StrFormatter.format(template, params);
 	}
 
+	/**
+	 * Format all.
+	 *
+	 * @param template the template
+	 * @param param    the param
+	 * @return the string
+	 */
 	public static String formatAll(String template, Object param) {
 		if (isEmpty(template)) {
 			return template;
@@ -285,7 +315,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 * 下划线转驼峰命名
+	 * To under score case.
+	 *
+	 * @param str the str
+	 * @return the string
 	 */
 	public static String toUnderScoreCase(String str) {
 		if (str == null) {
@@ -324,11 +357,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 * 是否包含字符串
+	 * In string ignore case.
 	 *
-	 * @param str  验证字符串
-	 * @param strs 字符串组
-	 * @return 包含返回true
+	 * @param str  the str
+	 * @param strs the strs
+	 * @return true, if successful
 	 */
 	public static boolean inStringIgnoreCase(String str, String... strs) {
 		if (str != null && strs != null) {
@@ -342,11 +375,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 * 将下划线大写方式命名的字符串转换为驼峰式。如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。
-	 * 例如：HELLO_WORLD->HelloWorld
+	 * Convert to camel case.
 	 *
-	 * @param name 转换前的下划线大写方式命名的字符串
-	 * @return 转换后的驼峰式命名的字符串
+	 * @param name the name
+	 * @return the string
 	 */
 	public static String convertToCamelCase(String name) {
 		final StringBuilder result = new StringBuilder();
@@ -373,7 +405,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 * 驼峰式命名法 例如：user_name->userName
+	 * To camel case.
+	 *
+	 * @param s the s
+	 * @return the string
 	 */
 	public static String toCamelCase(String s) {
 		if (s == null) {
@@ -397,11 +432,24 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return sb.toString();
 	}
 
+	/**
+	 * Cast.
+	 *
+	 * @param <T> the generic type
+	 * @param obj the obj
+	 * @return the t
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T cast(Object obj) {
 		return (T) obj;
 	}
 
+	/**
+	 * Array to string.
+	 *
+	 * @param array the array
+	 * @return the string
+	 */
 	public static String arrayToString(Object[] array) {
 		if (array == null || array.length == 0) {
 			return "";
@@ -416,10 +464,23 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return new String(buf);
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @param object the object
+	 * @return the string
+	 */
 	public static String toString(Object object) {
 		return object == null ? null : object.toString();
 	}
 
+	/**
+	 * Replace format.
+	 *
+	 * @param str          the str
+	 * @param replacements the replacements
+	 * @return the string
+	 */
 	public static String replaceFormat(String str, Object... replacements) {
 		if (str == null || str.equals("")) {
 			return str;
@@ -434,6 +495,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return result;
 	}
 
+	/**
+	 * Matches.
+	 *
+	 * @param regex  the regex
+	 * @param string the string
+	 * @return true, if successful
+	 */
 	public static boolean matches(String regex, String string) {
 		if (StringUtils.isEmpty(regex) || isEmpty(string)) {
 			return false;
@@ -441,10 +509,24 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return string.matches(regex);
 	}
 
+	/**
+	 * Encrypt password.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param salt     the salt
+	 * @return the string
+	 */
 	public static String encryptPassword(String username, String password, String salt) {
 		return new Md5Hash(username + password + salt).toHex();
 	}
 
+	/**
+	 * Checks if is valid email.
+	 *
+	 * @param email the email
+	 * @return true, if is valid email
+	 */
 	public static boolean isValidEmail(String email) {
 		if (isEmpty(email)) {
 			return false;
@@ -458,6 +540,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		}
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		System.out.println(encryptPassword("14", "111111", "764758"));
 	}

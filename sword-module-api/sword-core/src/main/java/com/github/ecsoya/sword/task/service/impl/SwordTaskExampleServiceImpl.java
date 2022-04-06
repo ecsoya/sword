@@ -13,21 +13,20 @@ import com.github.ecsoya.sword.task.mapper.SwordTaskExampleMapper;
 import com.github.ecsoya.sword.task.service.ISwordTaskExampleService;
 
 /**
- * 定时任务执行结果Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-18
+ * The Class SwordTaskExampleServiceImpl.
  */
 @Service
 public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
+
+	/** The sword task example mapper. */
 	@Autowired
 	private SwordTaskExampleMapper swordTaskExampleMapper;
 
 	/**
-	 * 查询定时任务执行结果
+	 * Select sword task example by id.
 	 *
-	 * @param id 定时任务执行结果ID
-	 * @return 定时任务执行结果
+	 * @param id the id
+	 * @return the sword task example
 	 */
 	@Override
 	public SwordTaskExample selectSwordTaskExampleById(Long id) {
@@ -35,10 +34,10 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 	}
 
 	/**
-	 * 查询定时任务执行结果列表
+	 * Select sword task example list.
 	 *
-	 * @param swordTaskExample 定时任务执行结果
-	 * @return 定时任务执行结果
+	 * @param swordTaskExample the sword task example
+	 * @return the list
 	 */
 	@Override
 	public List<SwordTaskExample> selectSwordTaskExampleList(SwordTaskExample swordTaskExample) {
@@ -46,10 +45,10 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 	}
 
 	/**
-	 * 新增定时任务执行结果
+	 * Insert sword task example.
 	 *
-	 * @param swordTaskExample 定时任务执行结果
-	 * @return 结果
+	 * @param swordTaskExample the sword task example
+	 * @return the int
 	 */
 	@Override
 	public int insertSwordTaskExample(SwordTaskExample swordTaskExample) {
@@ -63,10 +62,10 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 	}
 
 	/**
-	 * 修改定时任务执行结果
+	 * Update sword task example.
 	 *
-	 * @param swordTaskExample 定时任务执行结果
-	 * @return 结果
+	 * @param swordTaskExample the sword task example
+	 * @return the int
 	 */
 	@Override
 	public int updateSwordTaskExample(SwordTaskExample swordTaskExample) {
@@ -75,10 +74,10 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 	}
 
 	/**
-	 * 删除定时任务执行结果对象
+	 * Delete sword task example by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteSwordTaskExampleByIds(String ids) {
@@ -86,16 +85,21 @@ public class SwordTaskExampleServiceImpl implements ISwordTaskExampleService {
 	}
 
 	/**
-	 * 删除定时任务执行结果信息
+	 * Delete sword task example by id.
 	 *
-	 * @param id 定时任务执行结果ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteSwordTaskExampleById(Long id) {
 		return swordTaskExampleMapper.deleteSwordTaskExampleById(id);
 	}
 
+	/**
+	 * Select last sword task example.
+	 *
+	 * @return the sword task example
+	 */
 	@Override
 	public SwordTaskExample selectLastSwordTaskExample() {
 		return swordTaskExampleMapper.selectLastSwordTaskExample();

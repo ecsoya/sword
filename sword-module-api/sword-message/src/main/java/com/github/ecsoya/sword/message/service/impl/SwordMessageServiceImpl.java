@@ -17,24 +17,24 @@ import com.github.ecsoya.sword.message.service.ISwordMessageService;
 import com.github.ecsoya.sword.message.service.IUserMessageService;
 
 /**
- * 消息Service业务层处理
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-05-20
+ * The Class SwordMessageServiceImpl.
  */
 @Service
 public class SwordMessageServiceImpl implements ISwordMessageService {
+
+	/** The sword message mapper. */
 	@Autowired
 	private SwordMessageMapper swordMessageMapper;
 
+	/** The user message service. */
 	@Autowired
 	private IUserMessageService userMessageService;
 
 	/**
-	 * 查询消息
-	 * 
-	 * @param id 消息ID
-	 * @return 消息
+	 * Select sword message by id.
+	 *
+	 * @param id the id
+	 * @return the sword message
 	 */
 	@Override
 	public SwordMessage selectSwordMessageById(Long id) {
@@ -42,10 +42,10 @@ public class SwordMessageServiceImpl implements ISwordMessageService {
 	}
 
 	/**
-	 * 查询消息列表
-	 * 
-	 * @param swordMessage 消息
-	 * @return 消息
+	 * Select sword message list.
+	 *
+	 * @param swordMessage the sword message
+	 * @return the list
 	 */
 	@Override
 	public List<SwordMessage> selectSwordMessageList(SwordMessage swordMessage) {
@@ -53,10 +53,10 @@ public class SwordMessageServiceImpl implements ISwordMessageService {
 	}
 
 	/**
-	 * 新增消息
-	 * 
-	 * @param swordMessage 消息
-	 * @return 结果
+	 * Insert sword message.
+	 *
+	 * @param swordMessage the sword message
+	 * @return the int
 	 */
 	@Override
 	public int insertSwordMessage(SwordMessage swordMessage) {
@@ -70,10 +70,10 @@ public class SwordMessageServiceImpl implements ISwordMessageService {
 	}
 
 	/**
-	 * 修改消息
-	 * 
-	 * @param swordMessage 消息
-	 * @return 结果
+	 * Update sword message.
+	 *
+	 * @param swordMessage the sword message
+	 * @return the int
 	 */
 	@Override
 	public int updateSwordMessage(SwordMessage swordMessage) {
@@ -82,10 +82,10 @@ public class SwordMessageServiceImpl implements ISwordMessageService {
 	}
 
 	/**
-	 * 删除消息对象
-	 * 
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * Delete sword message by ids.
+	 *
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteSwordMessageByIds(String ids) {
@@ -93,16 +93,23 @@ public class SwordMessageServiceImpl implements ISwordMessageService {
 	}
 
 	/**
-	 * 删除消息信息
-	 * 
-	 * @param id 消息ID
-	 * @return 结果
+	 * Delete sword message by id.
+	 *
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteSwordMessageById(Long id) {
 		return swordMessageMapper.deleteSwordMessageById(id);
 	}
 
+	/**
+	 * Publish sword message.
+	 *
+	 * @param swordMessage the sword message
+	 * @param userIds      the user ids
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> publishSwordMessage(SwordMessage swordMessage, String userIds) {
 		if (swordMessage == null) {

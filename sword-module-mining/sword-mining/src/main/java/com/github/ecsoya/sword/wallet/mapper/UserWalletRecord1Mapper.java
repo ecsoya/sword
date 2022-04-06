@@ -6,61 +6,71 @@ import java.util.List;
 import com.github.ecsoya.sword.wallet.domain.UserWalletRecord;
 
 /**
- * 用户钱包记录Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface UserWalletRecord1Mapper.
  */
 public interface UserWalletRecord1Mapper {
+
 	/**
-	 * 查询用户钱包记录
+	 * Select user wallet record by id.
 	 *
-	 * @param id 用户钱包记录ID
-	 * @return 用户钱包记录
+	 * @param id the id
+	 * @return the user wallet record
 	 */
 	public UserWalletRecord selectUserWalletRecordById(Long id);
 
 	/**
-	 * 查询用户钱包记录列表
+	 * Select user wallet record list.
 	 *
-	 * @param userWalletRecord 用户钱包记录
-	 * @return 用户钱包记录集合
+	 * @param userWalletRecord the user wallet record
+	 * @return the list
 	 */
 	public List<UserWalletRecord> selectUserWalletRecordList(UserWalletRecord userWalletRecord);
 
 	/**
-	 * 新增用户钱包记录
+	 * Insert user wallet record.
 	 *
-	 * @param userWalletRecord 用户钱包记录
-	 * @return 结果
+	 * @param userWalletRecord the user wallet record
+	 * @return the int
 	 */
 	public int insertUserWalletRecord(UserWalletRecord userWalletRecord);
 
 	/**
-	 * 修改用户钱包记录
+	 * Update user wallet record.
 	 *
-	 * @param userWalletRecord 用户钱包记录
-	 * @return 结果
+	 * @param userWalletRecord the user wallet record
+	 * @return the int
 	 */
 	public int updateUserWalletRecord(UserWalletRecord userWalletRecord);
 
 	/**
-	 * 删除用户钱包记录
+	 * Delete user wallet record by id.
 	 *
-	 * @param id 用户钱包记录ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserWalletRecordById(Long id);
 
 	/**
-	 * 批量删除用户钱包记录
+	 * Delete user wallet record by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserWalletRecordByIds(String[] ids);
 
+	/**
+	 * Select user wallet record amount.
+	 *
+	 * @param record the record
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserWalletRecordAmount(UserWalletRecord record);
 
+	/**
+	 * Select user wallet record one.
+	 *
+	 * @param query the query
+	 * @return the user wallet record
+	 */
 	public UserWalletRecord selectUserWalletRecordOne(UserWalletRecord query);
 }

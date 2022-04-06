@@ -7,69 +7,102 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.message.domain.UserMessage;
 
 /**
- * 用户消息Mapper接口
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-05-20
+ * The Interface UserMessageMapper.
  */
 public interface UserMessageMapper {
+
 	/**
-	 * 查询用户消息
-	 * 
-	 * @param id 用户消息ID
-	 * @return 用户消息
+	 * Select user message by id.
+	 *
+	 * @param id the id
+	 * @return the user message
 	 */
 	public UserMessage selectUserMessageById(Long id);
 
 	/**
-	 * 查询用户消息列表
-	 * 
-	 * @param userMessage 用户消息
-	 * @return 用户消息集合
+	 * Select user message list.
+	 *
+	 * @param userMessage the user message
+	 * @return the list
 	 */
 	public List<UserMessage> selectUserMessageList(UserMessage userMessage);
 
 	/**
-	 * 新增用户消息
-	 * 
-	 * @param userMessage 用户消息
-	 * @return 结果
+	 * Insert user message.
+	 *
+	 * @param userMessage the user message
+	 * @return the int
 	 */
 	public int insertUserMessage(UserMessage userMessage);
 
 	/**
-	 * 修改用户消息
-	 * 
-	 * @param userMessage 用户消息
-	 * @return 结果
+	 * Update user message.
+	 *
+	 * @param userMessage the user message
+	 * @return the int
 	 */
 	public int updateUserMessage(UserMessage userMessage);
 
 	/**
-	 * 删除用户消息
-	 * 
-	 * @param id 用户消息ID
-	 * @return 结果
+	 * Delete user message by id.
+	 *
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserMessageById(Long id);
 
 	/**
-	 * 批量删除用户消息
-	 * 
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * Delete user message by ids.
+	 *
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserMessageByIds(String[] ids);
 
+	/**
+	 * Select user message unread count.
+	 *
+	 * @param userId the user id
+	 * @return the integer
+	 */
 	public Integer selectUserMessageUnreadCount(Long userId);
 
+	/**
+	 * Insert user message batch.
+	 *
+	 * @param messages the messages
+	 * @return the int
+	 */
 	public int insertUserMessageBatch(@Param("messages") List<UserMessage> messages);
 
+	/**
+	 * Read user message by ids.
+	 *
+	 * @param ids the ids
+	 * @return the int
+	 */
 	public int readUserMessageByIds(String ids);
 
+	/**
+	 * Read user message by user id.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	public int readUserMessageByUserId(Long userId);
 
+	/**
+	 * Read user message by ids.
+	 *
+	 * @param ids the ids
+	 * @return the int
+	 */
 	public int readUserMessageByIds(String[] ids);
 
+	/**
+	 * Delete user message by user id.
+	 *
+	 * @param userId the user id
+	 */
 	public void deleteUserMessageByUserId(Long userId);
 }

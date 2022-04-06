@@ -15,26 +15,32 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Swagger2的接口配置
- *
- * @author ruoyi
+ * The Class SwaggerConfig.
  */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
-	/** 是否开启swagger */
+	/** The enabled. */
 	@Value("${swagger.enabled: false}")
 	private boolean enabled;
+
+	/** The publish url. */
 	@Value("${swagger.publishUrl:}")
 	private String publishUrl;
+
+	/** The dev url. */
 	@Value("${swagger.devUrl:}")
 	private String devUrl;
+
+	/** The title. */
 	@Value("${swagger.title:Sword}")
 	private String title;
 
 	/**
-	 * 创建API
+	 * Creates the rest api.
+	 *
+	 * @return the docket
 	 */
 	@Bean
 	public Docket createRestApi() {
@@ -54,7 +60,9 @@ public class SwaggerConfig {
 	}
 
 	/**
-	 * 添加摘要信息
+	 * Api info.
+	 *
+	 * @return the api info
 	 */
 	private ApiInfo apiInfo() {
 		// 用ApiInfoBuilder进行定制

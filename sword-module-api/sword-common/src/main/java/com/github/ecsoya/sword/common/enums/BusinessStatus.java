@@ -1,18 +1,13 @@
 package com.github.ecsoya.sword.common.enums;
 
 /**
- * 操作状态
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Enum BusinessStatus.
  */
 public enum BusinessStatus {
-	/**
-	 * 成功
-	 */
+
+	/** The success. */
 	SUCCESS,
 
-	/**
-	 * 失败
-	 */
+	/** The fail. */
 	FAIL,
 }

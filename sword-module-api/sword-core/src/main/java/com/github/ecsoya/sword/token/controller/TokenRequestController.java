@@ -14,8 +14,17 @@ import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 import com.github.ecsoya.sword.token.domain.TokenRequest;
 import com.github.ecsoya.sword.token.service.ITokenSecretService;
 
+/**
+ * The Class TokenRequestController.
+ */
 public class TokenRequestController {
 
+	/**
+	 * Check request.
+	 *
+	 * @param request the request
+	 * @return the common result
+	 */
 	protected CommonResult<?> checkRequest(TokenRequest request) {
 		if (request == null) {
 			return CommonResult.fail("参数错误");
@@ -48,6 +57,13 @@ public class TokenRequestController {
 		return CommonResult.success();
 	}
 
+	/**
+	 * Gets the signature.
+	 *
+	 * @param data      the data
+	 * @param secretKey the secret key
+	 * @return the signature
+	 */
 	public static String getSignature(final Map<String, Object> data, String secretKey) {
 		try {
 			final Set<String> keySet = data.keySet();
@@ -74,6 +90,12 @@ public class TokenRequestController {
 		return null;
 	}
 
+	/**
+	 * Encode.
+	 *
+	 * @param value the value
+	 * @return the string
+	 */
 	private static String encode(String value) {
 		try {
 			return URLEncoder.encode(value, "utf-8");

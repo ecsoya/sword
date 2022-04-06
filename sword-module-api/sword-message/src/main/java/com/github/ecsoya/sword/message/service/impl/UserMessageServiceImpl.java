@@ -23,34 +23,36 @@ import com.github.ecsoya.sword.system.service.ISysNoticeService;
 import com.github.ecsoya.sword.user.service.IUserProfileService;
 
 /**
- * 用户消息Service业务层处理
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-05-20
+ * The Class UserMessageServiceImpl.
  */
 @Service
 public class UserMessageServiceImpl implements IUserMessageService {
 
+	/** The message service. */
 	@Autowired
 	private ISwordMessageService messageService;
 
+	/** The user message mapper. */
 	@Autowired
 	private UserMessageMapper userMessageMapper;
 
+	/** The user service. */
 	@Autowired
 	private IUserProfileService userService;
 
+	/** The message sender. */
 	@Autowired
 	private MessageWebSocketSender messageSender;
 
+	/** The notice service. */
 	@Autowired
 	private ISysNoticeService noticeService;
 
 	/**
-	 * 查询用户消息
-	 * 
-	 * @param id 用户消息ID
-	 * @return 用户消息
+	 * Select user message by id.
+	 *
+	 * @param id the id
+	 * @return the user message
 	 */
 	@Override
 	public UserMessage selectUserMessageById(Long id) {
@@ -58,10 +60,10 @@ public class UserMessageServiceImpl implements IUserMessageService {
 	}
 
 	/**
-	 * 查询用户消息列表
-	 * 
-	 * @param userMessage 用户消息
-	 * @return 用户消息
+	 * Select user message list.
+	 *
+	 * @param userMessage the user message
+	 * @return the list
 	 */
 	@Override
 	public List<UserMessage> selectUserMessageList(UserMessage userMessage) {
@@ -69,6 +71,12 @@ public class UserMessageServiceImpl implements IUserMessageService {
 		return list.parallelStream().map(msg -> updateMessageContent(msg)).collect(Collectors.toList());
 	}
 
+	/**
+	 * Update message content.
+	 *
+	 * @param msg the msg
+	 * @return the user message
+	 */
 	private UserMessage updateMessageContent(UserMessage msg) {
 		Integer type = msg.getType();
 		Long messageId = msg.getMessageId();
@@ -100,10 +108,10 @@ public class UserMessageServiceImpl implements IUserMessageService {
 	}
 
 	/**
-	 * 新增用户消息
-	 * 
-	 * @param userMessage 用户消息
-	 * @return 结果
+	 * Insert user message.
+	 *
+	 * @param userMessage the user message
+	 * @return the int
 	 */
 	@Override
 	public int insertUserMessage(UserMessage userMessage) {
@@ -117,10 +125,10 @@ public class UserMessageServiceImpl implements IUserMessageService {
 	}
 
 	/**
-	 * 修改用户消息
-	 * 
-	 * @param userMessage 用户消息
-	 * @return 结果
+	 * Update user message.
+	 *
+	 * @param userMessage the user message
+	 * @return the int
 	 */
 	@Override
 	public int updateUserMessage(UserMessage userMessage) {
@@ -129,10 +137,10 @@ public class UserMessageServiceImpl implements IUserMessageService {
 	}
 
 	/**
-	 * 删除用户消息对象
-	 * 
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * Delete user message by ids.
+	 *
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserMessageByIds(String ids) {
@@ -149,10 +157,10 @@ public class UserMessageServiceImpl implements IUserMessageService {
 	}
 
 	/**
-	 * 删除用户消息信息
-	 * 
-	 * @param id 用户消息ID
-	 * @return 结果
+	 * Delete user message by id.
+	 *
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserMessageById(Long id) {
@@ -164,6 +172,12 @@ public class UserMessageServiceImpl implements IUserMessageService {
 		return rows;
 	}
 
+	/**
+	 * Select user message unread count.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	@Override
 	public int selectUserMessageUnreadCount(Long userId) {
 		if (userId == null) {
@@ -173,6 +187,14 @@ public class UserMessageServiceImpl implements IUserMessageService {
 		return count == null ? 0 : count.intValue();
 	}
 
+	/**
+	 * Publish user messages.
+	 *
+	 * @param messageId the message id
+	 * @param type      the type
+	 * @param userIds   the user ids
+	 * @return the int
+	 */
 	@Override
 	public int publishUserMessages(Long messageId, Integer type, Long... userIds) {
 		if (messageId == null || type == null) {
@@ -201,6 +223,12 @@ public class UserMessageServiceImpl implements IUserMessageService {
 		return rows;
 	}
 
+	/**
+	 * Notify message sender.
+	 *
+	 * @param message the message
+	 * @param userIds the user ids
+	 */
 	private void notifyMessageSender(String message, Long[] userIds) {
 		if (messageSender == null) {
 			return;
@@ -218,6 +246,13 @@ public class UserMessageServiceImpl implements IUserMessageService {
 		});
 	}
 
+	/**
+	 * Publish user messages.
+	 *
+	 * @param message the message
+	 * @param userIds the user ids
+	 * @return the int
+	 */
 	@Override
 	public int publishUserMessages(String message, Long[] userIds) {
 		if (StringUtils.isEmpty(message)) {
@@ -233,6 +268,13 @@ public class UserMessageServiceImpl implements IUserMessageService {
 		return rows;
 	}
 
+	/**
+	 * Read user message by ids.
+	 *
+	 * @param userId the user id
+	 * @param ids    the ids
+	 * @return the int
+	 */
 	@Override
 	public int readUserMessageByIds(Long userId, String ids) {
 		if (StringUtils.isEmpty(ids)) {
@@ -245,6 +287,12 @@ public class UserMessageServiceImpl implements IUserMessageService {
 		return rows;
 	}
 
+	/**
+	 * Read user message by user id.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	@Override
 	public int readUserMessageByUserId(Long userId) {
 		if (userId == null) {
@@ -257,6 +305,12 @@ public class UserMessageServiceImpl implements IUserMessageService {
 		return rows;
 	}
 
+	/**
+	 * Removes the all user message by user id.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	@Override
 	public int removeAllUserMessageByUserId(Long userId) {
 		if (userId == null) {

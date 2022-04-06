@@ -6,13 +6,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Md5加密方法
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class Md5Utils.
  */
 public class Md5Utils {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(Md5Utils.class);
 
+	/**
+	 * Md 5.
+	 *
+	 * @param s the s
+	 * @return the byte[]
+	 */
 	private static byte[] md5(String s) {
 		MessageDigest algorithm;
 		try {
@@ -27,6 +33,12 @@ public class Md5Utils {
 		return null;
 	}
 
+	/**
+	 * To hex.
+	 *
+	 * @param hash the hash
+	 * @return the string
+	 */
 	private static final String toHex(byte hash[]) {
 		if (hash == null) {
 			return null;
@@ -43,6 +55,12 @@ public class Md5Utils {
 		return buf.toString();
 	}
 
+	/**
+	 * Hash.
+	 *
+	 * @param s the s
+	 * @return the string
+	 */
 	public static String hash(String s) {
 		try {
 			return new String(toHex(md5(s)).getBytes("UTF-8"), "UTF-8");

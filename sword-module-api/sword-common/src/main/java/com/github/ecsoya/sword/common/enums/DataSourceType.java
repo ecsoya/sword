@@ -1,18 +1,13 @@
 package com.github.ecsoya.sword.common.enums;
 
 /**
- * 数据源
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Enum DataSourceType.
  */
 public enum DataSourceType {
-	/**
-	 * 主库
-	 */
+
+	/** The master. */
 	MASTER,
 
-	/**
-	 * 从库
-	 */
+	/** The slave. */
 	SLAVE
 }

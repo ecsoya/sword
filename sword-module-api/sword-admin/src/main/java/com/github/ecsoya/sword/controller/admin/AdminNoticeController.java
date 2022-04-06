@@ -25,14 +25,25 @@ import com.github.ecsoya.sword.message.MessageHelper;
 import com.github.ecsoya.sword.system.domain.SysNotice;
 import com.github.ecsoya.sword.system.service.ISysNoticeService;
 
+/**
+ * The Class AdminNoticeController.
+ */
 @Controller
 @RequestMapping("/admin/notice")
 public class AdminNoticeController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "admin/notice";
 
+	/** The notice service. */
 	@Autowired
 	private ISysNoticeService noticeService;
 
+	/**
+	 * Notice.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("admin:notice:view")
 	@GetMapping()
 	public String notice() {
@@ -40,7 +51,10 @@ public class AdminNoticeController extends BaseController {
 	}
 
 	/**
-	 * 查询公告列表
+	 * List.
+	 *
+	 * @param notice the notice
+	 * @return the table data info
 	 */
 	@RequiresPermissions("admin:notice:list")
 	@PostMapping("/list")
@@ -53,7 +67,9 @@ public class AdminNoticeController extends BaseController {
 	}
 
 	/**
-	 * 新增公告
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -61,7 +77,10 @@ public class AdminNoticeController extends BaseController {
 	}
 
 	/**
-	 * 新增保存公告
+	 * Adds the save.
+	 *
+	 * @param notice the notice
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:notice:add")
 	@Log(title = "添加通知公告", businessType = BusinessType.INSERT)
@@ -84,7 +103,11 @@ public class AdminNoticeController extends BaseController {
 	}
 
 	/**
-	 * 修改公告
+	 * Edits the.
+	 *
+	 * @param noticeId the notice id
+	 * @param mmap     the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{noticeId}")
 	public String edit(@PathVariable("noticeId") Long noticeId, ModelMap mmap) {
@@ -93,7 +116,10 @@ public class AdminNoticeController extends BaseController {
 	}
 
 	/**
-	 * 修改保存公告
+	 * Edits the save.
+	 *
+	 * @param notice the notice
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:notice:edit")
 	@Log(title = "更新通知公告", businessType = BusinessType.UPDATE)
@@ -105,7 +131,10 @@ public class AdminNoticeController extends BaseController {
 	}
 
 	/**
-	 * 删除公告
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:notice:remove")
 	@Log(title = "删除通知公告", businessType = BusinessType.DELETE)

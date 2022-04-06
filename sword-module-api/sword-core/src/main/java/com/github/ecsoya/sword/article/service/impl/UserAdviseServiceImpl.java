@@ -15,21 +15,20 @@ import com.github.ecsoya.sword.common.utils.IdWorker;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * 用户反馈Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-06
+ * The Class UserAdviseServiceImpl.
  */
 @Service
 public class UserAdviseServiceImpl implements IUserAdviseService {
+
+	/** The user advise mapper. */
 	@Autowired
 	private UserAdviseMapper userAdviseMapper;
 
 	/**
-	 * 查询用户反馈
+	 * Select user advise by id.
 	 *
-	 * @param id 用户反馈ID
-	 * @return 用户反馈
+	 * @param id the id
+	 * @return the user advise
 	 */
 	@Override
 	public UserAdvise selectUserAdviseById(Long id) {
@@ -37,10 +36,10 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 	}
 
 	/**
-	 * 查询用户反馈列表
+	 * Select user advise list.
 	 *
-	 * @param userAdvise 用户反馈
-	 * @return 用户反馈
+	 * @param userAdvise the user advise
+	 * @return the list
 	 */
 	@Override
 	public List<UserAdvise> selectUserAdviseList(UserAdvise userAdvise) {
@@ -48,10 +47,10 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 	}
 
 	/**
-	 * 新增用户反馈
+	 * Insert user advise.
 	 *
-	 * @param userAdvise 用户反馈
-	 * @return 结果
+	 * @param userAdvise the user advise
+	 * @return the int
 	 */
 	@Override
 	public int insertUserAdvise(UserAdvise userAdvise) {
@@ -71,10 +70,10 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 	}
 
 	/**
-	 * 修改用户反馈
+	 * Update user advise.
 	 *
-	 * @param userAdvise 用户反馈
-	 * @return 结果
+	 * @param userAdvise the user advise
+	 * @return the int
 	 */
 	@Override
 	public int updateUserAdvise(UserAdvise userAdvise) {
@@ -83,10 +82,10 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 	}
 
 	/**
-	 * 删除用户反馈对象
+	 * Delete user advise by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserAdviseByIds(String ids) {
@@ -94,16 +93,22 @@ public class UserAdviseServiceImpl implements IUserAdviseService {
 	}
 
 	/**
-	 * 删除用户反馈信息
+	 * Delete user advise by id.
 	 *
-	 * @param id 用户反馈ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserAdviseById(Long id) {
 		return userAdviseMapper.deleteUserAdviseById(id);
 	}
 
+	/**
+	 * Select user advise list by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	@Override
 	public List<UserAdvise> selectUserAdviseListByUserId(Long userId) {
 		if (userId == null) {

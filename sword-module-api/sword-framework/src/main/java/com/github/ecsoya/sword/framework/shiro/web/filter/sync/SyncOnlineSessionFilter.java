@@ -10,15 +10,21 @@ import com.github.ecsoya.sword.framework.shiro.session.OnlineSession;
 import com.github.ecsoya.sword.framework.shiro.session.OnlineSessionDAO;
 
 /**
- * 同步Session数据到Db
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SyncOnlineSessionFilter.
  */
 public class SyncOnlineSessionFilter extends PathMatchingFilter {
+
+	/** The online session DAO. */
 	private OnlineSessionDAO onlineSessionDAO;
 
 	/**
-	 * 同步会话数据到DB 一次请求最多同步一次 防止过多处理 需要放到Shiro过滤器之前
+	 * On pre handle.
+	 *
+	 * @param request     the request
+	 * @param response    the response
+	 * @param mappedValue the mapped value
+	 * @return true, if successful
+	 * @throws Exception the exception
 	 */
 	@Override
 	protected boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue)
@@ -32,6 +38,11 @@ public class SyncOnlineSessionFilter extends PathMatchingFilter {
 		return true;
 	}
 
+	/**
+	 * Sets the online session DAO.
+	 *
+	 * @param onlineSessionDAO the new online session DAO
+	 */
 	public void setOnlineSessionDAO(OnlineSessionDAO onlineSessionDAO) {
 		this.onlineSessionDAO = onlineSessionDAO;
 	}

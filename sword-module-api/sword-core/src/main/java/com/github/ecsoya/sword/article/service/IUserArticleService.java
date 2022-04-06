@@ -6,64 +6,72 @@ import com.github.ecsoya.sword.article.domain.UserArticle;
 import com.github.ecsoya.sword.article.domain.UserArticleComment;
 
 /**
- * 用户文章Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-02-04
+ * The Interface IUserArticleService.
  */
 public interface IUserArticleService {
+
 	/**
-	 * 查询用户文章
+	 * Select user article by id.
 	 *
-	 * @param id 用户文章ID
-	 * @return 用户文章
+	 * @param id the id
+	 * @return the user article
 	 */
 	public UserArticle selectUserArticleById(Long id);
 
 	/**
-	 * 查询用户文章列表
+	 * Select user article list.
 	 *
-	 * @param userArticle 用户文章
-	 * @return 用户文章集合
+	 * @param userArticle the user article
+	 * @return the list
 	 */
 	public List<UserArticle> selectUserArticleList(UserArticle userArticle);
 
 	/**
-	 * 新增用户文章
+	 * Insert user article.
 	 *
-	 * @param userArticle 用户文章
-	 * @return 结果
+	 * @param userArticle the user article
+	 * @return the int
 	 */
 	public int insertUserArticle(UserArticle userArticle);
 
 	/**
-	 * 修改用户文章
+	 * Update user article.
 	 *
-	 * @param userArticle 用户文章
-	 * @return 结果
+	 * @param userArticle the user article
+	 * @return the int
 	 */
 	public int updateUserArticle(UserArticle userArticle);
 
 	/**
-	 * 批量删除用户文章
+	 * Delete user article by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserArticleByIds(String ids);
 
 	/**
-	 * 删除用户文章信息
+	 * Delete user article by id.
 	 *
-	 * @param id 用户文章ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserArticleById(Long id);
 
+	/**
+	 * Select user article by article id.
+	 *
+	 * @param articleId the article id
+	 * @param userId    the user id
+	 * @return the user article
+	 */
 	public UserArticle selectUserArticleByArticleId(Long articleId, Long userId);
 
 	/**
-	 * 获取文章的评论列表
+	 * Select user article comment list.
+	 *
+	 * @param articleId the article id
+	 * @return the list
 	 */
 	public List<UserArticleComment> selectUserArticleCommentList(Long articleId);
 }

@@ -12,16 +12,20 @@ import com.github.ecsoya.sword.common.core.domain.AjaxResult;
 import com.github.ecsoya.sword.qrcode.QrcodeUtils;
 
 /**
- * 版本Controller
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-22
+ * The Class ResourceController.
  */
 @Controller
 @RequestMapping("/tool/resource")
 public class ResourceController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "tool/resource";
 
+	/**
+	 * Resource.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("tool:resource:view")
 	@GetMapping()
 	public String resource() {
@@ -29,7 +33,10 @@ public class ResourceController extends BaseController {
 	}
 
 	/**
-	 * 导出版本列表
+	 * Qrcode.
+	 *
+	 * @param content the content
+	 * @return the ajax result
 	 */
 	@PostMapping("/qrcode")
 	@ResponseBody

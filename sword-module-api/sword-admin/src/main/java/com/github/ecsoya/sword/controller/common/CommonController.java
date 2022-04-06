@@ -30,18 +30,29 @@ import com.github.ecsoya.sword.service.IMobileCodeService;
 import com.github.ecsoya.sword.upload.utils.FileUploadUtils;
 
 /**
- * 通用请求处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class CommonController.
  */
 @Controller
 public class CommonController extends BaseController {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(CommonController.class);
+
+	/** The mail code service. */
 	@Autowired(required = false)
 	private IMailCodeService mailCodeService;
+
+	/** The mobile code service. */
 	@Autowired(required = false)
 	private IMobileCodeService mobileCodeService;
 
+	/**
+	 * Delivery.
+	 *
+	 * @param subject  the subject
+	 * @param template the template
+	 * @return the ajax result
+	 */
 	@PostMapping("/code/delivery")
 	@RepeatSubmit
 	@ResponseBody
@@ -60,8 +71,10 @@ public class CommonController extends BaseController {
 	}
 
 	/**
+	 * Verify code.
 	 *
-	 * 验证邮箱、短信验证码
+	 * @param code the code
+	 * @return the ajax result
 	 */
 	@PostMapping("/code/verify")
 	@RepeatSubmit
@@ -84,10 +97,12 @@ public class CommonController extends BaseController {
 	}
 
 	/**
-	 * 通用下载请求
+	 * File download.
 	 *
-	 * @param fileName 文件名称
-	 * @param delete   是否删除
+	 * @param fileName the file name
+	 * @param delete   the delete
+	 * @param response the response
+	 * @param request  the request
 	 */
 	@GetMapping("common/download")
 	public void fileDownload(String fileName, Boolean delete, HttpServletResponse response,
@@ -111,7 +126,12 @@ public class CommonController extends BaseController {
 	}
 
 	/**
-	 * 通用上传请求
+	 * Upload file.
+	 *
+	 * @param file  the file
+	 * @param width the width
+	 * @return the ajax result
+	 * @throws Exception the exception
 	 */
 	@PostMapping("/common/upload")
 	@ResponseBody
@@ -143,6 +163,14 @@ public class CommonController extends BaseController {
 		}
 	}
 
+	/**
+	 * Upload file cloud.
+	 *
+	 * @param file  the file
+	 * @param width the width
+	 * @return the ajax result
+	 * @throws Exception the exception
+	 */
 	@PostMapping("/common/uploadCloud")
 	@ResponseBody
 	public AjaxResult uploadFileCloud(MultipartFile file, Integer width) throws Exception {
@@ -175,7 +203,12 @@ public class CommonController extends BaseController {
 	}
 
 	/**
-	 * 本地资源通用下载
+	 * Resource download.
+	 *
+	 * @param resource the resource
+	 * @param request  the request
+	 * @param response the response
+	 * @throws Exception the exception
 	 */
 	@GetMapping("/common/download/resource")
 	public void resourceDownload(String resource, HttpServletRequest request, HttpServletResponse response)

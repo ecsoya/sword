@@ -20,105 +20,105 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.github.ecsoya.sword.common.config.GlobalConfig;
 import com.github.ecsoya.sword.common.utils.incrementer.DefaultIdentifierGenerator;
 import com.github.ecsoya.sword.common.utils.incrementer.IdentifierGenerator;
 
 /**
- * id 获取器
- *
- * @author hubin
- * @since 2016-08-01
+ * The Class IdWorker.
  */
 public class IdWorker {
+
+	/** The Constant DASH. */
 	private static final String DASH = "-";
+
+	/** The Constant EMPTY. */
 	private static final String EMPTY = "";
-	/**
-	 * 主机和进程的机器码
-	 */
+
+	/** The identifier generator. */
 	private static IdentifierGenerator IDENTIFIER_GENERATOR = new DefaultIdentifierGenerator();
 
-	/**
-	 * 毫秒格式化时间
-	 */
+	/** The Constant MILLISECOND. */
 	public static final DateTimeFormatter MILLISECOND = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
 	/**
-	 * 获取唯一ID
+	 * Gets the id.
 	 *
-	 * @return id
+	 * @return the id
 	 */
 	public static long getId() {
 		return getId(new Object());
 	}
 
 	/**
-	 * 获取唯一ID
+	 * Gets the id.
 	 *
-	 * @return id
+	 * @param entity the entity
+	 * @return the id
 	 */
 	public static long getId(Object entity) {
 		return IDENTIFIER_GENERATOR.nextId(entity).longValue();
 	}
 
 	/**
-	 * 获取唯一ID
+	 * Gets the id str.
 	 *
-	 * @return id
+	 * @return the id str
 	 */
 	public static String getIdStr() {
 		return getIdStr(new Object());
 	}
 
 	/**
-	 * 获取唯一ID
+	 * Gets the id str.
 	 *
-	 * @return id
+	 * @param entity the entity
+	 * @return the id str
 	 */
 	public static String getIdStr(Object entity) {
 		return IDENTIFIER_GENERATOR.nextId(entity).toString();
 	}
 
 	/**
-	 * 格式化的毫秒时间
+	 * Gets the millisecond.
+	 *
+	 * @return the millisecond
 	 */
 	public static String getMillisecond() {
 		return LocalDateTime.now().format(MILLISECOND);
 	}
 
 	/**
-	 * 时间 ID = Time + ID
-	 * <p>
-	 * 例如：可用于商品订单 ID
-	 * </p>
+	 * Gets the time id.
+	 *
+	 * @return the time id
 	 */
 	public static String getTimeId() {
 		return getMillisecond() + getIdStr();
 	}
 
 	/**
-	 * 有参构造器
+	 * Inits the sequence.
 	 *
-	 * @param workerId     工作机器 ID
-	 * @param dataCenterId 序列号
-	 * @see #setIdentifierGenerator(IdentifierGenerator)
+	 * @param workerId     the worker id
+	 * @param dataCenterId the data center id
 	 */
 	public static void initSequence(long workerId, long dataCenterId) {
 		IDENTIFIER_GENERATOR = new DefaultIdentifierGenerator(workerId, dataCenterId);
 	}
 
 	/**
-	 * 自定义id 生成方式
+	 * Sets the identifier generator.
 	 *
-	 * @param identifierGenerator id 生成器
-	 * @see GlobalConfig#setIdentifierGenerator(IdentifierGenerator)
+	 * @param identifierGenerator the new identifier generator
 	 */
 	public static void setIdentifierGenerator(IdentifierGenerator identifierGenerator) {
 		IDENTIFIER_GENERATOR = identifierGenerator;
 	}
 
 	/**
-	 * 使用ThreadLocalRandom获取UUID获取更优的效果 去掉"-"
+	 * Gets the 32uuid.
+	 *
+	 * @return the 32uuid
 	 */
 	public static String get32UUID() {
 		final ThreadLocalRandom random = ThreadLocalRandom.current();

@@ -13,21 +13,20 @@ import com.github.ecsoya.sword.system.mapper.SysNoticeMapper;
 import com.github.ecsoya.sword.system.service.ISysNoticeService;
 
 /**
- * 公告 服务层实现
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2018-06-25
+ * The Class SysNoticeServiceImpl.
  */
 @Service
 public class SysNoticeServiceImpl implements ISysNoticeService {
+
+	/** The notice mapper. */
 	@Autowired
 	private SysNoticeMapper noticeMapper;
 
 	/**
-	 * 查询公告信息
+	 * Select notice by id.
 	 *
-	 * @param noticeId 公告ID
-	 * @return 公告信息
+	 * @param noticeId the notice id
+	 * @return the sys notice
 	 */
 	@Override
 	public SysNotice selectNoticeById(Long noticeId) {
@@ -35,10 +34,10 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 	}
 
 	/**
-	 * 查询公告列表
+	 * Select notice list.
 	 *
-	 * @param notice 公告信息
-	 * @return 公告集合
+	 * @param notice the notice
+	 * @return the list
 	 */
 	@Override
 	public List<SysNotice> selectNoticeList(SysNotice notice) {
@@ -46,10 +45,10 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 	}
 
 	/**
-	 * 新增公告
+	 * Insert notice.
 	 *
-	 * @param notice 公告信息
-	 * @return 结果
+	 * @param notice the notice
+	 * @return the int
 	 */
 	@Override
 	public int insertNotice(SysNotice notice) {
@@ -57,10 +56,10 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 	}
 
 	/**
-	 * 修改公告
+	 * Update notice.
 	 *
-	 * @param notice 公告信息
-	 * @return 结果
+	 * @param notice the notice
+	 * @return the int
 	 */
 	@Override
 	public int updateNotice(SysNotice notice) {
@@ -68,16 +67,21 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 	}
 
 	/**
-	 * 删除公告对象
+	 * Delete notice by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteNoticeByIds(String ids) {
 		return noticeMapper.deleteNoticeByIds(Convert.toStrArray(ids));
 	}
 
+	/**
+	 * Gets the latest notice title.
+	 *
+	 * @return the latest notice title
+	 */
 	@Override
 	public String getLatestNoticeTitle() {
 		final List<SysNotice> list = selectNoticeListByType(SysNotice.NOTICE_TYPE_NOTICE);
@@ -94,6 +98,12 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
 		return new String(buf);
 	}
 
+	/**
+	 * Select notice list by type.
+	 *
+	 * @param noticeType the notice type
+	 * @return the list
+	 */
 	@Override
 	public List<SysNotice> selectNoticeListByType(String noticeType) {
 		if (StringUtils.isEmpty(noticeType)) {

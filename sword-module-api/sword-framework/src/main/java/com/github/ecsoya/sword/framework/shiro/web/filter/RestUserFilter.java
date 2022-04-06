@@ -11,13 +11,31 @@ import org.springframework.http.HttpStatus;
 import com.alibaba.fastjson.JSON;
 import com.github.ecsoya.sword.common.core.domain.CommonResult;
 
+/**
+ * The Class RestUserFilter.
+ */
 public class RestUserFilter extends UserFilter {
 
+	/**
+	 * On access denied.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return true, if successful
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		return true;
 	}
 
+	/**
+	 * Redirect to login.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
 		// 请求被拦截后直接返回json格式的响应数据

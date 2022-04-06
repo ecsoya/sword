@@ -6,13 +6,15 @@ import java.io.StringWriter;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
- * 错误信息处理类。
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class ExceptionUtil.
  */
 public class ExceptionUtil {
+
 	/**
-	 * 获取exception的详细错误信息。
+	 * Gets the exception message.
+	 *
+	 * @param e the e
+	 * @return the exception message
 	 */
 	public static String getExceptionMessage(Throwable e) {
 		final StringWriter sw = new StringWriter();
@@ -21,6 +23,12 @@ public class ExceptionUtil {
 		return str;
 	}
 
+	/**
+	 * Gets the root error mseeage.
+	 *
+	 * @param e the e
+	 * @return the root error mseeage
+	 */
 	public static String getRootErrorMseeage(Exception e) {
 		Throwable root = ExceptionUtils.getRootCause(e);
 		root = (root == null ? e : root);

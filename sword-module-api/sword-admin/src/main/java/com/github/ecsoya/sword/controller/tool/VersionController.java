@@ -27,19 +27,24 @@ import com.github.ecsoya.sword.version.domain.SwordVersion;
 import com.github.ecsoya.sword.version.service.ISwordVersionService;
 
 /**
- * 版本Controller
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-22
+ * The Class VersionController.
  */
 @Controller
 @RequestMapping("/tool/version")
 public class VersionController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "tool/version";
 
+	/** The sword version service. */
 	@Autowired
 	private ISwordVersionService swordVersionService;
 
+	/**
+	 * Version.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("tool:version:view")
 	@GetMapping()
 	public String version() {
@@ -47,7 +52,10 @@ public class VersionController extends BaseController {
 	}
 
 	/**
-	 * 查询版本列表
+	 * List.
+	 *
+	 * @param beeplusVersion the beeplus version
+	 * @return the table data info
 	 */
 	@RequiresPermissions("tool:version:list")
 	@PostMapping("/list")
@@ -59,7 +67,10 @@ public class VersionController extends BaseController {
 	}
 
 	/**
-	 * 导出版本列表
+	 * Export.
+	 *
+	 * @param beeplusVersion the beeplus version
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("tool:version:export")
 	@Log(title = "版本", businessType = BusinessType.EXPORT)
@@ -72,7 +83,10 @@ public class VersionController extends BaseController {
 	}
 
 	/**
-	 * 新增版本
+	 * Adds the.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add(ModelMap mmap) {
@@ -87,7 +101,14 @@ public class VersionController extends BaseController {
 	}
 
 	/**
-	 * 新增保存版本
+	 * Adds the save.
+	 *
+	 * @param version     the version
+	 * @param android     the android
+	 * @param ios         the ios
+	 * @param status      the status
+	 * @param description the description
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("tool:version:add")
 	@Log(title = "版本", businessType = BusinessType.INSERT)
@@ -119,7 +140,11 @@ public class VersionController extends BaseController {
 	}
 
 	/**
-	 * 修改版本
+	 * Edits the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
@@ -129,7 +154,10 @@ public class VersionController extends BaseController {
 	}
 
 	/**
-	 * 修改保存版本
+	 * Edits the save.
+	 *
+	 * @param beeplusVersion the beeplus version
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("tool:version:edit")
 	@Log(title = "版本", businessType = BusinessType.UPDATE)
@@ -140,7 +168,10 @@ public class VersionController extends BaseController {
 	}
 
 	/**
-	 * 删除版本
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("tool:version:remove")
 	@Log(title = "版本", businessType = BusinessType.DELETE)
@@ -151,7 +182,12 @@ public class VersionController extends BaseController {
 	}
 
 	/**
-	 * 通用上传请求
+	 * Upload file.
+	 *
+	 * @param file    the file
+	 * @param version the version
+	 * @return the ajax result
+	 * @throws Exception the exception
 	 */
 	@PostMapping("/upload")
 	@ResponseBody

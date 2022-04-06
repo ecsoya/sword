@@ -6,62 +6,75 @@ import com.github.ecsoya.sword.common.core.domain.CommonResult;
 import com.github.ecsoya.sword.user.domain.UserCertificate;
 
 /**
- * 用户实名Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-23
+ * The Interface IUserCertificateService.
  */
 public interface IUserCertificateService {
+
 	/**
-	 * 查询用户实名
+	 * Select user certificate by id.
 	 *
-	 * @param userId 用户实名ID
-	 * @return 用户实名
+	 * @param userId the user id
+	 * @return the user certificate
 	 */
 	public UserCertificate selectUserCertificateById(Long userId);
 
 	/**
-	 * 查询用户实名列表
+	 * Select user certificate list.
 	 *
-	 * @param userCertificate 用户实名
-	 * @return 用户实名集合
+	 * @param userCertificate the user certificate
+	 * @return the list
 	 */
 	public List<UserCertificate> selectUserCertificateList(UserCertificate userCertificate);
 
 	/**
-	 * 新增用户实名
+	 * Insert user certificate.
 	 *
-	 * @param userCertificate 用户实名
-	 * @return 结果
+	 * @param userCertificate the user certificate
+	 * @return the int
 	 */
 	public int insertUserCertificate(UserCertificate userCertificate);
 
 	/**
-	 * 修改用户实名
+	 * Update user certificate.
 	 *
-	 * @param userCertificate 用户实名
-	 * @return 结果
+	 * @param userCertificate the user certificate
+	 * @return the int
 	 */
 	public int updateUserCertificate(UserCertificate userCertificate);
 
 	/**
-	 * 批量删除用户实名
+	 * Delete user certificate by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserCertificateByIds(String ids);
 
 	/**
-	 * 删除用户实名信息
+	 * Delete user certificate by id.
 	 *
-	 * @param userId 用户实名ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int deleteUserCertificateById(Long userId);
 
+	/**
+	 * Update user certificate status.
+	 *
+	 * @param userId the user id
+	 * @param status the status
+	 * @param remark the remark
+	 * @return the int
+	 */
 	public int updateUserCertificateStatus(Long userId, Integer status, String remark);
 
+	/**
+	 * Check user certificate.
+	 *
+	 * @param userId the user id
+	 * @param kind   the kind
+	 * @return the common result
+	 */
 	public CommonResult<?> checkUserCertificate(Long userId, Integer kind);
 
 }

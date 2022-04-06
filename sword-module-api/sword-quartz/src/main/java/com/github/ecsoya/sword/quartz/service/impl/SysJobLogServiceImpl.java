@@ -11,20 +11,20 @@ import com.github.ecsoya.sword.quartz.mapper.SysJobLogMapper;
 import com.github.ecsoya.sword.quartz.service.ISysJobLogService;
 
 /**
- * 定时任务调度日志信息 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysJobLogServiceImpl.
  */
 @Service
 public class SysJobLogServiceImpl implements ISysJobLogService {
+
+	/** The job log mapper. */
 	@Autowired
 	private SysJobLogMapper jobLogMapper;
 
 	/**
-	 * 获取quartz调度器日志的计划任务
+	 * Select job log list.
 	 *
-	 * @param jobLog 调度日志信息
-	 * @return 调度任务日志集合
+	 * @param jobLog the job log
+	 * @return the list
 	 */
 	@Override
 	public List<SysJobLog> selectJobLogList(SysJobLog jobLog) {
@@ -32,10 +32,10 @@ public class SysJobLogServiceImpl implements ISysJobLogService {
 	}
 
 	/**
-	 * 通过调度任务日志ID查询调度信息
+	 * Select job log by id.
 	 *
-	 * @param jobLogId 调度任务日志ID
-	 * @return 调度任务日志对象信息
+	 * @param jobLogId the job log id
+	 * @return the sys job log
 	 */
 	@Override
 	public SysJobLog selectJobLogById(Long jobLogId) {
@@ -43,9 +43,9 @@ public class SysJobLogServiceImpl implements ISysJobLogService {
 	}
 
 	/**
-	 * 新增任务日志
+	 * Adds the job log.
 	 *
-	 * @param jobLog 调度日志信息
+	 * @param jobLog the job log
 	 */
 	@Override
 	public void addJobLog(SysJobLog jobLog) {
@@ -53,10 +53,10 @@ public class SysJobLogServiceImpl implements ISysJobLogService {
 	}
 
 	/**
-	 * 批量删除调度日志信息
+	 * Delete job log by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteJobLogByIds(String ids) {
@@ -64,9 +64,10 @@ public class SysJobLogServiceImpl implements ISysJobLogService {
 	}
 
 	/**
-	 * 删除任务日志
+	 * Delete job log by id.
 	 *
-	 * @param jobId 调度日志ID
+	 * @param jobId the job id
+	 * @return the int
 	 */
 	@Override
 	public int deleteJobLogById(Long jobId) {
@@ -74,7 +75,7 @@ public class SysJobLogServiceImpl implements ISysJobLogService {
 	}
 
 	/**
-	 * 清空任务日志
+	 * Clean job log.
 	 */
 	@Override
 	public void cleanJobLog() {

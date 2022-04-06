@@ -5,59 +5,63 @@ import java.util.List;
 import com.github.ecsoya.sword.mining.domain.MiningLevel;
 
 /**
- * Mining级别Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-03-15
+ * The Interface MiningLevelMapper.
  */
 public interface MiningLevelMapper {
+
 	/**
-	 * 查询Mining级别
+	 * Select mining level by id.
 	 *
-	 * @param id Mining级别ID
-	 * @return Mining级别
+	 * @param id the id
+	 * @return the mining level
 	 */
 	public MiningLevel selectMiningLevelById(Long id);
 
 	/**
-	 * 查询Mining级别列表
+	 * Select mining level list.
 	 *
-	 * @param miningLevel Mining级别
-	 * @return Mining级别集合
+	 * @param miningLevel the mining level
+	 * @return the list
 	 */
 	public List<MiningLevel> selectMiningLevelList(MiningLevel miningLevel);
 
 	/**
-	 * 新增Mining级别
+	 * Insert mining level.
 	 *
-	 * @param miningLevel Mining级别
-	 * @return 结果
+	 * @param miningLevel the mining level
+	 * @return the int
 	 */
 	public int insertMiningLevel(MiningLevel miningLevel);
 
 	/**
-	 * 修改Mining级别
+	 * Update mining level.
 	 *
-	 * @param miningLevel Mining级别
-	 * @return 结果
+	 * @param miningLevel the mining level
+	 * @return the int
 	 */
 	public int updateMiningLevel(MiningLevel miningLevel);
 
 	/**
-	 * 删除Mining级别
+	 * Delete mining level by id.
 	 *
-	 * @param id Mining级别ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteMiningLevelById(Long id);
 
 	/**
-	 * 批量删除Mining级别
+	 * Delete mining level by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteMiningLevelByIds(String[] ids);
 
+	/**
+	 * Select mining level by user id.
+	 *
+	 * @param userId the user id
+	 * @return the mining level
+	 */
 	public MiningLevel selectMiningLevelByUserId(Long userId);
 }

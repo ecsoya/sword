@@ -43,110 +43,100 @@ import com.github.ecsoya.sword.framework.shiro.web.session.CustomWebSessionManag
 import com.github.ecsoya.sword.framework.shiro.web.session.SpringSessionValidationScheduler;
 
 /**
- * 权限配置加载
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class ShiroConfig.
  */
 @Configuration
 public class ShiroConfig {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(ShiroConfig.class);
 
+	/** The Constant CACHE_KEY. */
 	private static final String CACHE_KEY = "shiro:cache:";
+
+	/** The Constant SESSION_KEY. */
 	private static final String SESSION_KEY = "shiro:session:";
+
+	/** The host. */
 	// Redis配置
 	@Value("${spring.redis.host:localhost}")
 	private String host;
+
+	/** The port. */
 	@Value("${spring.redis.port:6379}")
 	private int port;
+
+	/** The database. */
 	@Value("${spring.redis.database:1}")
 	private int database;
+
+	/** The timeout. */
 	@Value("${spring.redis.timeout:60000}")
 	private int timeout;
+
+	/** The password. */
 	@Value("${spring.redis.password:}")
 	private String password;
 
-	/**
-	 * Session超时时间，单位为毫秒（默认30分钟）
-	 */
+	/** The expire time. */
 	@Value("${shiro.session.expireTime}")
 	private int expireTime;
 
-	/**
-	 * 相隔多久检查一次session的有效性，单位毫秒，默认就是10分钟
-	 */
+	/** The validation interval. */
 	@Value("${shiro.session.validationInterval}")
 	private int validationInterval;
 
-	/**
-	 * 同一个用户最大会话数
-	 */
+	/** The max session. */
 	@Value("${shiro.session.maxSession}")
 	private int maxSession;
 
-	/**
-	 * 踢出之前登录的/之后登录的用户，默认踢出之前登录的用户
-	 */
+	/** The kickout after. */
 	@Value("${shiro.session.kickoutAfter}")
 	private boolean kickoutAfter;
 
-	/**
-	 * 验证码开关
-	 */
+	/** The captcha enabled. */
 	@Value("${shiro.user.captchaEnabled}")
 	private boolean captchaEnabled;
 
-	/**
-	 * 验证码类型
-	 */
+	/** The captcha type. */
 	@Value("${shiro.user.captchaType}")
 	private String captchaType;
 
-	/**
-	 * 设置Cookie的域名
-	 */
+	/** The domain. */
 	@Value("${shiro.cookie.domain}")
 	private String domain;
 
-	/**
-	 * 设置cookie的有效访问路径
-	 */
+	/** The path. */
 	@Value("${shiro.cookie.path}")
 	private String path;
 
-	/**
-	 * 设置HttpOnly属性
-	 */
+	/** The http only. */
 	@Value("${shiro.cookie.httpOnly}")
 	private boolean httpOnly;
 
-	/**
-	 * 设置Cookie的过期时间，秒为单位
-	 */
+	/** The max age. */
 	@Value("${shiro.cookie.maxAge}")
 	private int maxAge;
 
-	/**
-	 * 设置cipherKey密钥
-	 */
+	/** The cipher key. */
 	@Value("${shiro.cookie.cipherKey}")
 	private String cipherKey;
 
-	/**
-	 * 登录地址
-	 */
+	/** The login url. */
 	@Value("${shiro.user.loginUrl}")
 	private String loginUrl;
 
-	/**
-	 * 权限认证失败地址
-	 */
+	/** The unauthorized url. */
 	@Value("${shiro.user.unauthorizedUrl}")
 	private String unauthorizedUrl;
 
+	/** The context. */
 	@Autowired
 	private ApplicationContext context;
 
+	/**
+	 * Inits the.
+	 */
 	@PostConstruct
 	public void init() {
 		log.info("Init ShiroConfig");
@@ -162,6 +152,11 @@ public class ShiroConfig {
 		}
 	}
 
+	/**
+	 * Redis manager.
+	 *
+	 * @return the redis manager
+	 */
 	@Bean
 	public RedisManager redisManager() {
 		log.info("redis={}:{}, password={}", host, port, password);
@@ -176,7 +171,9 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 缓存管理器 使用Ehcache实现
+	 * Cache manager.
+	 *
+	 * @return the redis cache manager
 	 */
 	@Bean
 	public RedisCacheManager cacheManager() {
@@ -189,7 +186,10 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 自定义Realm
+	 * User realm.
+	 *
+	 * @param cacheManager the cache manager
+	 * @return the user realm
 	 */
 	@Bean
 	public UserRealm userRealm(CacheManager cacheManager) {
@@ -200,11 +200,9 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 配置RedisSessionDAO
+	 * Redis session DAO.
 	 *
-	 * @Attention 使用的是shiro-redis开源插件
-	 * @Author Sans
-	 * @CreateTime 2019/6/12 13:44
+	 * @return the redis session DAO
 	 */
 	@Bean
 	public RedisSessionDAO redisSessionDAO() {
@@ -220,7 +218,9 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 自定义sessionFactory会话
+	 * Session factory.
+	 *
+	 * @return the online session factory
 	 */
 	@Bean
 	public OnlineSessionFactory sessionFactory() {
@@ -229,7 +229,10 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 会话管理器
+	 * Session manager.
+	 *
+	 * @param cacheManager the cache manager
+	 * @return the custom web session manager
 	 */
 	@Bean
 	public CustomWebSessionManager sessionManager(CacheManager cacheManager) {
@@ -260,7 +263,12 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 安全管理器
+	 * Security manager.
+	 *
+	 * @param userRealm      the user realm
+	 * @param cacheManager   the cache manager
+	 * @param sessionManager the session manager
+	 * @return the security manager
 	 */
 	@Bean
 	public SecurityManager securityManager(UserRealm userRealm, CacheManager cacheManager,
@@ -278,7 +286,9 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 退出过滤器
+	 * Logout filter.
+	 *
+	 * @return the logout filter
 	 */
 	public LogoutFilter logoutFilter() {
 		final LogoutFilter logoutFilter = new LogoutFilter();
@@ -287,7 +297,12 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * Shiro过滤器配置
+	 * Shiro filter factory bean.
+	 *
+	 * @param securityManager the security manager
+	 * @param cacheManager    the cache manager
+	 * @param sessionManager  the session manager
+	 * @return the shiro filter factory bean
 	 */
 	@Bean
 	public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager, CacheManager cacheManager,
@@ -355,7 +370,9 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 自定义验证码过滤器
+	 * Captcha validate filter.
+	 *
+	 * @return the captcha validate filter
 	 */
 	public CaptchaValidateFilter captchaValidateFilter() {
 		final CaptchaValidateFilter captchaValidateFilter = new CaptchaValidateFilter();
@@ -365,7 +382,9 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * cookie 属性设置
+	 * Remember me cookie.
+	 *
+	 * @return the simple cookie
 	 */
 	public SimpleCookie rememberMeCookie() {
 		final SimpleCookie cookie = new SimpleCookie("rememberMe");
@@ -377,7 +396,9 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 记住我
+	 * Remember me manager.
+	 *
+	 * @return the cookie remember me manager
 	 */
 	public CookieRememberMeManager rememberMeManager() {
 		final CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
@@ -387,7 +408,11 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 同一个用户多设备登录限制
+	 * Kickout session filter.
+	 *
+	 * @param cacheManager   the cache manager
+	 * @param sessionManager the session manager
+	 * @return the kickout session filter
 	 */
 	public KickoutSessionFilter kickoutSessionFilter(CacheManager cacheManager, SessionManager sessionManager) {
 		final KickoutSessionFilter kickoutSessionFilter = new KickoutSessionFilter();
@@ -403,7 +428,10 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 开启Shiro注解通知器
+	 * Authorization attribute source advisor.
+	 *
+	 * @param securityManager the security manager
+	 * @return the authorization attribute source advisor
 	 */
 	@Bean
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
@@ -413,6 +441,11 @@ public class ShiroConfig {
 		return authorizationAttributeSourceAdvisor;
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// 生成Cookie cipherKey
 		AesCipherService cipherService = new AesCipherService();

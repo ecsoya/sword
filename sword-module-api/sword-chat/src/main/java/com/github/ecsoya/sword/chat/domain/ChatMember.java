@@ -6,47 +6,81 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.github.ecsoya.sword.common.core.domain.BaseEntity;
 
 /**
- * 聊天成员对象 t_chat_member
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-06-03
+ * The Class ChatMember.
  */
 public class ChatMember extends BaseEntity {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** $column.columnComment */
+	/** The id. */
 	private Long id;
 
-	/** $column.columnComment */
+	/** The chat id. */
 	private Long chatId;
 
-	/** $column.columnComment */
+	/** The user id. */
 	private Long userId;
 
+	/**
+	 * Sets the $column.
+	 *
+	 * @param id the new $column
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the $column.
+	 *
+	 * @return the $column
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the $column.
+	 *
+	 * @param chatId the new $column
+	 */
 	public void setChatId(Long chatId) {
 		this.chatId = chatId;
 	}
 
+	/**
+	 * Gets the $column.
+	 *
+	 * @return the $column
+	 */
 	public Long getChatId() {
 		return chatId;
 	}
 
+	/**
+	 * Sets the $column.
+	 *
+	 * @param userId the new $column
+	 */
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
+	/**
+	 * Gets the $column.
+	 *
+	 * @return the $column
+	 */
 	public Long getUserId() {
 		return userId;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", getId())

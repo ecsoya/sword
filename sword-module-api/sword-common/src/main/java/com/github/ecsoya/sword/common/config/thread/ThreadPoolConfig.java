@@ -12,24 +12,32 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import com.github.ecsoya.sword.common.utils.Threads;
 
 /**
- * 线程池配置
- *
- * @author Jin Liu (angryred@qq.com)
- **/
+ * The Class ThreadPoolConfig.
+ */
 @Configuration
 public class ThreadPoolConfig {
+
+	/** The core pool size. */
 	// 核心线程池大小
 	private final int corePoolSize = 50;
 
+	/** The max pool size. */
 	// 最大可创建的线程数
 	private final int maxPoolSize = 200;
 
+	/** The queue capacity. */
 	// 队列最大长度
 	private final int queueCapacity = 1000;
 
+	/** The keep alive seconds. */
 	// 线程池维护线程所允许的空闲时间
 	private final int keepAliveSeconds = 300;
 
+	/**
+	 * Thread pool task executor.
+	 *
+	 * @return the thread pool task executor
+	 */
 	@Bean(name = "threadPoolTaskExecutor")
 	public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
 		final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
@@ -43,7 +51,9 @@ public class ThreadPoolConfig {
 	}
 
 	/**
-	 * 执行周期性或定时任务
+	 * Scheduled executor service.
+	 *
+	 * @return the scheduled executor service
 	 */
 	@Bean(name = "scheduledExecutorService")
 	protected ScheduledExecutorService scheduledExecutorService() {

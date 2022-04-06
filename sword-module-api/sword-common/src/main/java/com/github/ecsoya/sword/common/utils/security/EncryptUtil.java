@@ -12,10 +12,21 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
 
+/**
+ * The Class EncryptUtil.
+ */
 public class EncryptUtil {
 
+	/** The encoding charset. */
 	private static String encodingCharset = "UTF-8";
 
+	/**
+	 * Hmac md 5.
+	 *
+	 * @param aValue the a value
+	 * @param aKey   the a key
+	 * @return the string
+	 */
 	public static String hmacMd5(String aValue, String aKey) {
 		final byte k_ipad[] = new byte[64];
 		final byte k_opad[] = new byte[64];
@@ -52,13 +63,12 @@ public class EncryptUtil {
 		return toHex(dg);
 	}
 
-	/***
-	 * 对应python里面的hmac.new(API_SECRET, msg=message,
-	 * digestmod=hashlib.sha256).hexdigest().upper()
+	/**
+	 * Hmac sha 256.
 	 *
-	 * @param key
-	 * @param value
-	 * @return
+	 * @param value the value
+	 * @param key   the key
+	 * @return the string
 	 */
 	public static String hmacSha256(String value, String key) {
 		String result = null;
@@ -82,52 +92,52 @@ public class EncryptUtil {
 		return result;
 	}
 
-	/***
-	 * MD5加密
+	/**
+	 * Md5.
 	 *
-	 * @param string
-	 * @return
+	 * @param string the string
+	 * @return the string
 	 */
 	public static String MD5(String string) {
 		return encrypt(string, "MD5");
 	}
 
-	/***
-	 * sha-1散列加密
+	/**
+	 * Sha.
 	 *
-	 * @param string
-	 * @return
+	 * @param string the string
+	 * @return the string
 	 */
 	public static String SHA(String string) {
 		return encrypt(string, "SHA");
 	}
 
-	/***
-	 * sha-256散列加密
+	/**
+	 * Sha256.
 	 *
-	 * @param string
-	 * @return
+	 * @param string the string
+	 * @return the string
 	 */
 	public static String SHA256(String string) {
 		return encrypt(string, "SHA-256");
 	}
 
-	/***
-	 * sha-512散列加密
+	/**
+	 * Sha512.
 	 *
-	 * @param string
-	 * @return
+	 * @param string the string
+	 * @return the string
 	 */
 	public static String SHA512(String string) {
 		return encrypt(string, "SHA-512");
 	}
 
 	/**
-	 * 通用加密方法
+	 * Encrypt.
 	 *
-	 * @param aValue
-	 * @param algorithm
-	 * @return
+	 * @param aValue    the a value
+	 * @param algorithm the algorithm
+	 * @return the string
 	 */
 	private static String encrypt(String aValue, String algorithm) {
 		aValue = aValue.trim();
@@ -147,6 +157,12 @@ public class EncryptUtil {
 		return toHex(md.digest(value));
 	}
 
+	/**
+	 * To hex.
+	 *
+	 * @param input the input
+	 * @return the string
+	 */
 	public static String toHex(byte input[]) {
 		if (input == null) {
 			return null;
@@ -162,6 +178,12 @@ public class EncryptUtil {
 		return Hex.encodeHexString(input);
 	}
 
+	/**
+	 * From hex.
+	 *
+	 * @param hex the hex
+	 * @return the byte[]
+	 */
 	public static byte[] fromHex(String hex) {
 		if (hex == null) {
 			return null;
@@ -174,11 +196,11 @@ public class EncryptUtil {
 	}
 
 	/**
-	 * 生成签名消息
+	 * Gets the hmac.
 	 *
-	 * @param aValue 要签名的字符串
-	 * @param aKey   签名密钥
-	 * @return
+	 * @param args the args
+	 * @param key  the key
+	 * @return the hmac
 	 */
 
 	/**
@@ -199,10 +221,10 @@ public class EncryptUtil {
 	}
 
 	/**
-	 * SHA加密
+	 * Digest.
 	 *
-	 * @param aValue
-	 * @return
+	 * @param aValue the a value
+	 * @return the string
 	 */
 	public static String digest(String aValue) {
 		aValue = aValue.trim();
@@ -224,7 +246,13 @@ public class EncryptUtil {
 	}
 
 	/**
-	 * 对字符串进行散列, 支持md5与sha1算法.
+	 * Digest.
+	 *
+	 * @param input      the input
+	 * @param algorithm  the algorithm
+	 * @param salt       the salt
+	 * @param iterations the iterations
+	 * @return the string
 	 */
 	public static String digest(byte[] input, String algorithm, byte[] salt, int iterations) {
 		try {

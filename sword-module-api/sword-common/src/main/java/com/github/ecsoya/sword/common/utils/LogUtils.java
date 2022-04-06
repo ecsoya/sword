@@ -13,19 +13,21 @@ import org.slf4j.LoggerFactory;
 import com.github.ecsoya.sword.common.json.JSON;
 
 /**
- * 处理并记录日志文件
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class LogUtils.
  */
 public class LogUtils {
+
+	/** The Constant ERROR_LOG. */
 	public static final Logger ERROR_LOG = LoggerFactory.getLogger("sys-error");
+
+	/** The Constant ACCESS_LOG. */
 	public static final Logger ACCESS_LOG = LoggerFactory.getLogger("sys-access");
 
 	/**
-	 * 记录访问日志 [username][jsessionid][ip][accept][UserAgent][url][params][Referer]
+	 * Log access.
 	 *
-	 * @param request
-	 * @throws Exception
+	 * @param request the request
+	 * @throws Exception the exception
 	 */
 	public static void logAccess(HttpServletRequest request) throws Exception {
 		final String username = getUsername();
@@ -49,10 +51,10 @@ public class LogUtils {
 	}
 
 	/**
-	 * 记录异常错误 格式 [exception]
+	 * Log error.
 	 *
-	 * @param message
-	 * @param e
+	 * @param message the message
+	 * @param e       the e
 	 */
 	public static void logError(String message, Throwable e) {
 		final String username = getUsername();
@@ -64,10 +66,9 @@ public class LogUtils {
 	}
 
 	/**
-	 * 记录页面错误 错误日志记录
-	 * [page/eception][username][statusCode][errorMessage][servletName][uri][exceptionName][ip][exception]
+	 * Log page error.
 	 *
-	 * @param request
+	 * @param request the request
 	 */
 	public static void logPageError(HttpServletRequest request) {
 		final String username = getUsername();
@@ -101,6 +102,12 @@ public class LogUtils {
 
 	}
 
+	/**
+	 * Gets the block.
+	 *
+	 * @param msg the msg
+	 * @return the block
+	 */
 	public static String getBlock(Object msg) {
 		if (msg == null) {
 			msg = "";
@@ -108,19 +115,41 @@ public class LogUtils {
 		return "[" + msg.toString() + "]";
 	}
 
+	/**
+	 * Gets the params.
+	 *
+	 * @param request the request
+	 * @return the params
+	 * @throws Exception the exception
+	 */
 	protected static String getParams(HttpServletRequest request) throws Exception {
 		final Map<String, String[]> params = request.getParameterMap();
 		return JSON.marshal(params);
 	}
 
+	/**
+	 * Gets the username.
+	 *
+	 * @return the username
+	 */
 	protected static String getUsername() {
 		return (String) SecurityUtils.getSubject().getPrincipal();
 	}
 
+	/**
+	 * Gets the access log.
+	 *
+	 * @return the access log
+	 */
 	public static Logger getAccessLog() {
 		return ACCESS_LOG;
 	}
 
+	/**
+	 * Gets the error log.
+	 *
+	 * @return the error log
+	 */
 	public static Logger getErrorLog() {
 		return ERROR_LOG;
 	}

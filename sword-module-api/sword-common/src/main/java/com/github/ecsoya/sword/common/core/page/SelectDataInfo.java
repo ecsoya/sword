@@ -10,38 +10,40 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 
 /**
- * 表格分页数据对象
- *
- * @author iptv
+ * The Class SelectDataInfo.
  */
 public class SelectDataInfo implements Serializable {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** 总记录数 */
+	/** The more. */
 	private boolean more;
 
+	/** The page. */
 	private int page;
 
-	/** 列表数据 */
+	/** The rows. */
 	private List<?> rows;
 
-	/** 消息状态码 */
+	/** The code. */
 	private int code;
 
-	/** 消息内容 */
+	/** The msg. */
 	private int msg;
 
 	/**
-	 * 表格数据对象
+	 * Instantiates a new select data info.
 	 */
 	public SelectDataInfo() {
 	}
 
 	/**
-	 * 分页
+	 * Instantiates a new select data info.
 	 *
-	 * @param list  列表数据
-	 * @param total 总记录数
+	 * @param list the list
+	 * @param page the page
+	 * @param more 总记录数.
 	 */
 	public SelectDataInfo(List<?> list, int page, boolean more) {
 		this.rows = list;
@@ -49,73 +51,165 @@ public class SelectDataInfo implements Serializable {
 		this.more = more;
 	}
 
+	/**
+	 * Gets the 列表数据.
+	 *
+	 * @return the 列表数据
+	 */
 	public List<?> getRows() {
 		return rows;
 	}
 
+	/**
+	 * Sets the 列表数据.
+	 *
+	 * @param rows the new 列表数据
+	 */
 	public void setRows(List<?> rows) {
 		this.rows = rows;
 	}
 
+	/**
+	 * Gets the 消息状态码.
+	 *
+	 * @return the 消息状态码
+	 */
 	public int getCode() {
 		return code;
 	}
 
+	/**
+	 * Sets the 消息状态码.
+	 *
+	 * @param code the new 消息状态码
+	 */
 	public void setCode(int code) {
 		this.code = code;
 	}
 
+	/**
+	 * Gets the 消息内容.
+	 *
+	 * @return the 消息内容
+	 */
 	public int getMsg() {
 		return msg;
 	}
 
+	/**
+	 * Sets the 消息内容.
+	 *
+	 * @param msg the new 消息内容
+	 */
 	public void setMsg(int msg) {
 		this.msg = msg;
 	}
 
+	/**
+	 * Checks if is 总记录数.
+	 *
+	 * @return the 总记录数
+	 */
 	public boolean isMore() {
 		return more;
 	}
 
+	/**
+	 * Sets the 总记录数.
+	 *
+	 * @param more the new 总记录数
+	 */
 	public void setMore(boolean more) {
 		this.more = more;
 	}
 
+	/**
+	 * Gets the page.
+	 *
+	 * @return the page
+	 */
 	public int getPage() {
 		return page;
 	}
 
+	/**
+	 * Sets the page.
+	 *
+	 * @param page the new page
+	 */
 	public void setPage(int page) {
 		this.page = page;
 	}
 
+	/**
+	 * The Class SelectItem.
+	 */
 	public static class SelectItem {
+
+		/** The id. */
 		private String id;
 
+		/** The text. */
 		private String text;
 
+		/**
+		 * Gets the id.
+		 *
+		 * @return the id
+		 */
 		public String getId() {
 			return id;
 		}
 
+		/**
+		 * Sets the id.
+		 *
+		 * @param id the new id
+		 */
 		public void setId(String id) {
 			this.id = id;
 		}
 
+		/**
+		 * Gets the text.
+		 *
+		 * @return the text
+		 */
 		public String getText() {
 			return text;
 		}
 
+		/**
+		 * Sets the text.
+		 *
+		 * @param text the new text
+		 */
 		public void setText(String text) {
 			this.text = text;
 		}
 
+		/**
+		 * To string.
+		 *
+		 * @return the string
+		 */
 		@Override
 		public String toString() {
 			return String.format("%s=%s", id, text);
 		}
 	}
 
+	/**
+	 * Builds the.
+	 *
+	 * @param <T>           the generic type
+	 * @param list          the list
+	 * @param page          the page
+	 * @param idFieldName   the id field name
+	 * @param textFiledName the text filed name
+	 * @param type          the type
+	 * @return the select data info
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> SelectDataInfo build(List<T> list, int page, String idFieldName, String textFiledName,
 			Class<T> type) {
@@ -137,6 +231,13 @@ public class SelectDataInfo implements Serializable {
 		return new SelectDataInfo(items, page, more);
 	}
 
+	/**
+	 * Gets the field value.
+	 *
+	 * @param object    the object
+	 * @param fieldName the field name
+	 * @return the field value
+	 */
 	private static Object getFieldValue(Object object, String fieldName) {
 		if (object == null || fieldName == null) {
 			return null;

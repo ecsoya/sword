@@ -15,20 +15,34 @@ import com.github.ecsoya.sword.system.service.ISysNoticeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * The Class NoticeController.
+ */
 @RestController
 @RequestMapping("/notice")
 @Api(tags = { "公告" }, description = "首页小喇叭信息查询、列表")
 public class NoticeController extends BaseController {
 
+	/** The notice service. */
 	@Autowired
 	private ISysNoticeService noticeService;
 
+	/**
+	 * Notice.
+	 *
+	 * @return the common result
+	 */
 	@ApiOperation("查询公告")
 	@GetMapping("/latest")
 	public CommonResult<String> notice() {
 		return CommonResult.build(noticeService.getLatestNoticeTitle());
 	}
 
+	/**
+	 * Notice list.
+	 *
+	 * @return the common result
+	 */
 	@ApiOperation("查询公告列表")
 	@GetMapping("/list")
 	public CommonResult<List<SysNotice>> noticeList() {

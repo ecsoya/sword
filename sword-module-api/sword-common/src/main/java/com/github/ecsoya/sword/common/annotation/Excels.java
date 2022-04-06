@@ -6,12 +6,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Excel注解集
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface Excels.
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Excels {
+
+	/**
+	 * Value.
+	 *
+	 * @return the excel[]
+	 */
 	Excel[] value();
 }

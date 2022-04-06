@@ -17,21 +17,37 @@ import com.github.ecsoya.sword.common.enums.BusinessType;
 import com.github.ecsoya.sword.message.domain.SwordMessage;
 import com.github.ecsoya.sword.message.service.ISwordMessageService;
 
+/**
+ * The Class MessageSentController.
+ */
 @Controller
 @RequestMapping("/message/sent")
 public class MessageSentController extends AbstractMessageController {
 
+	/** The Constant prefix. */
 	private static final String prefix = "message/sent";
 
+	/** The message service. */
 	@Autowired
 	private ISwordMessageService messageService;
 
+	/**
+	 * Index.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("message:sent:view")
 	@GetMapping()
 	public String index() {
 		return prefix + "/message";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param message the message
+	 * @return the table data info
+	 */
 	@RequiresPermissions("message:sent:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -41,6 +57,12 @@ public class MessageSentController extends AbstractMessageController {
 		return getDataTable(messageService.selectSwordMessageList(message));
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("message:sent:remove")
 	@PostMapping("/remove")
 	@ResponseBody
@@ -49,7 +71,9 @@ public class MessageSentController extends AbstractMessageController {
 	}
 
 	/**
-	 * 新增消息
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -57,7 +81,10 @@ public class MessageSentController extends AbstractMessageController {
 	}
 
 	/**
-	 * 新增保存消息
+	 * Adds the save.
+	 *
+	 * @param swordMessage the sword message
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("message:sent:add")
 	@Log(title = "消息", businessType = BusinessType.INSERT)
@@ -70,7 +97,11 @@ public class MessageSentController extends AbstractMessageController {
 	}
 
 	/**
-	 * 修改消息
+	 * Edits the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
@@ -80,7 +111,10 @@ public class MessageSentController extends AbstractMessageController {
 	}
 
 	/**
-	 * 修改保存消息
+	 * Edits the save.
+	 *
+	 * @param swordMessage the sword message
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("message:sent:edit")
 	@Log(title = "消息", businessType = BusinessType.UPDATE)

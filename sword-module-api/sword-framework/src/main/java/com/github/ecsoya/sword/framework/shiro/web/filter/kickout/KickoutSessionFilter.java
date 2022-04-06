@@ -31,37 +31,51 @@ import com.github.ecsoya.sword.common.utils.StringUtils;
 import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 
 /**
- * 登录帐号控制过滤器
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class KickoutSessionFilter.
  */
 public class KickoutSessionFilter extends AccessControlFilter {
+
+	/** The Constant objectMapper. */
 	private final static ObjectMapper objectMapper = new ObjectMapper();
 
-	/**
-	 * 同一个用户最大会话数
-	 **/
+	/** The max session. */
 	private int maxSession = -1;
 
-	/**
-	 * 踢出之前登录的/之后登录的用户 默认false踢出之前登录的用户
-	 **/
+	/** The kickout after. */
 	private Boolean kickoutAfter = false;
 
-	/**
-	 * 踢出后到的地址
-	 **/
+	/** The kickout url. */
 	private String kickoutUrl;
 
+	/** The session manager. */
 	private SessionManager sessionManager;
+
+	/** The cache. */
 	private Cache<String, Deque<Serializable>> cache;
 
+	/**
+	 * Checks if is access allowed.
+	 *
+	 * @param servletRequest  the servlet request
+	 * @param servletResponse the servlet response
+	 * @param o               the o
+	 * @return true, if is access allowed
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o)
 			throws Exception {
 		return false;
 	}
 
+	/**
+	 * On access denied.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return true, if successful
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		final Subject subject = getSubject(request, response);
@@ -131,6 +145,14 @@ public class KickoutSessionFilter extends AccessControlFilter {
 		}
 	}
 
+	/**
+	 * Redirect to kickout login.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return true, if successful
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private boolean redirectToKickoutLogin(ServletRequest request, ServletResponse response) throws IOException {
 		final HttpServletRequest req = (HttpServletRequest) request;
 		final HttpServletResponse res = (HttpServletResponse) response;
@@ -151,22 +173,47 @@ public class KickoutSessionFilter extends AccessControlFilter {
 		return false;
 	}
 
+	/**
+	 * Sets the max session.
+	 *
+	 * @param maxSession the new max session
+	 */
 	public void setMaxSession(int maxSession) {
 		this.maxSession = maxSession;
 	}
 
+	/**
+	 * Sets the kickout after.
+	 *
+	 * @param kickoutAfter the new kickout after
+	 */
 	public void setKickoutAfter(boolean kickoutAfter) {
 		this.kickoutAfter = kickoutAfter;
 	}
 
+	/**
+	 * Sets the kickout url.
+	 *
+	 * @param kickoutUrl the new kickout url
+	 */
 	public void setKickoutUrl(String kickoutUrl) {
 		this.kickoutUrl = kickoutUrl;
 	}
 
+	/**
+	 * Sets the session manager.
+	 *
+	 * @param sessionManager the new session manager
+	 */
 	public void setSessionManager(SessionManager sessionManager) {
 		this.sessionManager = sessionManager;
 	}
 
+	/**
+	 * Sets the cache manager.
+	 *
+	 * @param cacheManager the new cache manager
+	 */
 	// 设置Cache的key的前缀
 	public void setCacheManager(CacheManager cacheManager) {
 		// 必须和ehcache缓存配置中的缓存name一致

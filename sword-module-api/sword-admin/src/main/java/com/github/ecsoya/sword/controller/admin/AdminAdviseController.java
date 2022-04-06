@@ -21,14 +21,25 @@ import com.github.ecsoya.sword.common.core.page.TableDataInfo;
 import com.github.ecsoya.sword.common.enums.BusinessType;
 import com.github.ecsoya.sword.common.utils.poi.ExcelUtil;
 
+/**
+ * The Class AdminAdviseController.
+ */
 @Controller
 @RequestMapping("/admin/advise")
 public class AdminAdviseController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "admin/advise";
 
+	/** The user advise service. */
 	@Autowired
 	private IUserAdviseService userAdviseService;
 
+	/**
+	 * Advise.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("admin:advise:view")
 	@GetMapping()
 	public String advise() {
@@ -36,7 +47,10 @@ public class AdminAdviseController extends BaseController {
 	}
 
 	/**
-	 * 查询用户反馈列表
+	 * List.
+	 *
+	 * @param userAdvise the user advise
+	 * @return the table data info
 	 */
 	@RequiresPermissions("admin:advise:list")
 	@PostMapping("/list")
@@ -49,7 +63,10 @@ public class AdminAdviseController extends BaseController {
 	}
 
 	/**
-	 * 查询用户反馈列表
+	 * Reply list.
+	 *
+	 * @param userAdvise the user advise
+	 * @return the table data info
 	 */
 	@RequiresPermissions("admin:advise:list")
 	@PostMapping("/reply/list")
@@ -62,7 +79,10 @@ public class AdminAdviseController extends BaseController {
 	}
 
 	/**
-	 * 导出用户反馈列表
+	 * Export.
+	 *
+	 * @param userAdvise the user advise
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:advise:export")
 	@Log(title = "用户反馈", businessType = BusinessType.EXPORT)
@@ -75,7 +95,11 @@ public class AdminAdviseController extends BaseController {
 	}
 
 	/**
-	 * 新增用户反馈
+	 * Adds the.
+	 *
+	 * @param parentId the parent id
+	 * @param mmap     the mmap
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add(Long parentId, ModelMap mmap) {
@@ -84,7 +108,10 @@ public class AdminAdviseController extends BaseController {
 	}
 
 	/**
-	 * 新增保存用户反馈
+	 * Adds the save.
+	 *
+	 * @param userAdvise the user advise
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:advise:add")
 	@Log(title = "用户反馈", businessType = BusinessType.INSERT)
@@ -96,7 +123,11 @@ public class AdminAdviseController extends BaseController {
 	}
 
 	/**
-	 * 修改用户反馈
+	 * Edits the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
@@ -106,7 +137,10 @@ public class AdminAdviseController extends BaseController {
 	}
 
 	/**
-	 * 修改保存用户反馈
+	 * Edits the save.
+	 *
+	 * @param userAdvise the user advise
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:advise:edit")
 	@Log(title = "用户反馈", businessType = BusinessType.UPDATE)
@@ -117,7 +151,10 @@ public class AdminAdviseController extends BaseController {
 	}
 
 	/**
-	 * 删除用户反馈
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:advise:remove")
 	@Log(title = "用户反馈", businessType = BusinessType.DELETE)

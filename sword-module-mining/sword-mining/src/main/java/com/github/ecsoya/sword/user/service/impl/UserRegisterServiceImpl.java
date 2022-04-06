@@ -21,31 +21,58 @@ import com.github.ecsoya.sword.user.service.IUserReferrerService;
 import com.github.ecsoya.sword.user.service.IUserRegisterService;
 import com.github.ecsoya.sword.wallet.service.IUserWalletService;
 
+/**
+ * The Class UserRegisterServiceImpl.
+ */
 @Service
 public class UserRegisterServiceImpl implements IUserRegisterService {
+
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
+	/** The referrer service. */
 	@Autowired
 	private IUserReferrerService referrerService;
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/** The certificate service. */
 	@Autowired
 	private IUserCertificateService certificateService;
 
+	/** The wallet service. */
 	@Autowired
 	private IUserWalletService walletService;
 
+	/** The binary tree service. */
 	@Autowired
 	private IUserBinaryTreeService binaryTreeService;
 
+	/**
+	 * Register user.
+	 *
+	 * @param user           the user
+	 * @param referrerCode   the referrer code
+	 * @param walletPassword the wallet password
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> registerUser(User user, String referrerCode, String walletPassword) {
 		return registerUser(user, referrerCode, walletPassword, true);
 	}
 
+	/**
+	 * Register user.
+	 *
+	 * @param user           the user
+	 * @param referrerCode   the referrer code
+	 * @param walletPassword the wallet password
+	 * @param async          the async
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> registerUser(User user, String referrerCode, String walletPassword, boolean async) {
 		final boolean needReferrerCode = "true" //$NON-NLS-1$
@@ -123,6 +150,15 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 		}
 	}
 
+	/**
+	 * Post register user.
+	 *
+	 * @param userId         the user id
+	 * @param referralId     the referral id
+	 * @param referralCode   the referral code
+	 * @param walletPassword the wallet password
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> postRegisterUser(Long userId, Long referralId, String referralCode, String walletPassword) {
 		if (userId == null) {
@@ -159,6 +195,16 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 		return CommonResult.success(userId);
 	}
 
+	/**
+	 * Post register user.
+	 *
+	 * @param userId         the user id
+	 * @param referralId     the referral id
+	 * @param referralCode   the referral code
+	 * @param walletPassword the wallet password
+	 * @param async          the async
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> postRegisterUser(Long userId, Long referralId, String referralCode, String walletPassword,
 			boolean async) {

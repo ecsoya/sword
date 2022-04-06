@@ -13,21 +13,20 @@ import com.github.ecsoya.sword.common.utils.DateUtils;
 import com.github.ecsoya.sword.common.utils.IdWorker;
 
 /**
- * 聊天室Service业务层处理
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-06-03
+ * The Class ChatRoomServiceImpl.
  */
 @Service
 public class ChatRoomServiceImpl implements IChatRoomService {
+
+	/** The chat room mapper. */
 	@Autowired
 	private ChatRoomMapper chatRoomMapper;
 
 	/**
-	 * 查询聊天室
-	 * 
-	 * @param id 聊天室ID
-	 * @return 聊天室
+	 * Select chat room by id.
+	 *
+	 * @param id the id
+	 * @return the chat room
 	 */
 	@Override
 	public ChatRoom selectChatRoomById(Long id) {
@@ -35,10 +34,10 @@ public class ChatRoomServiceImpl implements IChatRoomService {
 	}
 
 	/**
-	 * 查询聊天室列表
-	 * 
-	 * @param chatRoom 聊天室
-	 * @return 聊天室
+	 * Select chat room list.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the list
 	 */
 	@Override
 	public List<ChatRoom> selectChatRoomList(ChatRoom chatRoom) {
@@ -46,10 +45,10 @@ public class ChatRoomServiceImpl implements IChatRoomService {
 	}
 
 	/**
-	 * 新增聊天室
-	 * 
-	 * @param chatRoom 聊天室
-	 * @return 结果
+	 * Insert chat room.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the int
 	 */
 	@Override
 	public int insertChatRoom(ChatRoom chatRoom) {
@@ -63,10 +62,10 @@ public class ChatRoomServiceImpl implements IChatRoomService {
 	}
 
 	/**
-	 * 修改聊天室
-	 * 
-	 * @param chatRoom 聊天室
-	 * @return 结果
+	 * Update chat room.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the int
 	 */
 	@Override
 	public int updateChatRoom(ChatRoom chatRoom) {
@@ -75,10 +74,10 @@ public class ChatRoomServiceImpl implements IChatRoomService {
 	}
 
 	/**
-	 * 删除聊天室对象
-	 * 
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * Delete chat room by ids.
+	 *
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteChatRoomByIds(String ids) {
@@ -86,10 +85,10 @@ public class ChatRoomServiceImpl implements IChatRoomService {
 	}
 
 	/**
-	 * 删除聊天室信息
-	 * 
-	 * @param id 聊天室ID
-	 * @return 结果
+	 * Delete chat room by id.
+	 *
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteChatRoomById(Long id) {

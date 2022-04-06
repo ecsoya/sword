@@ -15,23 +15,28 @@ import com.github.ecsoya.sword.generator.config.GenConfig;
 import com.github.ecsoya.sword.generator.domain.GenTable;
 import com.github.ecsoya.sword.generator.domain.GenTableColumn;
 
+/**
+ * The Class VelocityUtils.
+ */
 public class VelocityUtils {
-	/** 项目空间路径 */
+
+	/** The Constant PROJECT_PATH. */
 	private static final String PROJECT_PATH = "main/java";
 
-	/** mybatis空间路径 */
+	/** The Constant MYBATIS_PATH. */
 	private static final String MYBATIS_PATH = "main/resources/mapper";
 
-	/** html空间路径 */
+	/** The Constant TEMPLATES_PATH. */
 	private static final String TEMPLATES_PATH = "main/resources/templates";
 
-	/** 默认上级菜单，系统工具 */
+	/** The Constant DEFAULT_PARENT_MENU_ID. */
 	private static final String DEFAULT_PARENT_MENU_ID = "3";
 
 	/**
-	 * 设置模板变量信息
+	 * Prepare context.
 	 *
-	 * @return 模板列表
+	 * @param genTable the gen table
+	 * @return the velocity context
 	 */
 	public static VelocityContext prepareContext(GenTable genTable) {
 		final String moduleName = genTable.getModuleName();
@@ -68,6 +73,12 @@ public class VelocityUtils {
 		return velocityContext;
 	}
 
+	/**
+	 * Sets the menu velocity context.
+	 *
+	 * @param context  the context
+	 * @param genTable the gen table
+	 */
 	public static void setMenuVelocityContext(VelocityContext context, GenTable genTable) {
 		final String options = genTable.getOptions();
 		final JSONObject paramsObj = JSON.parseObject(options);
@@ -75,6 +86,12 @@ public class VelocityUtils {
 		context.put("parentMenuId", parentMenuId);
 	}
 
+	/**
+	 * Sets the tree velocity context.
+	 *
+	 * @param context  the context
+	 * @param genTable the gen table
+	 */
 	public static void setTreeVelocityContext(VelocityContext context, GenTable genTable) {
 		final String options = genTable.getOptions();
 		final JSONObject paramsObj = JSON.parseObject(options);
@@ -94,6 +111,12 @@ public class VelocityUtils {
 		}
 	}
 
+	/**
+	 * Sets the sub velocity context.
+	 *
+	 * @param context  the context
+	 * @param genTable the gen table
+	 */
 	public static void setSubVelocityContext(VelocityContext context, GenTable genTable) {
 		final GenTable subTable = genTable.getSubTable();
 		final String subTableName = genTable.getSubTableName();
@@ -112,9 +135,10 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 获取模板信息
+	 * Gets the template list.
 	 *
-	 * @return 模板列表
+	 * @param tplCategory the tpl category
+	 * @return the template list
 	 */
 	public static List<String> getTemplateList(String tplCategory) {
 		final List<String> templates = new ArrayList<String>();
@@ -140,7 +164,11 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 获取文件名
+	 * Gets the file name.
+	 *
+	 * @param template the template
+	 * @param genTable the gen table
+	 * @return the file name
 	 */
 	public static String getFileName(String template, GenTable genTable) {
 		// 文件名称
@@ -192,9 +220,9 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 获取项目文件路径
+	 * Gets the project path.
 	 *
-	 * @return 路径
+	 * @return the project path
 	 */
 	public static String getProjectPath() {
 		final String packageName = GenConfig.getPackageName();
@@ -206,10 +234,10 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 获取包前缀
+	 * Gets the package prefix.
 	 *
-	 * @param packageName 包名称
-	 * @return 包前缀名称
+	 * @param packageName the package name
+	 * @return the package prefix
 	 */
 	public static String getPackagePrefix(String packageName) {
 		final int lastIndex = packageName.lastIndexOf(".");
@@ -218,10 +246,10 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 根据列类型获取导入包
+	 * Gets the import list.
 	 *
-	 * @param genTable 业务表对象
-	 * @return 返回需要导入的包列表
+	 * @param genTable the gen table
+	 * @return the import list
 	 */
 	public static HashSet<String> getImportList(GenTable genTable) {
 		final List<GenTableColumn> columns = genTable.getColumns();
@@ -242,21 +270,21 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 获取权限前缀
+	 * Gets the permission prefix.
 	 *
-	 * @param moduleName   模块名称
-	 * @param businessName 业务名称
-	 * @return 返回权限前缀
+	 * @param moduleName   the module name
+	 * @param businessName the business name
+	 * @return the permission prefix
 	 */
 	public static String getPermissionPrefix(String moduleName, String businessName) {
 		return StringUtils.format("{}:{}", moduleName, businessName);
 	}
 
 	/**
-	 * 获取上级菜单ID字段
+	 * Gets the parent menu id.
 	 *
-	 * @param options 生成其他选项
-	 * @return 上级菜单ID字段
+	 * @param paramsObj the params obj
+	 * @return the parent menu id
 	 */
 	public static String getParentMenuId(JSONObject paramsObj) {
 		if (StringUtils.isNotEmpty(paramsObj) && paramsObj.containsKey(GenConstants.PARENT_MENU_ID)) {
@@ -266,10 +294,10 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 获取树编码
+	 * Gets the treecode.
 	 *
-	 * @param options 生成其他选项
-	 * @return 树编码
+	 * @param paramsObj the params obj
+	 * @return the treecode
 	 */
 	public static String getTreecode(JSONObject paramsObj) {
 		if (paramsObj.containsKey(GenConstants.TREE_CODE)) {
@@ -279,10 +307,10 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 获取树父编码
+	 * Gets the tree parent code.
 	 *
-	 * @param options 生成其他选项
-	 * @return 树父编码
+	 * @param paramsObj the params obj
+	 * @return the tree parent code
 	 */
 	public static String getTreeParentCode(JSONObject paramsObj) {
 		if (paramsObj.containsKey(GenConstants.TREE_PARENT_CODE)) {
@@ -292,10 +320,10 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 获取树名称
+	 * Gets the tree name.
 	 *
-	 * @param options 生成其他选项
-	 * @return 树名称
+	 * @param paramsObj the params obj
+	 * @return the tree name
 	 */
 	public static String getTreeName(JSONObject paramsObj) {
 		if (paramsObj.containsKey(GenConstants.TREE_NAME)) {
@@ -305,10 +333,10 @@ public class VelocityUtils {
 	}
 
 	/**
-	 * 获取需要在哪一列上面显示展开按钮
+	 * Gets the expand column.
 	 *
-	 * @param genTable 业务表对象
-	 * @return 展开按钮列序号
+	 * @param genTable the gen table
+	 * @return the expand column
 	 */
 	public static int getExpandColumn(GenTable genTable) {
 		final String options = genTable.getOptions();

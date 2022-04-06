@@ -21,19 +21,31 @@ import com.github.ecsoya.sword.common.core.domain.CommonResult;
 import com.github.ecsoya.sword.common.utils.MessageUtils;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
+/**
+ * The Class MailServiceImpl.
+ */
 @Service
 public class MailServiceImpl implements IMailService {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(MailServiceImpl.class);
 
+	/** The redis. */
 	@Autowired
 	private RedisTemplate<String, Object> redis;
 
+	/** The Constant loader. */
 	private static final ServiceLoader<IMailCodeHandlerRegistry> loader = ServiceLoader
 			.load(IMailCodeHandlerRegistry.class);
 
+	/** The handlers. */
 	private List<SendMailCodeHandler> handlers;
 
+	/**
+	 * Gets the handlers.
+	 *
+	 * @return the handlers
+	 */
 	private List<SendMailCodeHandler> getHandlers() {
 		if (handlers == null) {
 			handlers = new ArrayList<SendMailCodeHandler>();
@@ -56,10 +68,23 @@ public class MailServiceImpl implements IMailService {
 		return handlers;
 	}
 
+	/**
+	 * Without handlers.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean withoutHandlers() {
 		return getHandlers().isEmpty();
 	}
 
+	/**
+	 * Send email.
+	 *
+	 * @param email   the email
+	 * @param subject the subject
+	 * @param content the content
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendEmail(String email, String subject, String content) {
 		if (withoutHandlers()) {
@@ -79,11 +104,25 @@ public class MailServiceImpl implements IMailService {
 		return CommonResult.fail("发送失败");
 	}
 
+	/**
+	 * Send code.
+	 *
+	 * @param email the email
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendCode(String email) {
 		return sendCode(email, null, null);
 	}
 
+	/**
+	 * Send code.
+	 *
+	 * @param email    the email
+	 * @param subject  the subject
+	 * @param template the template
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendCode(String email, String subject, String template) {
 		if (withoutHandlers()) {
@@ -113,6 +152,13 @@ public class MailServiceImpl implements IMailService {
 		return CommonResult.fail("发送失败");
 	}
 
+	/**
+	 * Verify code.
+	 *
+	 * @param email the email
+	 * @param code  the code
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> verifyCode(String email, String code) {
 		if (!StringUtils.isValidEmail(email)) {

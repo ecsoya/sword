@@ -5,40 +5,39 @@ import java.util.List;
 import com.github.ecsoya.sword.generator.domain.GenTableColumn;
 
 /**
- * 业务字段 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface IGenTableColumnService.
  */
 public interface IGenTableColumnService {
+
 	/**
-	 * 查询业务字段列表
+	 * Select gen table column list by table id.
 	 *
-	 * @param genTableColumn 业务字段信息
-	 * @return 业务字段集合
+	 * @param genTableColumn the gen table column
+	 * @return the list
 	 */
 	public List<GenTableColumn> selectGenTableColumnListByTableId(GenTableColumn genTableColumn);
 
 	/**
-	 * 新增业务字段
+	 * Insert gen table column.
 	 *
-	 * @param genTableColumn 业务字段信息
-	 * @return 结果
+	 * @param genTableColumn the gen table column
+	 * @return the int
 	 */
 	public int insertGenTableColumn(GenTableColumn genTableColumn);
 
 	/**
-	 * 修改业务字段
+	 * Update gen table column.
 	 *
-	 * @param genTableColumn 业务字段信息
-	 * @return 结果
+	 * @param genTableColumn the gen table column
+	 * @return the int
 	 */
 	public int updateGenTableColumn(GenTableColumn genTableColumn);
 
 	/**
-	 * 删除业务字段信息
+	 * Delete gen table column by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteGenTableColumnByIds(String ids);
 }

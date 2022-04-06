@@ -24,34 +24,63 @@ import com.github.ecsoya.sword.order.service.IUserWithdrawalOrderService;
 import com.github.ecsoya.sword.user.service.IUserProfileService;
 import com.github.ecsoya.sword.utils.MathUtils;
 
+/**
+ * The Class WithdrawalNotifyServiceImpl.
+ */
 @Service
 public class WithdrawalNotifyServiceImpl implements IWithdrawalNotifyService {
 
+	/** The Constant UTF_8. */
 	private static final Charset UTF_8 = Charset.forName("utf-8");
+
+	/** The Constant iv. */
 	private static final byte[] iv = "21210873".getBytes(UTF_8);
+
+	/** The Constant SWORD. */
 	private static final String SWORD = "Sword*no1ti9fy!";
 
+	/** The Constant PARAM_TYPE. */
 	private static final String PARAM_TYPE = "t";
+
+	/** The Constant PARAM_USER_ID. */
 	private static final String PARAM_USER_ID = "u";
+
+	/** The Constant PARAM_ORDER_NO. */
 	private static final String PARAM_ORDER_NO = "o";
 
+	/** The Constant TYPE_CONFIRMED. */
 	private static final Integer TYPE_CONFIRMED = 0;
+
+	/** The Constant TYPE_REJECTED. */
 	private static final Integer TYPE_REJECTED = 1;
 
+	/** The Constant PATH. */
 	private static final String PATH = "/open/v1/confirm?token=";
 
+	/** The Constant SUBJECT. */
 	private static final String SUBJECT = "你收到一笔新的提币订单，需要确认！";
+
+	/** The Constant TEMPLATES. */
 	private static final String TEMPLATES = "<html><head><meta charset='UTF-8'><title>提币订单确认</title></head><body><h3>尊敬的管理员</h3><p>你收到了一笔提币订单，需要确认：<ul style='border:1px solid #ccc;border-radius:4px;padding-inline-start:14px;padding-top:8px;padding-bottom:8px'><li style='list-style:none'><label style='display:inline-block;width:80px'>用户名</label>：<label style='color:gray'>{loginName}</label><li style='list-style:none'><label style='display:inline-block;width:80px'>邮箱</label>：<label style='color:gray'>{email}</label><li style='list-style:none'><label style='display:inline-block;width:80px'>电话</label>：<label style='color:gray'>{mobile}</label><li style='list-style:none'><label style='display:inline-block;width:80px'>提币金额</label>：<label style='color:gray'>{amount}</label><li style='list-style:none'><label style='display:inline-block;width:80px'>提币地址</label>：<label style='color:gray'>{address}</label><li style='list-style:none'><label style='display:inline-block;width:80px'>提币币种</label>：<label style='color:gray'>{symbol}</label><li style='list-style:none'><label style='display:inline-block;width:80px'>提币时间</label>：<label style='color:gray'>{createTime}</label></ul><p style='color:gray'>你可以通过点击下方的链接，进行快速的<strong>确认</strong>或<strong>拒绝</strong>操作，也可以登录后台进行操作。<div style='text-align:center;padding:50px 20px'><a href='{confirmUrl}' style='color:#fff;font-size:20px;background-color:#1ab394;border:none;border-radius:8px;padding:8px 14px;display:inline-block;text-decoration:none'>确认提币</a><a href='{rejectUrl}' style='color:#fff;font-size:20px;background-color:#ed5565;border:none;border-radius:8px;padding:8px 14px;display:inline-block;text-decoration:none;margin-left:40px'>拒绝提币</a></div></body></html>";
 
+	/** The profile service. */
 	@Autowired
 	private IUserProfileService profileService;
 
+	/** The mail service. */
 	@Autowired
 	private IMailService mailService;
 
+	/** The withdrawal order service. */
 	@Autowired
 	private IUserWithdrawalOrderService withdrawalOrderService;
 
+	/**
+	 * Notify.
+	 *
+	 * @param order the order
+	 * @return the int
+	 */
 	@Override
 	public int notify(UserWithdrawalOrder order) {
 		if (order == null) {
@@ -72,6 +101,13 @@ public class WithdrawalNotifyServiceImpl implements IWithdrawalNotifyService {
 		return 1;
 	}
 
+	/**
+	 * Gets the notify url.
+	 *
+	 * @param order the order
+	 * @param type  the type
+	 * @return the notify url
+	 */
 	private String getNotifyUrl(UserWithdrawalOrder order, Integer type) {
 		String value = "";
 		try {
@@ -81,6 +117,12 @@ public class WithdrawalNotifyServiceImpl implements IWithdrawalNotifyService {
 		return GlobalConfig.getGateway() + PATH + value;
 	}
 
+	/**
+	 * Confirm order.
+	 *
+	 * @param token the token
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> confirmOrder(String token) {
 		if (StringUtils.isEmpty(token) || token.length() < 5) {
@@ -112,6 +154,12 @@ public class WithdrawalNotifyServiceImpl implements IWithdrawalNotifyService {
 		}
 	}
 
+	/**
+	 * Decrypt.
+	 *
+	 * @param token the token
+	 * @return the map
+	 */
 	private static Map<String, Object> decrypt(String token) {
 		if (StringUtils.isEmpty(token) || token.length() < 5) {
 			return Collections.emptyMap();
@@ -131,6 +179,14 @@ public class WithdrawalNotifyServiceImpl implements IWithdrawalNotifyService {
 		}
 	}
 
+	/**
+	 * Encrypt.
+	 *
+	 * @param userId  the user id
+	 * @param orderNo the order no
+	 * @param type    the type
+	 * @return the string
+	 */
 	private static String encrypt(Long userId, String orderNo, Integer type) {
 		if (userId == null || orderNo == null || type == null) {
 			return null;

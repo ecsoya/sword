@@ -24,79 +24,123 @@ import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
 /**
- * 服务器相关信息
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class Server.
  */
 public class Server {
 
+	/** The Constant OSHI_WAIT_SECOND. */
 	private static final int OSHI_WAIT_SECOND = 1000;
 
-	/**
-	 * CPU相关信息
-	 */
+	/** The cpu. */
 	private Cpu cpu = new Cpu();
 
-	/**
-	 * 內存相关信息
-	 */
+	/** The mem. */
 	private Mem mem = new Mem();
 
-	/**
-	 * JVM相关信息
-	 */
+	/** The jvm. */
 	private Jvm jvm = new Jvm();
 
-	/**
-	 * 服务器相关信息
-	 */
+	/** The sys. */
 	private Sys sys = new Sys();
 
-	/**
-	 * 磁盘相关信息
-	 */
+	/** The sys files. */
 	private List<SysFile> sysFiles = new LinkedList<SysFile>();
 
+	/**
+	 * Gets the cpu.
+	 *
+	 * @return the cpu
+	 */
 	public Cpu getCpu() {
 		return cpu;
 	}
 
+	/**
+	 * Sets the cpu.
+	 *
+	 * @param cpu the new cpu
+	 */
 	public void setCpu(Cpu cpu) {
 		this.cpu = cpu;
 	}
 
+	/**
+	 * Gets the mem.
+	 *
+	 * @return the mem
+	 */
 	public Mem getMem() {
 		return mem;
 	}
 
+	/**
+	 * Sets the mem.
+	 *
+	 * @param mem the new mem
+	 */
 	public void setMem(Mem mem) {
 		this.mem = mem;
 	}
 
+	/**
+	 * Gets the jvm.
+	 *
+	 * @return the jvm
+	 */
 	public Jvm getJvm() {
 		return jvm;
 	}
 
+	/**
+	 * Sets the jvm.
+	 *
+	 * @param jvm the new jvm
+	 */
 	public void setJvm(Jvm jvm) {
 		this.jvm = jvm;
 	}
 
+	/**
+	 * Gets the sys.
+	 *
+	 * @return the sys
+	 */
 	public Sys getSys() {
 		return sys;
 	}
 
+	/**
+	 * Sets the sys.
+	 *
+	 * @param sys the new sys
+	 */
 	public void setSys(Sys sys) {
 		this.sys = sys;
 	}
 
+	/**
+	 * Gets the sys files.
+	 *
+	 * @return the sys files
+	 */
 	public List<SysFile> getSysFiles() {
 		return sysFiles;
 	}
 
+	/**
+	 * Sets the sys files.
+	 *
+	 * @param sysFiles the new sys files
+	 */
 	public void setSysFiles(List<SysFile> sysFiles) {
 		this.sysFiles = sysFiles;
 	}
 
+	/**
+	 * Copy to.
+	 *
+	 * @throws Exception the exception
+	 */
 	public void copyTo() throws Exception {
 		final SystemInfo si = new SystemInfo();
 		final HardwareAbstractionLayer hal = si.getHardware();
@@ -113,7 +157,9 @@ public class Server {
 	}
 
 	/**
-	 * 设置CPU信息
+	 * Sets the cpu info.
+	 *
+	 * @param processor the new cpu info
 	 */
 	private void setCpuInfo(CentralProcessor processor) {
 		// CPU信息
@@ -138,7 +184,9 @@ public class Server {
 	}
 
 	/**
-	 * 设置内存信息
+	 * Sets the mem info.
+	 *
+	 * @param memory the new mem info
 	 */
 	private void setMemInfo(GlobalMemory memory) {
 		mem.setTotal(memory.getTotal());
@@ -147,7 +195,7 @@ public class Server {
 	}
 
 	/**
-	 * 设置服务器信息
+	 * Sets the sys info.
 	 */
 	private void setSysInfo() {
 		final Properties props = System.getProperties();
@@ -159,7 +207,9 @@ public class Server {
 	}
 
 	/**
-	 * 设置Java虚拟机
+	 * Sets the jvm info.
+	 *
+	 * @throws UnknownHostException the unknown host exception
 	 */
 	private void setJvmInfo() throws UnknownHostException {
 		final Properties props = System.getProperties();
@@ -171,7 +221,9 @@ public class Server {
 	}
 
 	/**
-	 * 设置磁盘信息
+	 * Sets the sys files.
+	 *
+	 * @param os the new sys files
 	 */
 	private void setSysFiles(OperatingSystem os) {
 		final FileSystem fileSystem = os.getFileSystem();
@@ -193,10 +245,10 @@ public class Server {
 	}
 
 	/**
-	 * 字节转换
+	 * Convert file size.
 	 *
-	 * @param size 字节大小
-	 * @return 转换后值
+	 * @param size the size
+	 * @return the string
 	 */
 	public String convertFileSize(long size) {
 		final long kb = 1024;

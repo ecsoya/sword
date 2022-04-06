@@ -21,21 +21,26 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 
 /**
- * 图片验证码（支持算术形式）
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysCaptchaController.
  */
 @Controller
 @RequestMapping("/captcha")
 public class SysCaptchaController extends BaseController {
+
+	/** The captcha producer. */
 	@Resource(name = "captchaProducer")
 	private Producer captchaProducer;
 
+	/** The captcha producer math. */
 	@Resource(name = "captchaProducerMath")
 	private Producer captchaProducerMath;
 
 	/**
-	 * 验证码生成
+	 * Gets the kaptcha image.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return the kaptcha image
 	 */
 	@GetMapping(value = "/captchaImage")
 	public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response) {

@@ -34,33 +34,50 @@ import com.github.ecsoya.sword.wallet.service.IUserWalletAccountService;
 import com.github.ecsoya.sword.wallet.service.IUserWalletRecordService;
 import com.github.ecsoya.sword.wallet.service.IWalletService;
 
+/**
+ * The Class MiningWalletController.
+ */
 @Controller
 @RequestMapping("/mining/wallet")
 public class MiningWalletController extends BaseController {
 
+	/** The Constant prefix. */
 	private static final String prefix = "mining/wallet";
 
+	/** The user deposit order service. */
 	@Autowired
 	private IUserDepositOrderService userDepositOrderService;
 
+	/** The user withdrawal order service. */
 	@Autowired
 	private IUserWithdrawalOrderService userWithdrawalOrderService;
 
+	/** The wallet record service. */
 	@Autowired
 	private IUserWalletRecordService walletRecordService;
 
+	/** The symbol service. */
 	@Autowired
 	private IMiningSymbolService symbolService;
 
+	/** The profile service. */
 	@Autowired
 	private IUserProfileService profileService;
 
+	/** The wallet account service. */
 	@Autowired
 	private IUserWalletAccountService walletAccountService;
 
+	/** The wallet service. */
 	@Autowired
 	private IWalletService walletService;
 
+	/**
+	 * Withdrawal.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("mining:wallet:withdrawal:view")
 	@GetMapping("/withdrawal")
 	public String withdrawal(ModelMap mmap) {
@@ -70,7 +87,12 @@ public class MiningWalletController extends BaseController {
 	}
 
 	/**
-	 * 查询提现订单列表
+	 * List.
+	 *
+	 * @param userWithdrawalOrder the user withdrawal order
+	 * @param start               the start
+	 * @param end                 the end
+	 * @return the table data info
 	 */
 	@RequiresPermissions("mining:wallet:withdrawal:list")
 	@PostMapping("/withdrawal/list")
@@ -93,6 +115,12 @@ public class MiningWalletController extends BaseController {
 		return table;
 	}
 
+	/**
+	 * Deposit.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("mining:wallet:deposit:view")
 	@GetMapping("/deposit")
 	public String deposit(ModelMap mmap) {
@@ -101,7 +129,12 @@ public class MiningWalletController extends BaseController {
 	}
 
 	/**
-	 * 查询充值订单列表
+	 * List.
+	 *
+	 * @param userDepositOrder the user deposit order
+	 * @param start            the start
+	 * @param end              the end
+	 * @return the table data info
 	 */
 	@RequiresPermissions("mining:wallet:deposit:list")
 	@PostMapping("/deposit/list")
@@ -122,6 +155,12 @@ public class MiningWalletController extends BaseController {
 		return table;
 	}
 
+	/**
+	 * Check passed.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("mining:wallet:withdrawal:edit")
 	@Log(title = "审核通过提现订单", businessType = BusinessType.UPDATE)
 	@PostMapping("/withdrawal/checkPassed")
@@ -134,6 +173,13 @@ public class MiningWalletController extends BaseController {
 		return AjaxResult.error(result.getInfo());
 	}
 
+	/**
+	 * Check denied.
+	 *
+	 * @param ids    the ids
+	 * @param remark the remark
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("mining:wallet:withdrawal:edit")
 	@Log(title = "审核拒绝提现订单", businessType = BusinessType.UPDATE)
 	@PostMapping("/withdrawal/checkDenied")
@@ -146,6 +192,12 @@ public class MiningWalletController extends BaseController {
 		return AjaxResult.error(result.getInfo());
 	}
 
+	/**
+	 * Record.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("mining:wallet:record:view")
 	@GetMapping("/record")
 	public String record(ModelMap mmap) {
@@ -154,7 +206,12 @@ public class MiningWalletController extends BaseController {
 	}
 
 	/**
-	 * 查询提现订单列表
+	 * Record.
+	 *
+	 * @param record the record
+	 * @param start  the start
+	 * @param end    the end
+	 * @return the table data info
 	 */
 	@RequiresPermissions("mining:wallet:record:list")
 	@PostMapping("/record/list")
@@ -181,6 +238,13 @@ public class MiningWalletController extends BaseController {
 		return table;
 	}
 
+	/**
+	 * Manual record.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("mining:wallet:withdrawal:view")
 	@GetMapping("/withdrawal/manualRecord")
 	public String manualRecord(Long id, ModelMap mmap) {
@@ -188,6 +252,12 @@ public class MiningWalletController extends BaseController {
 		return prefix + "/manualRecord";
 	}
 
+	/**
+	 * Manual record.
+	 *
+	 * @param manual the manual
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("mining:wallet:withdrawal:edit")
 	@Log(title = "手工核销提现订单", businessType = BusinessType.UPDATE)
 	@PostMapping("/withdrawal/manualRecord")

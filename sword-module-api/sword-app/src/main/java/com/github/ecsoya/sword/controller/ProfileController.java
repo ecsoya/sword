@@ -16,14 +16,23 @@ import com.github.ecsoya.sword.utils.SwordUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * The Class ProfileController.
+ */
 @RestController
 @RequestMapping("/profile")
 @Api(tags = { "用户资料" }, description = "查询、修改、更新登录密码")
 public class ProfileController extends BaseController {
 
+	/** The user service. */
 	@Autowired
 	private IUserProfileService userService;
 
+	/**
+	 * Profile.
+	 *
+	 * @return the common result
+	 */
 	@ApiOperation("查询用户资料")
 	@GetMapping("/get")
 	public CommonResult<UserProfile> profile() {
@@ -31,6 +40,13 @@ public class ProfileController extends BaseController {
 		return CommonResult.build(profile);
 	}
 
+	/**
+	 * Edits the.
+	 *
+	 * @param avatar   the avatar
+	 * @param userName the user name
+	 * @return the common result
+	 */
 	@ApiOperation("更新用户资料（昵称和头像）")
 	@PostMapping("/edit")
 	@RepeatSubmit
@@ -42,6 +58,14 @@ public class ProfileController extends BaseController {
 		return userService.updateUserProfile(profile);
 	}
 
+	/**
+	 * Change pwd.
+	 *
+	 * @param oldPassword the old password
+	 * @param newPassword the new password
+	 * @param code        the code
+	 * @return the common result
+	 */
 	@ApiOperation("修改用户密码")
 	@PostMapping("/changePwd")
 	@RepeatSubmit
@@ -54,6 +78,13 @@ public class ProfileController extends BaseController {
 		return userService.changeUserPassword(userId, oldPassword, newPassword);
 	}
 
+	/**
+	 * Reset pwd.
+	 *
+	 * @param password the password
+	 * @param code     the code
+	 * @return the common result
+	 */
 	@ApiOperation("重置用户密码")
 	@PostMapping("/resetPwd")
 	@RepeatSubmit

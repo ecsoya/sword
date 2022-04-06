@@ -7,10 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 自定义注解防止表单重复提交
- *
- * @author Jin Liu (angryred@qq.com)
- *
+ * The Interface RepeatSubmit.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

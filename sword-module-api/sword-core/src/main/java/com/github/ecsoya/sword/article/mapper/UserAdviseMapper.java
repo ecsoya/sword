@@ -5,61 +5,71 @@ import java.util.List;
 import com.github.ecsoya.sword.article.domain.UserAdvise;
 
 /**
- * 用户反馈Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface UserAdviseMapper.
  */
 public interface UserAdviseMapper {
+
 	/**
-	 * 查询用户反馈
+	 * Select user advise by id.
 	 *
-	 * @param id 用户反馈ID
-	 * @return 用户反馈
+	 * @param id the id
+	 * @return the user advise
 	 */
 	public UserAdvise selectUserAdviseById(Long id);
 
 	/**
-	 * 查询用户反馈列表
+	 * Select user advise list.
 	 *
-	 * @param userAdvise 用户反馈
-	 * @return 用户反馈集合
+	 * @param userAdvise the user advise
+	 * @return the list
 	 */
 	public List<UserAdvise> selectUserAdviseList(UserAdvise userAdvise);
 
 	/**
-	 * 新增用户反馈
+	 * Insert user advise.
 	 *
-	 * @param userAdvise 用户反馈
-	 * @return 结果
+	 * @param userAdvise the user advise
+	 * @return the int
 	 */
 	public int insertUserAdvise(UserAdvise userAdvise);
 
 	/**
-	 * 修改用户反馈
+	 * Update user advise.
 	 *
-	 * @param userAdvise 用户反馈
-	 * @return 结果
+	 * @param userAdvise the user advise
+	 * @return the int
 	 */
 	public int updateUserAdvise(UserAdvise userAdvise);
 
 	/**
-	 * 删除用户反馈
+	 * Delete user advise by id.
 	 *
-	 * @param id 用户反馈ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserAdviseById(Long id);
 
 	/**
-	 * 批量删除用户反馈
+	 * Delete user advise by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserAdviseByIds(String[] ids);
 
+	/**
+	 * Select user advise list by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	public List<UserAdvise> selectUserAdviseListByUserId(Long userId);
 
+	/**
+	 * Select user advise reply list.
+	 *
+	 * @param id the id
+	 * @return the list
+	 */
 	public List<UserAdvise> selectUserAdviseReplyList(Long id);
 }

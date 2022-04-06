@@ -15,17 +15,30 @@ import com.github.ecsoya.sword.common.core.domain.CommonResult;
 import com.github.ecsoya.sword.common.utils.MessageUtils;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
+/**
+ * The Class MobileServiceImpl.
+ */
 @Service
 public class MobileServiceImpl implements IMobileService {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(MobileServiceImpl.class);
 
+	/** The redis. */
 	@Autowired
 	private RedisTemplate<String, Object> redis;
 
+	/** The send mobile handler. */
 	@Autowired(required = false)
 	private SendMobileCodeHandler sendMobileHandler;
 
+	/**
+	 * Send message.
+	 *
+	 * @param mobile  the mobile
+	 * @param message the message
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendMessage(String mobile, String message) {
 		if (sendMobileHandler != null) {
@@ -34,6 +47,12 @@ public class MobileServiceImpl implements IMobileService {
 		return CommonResult.fail("暂不支持");
 	}
 
+	/**
+	 * Send code.
+	 *
+	 * @param mobile the mobile
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendCode(String mobile) {
 		if (sendMobileHandler == null) {
@@ -53,6 +72,13 @@ public class MobileServiceImpl implements IMobileService {
 
 	}
 
+	/**
+	 * Verify code.
+	 *
+	 * @param mobile the mobile
+	 * @param code   the code
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> verifyCode(String mobile, String code) {
 		if (StringUtils.isEmpty(mobile)) {

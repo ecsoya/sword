@@ -11,17 +11,21 @@ import com.github.ecsoya.sword.common.utils.async.AsyncManager;
 import com.github.ecsoya.sword.framework.shiro.web.session.SpringSessionValidationScheduler;
 
 /**
- * 确保应用退出时能关闭后台线程
- *
- * @author cj
+ * The Class ShutdownManager.
  */
 @Component
 public class ShutdownManager {
+
+	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger("sys-user");
 
+	/** The spring session validation scheduler. */
 	@Autowired(required = false)
 	private SpringSessionValidationScheduler springSessionValidationScheduler;
 
+	/**
+	 * Destroy.
+	 */
 	@PreDestroy
 	public void destroy() {
 		shutdownSpringSessionValidationScheduler();
@@ -29,7 +33,7 @@ public class ShutdownManager {
 	}
 
 	/**
-	 * 停止Seesion会话检查
+	 * Shutdown spring session validation scheduler.
 	 */
 	private void shutdownSpringSessionValidationScheduler() {
 		if (springSessionValidationScheduler != null && springSessionValidationScheduler.isEnabled()) {
@@ -43,7 +47,7 @@ public class ShutdownManager {
 	}
 
 	/**
-	 * 停止异步执行任务
+	 * Shutdown async manager.
 	 */
 	private void shutdownAsyncManager() {
 		try {

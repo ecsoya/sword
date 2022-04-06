@@ -12,7 +12,6 @@ import com.github.ecsoya.sword.common.utils.StringUtils;
 import com.github.ecsoya.sword.upload.core.FileUploadException;
 import com.github.ecsoya.sword.upload.core.UploadConfig;
 import com.github.ecsoya.sword.upload.core.UploadData;
-import com.github.ecsoya.sword.upload.uploader.AbstractFileUploader;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -20,16 +19,34 @@ import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.region.Region;
 
+/**
+ * The Class TencentFileUploader.
+ */
 @Service
 public class TencentFileUploader extends AbstractFileUploader {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(TencentFileUploader.class);
 
+	/**
+	 * Test upload config.
+	 *
+	 * @param config the config
+	 * @throws FileUploadException the file upload exception
+	 */
 	@Override
 	protected void testUploadConfig(UploadConfig config) throws FileUploadException {
 		config.testCloudValidated();
 	}
 
+	/**
+	 * Do upload.
+	 *
+	 * @param files  the files
+	 * @param config the config
+	 * @return the list
+	 * @throws FileUploadException the file upload exception
+	 */
 	@Override
 	protected List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException {
 		log.info("TencentFileUploader, config={}", config);

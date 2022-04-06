@@ -5,57 +5,55 @@ import java.util.List;
 import com.github.ecsoya.sword.chat.domain.ChatRoom;
 
 /**
- * 聊天室Service接口
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-06-03
+ * The Interface IChatRoomService.
  */
 public interface IChatRoomService {
+
 	/**
-	 * 查询聊天室
-	 * 
-	 * @param id 聊天室ID
-	 * @return 聊天室
+	 * Select chat room by id.
+	 *
+	 * @param id the id
+	 * @return the chat room
 	 */
 	public ChatRoom selectChatRoomById(Long id);
 
 	/**
-	 * 查询聊天室列表
-	 * 
-	 * @param chatRoom 聊天室
-	 * @return 聊天室集合
+	 * Select chat room list.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the list
 	 */
 	public List<ChatRoom> selectChatRoomList(ChatRoom chatRoom);
 
 	/**
-	 * 新增聊天室
-	 * 
-	 * @param chatRoom 聊天室
-	 * @return 结果
+	 * Insert chat room.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the int
 	 */
 	public int insertChatRoom(ChatRoom chatRoom);
 
 	/**
-	 * 修改聊天室
-	 * 
-	 * @param chatRoom 聊天室
-	 * @return 结果
+	 * Update chat room.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the int
 	 */
 	public int updateChatRoom(ChatRoom chatRoom);
 
 	/**
-	 * 批量删除聊天室
-	 * 
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * Delete chat room by ids.
+	 *
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteChatRoomByIds(String ids);
 
 	/**
-	 * 删除聊天室信息
-	 * 
-	 * @param id 聊天室ID
-	 * @return 结果
+	 * Delete chat room by id.
+	 *
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteChatRoomById(Long id);
 }

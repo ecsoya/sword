@@ -24,17 +24,30 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+/**
+ * The Class ArticleController.
+ */
 @RestController
 @RequestMapping("/article")
 @Api(tags = { "文章" }, description = "查询、详情")
 public class ArticleController extends BaseController {
 
+	/** The article service. */
 	@Autowired
 	private ISwordArticleService articleService;
 
+	/** The user article service. */
 	@Autowired
 	private IUserArticleService userArticleService;
 
+	/**
+	 * List.
+	 *
+	 * @param pageSize the page size
+	 * @param pageNum  the page num
+	 * @param category the category
+	 * @return the table data info
+	 */
 	@ApiOperation(value = "查询消息列表（支持分页）", notes = "{\n" + "            \"createTime\": \"2021-02-04 18:23:36\",\n"
 			+ "            \"updateTime\": null,\n" + "            \"remark\": \"\",\n"
 			+ "            \"params\": {},\n" + "            \"id\": \"1\",\n"
@@ -57,12 +70,23 @@ public class ArticleController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Categories.
+	 *
+	 * @return the common result
+	 */
 	@ApiOperation(value = "查询分类")
 	@GetMapping("/categories")
 	public CommonResult<List<String>> categories() {
 		return CommonResult.build(articleService.selectSwordArticleCategories());
 	}
 
+	/**
+	 * Detail.
+	 *
+	 * @param id the id
+	 * @return the common result
+	 */
 	@ApiOperation(value = "查询消息详情", notes = "id: 文章Id，\ncontent：为富文本内容")
 	@GetMapping("/detail")
 	public CommonResult<SwordArticle> detail(Long id) {
@@ -82,12 +106,24 @@ public class ArticleController extends BaseController {
 		return build;
 	}
 
+	/**
+	 * User.
+	 *
+	 * @param id the id
+	 * @return the common result
+	 */
 	@ApiOperation(value = "查询用户的点赞和回复", notes = "id: 文章Id，\nlike：0-未点赞，1-已点赞，\ncomment：为评论")
 	@GetMapping("/user")
 	public CommonResult<UserArticle> user(Long id) {
 		return CommonResult.build(userArticleService.selectUserArticleByArticleId(id, SwordUtils.getUserId()));
 	}
 
+	/**
+	 * Like.
+	 *
+	 * @param id the id
+	 * @return the common result
+	 */
 	@ApiOperation(value = "点赞", notes = "id: 文章Id")
 	@PostMapping("/like")
 	@RepeatSubmit
@@ -100,6 +136,12 @@ public class ArticleController extends BaseController {
 		return CommonResult.ajax(userArticleService.updateUserArticle(userArticle));
 	}
 
+	/**
+	 * Unlike.
+	 *
+	 * @param id the id
+	 * @return the common result
+	 */
 	@ApiOperation(value = "取消点赞", notes = "id: 文章Id")
 	@PostMapping("/unlike")
 	@RepeatSubmit
@@ -112,6 +154,13 @@ public class ArticleController extends BaseController {
 		return CommonResult.ajax(userArticleService.updateUserArticle(userArticle));
 	}
 
+	/**
+	 * Comment.
+	 *
+	 * @param id      the id
+	 * @param comment the comment
+	 * @return the common result
+	 */
 	@ApiOperation(value = "添加评论", notes = "id: 文章Id，\ncomment：评论内容，当前每篇文章每人仅能发表一次评论")
 	@PostMapping("/comment/add")
 	@RepeatSubmit
@@ -127,6 +176,14 @@ public class ArticleController extends BaseController {
 		return CommonResult.ajax(userArticleService.updateUserArticle(userArticle));
 	}
 
+	/**
+	 * Comment list.
+	 *
+	 * @param pageSize the page size
+	 * @param pageNum  the page num
+	 * @param id       the id
+	 * @return the table data info
+	 */
 	@ApiOperation(value = "评论列表", notes = "查询变量id: 文章Id；\n返回结果：\n{\n"
 			+ "            \"createTime\": \"2021-02-05 09:02:08\",\n"
 			+ "            \"updateTime\": \"2021-02-05 09:02:08\",\n"

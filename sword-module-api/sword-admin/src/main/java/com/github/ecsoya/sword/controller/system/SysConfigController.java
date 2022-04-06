@@ -25,18 +25,24 @@ import com.github.ecsoya.sword.system.domain.SysConfig;
 import com.github.ecsoya.sword.system.service.ISysConfigService;
 
 /**
- * 参数配置 信息操作处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysConfigController.
  */
 @Controller
 @RequestMapping("/system/config")
 public class SysConfigController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/config";
 
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
+	/**
+	 * Config.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:config:view")
 	@GetMapping()
 	public String config() {
@@ -44,7 +50,10 @@ public class SysConfigController extends BaseController {
 	}
 
 	/**
-	 * 查询参数配置列表
+	 * List.
+	 *
+	 * @param config the config
+	 * @return the table data info
 	 */
 	@RequiresPermissions("system:config:list")
 	@PostMapping("/list")
@@ -55,6 +64,12 @@ public class SysConfigController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param config the config
+	 * @return the ajax result
+	 */
 	@Log(title = "参数管理", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("system:config:export")
 	@PostMapping("/export")
@@ -66,7 +81,9 @@ public class SysConfigController extends BaseController {
 	}
 
 	/**
-	 * 新增参数配置
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -74,7 +91,10 @@ public class SysConfigController extends BaseController {
 	}
 
 	/**
-	 * 新增保存参数配置
+	 * Adds the save.
+	 *
+	 * @param config the config
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:config:add")
 	@Log(title = "参数管理", businessType = BusinessType.INSERT)
@@ -89,7 +109,11 @@ public class SysConfigController extends BaseController {
 	}
 
 	/**
-	 * 修改参数配置
+	 * Edits the.
+	 *
+	 * @param configId the config id
+	 * @param mmap     the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{configId}")
 	public String edit(@PathVariable("configId") Long configId, ModelMap mmap) {
@@ -98,7 +122,10 @@ public class SysConfigController extends BaseController {
 	}
 
 	/**
-	 * 修改保存参数配置
+	 * Edits the save.
+	 *
+	 * @param config the config
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:config:edit")
 	@Log(title = "参数管理", businessType = BusinessType.UPDATE)
@@ -113,7 +140,10 @@ public class SysConfigController extends BaseController {
 	}
 
 	/**
-	 * 删除参数配置
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:config:remove")
 	@Log(title = "参数管理", businessType = BusinessType.DELETE)
@@ -124,7 +154,9 @@ public class SysConfigController extends BaseController {
 	}
 
 	/**
-	 * 清空缓存
+	 * Clear cache.
+	 *
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:config:remove")
 	@Log(title = "参数管理", businessType = BusinessType.CLEAN)
@@ -136,7 +168,10 @@ public class SysConfigController extends BaseController {
 	}
 
 	/**
-	 * 校验参数键名
+	 * Check config key unique.
+	 *
+	 * @param config the config
+	 * @return the string
 	 */
 	@PostMapping("/checkConfigKeyUnique")
 	@ResponseBody

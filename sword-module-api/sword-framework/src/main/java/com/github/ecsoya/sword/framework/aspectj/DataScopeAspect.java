@@ -18,53 +18,54 @@ import com.github.ecsoya.sword.common.utils.StringUtils;
 import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 
 /**
- * 数据过滤处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class DataScopeAspect.
  */
 @Aspect
 @Component
 public class DataScopeAspect {
-	/**
-	 * 全部数据权限
-	 */
+
+	/** The Constant DATA_SCOPE_ALL. */
 	public static final String DATA_SCOPE_ALL = "1";
 
-	/**
-	 * 自定数据权限
-	 */
+	/** The Constant DATA_SCOPE_CUSTOM. */
 	public static final String DATA_SCOPE_CUSTOM = "2";
 
-	/**
-	 * 部门数据权限
-	 */
+	/** The Constant DATA_SCOPE_DEPT. */
 	public static final String DATA_SCOPE_DEPT = "3";
 
-	/**
-	 * 部门及以下数据权限
-	 */
+	/** The Constant DATA_SCOPE_DEPT_AND_CHILD. */
 	public static final String DATA_SCOPE_DEPT_AND_CHILD = "4";
 
-	/**
-	 * 仅本人数据权限
-	 */
+	/** The Constant DATA_SCOPE_SELF. */
 	public static final String DATA_SCOPE_SELF = "5";
 
-	/**
-	 * 数据权限过滤关键字
-	 */
+	/** The Constant DATA_SCOPE. */
 	public static final String DATA_SCOPE = "dataScope";
 
+	/**
+	 * Data scope point cut.
+	 */
 	// 配置织入点
 	@Pointcut("@annotation(com.github.ecsoya.sword.common.annotation.DataScope)")
 	public void dataScopePointCut() {
 	}
 
+	/**
+	 * Do before.
+	 *
+	 * @param point the point
+	 * @throws Throwable the throwable
+	 */
 	@Before("dataScopePointCut()")
 	public void doBefore(JoinPoint point) throws Throwable {
 		handleDataScope(point);
 	}
 
+	/**
+	 * Handle data scope.
+	 *
+	 * @param joinPoint the join point
+	 */
 	protected void handleDataScope(final JoinPoint joinPoint) {
 		// 获得注解
 		final DataScope controllerDataScope = getAnnotationLog(joinPoint);
@@ -82,12 +83,11 @@ public class DataScopeAspect {
 	}
 
 	/**
-	 * 数据范围过滤
+	 * Data scope filter.
 	 *
-	 * @param joinPoint 切点
-	 * @param user      用户
-	 * @param deptAlias 部门别名
-	 * @param userAlias 用户别名
+	 * @param joinPoint the join point
+	 * @param user      the user
+	 * @param dataScope the data scope
 	 */
 	public static void dataScopeFilter(JoinPoint joinPoint, SysUser user, DataScope dataScope) {
 		StringBuilder sqlString = new StringBuilder();
@@ -132,7 +132,10 @@ public class DataScopeAspect {
 	}
 
 	/**
-	 * 是否存在注解，如果存在就获取
+	 * Gets the annotation log.
+	 *
+	 * @param joinPoint the join point
+	 * @return the annotation log
 	 */
 	private DataScope getAnnotationLog(JoinPoint joinPoint) {
 		final Signature signature = joinPoint.getSignature();

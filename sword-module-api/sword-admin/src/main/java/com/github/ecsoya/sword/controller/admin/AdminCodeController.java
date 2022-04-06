@@ -13,22 +13,42 @@ import com.github.ecsoya.sword.common.core.controller.BaseController;
 import com.github.ecsoya.sword.common.core.domain.AjaxResult;
 import com.github.ecsoya.sword.common.core.domain.CommonResult;
 
+/**
+ * The Class AdminCodeController.
+ */
 @Controller
 @RequestMapping("/admin/code")
 public class AdminCodeController extends BaseController {
+
+	/** The Constant prefix. */
 	private static final String prefix = "admin/code";
 
+	/** The mail service. */
 	@Autowired
 	private IMailService mailService;
 
+	/** The mobile service. */
 	@Autowired
 	private IMobileService mobileService;
 
+	/**
+	 * Code.
+	 *
+	 * @return the string
+	 */
 	@GetMapping
 	public String code() {
 		return prefix + "/code";
 	}
 
+	/**
+	 * Send email.
+	 *
+	 * @param email   the email
+	 * @param subject the subject
+	 * @param content the content
+	 * @return the ajax result
+	 */
 	@PostMapping("/email")
 	@ResponseBody
 	public AjaxResult sendEmail(String email, String subject, String content) {
@@ -39,6 +59,13 @@ public class AdminCodeController extends BaseController {
 		return error(sent.getInfo());
 	}
 
+	/**
+	 * Send mobile.
+	 *
+	 * @param mobile  the mobile
+	 * @param message the message
+	 * @return the ajax result
+	 */
 	@PostMapping("/mobile")
 	@ResponseBody
 	public AjaxResult sendMobile(String mobile, String message) {
@@ -49,6 +76,12 @@ public class AdminCodeController extends BaseController {
 		return error(sent.getInfo());
 	}
 
+	/**
+	 * Send email code.
+	 *
+	 * @param email the email
+	 * @return the ajax result
+	 */
 	@PostMapping("/email/code")
 	@ResponseBody
 	public AjaxResult sendEmailCode(String email) {
@@ -59,6 +92,12 @@ public class AdminCodeController extends BaseController {
 		return error(sent.getInfo());
 	}
 
+	/**
+	 * Send mobile code.
+	 *
+	 * @param mobile the mobile
+	 * @return the ajax result
+	 */
 	@PostMapping("/mobile/code")
 	@ResponseBody
 	public AjaxResult sendMobileCode(String mobile) {

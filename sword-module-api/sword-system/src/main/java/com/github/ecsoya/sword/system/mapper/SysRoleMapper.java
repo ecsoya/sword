@@ -5,80 +5,79 @@ import java.util.List;
 import com.github.ecsoya.sword.common.core.domain.entity.SysRole;
 
 /**
- * 角色表 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface SysRoleMapper.
  */
 public interface SysRoleMapper {
+
 	/**
-	 * 根据条件分页查询角色数据
+	 * Select role list.
 	 *
-	 * @param role 角色信息
-	 * @return 角色数据集合信息
+	 * @param role the role
+	 * @return the list
 	 */
 	public List<SysRole> selectRoleList(SysRole role);
 
 	/**
-	 * 根据用户ID查询角色
+	 * Select roles by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 角色列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<SysRole> selectRolesByUserId(Long userId);
 
 	/**
-	 * 通过角色ID查询角色
+	 * Select role by id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 角色对象信息
+	 * @param roleId the role id
+	 * @return the sys role
 	 */
 	public SysRole selectRoleById(Long roleId);
 
 	/**
-	 * 通过角色ID删除角色
+	 * Delete role by id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 结果
+	 * @param roleId the role id
+	 * @return the int
 	 */
 	public int deleteRoleById(Long roleId);
 
 	/**
-	 * 批量角色用户信息
+	 * Delete role by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteRoleByIds(Long[] ids);
 
 	/**
-	 * 修改角色信息
+	 * Update role.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	public int updateRole(SysRole role);
 
 	/**
-	 * 新增角色信息
+	 * Insert role.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	public int insertRole(SysRole role);
 
 	/**
-	 * 校验角色名称是否唯一
+	 * Check role name unique.
 	 *
-	 * @param roleName 角色名称
-	 * @return 角色信息
+	 * @param roleName the role name
+	 * @return the sys role
 	 */
 	public SysRole checkRoleNameUnique(String roleName);
 
 	/**
-	 * 校验角色权限是否唯一
+	 * Check role key unique.
 	 *
-	 * @param roleKey 角色权限
-	 * @return 角色信息
+	 * @param roleKey the role key
+	 * @return the sys role
 	 */
 	public SysRole checkRoleKeyUnique(String roleKey);
 }

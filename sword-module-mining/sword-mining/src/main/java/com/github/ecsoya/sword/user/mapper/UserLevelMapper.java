@@ -5,59 +5,63 @@ import java.util.List;
 import com.github.ecsoya.sword.user.domain.UserLevel;
 
 /**
- * 用户级别Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface UserLevelMapper.
  */
 public interface UserLevelMapper {
+
 	/**
-	 * 查询用户级别
+	 * Select user level by id.
 	 *
-	 * @param userId 用户级别ID
-	 * @return 用户级别
+	 * @param userId the user id
+	 * @return the user level
 	 */
 	public UserLevel selectUserLevelById(Long userId);
 
 	/**
-	 * 查询用户级别列表
+	 * Select user level list.
 	 *
-	 * @param userLevel 用户级别
-	 * @return 用户级别集合
+	 * @param userLevel the user level
+	 * @return the list
 	 */
 	public List<UserLevel> selectUserLevelList(UserLevel userLevel);
 
 	/**
-	 * 新增用户级别
+	 * Insert user level.
 	 *
-	 * @param userLevel 用户级别
-	 * @return 结果
+	 * @param userLevel the user level
+	 * @return the int
 	 */
 	public int insertUserLevel(UserLevel userLevel);
 
 	/**
-	 * 修改用户级别
+	 * Update user level.
 	 *
-	 * @param userLevel 用户级别
-	 * @return 结果
+	 * @param userLevel the user level
+	 * @return the int
 	 */
 	public int updateUserLevel(UserLevel userLevel);
 
 	/**
-	 * 删除用户级别
+	 * Delete user level by id.
 	 *
-	 * @param userId 用户级别ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int deleteUserLevelById(Long userId);
 
 	/**
-	 * 批量删除用户级别
+	 * Delete user level by ids.
 	 *
-	 * @param userIds 需要删除的数据ID
-	 * @return 结果
+	 * @param userIds the user ids
+	 * @return the int
 	 */
 	public int deleteUserLevelByIds(String[] userIds);
 
+	/**
+	 * Select user level count.
+	 *
+	 * @param levelId the level id
+	 * @return the long
+	 */
 	public Long selectUserLevelCount(Long levelId);
 }

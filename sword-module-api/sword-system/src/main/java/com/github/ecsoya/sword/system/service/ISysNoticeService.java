@@ -5,55 +5,62 @@ import java.util.List;
 import com.github.ecsoya.sword.system.domain.SysNotice;
 
 /**
- * 公告 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysNoticeService.
  */
 public interface ISysNoticeService {
+
 	/**
-	 * 查询公告信息
+	 * Select notice by id.
 	 *
-	 * @param noticeId 公告ID
-	 * @return 公告信息
+	 * @param noticeId the notice id
+	 * @return the sys notice
 	 */
 	public SysNotice selectNoticeById(Long noticeId);
 
 	/**
-	 * 查询公告列表
+	 * Select notice list.
 	 *
-	 * @param notice 公告信息
-	 * @return 公告集合
+	 * @param notice the notice
+	 * @return the list
 	 */
 	public List<SysNotice> selectNoticeList(SysNotice notice);
 
 	/**
-	 * 新增公告
+	 * Insert notice.
 	 *
-	 * @param notice 公告信息
-	 * @return 结果
+	 * @param notice the notice
+	 * @return the int
 	 */
 	public int insertNotice(SysNotice notice);
 
 	/**
-	 * 修改公告
+	 * Update notice.
 	 *
-	 * @param notice 公告信息
-	 * @return 结果
+	 * @param notice the notice
+	 * @return the int
 	 */
 	public int updateNotice(SysNotice notice);
 
 	/**
-	 * 删除公告信息
+	 * Delete notice by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteNoticeByIds(String ids);
 
 	/**
-	 * 查询最新的通知标题
+	 * Gets the latest notice title.
+	 *
+	 * @return the latest notice title
 	 */
 	public String getLatestNoticeTitle();
 
+	/**
+	 * Select notice list by type.
+	 *
+	 * @param noticeType the notice type
+	 * @return the list
+	 */
 	public List<SysNotice> selectNoticeListByType(String noticeType);
 }

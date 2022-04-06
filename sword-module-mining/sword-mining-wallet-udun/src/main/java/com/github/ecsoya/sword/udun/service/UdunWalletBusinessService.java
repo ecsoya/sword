@@ -18,13 +18,27 @@ import com.github.ecsoya.sword.wallet.domain.Address;
 import com.github.ecsoya.sword.wallet.domain.WithdrawalResponse;
 import com.github.ecsoya.sword.wallet.service.IWalletBusinessService;
 
+/**
+ * The Class UdunWalletBusinessService.
+ */
 @Service
 public class UdunWalletBusinessService implements IWalletBusinessService {
+
+	/** The udun client. */
 	@Autowired
 	private UdunWalletClient udunClient;
+
+	/** The properties. */
 	@Autowired
 	private UdunWalletProperties properties;
 
+	/**
+	 * Gets the deposit address.
+	 *
+	 * @param symbol the symbol
+	 * @param chain  the chain
+	 * @return the deposit address
+	 */
 	@Override
 	public CommonResult<Address> getDepositAddress(String symbol, String chain) {
 		CoinType coinType = CoinType.ofSymbol(symbol);
@@ -51,6 +65,14 @@ public class UdunWalletBusinessService implements IWalletBusinessService {
 		return CommonResult.build(address);
 	}
 
+	/**
+	 * Creates the coin address.
+	 *
+	 * @param coinType the coin type
+	 * @param alias    the alias
+	 * @param walletId the wallet id
+	 * @return the u address
+	 */
 	private UAddress createCoinAddress(CoinType coinType, String alias, String walletId) {
 		// String realCallbackUrl = StringUtils.isEmpty(callbackUrl) ? (host +
 		// "/bipay/notify") : callbackUrl;
@@ -65,6 +87,14 @@ public class UdunWalletBusinessService implements IWalletBusinessService {
 		return null;
 	}
 
+	/**
+	 * Check withdrawal address.
+	 *
+	 * @param symbol  the symbol
+	 * @param chain   the chain
+	 * @param address the address
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> checkWithdrawalAddress(String symbol, String chain, String address) {
 		if (StringUtils.isEmpty(symbol) || StringUtils.isEmpty(address)) {
@@ -84,6 +114,18 @@ public class UdunWalletBusinessService implements IWalletBusinessService {
 		return CommonResult.fail(4183, "提币地址错误");
 	}
 
+	/**
+	 * Withdrawal.
+	 *
+	 * @param orderNo the order no
+	 * @param symbol  the symbol
+	 * @param chain   the chain
+	 * @param address the address
+	 * @param memo    the memo
+	 * @param amount  the amount
+	 * @param auto    the auto
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
 			String memo, BigDecimal amount, boolean auto) {
@@ -108,6 +150,18 @@ public class UdunWalletBusinessService implements IWalletBusinessService {
 		return CommonResult.success(res);
 	}
 
+	/**
+	 * Transfer.
+	 *
+	 * @param orderId      the order id
+	 * @param amount       the amount
+	 * @param mainCoinType the main coin type
+	 * @param coinType     the coin type
+	 * @param address      the address
+	 * @param memo         the memo
+	 * @param auto         the auto
+	 * @return the response message
+	 */
 	private ResponseMessage<String> transfer(String orderId, BigDecimal amount, String mainCoinType, String coinType,
 			String address, String memo, boolean auto) {
 		String callbackUrl = properties.getCallbackUrl();

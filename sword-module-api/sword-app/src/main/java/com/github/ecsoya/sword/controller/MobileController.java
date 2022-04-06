@@ -17,17 +17,27 @@ import com.github.ecsoya.sword.utils.SwordUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * The Class MobileController.
+ */
 @RestController
 @RequestMapping("/open/mobile")
 @Api(tags = { "手机验证码" }, description = "获取、验证")
 public class MobileController extends BaseController {
 
+	/** The mobile service. */
 	@Autowired
 	private IMobileCodeService mobileService;
 
+	/** The user service. */
 	@Autowired
 	private IUserProfileService userService;
 
+	/**
+	 * Delivery.
+	 *
+	 * @return the common result
+	 */
 	@ApiOperation("发送手机验证码，无参")
 	@PostMapping("/delivery")
 	@RepeatSubmit
@@ -36,6 +46,12 @@ public class MobileController extends BaseController {
 		return mobileService.sendCodeByUserId(userId);
 	}
 
+	/**
+	 * Delivery by user name.
+	 *
+	 * @param username the username
+	 * @return the common result
+	 */
 	@ApiOperation("发送手机验证码，用户名")
 	@PostMapping("/deliveryByUsername")
 	@RepeatSubmit
@@ -50,6 +66,12 @@ public class MobileController extends BaseController {
 		return mobileService.sendCodeByUserId(userId);
 	}
 
+	/**
+	 * Delivery bymobile.
+	 *
+	 * @param mobile the mobile
+	 * @return the common result
+	 */
 	@ApiOperation("发送手机验证码，手机")
 	@PostMapping("/deliveryByMobile")
 	@RepeatSubmit
@@ -61,8 +83,10 @@ public class MobileController extends BaseController {
 	}
 
 	/**
+	 * Verify.
 	 *
-	 * 验证手机验证码
+	 * @param code the code
+	 * @return the common result
 	 */
 	@ApiOperation("验证手机验证码，无参")
 	@GetMapping("/verify")
@@ -73,8 +97,11 @@ public class MobileController extends BaseController {
 	}
 
 	/**
+	 * Verify by username.
 	 *
-	 * 验证手机验证码
+	 * @param username the username
+	 * @param code     the code
+	 * @return the common result
 	 */
 	@ApiOperation("验证手机验证码，用户名")
 	@GetMapping("/verifyByUsername")
@@ -91,8 +118,11 @@ public class MobileController extends BaseController {
 	}
 
 	/**
+	 * Verify by mobile.
 	 *
-	 * 验证手机验证码
+	 * @param mobile the mobile
+	 * @param code   the code
+	 * @return the common result
 	 */
 	@ApiOperation("验证手机验证码，手机")
 	@GetMapping("/verifyByMobile")

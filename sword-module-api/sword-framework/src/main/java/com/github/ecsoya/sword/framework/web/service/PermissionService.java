@@ -11,46 +11,48 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
- * RuoYi首创 js调用 thymeleaf 实现按钮权限可见性
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class PermissionService.
  */
 @Service("permission")
 public class PermissionService {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(PermissionService.class);
 
-	/** 没有权限，hidden用于前端隐藏按钮 */
+	/** The Constant NOACCESS. */
 	public static final String NOACCESS = "hidden";
 
+	/** The Constant ROLE_DELIMETER. */
 	private static final String ROLE_DELIMETER = ",";
 
+	/** The Constant PERMISSION_DELIMETER. */
 	private static final String PERMISSION_DELIMETER = ",";
 
 	/**
-	 * 验证用户是否具备某权限，无权限返回hidden用于前端隐藏（如需返回Boolean使用isPermitted）
+	 * Checks for permi.
 	 *
-	 * @param permission 权限字符串
-	 * @return 用户是否具备某权限
+	 * @param permission the permission
+	 * @return the string
 	 */
 	public String hasPermi(String permission) {
 		return isPermitted(permission) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
-	 * 验证用户是否不具备某权限，与 hasPermi逻辑相反。无权限返回hidden用于前端隐藏（如需返回Boolean使用isLacksPermitted）
+	 * Lacks permi.
 	 *
-	 * @param permission 权限字符串
-	 * @return 用户是否不具备某权限
+	 * @param permission the permission
+	 * @return the string
 	 */
 	public String lacksPermi(String permission) {
 		return isLacksPermitted(permission) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
-	 * 验证用户是否具有以下任意一个权限，无权限返回hidden用于隐藏（如需返回Boolean使用hasAnyPermissions）
+	 * Checks for any permi.
 	 *
-	 * @param permissions 以 PERMISSION_NAMES_DELIMETER 为分隔符的权限列表
-	 * @return 用户是否具有以下任意一个权限
+	 * @param permissions the permissions
+	 * @return the string
 	 */
 	public String hasAnyPermi(String permissions) {
 		return hasAnyPermissions(permissions, PERMISSION_DELIMETER) ? org.apache.commons.lang3.StringUtils.EMPTY
@@ -58,39 +60,39 @@ public class PermissionService {
 	}
 
 	/**
-	 * 验证用户是否具备某角色，无权限返回hidden用于隐藏（如需返回Boolean使用isRole）
+	 * Checks for role.
 	 *
-	 * @param role 角色字符串
-	 * @return 用户是否具备某角色
+	 * @param role the role
+	 * @return the string
 	 */
 	public String hasRole(String role) {
 		return isRole(role) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
-	 * 验证用户是否不具备某角色，与hasRole逻辑相反。无权限返回hidden用于隐藏（如需返回Boolean使用isLacksRole）
+	 * Lacks role.
 	 *
-	 * @param role 角色字符串
-	 * @return 用户是否不具备某角色
+	 * @param role the role
+	 * @return the string
 	 */
 	public String lacksRole(String role) {
 		return isLacksRole(role) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
-	 * 验证用户是否具有以下任意一个角色，无权限返回hidden用于隐藏（如需返回Boolean使用isAnyRoles）
+	 * Checks for any roles.
 	 *
-	 * @param roles 以 ROLE_NAMES_DELIMETER 为分隔符的角色列表
-	 * @return 用户是否具有以下任意一个角色
+	 * @param roles the roles
+	 * @return the string
 	 */
 	public String hasAnyRoles(String roles) {
 		return isAnyRoles(roles, ROLE_DELIMETER) ? org.apache.commons.lang3.StringUtils.EMPTY : NOACCESS;
 	}
 
 	/**
-	 * 验证用户是否认证通过或已记住的用户。
+	 * Checks if is user.
 	 *
-	 * @return 用户是否认证通过或已记住的用户
+	 * @return true, if is user
 	 */
 	public boolean isUser() {
 		final Subject subject = SecurityUtils.getSubject();
@@ -98,41 +100,41 @@ public class PermissionService {
 	}
 
 	/**
-	 * 判断用户是否拥有某个权限
+	 * Checks if is permitted.
 	 *
-	 * @param permission 权限字符串
-	 * @return 用户是否具备某权限
+	 * @param permission the permission
+	 * @return true, if is permitted
 	 */
 	public boolean isPermitted(String permission) {
 		return SecurityUtils.getSubject().isPermitted(permission);
 	}
 
 	/**
-	 * 判断用户是否不具备某权限，与 isPermitted逻辑相反。
+	 * Checks if is lacks permitted.
 	 *
-	 * @param permission 权限名称
-	 * @return 用户是否不具备某权限
+	 * @param permission the permission
+	 * @return true, if is lacks permitted
 	 */
 	public boolean isLacksPermitted(String permission) {
 		return isPermitted(permission) != true;
 	}
 
 	/**
-	 * 验证用户是否具有以下任意一个权限。
+	 * Checks for any permissions.
 	 *
-	 * @param permissions 以 PERMISSION_NAMES_DELIMETER 为分隔符的权限列表
-	 * @return 用户是否具有以下任意一个权限
+	 * @param permissions the permissions
+	 * @return true, if successful
 	 */
 	public boolean hasAnyPermissions(String permissions) {
 		return hasAnyPermissions(permissions, PERMISSION_DELIMETER);
 	}
 
 	/**
-	 * 验证用户是否具有以下任意一个权限。
+	 * Checks for any permissions.
 	 *
-	 * @param permissions 以 delimeter 为分隔符的权限列表
-	 * @param delimeter   权限列表分隔符
-	 * @return 用户是否具有以下任意一个权限
+	 * @param permissions the permissions
+	 * @param delimeter   the delimeter
+	 * @return true, if successful
 	 */
 	public boolean hasAnyPermissions(String permissions, String delimeter) {
 		final Subject subject = SecurityUtils.getSubject();
@@ -153,41 +155,41 @@ public class PermissionService {
 	}
 
 	/**
-	 * 判断用户是否拥有某个角色
+	 * Checks if is role.
 	 *
-	 * @param role 角色字符串
-	 * @return 用户是否具备某角色
+	 * @param role the role
+	 * @return true, if is role
 	 */
 	public boolean isRole(String role) {
 		return SecurityUtils.getSubject().hasRole(role);
 	}
 
 	/**
-	 * 验证用户是否不具备某角色，与 isRole逻辑相反。
+	 * Checks if is lacks role.
 	 *
-	 * @param role 角色名称
-	 * @return 用户是否不具备某角色
+	 * @param role the role
+	 * @return true, if is lacks role
 	 */
 	public boolean isLacksRole(String role) {
 		return isRole(role) != true;
 	}
 
 	/**
-	 * 验证用户是否具有以下任意一个角色。
+	 * Checks if is any roles.
 	 *
-	 * @param roles 以 ROLE_NAMES_DELIMETER 为分隔符的角色列表
-	 * @return 用户是否具有以下任意一个角色
+	 * @param roles the roles
+	 * @return true, if is any roles
 	 */
 	public boolean isAnyRoles(String roles) {
 		return isAnyRoles(roles, ROLE_DELIMETER);
 	}
 
 	/**
-	 * 验证用户是否具有以下任意一个角色。
+	 * Checks if is any roles.
 	 *
-	 * @param roles     以 delimeter 为分隔符的角色列表
-	 * @param delimeter 角色列表分隔符
-	 * @return 用户是否具有以下任意一个角色
+	 * @param roles     the roles
+	 * @param delimeter the delimeter
+	 * @return true, if is any roles
 	 */
 	public boolean isAnyRoles(String roles, String delimeter) {
 		final Subject subject = SecurityUtils.getSubject();
@@ -207,10 +209,10 @@ public class PermissionService {
 	}
 
 	/**
-	 * 返回用户属性值
+	 * Gets the principal property.
 	 *
-	 * @param property 属性名称
-	 * @return 用户属性值
+	 * @param property the property
+	 * @return the principal property
 	 */
 	public Object getPrincipalProperty(String property) {
 		final Subject subject = SecurityUtils.getSubject();

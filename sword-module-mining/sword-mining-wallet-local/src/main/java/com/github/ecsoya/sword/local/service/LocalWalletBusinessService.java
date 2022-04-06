@@ -11,9 +11,19 @@ import com.github.ecsoya.sword.wallet.domain.Address;
 import com.github.ecsoya.sword.wallet.domain.WithdrawalResponse;
 import com.github.ecsoya.sword.wallet.service.IWalletBusinessService;
 
+/**
+ * The Class LocalWalletBusinessService.
+ */
 @Service
 public class LocalWalletBusinessService implements IWalletBusinessService {
 
+	/**
+	 * Gets the deposit address.
+	 *
+	 * @param symbol the symbol
+	 * @param chain  the chain
+	 * @return the deposit address
+	 */
 	@Override
 	public CommonResult<Address> getDepositAddress(String symbol, String chain) {
 		if (StringUtils.isEmpty(symbol)) {
@@ -26,6 +36,14 @@ public class LocalWalletBusinessService implements IWalletBusinessService {
 		return CommonResult.success(address);
 	}
 
+	/**
+	 * Check withdrawal address.
+	 *
+	 * @param symbol  the symbol
+	 * @param chain   the chain
+	 * @param address the address
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> checkWithdrawalAddress(String symbol, String chain, String address) {
 		if (StringUtils.isEmpty(symbol) || StringUtils.isEmpty(address)) {
@@ -34,6 +52,18 @@ public class LocalWalletBusinessService implements IWalletBusinessService {
 		return CommonResult.success();
 	}
 
+	/**
+	 * Withdrawal.
+	 *
+	 * @param orderNo the order no
+	 * @param symbol  the symbol
+	 * @param chain   the chain
+	 * @param address the address
+	 * @param memo    the memo
+	 * @param amount  the amount
+	 * @param auto    the auto
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
 			String memo, BigDecimal amount, boolean auto) {

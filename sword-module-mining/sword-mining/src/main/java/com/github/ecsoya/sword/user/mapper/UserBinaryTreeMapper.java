@@ -7,63 +7,79 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.user.domain.UserBinaryTree;
 
 /**
- * 用户双区树Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface UserBinaryTreeMapper.
  */
 public interface UserBinaryTreeMapper {
+
 	/**
-	 * 查询用户双区树
+	 * Select user binary tree by id.
 	 *
-	 * @param userId 用户双区树ID
-	 * @return 用户双区树
+	 * @param userId the user id
+	 * @return the user binary tree
 	 */
 	public UserBinaryTree selectUserBinaryTreeById(Long userId);
 
 	/**
-	 * 查询用户双区树列表
+	 * Select user binary tree list.
 	 *
-	 * @param userBinaryTree 用户双区树
-	 * @return 用户双区树集合
+	 * @param userBinaryTree the user binary tree
+	 * @return the list
 	 */
 	public List<UserBinaryTree> selectUserBinaryTreeList(UserBinaryTree userBinaryTree);
 
 	/**
-	 * 新增用户双区树
+	 * Insert user binary tree.
 	 *
-	 * @param userBinaryTree 用户双区树
-	 * @return 结果
+	 * @param userBinaryTree the user binary tree
+	 * @return the int
 	 */
 	public int insertUserBinaryTree(UserBinaryTree userBinaryTree);
 
 	/**
-	 * 修改用户双区树
+	 * Update user binary tree.
 	 *
-	 * @param userBinaryTree 用户双区树
-	 * @return 结果
+	 * @param userBinaryTree the user binary tree
+	 * @return the int
 	 */
 	public int updateUserBinaryTree(UserBinaryTree userBinaryTree);
 
 	/**
-	 * 删除用户双区树
+	 * Delete user binary tree by id.
 	 *
-	 * @param userId 用户双区树ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int deleteUserBinaryTreeById(Long userId);
 
 	/**
-	 * 批量删除用户双区树
+	 * Delete user binary tree by ids.
 	 *
-	 * @param userIds 需要删除的数据ID
-	 * @return 结果
+	 * @param userIds the user ids
+	 * @return the int
 	 */
 	public int deleteUserBinaryTreeByIds(String[] userIds);
 
+	/**
+	 * Checks if is in binary tree.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	public int isInBinaryTree(long userId);
 
+	/**
+	 * Query user binary tree count.
+	 *
+	 * @return the int
+	 */
 	public int queryUserBinaryTreeCount();
 
+	/**
+	 * Select user binary trees.
+	 *
+	 * @param start the start
+	 * @param limit the limit
+	 * @return the list
+	 */
 	public List<UserBinaryTree> selectUserBinaryTrees(@Param("start") Integer start, @Param("limit") Integer limit);
 }

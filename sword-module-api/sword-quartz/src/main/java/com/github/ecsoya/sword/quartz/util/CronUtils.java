@@ -6,27 +6,25 @@ import java.util.Date;
 import org.quartz.CronExpression;
 
 /**
- * cron表达式工具类
- *
- * @author Jin Liu (angryred@qq.com)
- *
+ * The Class CronUtils.
  */
 public class CronUtils {
+
 	/**
-	 * 返回一个布尔值代表一个给定的Cron表达式的有效性
+	 * Checks if is valid.
 	 *
-	 * @param cronExpression Cron表达式
-	 * @return boolean 表达式是否有效
+	 * @param cronExpression the cron expression
+	 * @return true, if is valid
 	 */
 	public static boolean isValid(String cronExpression) {
 		return CronExpression.isValidExpression(cronExpression);
 	}
 
 	/**
-	 * 返回一个字符串值,表示该消息无效Cron表达式给出有效性
+	 * Gets the invalid message.
 	 *
-	 * @param cronExpression Cron表达式
-	 * @return String 无效时返回表达式错误描述,如果有效返回null
+	 * @param cronExpression the cron expression
+	 * @return the invalid message
 	 */
 	public static String getInvalidMessage(String cronExpression) {
 		try {
@@ -38,10 +36,10 @@ public class CronUtils {
 	}
 
 	/**
-	 * 返回下一个执行时间根据给定的Cron表达式
+	 * Gets the next execution.
 	 *
-	 * @param cronExpression Cron表达式
-	 * @return Date 下次Cron表达式执行时间
+	 * @param cronExpression the cron expression
+	 * @return the next execution
 	 */
 	public static Date getNextExecution(String cronExpression) {
 		try {

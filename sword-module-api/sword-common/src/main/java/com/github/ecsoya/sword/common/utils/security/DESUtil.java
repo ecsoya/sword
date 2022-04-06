@@ -11,27 +11,26 @@ import javax.crypto.spec.IvParameterSpec;
 
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
+/**
+ * The Class DESUtil.
+ */
 public class DESUtil {
 
-	/**
-	 * 密钥算法
-	 */
+	/** The Constant ALGORITHM. */
 	private static final String ALGORITHM = "DES";
-	/**
-	 * 加密/解密算法-工作模式-填充模式
-	 */
+
+	/** The Constant CIPHER_ALGORITHM. */
 	private static final String CIPHER_ALGORITHM = "DES/CBC/PKCS5Padding";
-	/**
-	 * 默认编码
-	 */
+
+	/** The Constant CHARSET. */
 	private static final String CHARSET = "utf-8";
 
 	/**
-	 * 生成key
+	 * Generate key.
 	 *
-	 * @param password
-	 * @return
-	 * @throws Exception
+	 * @param password the password
+	 * @return the key
+	 * @throws Exception the exception
 	 */
 	private static Key generateKey(String password) throws Exception {
 		DESKeySpec dks = new DESKeySpec(password.getBytes(CHARSET));
@@ -40,11 +39,12 @@ public class DESUtil {
 	}
 
 	/**
-	 * DES加密字符串
+	 * Encrypt.
 	 *
-	 * @param password 加密密码，长度不能够小于8位
-	 * @param data     待加密字符串
-	 * @return 加密后内容
+	 * @param password the password
+	 * @param data     the data
+	 * @param ivBytes  the iv bytes
+	 * @return the string
 	 */
 	public static String encrypt(String password, String data, byte[] ivBytes) {
 		if (password == null || password.length() < 8) {
@@ -73,11 +73,12 @@ public class DESUtil {
 	}
 
 	/**
-	 * DES解密字符串
+	 * Decrypt.
 	 *
-	 * @param password 解密密码，长度不能够小于8位
-	 * @param data     待解密字符串
-	 * @return 解密后内容
+	 * @param password the password
+	 * @param data     the data
+	 * @param ivBytes  the iv bytes
+	 * @return the string
 	 */
 	public static String decrypt(String password, String data, byte[] ivBytes) {
 		if (password == null || password.length() < 8) {
@@ -100,6 +101,11 @@ public class DESUtil {
 		}
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		String value = "这是原始信息DEMO";
 		System.out.println("original: " + value);

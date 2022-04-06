@@ -16,18 +16,27 @@ import com.github.ecsoya.sword.quartz.domain.SysJob;
 import com.github.ecsoya.sword.quartz.mapper.SysJobMapper;
 import com.github.ecsoya.sword.quartz.util.ScheduleUtils;
 
+/**
+ * The Class QuartzJobRebuildTask.
+ */
 @Configuration
 @EnableScheduling
 public class QuartzJobRebuildTask {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(QuartzJobRebuildTask.class);
 
+	/** The scheduler. */
 	@Autowired
 	private Scheduler scheduler;
 
+	/** The job mapper. */
 	@Autowired
 	private SysJobMapper jobMapper;
 
+	/**
+	 * Configure tasks.
+	 */
 	@Scheduled(fixedRate = 20 * 60 * 1000)
 	private void configureTasks() {
 		if (SpringUtils.testProfile("local")) {

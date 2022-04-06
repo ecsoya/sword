@@ -12,20 +12,20 @@ import com.github.ecsoya.sword.system.mapper.SysDictDataMapper;
 import com.github.ecsoya.sword.system.service.ISysDictDataService;
 
 /**
- * 字典 业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysDictDataServiceImpl.
  */
 @Service
 public class SysDictDataServiceImpl implements ISysDictDataService {
+
+	/** The dict data mapper. */
 	@Autowired
 	private SysDictDataMapper dictDataMapper;
 
 	/**
-	 * 根据条件分页查询字典数据
+	 * Select dict data list.
 	 *
-	 * @param dictData 字典数据信息
-	 * @return 字典数据集合信息
+	 * @param dictData the dict data
+	 * @return the list
 	 */
 	@Override
 	public List<SysDictData> selectDictDataList(SysDictData dictData) {
@@ -33,11 +33,11 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
 	}
 
 	/**
-	 * 根据字典类型和字典键值查询字典数据信息
+	 * Select dict label.
 	 *
-	 * @param dictType  字典类型
-	 * @param dictValue 字典键值
-	 * @return 字典标签
+	 * @param dictType  the dict type
+	 * @param dictValue the dict value
+	 * @return the string
 	 */
 	@Override
 	public String selectDictLabel(String dictType, String dictValue) {
@@ -45,10 +45,10 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
 	}
 
 	/**
-	 * 根据字典数据ID查询信息
+	 * Select dict data by id.
 	 *
-	 * @param dictCode 字典数据ID
-	 * @return 字典数据
+	 * @param dictCode the dict code
+	 * @return the sys dict data
 	 */
 	@Override
 	public SysDictData selectDictDataById(Long dictCode) {
@@ -56,10 +56,10 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
 	}
 
 	/**
-	 * 批量删除字典数据
+	 * Delete dict data by ids.
 	 *
-	 * @param ids 需要删除的数据
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteDictDataByIds(String ids) {
@@ -71,10 +71,10 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
 	}
 
 	/**
-	 * 新增保存字典数据信息
+	 * Insert dict data.
 	 *
-	 * @param dictData 字典数据信息
-	 * @return 结果
+	 * @param dictData the dict data
+	 * @return the int
 	 */
 	@Override
 	public int insertDictData(SysDictData dictData) {
@@ -86,10 +86,10 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
 	}
 
 	/**
-	 * 修改保存字典数据信息
+	 * Update dict data.
 	 *
-	 * @param dictData 字典数据信息
-	 * @return 结果
+	 * @param dictData the dict data
+	 * @return the int
 	 */
 	@Override
 	public int updateDictData(SysDictData dictData) {

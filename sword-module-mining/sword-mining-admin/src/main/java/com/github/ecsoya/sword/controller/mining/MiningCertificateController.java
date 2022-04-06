@@ -27,22 +27,29 @@ import com.github.ecsoya.sword.user.service.IUserProfileService;
 import com.github.pagehelper.page.PageMethod;
 
 /**
- * 用户实名Controller
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-23
+ * The Class MiningCertificateController.
  */
 @Controller
 @RequestMapping("/mining/certificate")
 public class MiningCertificateController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "mining/certificate";
 
+	/** The user certificate service. */
 	@Autowired
 	private IUserCertificateService userCertificateService;
 
+	/** The user service. */
 	@Autowired
 	private IUserProfileService userService;
 
+	/**
+	 * Certificate.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("mining:certificate:view")
 	@GetMapping()
 	public String certificate(ModelMap mmap) {
@@ -51,7 +58,10 @@ public class MiningCertificateController extends BaseController {
 	}
 
 	/**
-	 * 查询用户实名列表
+	 * List.
+	 *
+	 * @param userCertificate the user certificate
+	 * @return the table data info
 	 */
 	@RequiresPermissions("mining:certificate:list")
 	@PostMapping("/list")
@@ -63,7 +73,10 @@ public class MiningCertificateController extends BaseController {
 	}
 
 	/**
-	 * 导出用户实名列表
+	 * Export.
+	 *
+	 * @param userCertificate the user certificate
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:certificate:export")
 	@Log(title = "用户实名", businessType = BusinessType.EXPORT)
@@ -76,7 +89,9 @@ public class MiningCertificateController extends BaseController {
 	}
 
 	/**
-	 * 新增用户实名
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -84,7 +99,10 @@ public class MiningCertificateController extends BaseController {
 	}
 
 	/**
-	 * 新增保存用户实名
+	 * Adds the save.
+	 *
+	 * @param userCertificate the user certificate
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:certificate:add")
 	@Log(title = "用户实名", businessType = BusinessType.INSERT)
@@ -95,7 +113,11 @@ public class MiningCertificateController extends BaseController {
 	}
 
 	/**
-	 * 修改用户实名
+	 * Edits the.
+	 *
+	 * @param userId the user id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{userId}")
 	public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
@@ -105,7 +127,10 @@ public class MiningCertificateController extends BaseController {
 	}
 
 	/**
-	 * 修改保存用户实名
+	 * Edits the save.
+	 *
+	 * @param userCertificate the user certificate
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:certificate:edit")
 	@Log(title = "用户实名", businessType = BusinessType.UPDATE)
@@ -116,7 +141,10 @@ public class MiningCertificateController extends BaseController {
 	}
 
 	/**
-	 * 删除用户实名
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:certificate:remove")
 	@Log(title = "用户实名", businessType = BusinessType.DELETE)
@@ -127,7 +155,11 @@ public class MiningCertificateController extends BaseController {
 	}
 
 	/**
-	 * 查询二级分类，Select2组件专用
+	 * List categories.
+	 *
+	 * @param search the search
+	 * @param page   the page
+	 * @return the select data info
 	 */
 	@GetMapping("users")
 	@ResponseBody
@@ -138,6 +170,12 @@ public class MiningCertificateController extends BaseController {
 		return build;
 	}
 
+	/**
+	 * Pass.
+	 *
+	 * @param userId the user id
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("mining:certificate:edit")
 	@Log(title = "用户实名审核通过", businessType = BusinessType.UPDATE)
 	@PostMapping("/pass")
@@ -147,6 +185,13 @@ public class MiningCertificateController extends BaseController {
 				userCertificateService.updateUserCertificateStatus(userId, UserCertificate.STATUS_SUCCESS, "审核通过"));
 	}
 
+	/**
+	 * Deny.
+	 *
+	 * @param userId the user id
+	 * @param remark the remark
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("mining:certificate:edit")
 	@Log(title = "用户实名审核拒绝", businessType = BusinessType.UPDATE)
 	@PostMapping("/deny")

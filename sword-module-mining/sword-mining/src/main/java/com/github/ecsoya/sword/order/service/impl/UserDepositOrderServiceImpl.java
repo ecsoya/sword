@@ -15,21 +15,20 @@ import com.github.ecsoya.sword.order.service.IUserDepositOrderService;
 import com.github.ecsoya.sword.utils.MathUtils;
 
 /**
- * 充值订单Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-06
+ * The Class UserDepositOrderServiceImpl.
  */
 @Service
 public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
+
+	/** The user deposit order mapper. */
 	@Autowired
 	private UserDepositOrderMapper userDepositOrderMapper;
 
 	/**
-	 * 查询充值订单
+	 * Select user deposit order by id.
 	 *
-	 * @param id 充值订单ID
-	 * @return 充值订单
+	 * @param id the id
+	 * @return the user deposit order
 	 */
 	@Override
 	public UserDepositOrder selectUserDepositOrderById(Long id) {
@@ -37,10 +36,10 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 	}
 
 	/**
-	 * 查询充值订单列表
+	 * Select user deposit order list.
 	 *
-	 * @param userDepositOrder 充值订单
-	 * @return 充值订单
+	 * @param userDepositOrder the user deposit order
+	 * @return the list
 	 */
 	@Override
 	public List<UserDepositOrder> selectUserDepositOrderList(UserDepositOrder userDepositOrder) {
@@ -48,10 +47,10 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 	}
 
 	/**
-	 * 新增充值订单
+	 * Insert user deposit order.
 	 *
-	 * @param userDepositOrder 充值订单
-	 * @return 结果
+	 * @param userDepositOrder the user deposit order
+	 * @return the int
 	 */
 	@Override
 	public int insertUserDepositOrder(UserDepositOrder userDepositOrder) {
@@ -65,10 +64,10 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 	}
 
 	/**
-	 * 修改充值订单
+	 * Update user deposit order.
 	 *
-	 * @param userDepositOrder 充值订单
-	 * @return 结果
+	 * @param userDepositOrder the user deposit order
+	 * @return the int
 	 */
 	@Override
 	public int updateUserDepositOrder(UserDepositOrder userDepositOrder) {
@@ -77,10 +76,10 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 	}
 
 	/**
-	 * 删除充值订单对象
+	 * Delete user deposit order by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserDepositOrderByIds(String ids) {
@@ -88,21 +87,33 @@ public class UserDepositOrderServiceImpl implements IUserDepositOrderService {
 	}
 
 	/**
-	 * 删除充值订单信息
+	 * Delete user deposit order by id.
 	 *
-	 * @param id 充值订单ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserDepositOrderById(Long id) {
 		return userDepositOrderMapper.deleteUserDepositOrderById(id);
 	}
 
+	/**
+	 * Select user deposit amount.
+	 *
+	 * @param userDepositOrder the user deposit order
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserDepositAmount(UserDepositOrder userDepositOrder) {
 		return MathUtils.nullToZero(userDepositOrderMapper.selectUserDepositAmount(userDepositOrder));
 	}
 
+	/**
+	 * Select user deposit amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserDepositAmount(String symbol) {
 		final UserDepositOrder query = new UserDepositOrder();

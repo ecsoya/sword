@@ -35,45 +35,56 @@ import com.github.ecsoya.sword.wallet.service.IUserWalletService;
 import com.github.ecsoya.sword.wallet.service.IWalletService;
 
 /**
- * 提现订单Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-06
+ * The Class UserWithdrawalOrderServiceImpl.
  */
 @Service
 public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderService {
+
+	/** The user withdrawal order mapper. */
 	@Autowired
 	private UserWithdrawalOrderMapper userWithdrawalOrderMapper;
 
+	/** The user wallet service. */
 	@Autowired
 	private IUserWalletService userWalletService;
 
+	/** The user wallet account service. */
 	@Autowired
 	private IUserWalletAccountService userWalletAccountService;
 
+	/** The symbol service. */
 	@Autowired
 	private IMiningSymbolService symbolService;
 
+	/** The wallet service. */
 	@Autowired
 	private IWalletService walletService;
 
+	/** The user withdrawal record service. */
 	@Autowired
 	private IUserWithdrawalRecordService userWithdrawalRecordService;
 
+	/** The certificate service. */
 	@Autowired
 	private IUserCertificateService certificateService;
 
 	/**
-	 * 查询提现订单
+	 * Select user withdrawal order by id.
 	 *
-	 * @param id 提现订单ID
-	 * @return 提现订单
+	 * @param id the id
+	 * @return the user withdrawal order
 	 */
 	@Override
 	public UserWithdrawalOrder selectUserWithdrawalOrderById(Long id) {
 		return userWithdrawalOrderMapper.selectUserWithdrawalOrderById(id);
 	}
 
+	/**
+	 * Select user withdrawal order by order no.
+	 *
+	 * @param orderNo the order no
+	 * @return the user withdrawal order
+	 */
 	@Override
 	public UserWithdrawalOrder selectUserWithdrawalOrderByOrderNo(String orderNo) {
 		if (StringUtils.isEmpty(orderNo)) {
@@ -83,10 +94,10 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 	}
 
 	/**
-	 * 查询提现订单列表
+	 * Select user withdrawal order list.
 	 *
-	 * @param userWithdrawalOrder 提现订单
-	 * @return 提现订单
+	 * @param userWithdrawalOrder the user withdrawal order
+	 * @return the list
 	 */
 	@Override
 	public List<UserWithdrawalOrder> selectUserWithdrawalOrderList(UserWithdrawalOrder userWithdrawalOrder) {
@@ -94,10 +105,10 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 	}
 
 	/**
-	 * 新增提现订单
+	 * Insert user withdrawal order.
 	 *
-	 * @param userWithdrawalOrder 提现订单
-	 * @return 结果
+	 * @param userWithdrawalOrder the user withdrawal order
+	 * @return the int
 	 */
 	@Override
 	public int insertUserWithdrawalOrder(UserWithdrawalOrder userWithdrawalOrder) {
@@ -111,10 +122,10 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 	}
 
 	/**
-	 * 修改提现订单
+	 * Update user withdrawal order.
 	 *
-	 * @param userWithdrawalOrder 提现订单
-	 * @return 结果
+	 * @param userWithdrawalOrder the user withdrawal order
+	 * @return the int
 	 */
 	@Override
 	public int updateUserWithdrawalOrder(UserWithdrawalOrder userWithdrawalOrder) {
@@ -123,10 +134,10 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 	}
 
 	/**
-	 * 删除提现订单对象
+	 * Delete user withdrawal order by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWithdrawalOrderByIds(String ids) {
@@ -134,16 +145,27 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 	}
 
 	/**
-	 * 删除提现订单信息
+	 * Delete user withdrawal order by id.
 	 *
-	 * @param id 提现订单ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWithdrawalOrderById(Long id) {
 		return userWithdrawalOrderMapper.deleteUserWithdrawalOrderById(id);
 	}
 
+	/**
+	 * Withdrawal.
+	 *
+	 * @param userId   the user id
+	 * @param symbol   the symbol
+	 * @param address  the address
+	 * @param amount   the amount
+	 * @param password the password
+	 * @return the common result
+	 * @throws TransactionException the transaction exception
+	 */
 	@Override
 	@Transactional(rollbackFor = TransactionException.class)
 	public CommonResult<UserWithdrawalOrder> withdrawal(Long userId, String symbol, String address, BigDecimal amount,
@@ -246,10 +268,27 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return CommonResult.build(order);
 	}
 
+	/**
+	 * Select user withdrawal amount by date.
+	 *
+	 * @param symbol the symbol
+	 * @param start  the start
+	 * @param end    the end
+	 * @return the big decimal
+	 */
 	private BigDecimal selectUserWithdrawalAmountByDate(String symbol, Date start, Date end) {
 		return userWithdrawalOrderMapper.selectUserWithdrawalAmountByDate(symbol, start, end);
 	}
 
+	/**
+	 * Cancel withdrawal.
+	 *
+	 * @param userId  the user id
+	 * @param orderNo the order no
+	 * @param remark  the remark
+	 * @return the common result
+	 * @throws TransactionException the transaction exception
+	 */
 	// 后台审核取消
 	@Override
 	@Transactional(rollbackFor = TransactionException.class)
@@ -283,6 +322,13 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return CommonResult.build(orderNo);
 	}
 
+	/**
+	 * Confirm withdrawal.
+	 *
+	 * @param orderNos the order nos
+	 * @return the common result
+	 * @throws TransactionException the transaction exception
+	 */
 	@Override
 	@Transactional(rollbackFor = TransactionException.class)
 	public CommonResult<?> confirmWithdrawal(String orderNos) throws TransactionException {
@@ -313,6 +359,14 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return CommonResult.ajax(rows);
 	}
 
+	/**
+	 * Confirm withdrawal.
+	 *
+	 * @param userId  the user id
+	 * @param orderNo the order no
+	 * @return the common result
+	 * @throws TransactionException the transaction exception
+	 */
 	@Override
 	@Transactional
 	public CommonResult<?> confirmWithdrawal(Long userId, String orderNo) throws TransactionException {
@@ -377,11 +431,38 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return result(id, UserWithdrawalOrder.STATUS_CONFIRM, UserWithdrawalOrder.FEEDBACK_NONE, "转账成功，等待确认", true);
 	}
 
+	/**
+	 * Adds the withdrawal record.
+	 *
+	 * @param userId    the user id
+	 * @param amount    the amount
+	 * @param fee       the fee
+	 * @param walletFee the wallet fee
+	 * @param orderNo   the order no
+	 * @param symbol    the symbol
+	 * @param success   the success
+	 * @param remark    the remark
+	 * @return true, if successful
+	 */
 	private boolean addWithdrawalRecord(Long userId, BigDecimal amount, BigDecimal fee, BigDecimal walletFee,
 			String orderNo, String symbol, boolean success, String remark) {
 		return addWithdrawalRecord(userId, amount, fee, walletFee, orderNo, symbol, success, remark, null);
 	}
 
+	/**
+	 * Adds the withdrawal record.
+	 *
+	 * @param userId    the user id
+	 * @param amount    the amount
+	 * @param fee       the fee
+	 * @param walletFee the wallet fee
+	 * @param orderNo   the order no
+	 * @param symbol    the symbol
+	 * @param success   the success
+	 * @param remark    the remark
+	 * @param txId      the tx id
+	 * @return true, if successful
+	 */
 	private boolean addWithdrawalRecord(Long userId, BigDecimal amount, BigDecimal fee, BigDecimal walletFee,
 			String orderNo, String symbol, boolean success, String remark, String txId) {
 		// 1. 扣款
@@ -407,6 +488,16 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return true;
 	}
 
+	/**
+	 * Result.
+	 *
+	 * @param orderId  the order id
+	 * @param status   the status
+	 * @param feedback the feedback
+	 * @param remark   the remark
+	 * @param success  the success
+	 * @return the common result
+	 */
 	private CommonResult<?> result(Long orderId, Integer status, Integer feedback, String remark, boolean success) {
 		final UserWithdrawalOrder update = new UserWithdrawalOrder();
 		update.setId(orderId);
@@ -421,6 +512,13 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return CommonResult.fail(remark);
 	}
 
+	/**
+	 * Cancel withdrawal.
+	 *
+	 * @param orderNos the order nos
+	 * @param remark   the remark
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> cancelWithdrawal(String orderNos, String remark) {
 		if (StringUtils.isEmpty(orderNos)) {
@@ -453,11 +551,23 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return CommonResult.ajax(rows);
 	}
 
+	/**
+	 * Select user withdrawal amount.
+	 *
+	 * @param userWithdrawalOrder the user withdrawal order
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserWithdrawalAmount(UserWithdrawalOrder userWithdrawalOrder) {
 		return MathUtils.nullToZero(userWithdrawalOrderMapper.selectUserWithdrawalAmount(userWithdrawalOrder));
 	}
 
+	/**
+	 * Select user withdrawal amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserWithdrawalAmount(String symbol) {
 		final UserWithdrawalOrder query = new UserWithdrawalOrder();
@@ -465,6 +575,12 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return selectUserWithdrawalAmount(query);
 	}
 
+	/**
+	 * Select user withdrawal fee amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserWithdrawalFeeAmount(String symbol) {
 		if (StringUtils.isEmpty(symbol)) {
@@ -473,6 +589,12 @@ public class UserWithdrawalOrderServiceImpl implements IUserWithdrawalOrderServi
 		return MathUtils.nullToZero(userWithdrawalOrderMapper.selectUserWithdrawalFeeAmount(symbol));
 	}
 
+	/**
+	 * Manual withdrawal record.
+	 *
+	 * @param manual the manual
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> manualWithdrawalRecord(UserWithdrawalManual manual) {
 		if (manual == null || StringUtils.isEmpty(manual.getId()) || manual.getStatus() == null) {

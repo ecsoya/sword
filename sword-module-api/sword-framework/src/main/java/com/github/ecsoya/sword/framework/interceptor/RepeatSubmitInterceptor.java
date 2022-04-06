@@ -15,12 +15,20 @@ import com.github.ecsoya.sword.common.json.JSON;
 import com.github.ecsoya.sword.common.utils.ServletUtils;
 
 /**
- * 防止重复提交拦截器
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class RepeatSubmitInterceptor.
  */
 @Component
 public abstract class RepeatSubmitInterceptor implements AsyncHandlerInterceptor {
+
+	/**
+	 * Pre handle.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @param handler  the handler
+	 * @return true, if successful
+	 * @throws Exception the exception
+	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -39,11 +47,11 @@ public abstract class RepeatSubmitInterceptor implements AsyncHandlerInterceptor
 	}
 
 	/**
-	 * 验证是否重复提交由子类实现具体的防重复提交的规则
+	 * Checks if is repeat submit.
 	 *
-	 * @param request
-	 * @return
-	 * @throws Exception
+	 * @param request the request
+	 * @return true, if is repeat submit
+	 * @throws Exception the exception
 	 */
 	public abstract boolean isRepeatSubmit(HttpServletRequest request) throws Exception;
 }

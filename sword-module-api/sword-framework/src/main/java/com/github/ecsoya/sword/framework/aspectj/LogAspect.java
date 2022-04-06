@@ -28,27 +28,31 @@ import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 import com.github.ecsoya.sword.system.domain.SysOperLog;
 
 /**
- * 操作日志记录处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class LogAspect.
  */
 @Aspect
 @Component
 public class LogAspect {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
-	/** 排除敏感属性字段 */
+	/** The Constant EXCLUDE_PROPERTIES. */
 	public static final String[] EXCLUDE_PROPERTIES = { "password", "oldPassword", "newPassword", "confirmPassword" };
 
+	/**
+	 * Log point cut.
+	 */
 	// 配置织入点
 	@Pointcut("@annotation(com.github.ecsoya.sword.common.annotation.Log)")
 	public void logPointCut() {
 	}
 
 	/**
-	 * 处理完请求后执行
+	 * Do after returning.
 	 *
-	 * @param joinPoint 切点
+	 * @param joinPoint  the join point
+	 * @param jsonResult the json result
 	 */
 	@AfterReturning(pointcut = "logPointCut()", returning = "jsonResult")
 	public void doAfterReturning(JoinPoint joinPoint, Object jsonResult) {
@@ -56,16 +60,23 @@ public class LogAspect {
 	}
 
 	/**
-	 * 拦截异常操作
+	 * Do after throwing.
 	 *
-	 * @param joinPoint 切点
-	 * @param e         异常
+	 * @param joinPoint the join point
+	 * @param e         the e
 	 */
 	@AfterThrowing(value = "logPointCut()", throwing = "e")
 	public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
 		handleLog(joinPoint, e, null);
 	}
 
+	/**
+	 * Handle log.
+	 *
+	 * @param joinPoint  the join point
+	 * @param e          the e
+	 * @param jsonResult the json result
+	 */
 	protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult) {
 		try {
 			// 获得注解
@@ -119,11 +130,11 @@ public class LogAspect {
 	}
 
 	/**
-	 * 获取注解中对方法的描述信息 用于Controller层注解
+	 * Gets the controller method description.
 	 *
-	 * @param log     日志
-	 * @param operLog 操作日志
-	 * @throws Exception
+	 * @param log     the log
+	 * @param operLog the oper log
+	 * @throws Exception the exception
 	 */
 	public void getControllerMethodDescription(Log log, SysOperLog operLog) throws Exception {
 		// 设置action动作
@@ -140,10 +151,10 @@ public class LogAspect {
 	}
 
 	/**
-	 * 获取请求的参数，放到log中
+	 * Sets the request value.
 	 *
-	 * @param operLog 操作日志
-	 * @throws Exception 异常
+	 * @param operLog the new request value
+	 * @throws Exception the exception
 	 */
 	private void setRequestValue(SysOperLog operLog) throws Exception {
 		final Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
@@ -156,7 +167,11 @@ public class LogAspect {
 	}
 
 	/**
-	 * 是否存在注解，如果存在就获取
+	 * Gets the annotation log.
+	 *
+	 * @param joinPoint the join point
+	 * @return the annotation log
+	 * @throws Exception the exception
 	 */
 	private Log getAnnotationLog(JoinPoint joinPoint) throws Exception {
 		final Signature signature = joinPoint.getSignature();

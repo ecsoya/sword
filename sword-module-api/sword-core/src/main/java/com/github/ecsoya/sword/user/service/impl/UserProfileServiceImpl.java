@@ -18,21 +18,44 @@ import com.github.ecsoya.sword.user.domain.UserProfile;
 import com.github.ecsoya.sword.user.mapper.UserProfileMapper;
 import com.github.ecsoya.sword.user.service.IUserProfileService;
 
+/**
+ * The Class UserProfileServiceImpl.
+ */
 @Service
 public class UserProfileServiceImpl implements IUserProfileService {
+
+	/** The Constant USER_ID_2_EMAIL_CACHE. */
 	private static final String USER_ID_2_EMAIL_CACHE = "user-id-email:"; //$NON-NLS-1$
+
+	/** The Constant USER_LOGIN_NAME_2_EMAIL_CACHE. */
 	private static final String USER_LOGIN_NAME_2_EMAIL_CACHE = "user-login-name-email:"; //$NON-NLS-1$
+
+	/** The Constant USER_LOGIN_NAME_2_ID_CACHE. */
 	private static final String USER_LOGIN_NAME_2_ID_CACHE = "user-login-name-id:"; //$NON-NLS-1$
+
+	/** The Constant USER_ID_LOGIN_NAME_CACHE. */
 	private static final String USER_ID_LOGIN_NAME_CACHE = "user-id-login-name:"; //$NON-NLS-1$
+
+	/** The Constant USER_ID_MOBILE_CACHE. */
 	private static final String USER_ID_MOBILE_CACHE = "user-id-mobile:"; //$NON-NLS-1$
+
+	/** The Constant USER_LOGIN_NAME_2_MOBILE_CACHE. */
 	private static final String USER_LOGIN_NAME_2_MOBILE_CACHE = "user-login-name-mobile:"; //$NON-NLS-1$
 
+	/** The user profile mapper. */
 	@Autowired
 	private UserProfileMapper userProfileMapper;
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/**
+	 * Select user profile by id.
+	 *
+	 * @param userId the user id
+	 * @return the user profile
+	 */
 	@Override
 	public UserProfile selectUserProfileById(Long userId) {
 		if (userId == null) {
@@ -41,6 +64,12 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return userProfileMapper.selectUserProfileById(userId);
 	}
 
+	/**
+	 * Update user profile.
+	 *
+	 * @param profile the profile
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> updateUserProfile(UserProfile profile) {
 		if (profile == null || profile.getUserId() == null) {
@@ -54,6 +83,12 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return rows > 0 ? CommonResult.success(rows) : CommonResult.fail(MessageUtils.message("UserServiceImpl.16")); //$NON-NLS-1$
 	}
 
+	/**
+	 * Select user email by id.
+	 *
+	 * @param userId the user id
+	 * @return the string
+	 */
 	@Override
 	public String selectUserEmailById(Long userId) {
 		if (userId == null) {
@@ -69,6 +104,13 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return email;
 	}
 
+	/**
+	 * Change status.
+	 *
+	 * @param userId the user id
+	 * @param status the status
+	 * @return the int
+	 */
 	@Override
 	public int changeStatus(Long userId, Integer status) {
 		if (userId == null || status == null) {
@@ -80,6 +122,12 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return userService.changeStatus(user);
 	}
 
+	/**
+	 * Select user id by username.
+	 *
+	 * @param username the username
+	 * @return the long
+	 */
 	@Override
 	public Long selectUserIdByUsername(String username) {
 		if (StringUtils.isEmpty(username)) {
@@ -95,6 +143,12 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return userId;
 	}
 
+	/**
+	 * Select user email by username.
+	 *
+	 * @param username the username
+	 * @return the string
+	 */
 	@Override
 	public String selectUserEmailByUsername(String username) {
 		if (StringUtils.isEmpty(username)) {
@@ -110,6 +164,14 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return email;
 	}
 
+	/**
+	 * Change user password.
+	 *
+	 * @param userId      the user id
+	 * @param oldPassword the old password
+	 * @param newPassword the new password
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> changeUserPassword(Long userId, String oldPassword, String newPassword) {
 		if (userId == null || StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)) {
@@ -130,6 +192,12 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return CommonResult.ajax(userService.resetUserPwd(resetPwd));
 	}
 
+	/**
+	 * Select user login name by user id.
+	 *
+	 * @param userId the user id
+	 * @return the string
+	 */
 	@Override
 	public String selectUserLoginNameByUserId(Long userId) {
 		if (userId == null) {
@@ -145,6 +213,12 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return loginName;
 	}
 
+	/**
+	 * Select user mobile by id.
+	 *
+	 * @param userId the user id
+	 * @return the string
+	 */
 	@Override
 	public String selectUserMobileById(Long userId) {
 		if (userId == null) {
@@ -160,6 +234,12 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return mobile;
 	}
 
+	/**
+	 * Select user mobile by username.
+	 *
+	 * @param username the username
+	 * @return the string
+	 */
 	@Override
 	public String selectUserMobileByUsername(String username) {
 		if (username == null) {
@@ -175,6 +255,13 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return mobile;
 	}
 
+	/**
+	 * Reset user password.
+	 *
+	 * @param userId   the user id
+	 * @param password the password
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> resetUserPassword(Long userId, String password) {
 		final String loginName = selectUserLoginNameByUserId(userId);
@@ -197,6 +284,13 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return CommonResult.ajax(userService.resetUserPwd(resetPwd));
 	}
 
+	/**
+	 * Select user accounts from email.
+	 *
+	 * @param userId   the user id
+	 * @param userType the user type
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<List<String>> selectUserAccountsFromEmail(Long userId, String userType) {
 		if (userId == null) {
@@ -205,6 +299,13 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		return CommonResult.build(userProfileMapper.selectUserAccountsFromEmail(userId, userType));
 	}
 
+	/**
+	 * Update user mobile.
+	 *
+	 * @param userId the user id
+	 * @param mobile the mobile
+	 * @return the ajax result
+	 */
 	@Override
 	public AjaxResult updateUserMobile(Long userId, String mobile) {
 		if (userId == null || StringUtils.isEmpty(mobile)) {
@@ -221,6 +322,13 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		}
 	}
 
+	/**
+	 * Update user email.
+	 *
+	 * @param userId the user id
+	 * @param email  the email
+	 * @return the ajax result
+	 */
 	@Override
 	public AjaxResult updateUserEmail(Long userId, String email) {
 		if (userId == null || StringUtils.isEmpty(email)) {
@@ -239,21 +347,45 @@ public class UserProfileServiceImpl implements IUserProfileService {
 		}
 	}
 
+	/**
+	 * Select user ids by type.
+	 *
+	 * @param userType the user type
+	 * @return the list
+	 */
 	@Override
 	public List<Long> selectUserIdsByType(String userType) {
 		return userProfileMapper.selectUserIdsByType(userType);
 	}
 
+	/**
+	 * Fuzzy search user list.
+	 *
+	 * @param loginName the login name
+	 * @return the list
+	 */
 	@Override
 	public List<UserProfile> fuzzySearchUserList(String loginName) {
 		return userProfileMapper.fuzzySearchUserList(loginName);
 	}
 
+	/**
+	 * Fuzzy search user list by mobile.
+	 *
+	 * @param mobile the mobile
+	 * @return the list
+	 */
 	@Override
 	public List<UserProfile> fuzzySearchUserListByMobile(String mobile) {
 		return userProfileMapper.fuzzySearchUserListByMobile(mobile);
 	}
 
+	/**
+	 * Select user profile list.
+	 *
+	 * @param userIds the user ids
+	 * @return the list
+	 */
 	@Override
 	public List<UserProfile> selectUserProfileList(List<Long> userIds) {
 		if (userIds == null || userIds.isEmpty()) {

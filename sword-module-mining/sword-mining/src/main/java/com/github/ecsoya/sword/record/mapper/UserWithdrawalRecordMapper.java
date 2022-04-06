@@ -9,64 +9,83 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.record.domain.UserWithdrawalRecord;
 
 /**
- * 用户提现Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface UserWithdrawalRecordMapper.
  */
 public interface UserWithdrawalRecordMapper {
+
 	/**
-	 * 查询用户提现
+	 * Select user withdrawal record by id.
 	 *
-	 * @param id 用户提现ID
-	 * @return 用户提现
+	 * @param id the id
+	 * @return the user withdrawal record
 	 */
 	public UserWithdrawalRecord selectUserWithdrawalRecordById(Long id);
 
 	/**
-	 * 查询用户提现列表
+	 * Select user withdrawal record list.
 	 *
-	 * @param userWithdrawalRecord 用户提现
-	 * @return 用户提现集合
+	 * @param userWithdrawalRecord the user withdrawal record
+	 * @return the list
 	 */
 	public List<UserWithdrawalRecord> selectUserWithdrawalRecordList(UserWithdrawalRecord userWithdrawalRecord);
 
 	/**
-	 * 新增用户提现
+	 * Insert user withdrawal record.
 	 *
-	 * @param userWithdrawalRecord 用户提现
-	 * @return 结果
+	 * @param userWithdrawalRecord the user withdrawal record
+	 * @return the int
 	 */
 	public int insertUserWithdrawalRecord(UserWithdrawalRecord userWithdrawalRecord);
 
 	/**
-	 * 修改用户提现
+	 * Update user withdrawal record.
 	 *
-	 * @param userWithdrawalRecord 用户提现
-	 * @return 结果
+	 * @param userWithdrawalRecord the user withdrawal record
+	 * @return the int
 	 */
 	public int updateUserWithdrawalRecord(UserWithdrawalRecord userWithdrawalRecord);
 
 	/**
-	 * 删除用户提现
+	 * Delete user withdrawal record by id.
 	 *
-	 * @param id 用户提现ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserWithdrawalRecordById(Long id);
 
 	/**
-	 * 批量删除用户提现
+	 * Delete user withdrawal record by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserWithdrawalRecordByIds(String[] ids);
 
+	/**
+	 * Update user withdrawal record height by tx id.
+	 *
+	 * @param txId   the tx id
+	 * @param height the height
+	 * @return the int
+	 */
 	public int updateUserWithdrawalRecordHeightByTxId(@Param("txId") String txId, @Param("height") Long height);
 
+	/**
+	 * Select user withdrawal amount by date.
+	 *
+	 * @param symbol the symbol
+	 * @param start  the start
+	 * @param end    the end
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserWithdrawalAmountByDate(@Param("symbol") String symbol, @Param("start") Date start,
 			@Param("end") Date end);
 
+	/**
+	 * Select user withdrawal fee amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserWithdrawalFeeAmount(String symbol);
 }

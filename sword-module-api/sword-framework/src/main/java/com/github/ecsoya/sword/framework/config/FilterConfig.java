@@ -13,21 +13,28 @@ import org.springframework.context.annotation.Configuration;
 import com.github.ecsoya.sword.common.xss.XssFilter;
 
 /**
- * Filter配置
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class FilterConfig.
  */
 @Configuration
 public class FilterConfig {
+
+	/** The enabled. */
 	@Value("${xss.enabled}")
 	private String enabled;
 
+	/** The excludes. */
 	@Value("${xss.excludes}")
 	private String excludes;
 
+	/** The url patterns. */
 	@Value("${xss.urlPatterns}")
 	private String urlPatterns;
 
+	/**
+	 * Xss filter registration.
+	 *
+	 * @return the filter registration bean
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean
 	public FilterRegistrationBean xssFilterRegistration() {

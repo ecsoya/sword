@@ -6,8 +6,17 @@ import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 import com.github.ecsoya.sword.utils.SwordUtils;
 import com.github.ecsoya.sword.wallet.service.IUserWalletService;
 
+/**
+ * The Class SwordMiningUtils.
+ */
 public class SwordMiningUtils extends SwordUtils {
 
+	/**
+	 * Verify wallet password.
+	 *
+	 * @param password the password
+	 * @return the common result
+	 */
 	public static CommonResult<?> verifyWalletPassword(String password) {
 		if (StringUtils.isEmpty(password)) {
 			return CommonResult.fail("密码错误");

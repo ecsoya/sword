@@ -7,104 +7,103 @@ import com.github.ecsoya.sword.common.core.domain.entity.SysDept;
 import com.github.ecsoya.sword.common.core.domain.entity.SysRole;
 
 /**
- * 部门管理 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysDeptService.
  */
 public interface ISysDeptService {
+
 	/**
-	 * 查询部门管理数据
+	 * Select dept list.
 	 *
-	 * @param dept 部门信息
-	 * @return 部门信息集合
+	 * @param dept the dept
+	 * @return the list
 	 */
 	public List<SysDept> selectDeptList(SysDept dept);
 
 	/**
-	 * 查询部门管理树
+	 * Select dept tree.
 	 *
-	 * @param dept 部门信息
-	 * @return 所有部门信息
+	 * @param dept the dept
+	 * @return the list
 	 */
 	public List<Ztree> selectDeptTree(SysDept dept);
 
 	/**
-	 * 查询部门管理树（排除下级）
+	 * Select dept tree exclude child.
 	 *
-	 * @param dept 部门信息
-	 * @return 所有部门信息
+	 * @param dept the dept
+	 * @return the list
 	 */
 	public List<Ztree> selectDeptTreeExcludeChild(SysDept dept);
 
 	/**
-	 * 根据角色ID查询菜单
+	 * Role dept tree data.
 	 *
-	 * @param role 角色对象
-	 * @return 菜单列表
+	 * @param role the role
+	 * @return the list
 	 */
 	public List<Ztree> roleDeptTreeData(SysRole role);
 
 	/**
-	 * 查询部门人数
+	 * Select dept count.
 	 *
-	 * @param parentId 父部门ID
-	 * @return 结果
+	 * @param parentId the parent id
+	 * @return the int
 	 */
 	public int selectDeptCount(Long parentId);
 
 	/**
-	 * 查询部门是否存在用户
+	 * Check dept exist user.
 	 *
-	 * @param deptId 部门ID
-	 * @return 结果 true 存在 false 不存在
+	 * @param deptId the dept id
+	 * @return true, if successful
 	 */
 	public boolean checkDeptExistUser(Long deptId);
 
 	/**
-	 * 删除部门管理信息
+	 * Delete dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 结果
+	 * @param deptId the dept id
+	 * @return the int
 	 */
 	public int deleteDeptById(Long deptId);
 
 	/**
-	 * 新增保存部门信息
+	 * Insert dept.
 	 *
-	 * @param dept 部门信息
-	 * @return 结果
+	 * @param dept the dept
+	 * @return the int
 	 */
 	public int insertDept(SysDept dept);
 
 	/**
-	 * 修改保存部门信息
+	 * Update dept.
 	 *
-	 * @param dept 部门信息
-	 * @return 结果
+	 * @param dept the dept
+	 * @return the int
 	 */
 	public int updateDept(SysDept dept);
 
 	/**
-	 * 根据部门ID查询信息
+	 * Select dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 部门信息
+	 * @param deptId the dept id
+	 * @return the sys dept
 	 */
 	public SysDept selectDeptById(Long deptId);
 
 	/**
-	 * 根据ID查询所有子部门（正常状态）
+	 * Select normal children dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 子部门数
+	 * @param deptId the dept id
+	 * @return the int
 	 */
 	public int selectNormalChildrenDeptById(Long deptId);
 
 	/**
-	 * 校验部门名称是否唯一
+	 * Check dept name unique.
 	 *
-	 * @param dept 部门信息
-	 * @return 结果
+	 * @param dept the dept
+	 * @return the string
 	 */
 	public String checkDeptNameUnique(SysDept dept);
 }

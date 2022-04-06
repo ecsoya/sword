@@ -18,16 +18,20 @@ import com.github.ecsoya.sword.common.utils.ServletUtils;
 import com.github.ecsoya.sword.common.utils.security.PermissionUtils;
 
 /**
- * 全局异常处理器
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class GlobalExceptionHandler.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	/**
-	 * 权限校验失败 如果请求为ajax返回json，普通请求跳转页面
+	 * Handle authorization exception.
+	 *
+	 * @param request the request
+	 * @param e       the e
+	 * @return the object
 	 */
 	@ExceptionHandler(AuthorizationException.class)
 	public Object handleAuthorizationException(HttpServletRequest request, AuthorizationException e) {
@@ -42,7 +46,10 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * 请求方式不支持
+	 * Handle exception.
+	 *
+	 * @param e the e
+	 * @return the ajax result
 	 */
 	@ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
 	public AjaxResult handleException(HttpRequestMethodNotSupportedException e) {
@@ -51,7 +58,10 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * 拦截未知的运行时异常
+	 * Not fount.
+	 *
+	 * @param e the e
+	 * @return the ajax result
 	 */
 	@ExceptionHandler(RuntimeException.class)
 	public AjaxResult notFount(RuntimeException e) {
@@ -60,7 +70,11 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * 系统异常
+	 * Business exception.
+	 *
+	 * @param request the request
+	 * @param e       the e
+	 * @return the object
 	 */
 //	@ExceptionHandler(Exception.class)
 //	public AjaxResult handleException(Exception e) {
@@ -69,7 +83,9 @@ public class GlobalExceptionHandler {
 //	}
 
 	/**
-	 * 业务异常
+	 * @param request the request
+	 * @param e       exception
+	 * @return result
 	 */
 	@ExceptionHandler(BusinessException.class)
 	public Object businessException(HttpServletRequest request, BusinessException e) {
@@ -85,7 +101,10 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * 自定义验证异常
+	 * Validated bind exception.
+	 *
+	 * @param e the e
+	 * @return the ajax result
 	 */
 	@ExceptionHandler(BindException.class)
 	public AjaxResult validatedBindException(BindException e) {
@@ -95,7 +114,10 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * 演示模式异常
+	 * Demo mode exception.
+	 *
+	 * @param e the e
+	 * @return the ajax result
 	 */
 	@ExceptionHandler(DemoModeException.class)
 	public AjaxResult demoModeException(DemoModeException e) {

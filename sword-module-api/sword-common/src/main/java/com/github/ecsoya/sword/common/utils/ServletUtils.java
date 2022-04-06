@@ -13,76 +13,98 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.github.ecsoya.sword.common.core.text.Convert;
 
 /**
- * 客户端工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class ServletUtils.
  */
 public class ServletUtils {
-	/**
-	 * 定义移动端请求的所有可能类型
-	 */
+
+	/** The Constant agent. */
 	private final static String[] agent = { "Android", "iPhone", "iPod", "iPad", "Windows Phone", "MQQBrowser" };
 
 	/**
-	 * 获取String参数
+	 * Gets the parameter.
+	 *
+	 * @param name the name
+	 * @return the parameter
 	 */
 	public static String getParameter(String name) {
 		return getRequest().getParameter(name);
 	}
 
 	/**
-	 * 获取String参数
+	 * Gets the parameter.
+	 *
+	 * @param name         the name
+	 * @param defaultValue the default value
+	 * @return the parameter
 	 */
 	public static String getParameter(String name, String defaultValue) {
 		return Convert.toStr(getRequest().getParameter(name), defaultValue);
 	}
 
 	/**
-	 * 获取Integer参数
+	 * Gets the parameter to int.
+	 *
+	 * @param name the name
+	 * @return the parameter to int
 	 */
 	public static Integer getParameterToInt(String name) {
 		return Convert.toInt(getRequest().getParameter(name));
 	}
 
 	/**
-	 * 获取Integer参数
+	 * Gets the parameter to int.
+	 *
+	 * @param name         the name
+	 * @param defaultValue the default value
+	 * @return the parameter to int
 	 */
 	public static Integer getParameterToInt(String name, Integer defaultValue) {
 		return Convert.toInt(getRequest().getParameter(name), defaultValue);
 	}
 
 	/**
-	 * 获取request
+	 * Gets the request.
+	 *
+	 * @return the request
 	 */
 	public static HttpServletRequest getRequest() {
 		return getRequestAttributes().getRequest();
 	}
 
 	/**
-	 * 获取response
+	 * Gets the response.
+	 *
+	 * @return the response
 	 */
 	public static HttpServletResponse getResponse() {
 		return getRequestAttributes().getResponse();
 	}
 
 	/**
-	 * 获取session
+	 * Gets the session.
+	 *
+	 * @return the session
 	 */
 	public static HttpSession getSession() {
 		return getRequest().getSession();
 	}
 
+	/**
+	 * Gets the request attributes.
+	 *
+	 * @return the request attributes
+	 */
 	public static ServletRequestAttributes getRequestAttributes() {
 		final RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
 		return (ServletRequestAttributes) attributes;
 	}
 
 	/**
-	 * 将字符串渲染到客户端
+	 * Render string.
 	 *
-	 * @param response 渲染对象
-	 * @param string   待渲染的字符串
-	 * @return null
+	 * @param response the response
+	 * @param string   the string
+	 * @return the string
 	 */
 	public static String renderString(HttpServletResponse response, String string) {
 		try {
@@ -96,9 +118,10 @@ public class ServletUtils {
 	}
 
 	/**
-	 * 是否是Ajax异步请求
+	 * Checks if is ajax request.
 	 *
-	 * @param request
+	 * @param request the request
+	 * @return true, if is ajax request
 	 */
 	public static boolean isAjaxRequest(HttpServletRequest request) {
 		final String accept = request.getHeader("accept");
@@ -124,7 +147,10 @@ public class ServletUtils {
 	}
 
 	/**
-	 * 判断User-Agent 是不是来自于手机
+	 * Check agent is mobile.
+	 *
+	 * @param ua the ua
+	 * @return true, if successful
 	 */
 	public static boolean checkAgentIsMobile(String ua) {
 		boolean flag = false;

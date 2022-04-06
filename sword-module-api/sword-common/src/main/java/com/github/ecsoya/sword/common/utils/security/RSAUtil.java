@@ -18,29 +18,30 @@ import javax.crypto.Cipher;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * 非对称加密算法RSA算法组件 非对称算法一般是用来传送对称加密算法的密钥来使用的，相对于DH算法，RSA算法只需要一方构造密钥，不需要
- * 大费周章的构造各自本地的密钥对了。DH算法只能算法非对称算法的底层实现。而RSA算法算法实现起来较为简单
- *
- * @author kongqz
+ * The Class RSAUtil.
  */
 public class RSAUtil {
+
+	/** The Constant KEY_ALGORITHM. */
 	// 非对称密钥算法
 	public static final String KEY_ALGORITHM = "RSA";
 
-	/**
-	 * 密钥长度，DH算法的默认密钥长度是1024 密钥长度必须是64的倍数，在512到65536位之间
-	 */
+	/** The Constant KEY_SIZE. */
 	private static final int KEY_SIZE = 512;
+
+	/** The Constant PUBLIC_KEY. */
 	// 公钥
 	private static final String PUBLIC_KEY = "RSAPublicKey";
 
+	/** The Constant PRIVATE_KEY. */
 	// 私钥
 	private static final String PRIVATE_KEY = "RSAPrivateKey";
 
 	/**
-	 * 初始化密钥对
+	 * Inits the key.
 	 *
-	 * @return Map 甲方密钥的Map
+	 * @return the map
+	 * @throws Exception the exception
 	 */
 	public static Map<String, Object> initKey() throws Exception {
 		// 实例化密钥生成器
@@ -62,11 +63,12 @@ public class RSAUtil {
 	}
 
 	/**
-	 * 私钥加密
+	 * Encrypt by private key.
 	 *
-	 * @param data 待加密数据
-	 * @param key  密钥
-	 * @return byte[] 加密数据
+	 * @param data the data
+	 * @param key  the key
+	 * @return the byte[]
+	 * @throws Exception the exception
 	 */
 	public static byte[] encryptByPrivateKey(byte[] data, byte[] key) throws Exception {
 
@@ -82,11 +84,12 @@ public class RSAUtil {
 	}
 
 	/**
-	 * 公钥加密
+	 * Encrypt by public key.
 	 *
-	 * @param data 待加密数据
-	 * @param key  密钥
-	 * @return byte[] 加密数据
+	 * @param data the data
+	 * @param key  the key
+	 * @return the byte[]
+	 * @throws Exception the exception
 	 */
 	public static byte[] encryptByPublicKey(byte[] data, byte[] key) throws Exception {
 
@@ -105,11 +108,12 @@ public class RSAUtil {
 	}
 
 	/**
-	 * 私钥解密
+	 * Decrypt by private key.
 	 *
-	 * @param data 待解密数据
-	 * @param key  密钥
-	 * @return byte[] 解密数据
+	 * @param data the data
+	 * @param key  the key
+	 * @return the byte[]
+	 * @throws Exception the exception
 	 */
 	public static byte[] decryptByPrivateKey(byte[] data, byte[] key) throws Exception {
 		// 取得私钥
@@ -124,11 +128,12 @@ public class RSAUtil {
 	}
 
 	/**
-	 * 公钥解密
+	 * Decrypt by public key.
 	 *
-	 * @param data 待解密数据
-	 * @param key  密钥
-	 * @return byte[] 解密数据
+	 * @param data the data
+	 * @param key  the key
+	 * @return the byte[]
+	 * @throws Exception the exception
 	 */
 	public static byte[] decryptByPublicKey(byte[] data, byte[] key) throws Exception {
 
@@ -146,10 +151,10 @@ public class RSAUtil {
 	}
 
 	/**
-	 * 取得私钥
+	 * Gets the private key.
 	 *
-	 * @param keyMap 密钥map
-	 * @return byte[] 私钥
+	 * @param keyMap the key map
+	 * @return the private key
 	 */
 	public static byte[] getPrivateKey(Map<String, Object> keyMap) {
 		Key key = (Key) keyMap.get(PRIVATE_KEY);
@@ -157,10 +162,11 @@ public class RSAUtil {
 	}
 
 	/**
-	 * 取得公钥
+	 * Gets the public key.
 	 *
-	 * @param keyMap 密钥map
-	 * @return byte[] 公钥
+	 * @param keyMap the key map
+	 * @return the public key
+	 * @throws Exception the exception
 	 */
 	public static byte[] getPublicKey(Map<String, Object> keyMap) throws Exception {
 		Key key = (Key) keyMap.get(PUBLIC_KEY);
@@ -168,8 +174,10 @@ public class RSAUtil {
 	}
 
 	/**
-	 * @param args
-	 * @throws Exception
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws Exception the exception
 	 */
 	public static void main(String[] args) throws Exception {
 		// 初始化密钥

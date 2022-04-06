@@ -46,48 +46,70 @@ import com.github.ecsoya.sword.utils.MathUtils;
 import com.github.ecsoya.sword.wallet.service.IUserWalletAccountService;
 import com.github.ecsoya.sword.wallet.service.IUserWalletService;
 
+/**
+ * The Class MiningUserController.
+ */
 @Controller
 @RequestMapping("/mining/user")
 public class MiningUserController extends BaseController {
 
+	/** The Constant prefix. */
 	private static final String prefix = "mining/user";
 
+	/** The mining user service. */
 	@Autowired
 	private IMiningUserService miningUserService;
 
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
+	/** The sys user service. */
 	@Autowired
 	private ISysUserService sysUserService;
 
+	/** The referrer service. */
 	@Autowired
 	private IUserReferrerService referrerService;
 
+	/** The user register service. */
 	@Autowired
 	private IUserRegisterService userRegisterService;
 
+	/** The user profile service. */
 	@Autowired
 	private IUserProfileService userProfileService;
 
+	/** The user wallet service. */
 	@Autowired
 	private IUserWalletService userWalletService;
 
+	/** The user wallet account service. */
 	@Autowired
 	private IUserWalletAccountService userWalletAccountService;
 
+	/** The user level service. */
 	@Autowired
 	private IUserLevelService userLevelService;
 
+	/** The level service. */
 	@Autowired
 	private IMiningLevelService levelService;
 
+	/** The data source. */
 	@Autowired
 	private DataSource dataSource;
 
+	/** The symbol service. */
 	@Autowired
 	private IMiningSymbolService symbolService;
 
+	/**
+	 * Index.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@GetMapping()
 	@RequiresPermissions("mining:user:view")
 	public String index(ModelMap mmap) {
@@ -96,6 +118,12 @@ public class MiningUserController extends BaseController {
 		return prefix + "/user";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param query the query
+	 * @return the table data info
+	 */
 	@RequiresPermissions("mining:user:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -103,6 +131,13 @@ public class MiningUserController extends BaseController {
 		return getDataTable(miningUserService.selectMiningUserList(query));
 	}
 
+	/**
+	 * Adds the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("mining:user:add")
 	@GetMapping("/add")
 	public String add(Long id, ModelMap mmap) {
@@ -117,7 +152,10 @@ public class MiningUserController extends BaseController {
 	}
 
 	/**
-	 * 校验用户名
+	 * Check login name unique.
+	 *
+	 * @param user the user
+	 * @return the string
 	 */
 	@PostMapping("/checkLoginNameUnique")
 	@ResponseBody
@@ -125,6 +163,16 @@ public class MiningUserController extends BaseController {
 		return sysUserService.checkLoginNameUnique(user.getLoginName());
 	}
 
+	/**
+	 * Save add.
+	 *
+	 * @param parentId       the parent id
+	 * @param referral       the referral
+	 * @param user           the user
+	 * @param password       the password
+	 * @param walletPassword the wallet password
+	 * @return the ajax result
+	 */
 	@Log(title = "添加用户", businessType = BusinessType.INSERT, isSaveRequestData = true)
 	@RequiresPermissions("mining:user:add")
 	@PostMapping("/add")
@@ -152,6 +200,13 @@ public class MiningUserController extends BaseController {
 		return AjaxResult.error(result.getInfo());
 	}
 
+	/**
+	 * Edits the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("mining:user:edit")
 	@GetMapping("/edit")
 	public String edit(Long id, ModelMap mmap) {
@@ -162,7 +217,14 @@ public class MiningUserController extends BaseController {
 	}
 
 	/**
-	 * 修改保存用户
+	 * Edits the save.
+	 *
+	 * @param userId         the user id
+	 * @param email          the email
+	 * @param mobile         the mobile
+	 * @param password       the password
+	 * @param walletPassword the wallet password
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:user:edit")
 	@Log(title = "更新用户信息", businessType = BusinessType.UPDATE, isSaveRequestData = true)
@@ -188,7 +250,13 @@ public class MiningUserController extends BaseController {
 	}
 
 	/**
-	 * 修改保存用户
+	 * Edits the wallet.
+	 *
+	 * @param userId the user id
+	 * @param value  the value
+	 * @param kind   the kind
+	 * @param symbol the symbol
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("mining:user:edit")
 	@Log(title = "更新用户钱包", businessType = BusinessType.UPDATE, isSaveRequestData = true)
@@ -203,7 +271,10 @@ public class MiningUserController extends BaseController {
 	}
 
 	/**
-	 * 用户状态修改
+	 * Change status.
+	 *
+	 * @param user the user
+	 * @return the ajax result
 	 */
 	@Log(title = "更改用户状态", businessType = BusinessType.UPDATE, isSaveRequestData = true)
 	@RequiresPermissions("mining:user:edit")
@@ -214,7 +285,10 @@ public class MiningUserController extends BaseController {
 	}
 
 	/**
-	 * 用户状态修改
+	 * Removes the level.
+	 *
+	 * @param userId the user id
+	 * @return the ajax result
 	 */
 	@Log(title = "删除用户等级", businessType = BusinessType.DELETE, isSaveRequestData = true)
 	@RequiresPermissions("mining:user:edit")
@@ -225,7 +299,11 @@ public class MiningUserController extends BaseController {
 	}
 
 	/**
-	 * 用户状态修改
+	 * Sets the level.
+	 *
+	 * @param userId the user id
+	 * @param id     the id
+	 * @return the ajax result
 	 */
 	@Log(title = "设置用户等级", businessType = BusinessType.UPDATE, isSaveRequestData = true)
 	@RequiresPermissions("mining:user:edit")
@@ -240,7 +318,9 @@ public class MiningUserController extends BaseController {
 	}
 
 	/**
-	 * 用户状态修改
+	 * Clean.
+	 *
+	 * @return the ajax result
 	 */
 	@Log(title = "系统重置", businessType = BusinessType.CLEAN, isSaveRequestData = true)
 	@RequiresPermissions("mining:user:edit")
@@ -271,6 +351,14 @@ public class MiningUserController extends BaseController {
 		return AjaxResult.success("处理成功");
 	}
 
+	/**
+	 * Change withdrawal enabled.
+	 *
+	 * @param userId  the user id
+	 * @param symbol  the symbol
+	 * @param enabled the enabled
+	 * @return the ajax result
+	 */
 	@Log(title = "启停用户提币", businessType = BusinessType.UPDATE, isSaveRequestData = true)
 	@RequiresPermissions("mining:user:edit")
 	@PostMapping("/changeWithdrawalEnabled")
@@ -280,6 +368,13 @@ public class MiningUserController extends BaseController {
 				.success(userWalletAccountService.changeUserWalletAccountWithdrawalEnabled(userId, symbol, enabled));
 	}
 
+	/**
+	 * Update user mobile.
+	 *
+	 * @param userId the user id
+	 * @param mobile the mobile
+	 * @return the ajax result
+	 */
 	@Log(title = "修改用户手机", businessType = BusinessType.UPDATE, isSaveRequestData = true)
 	@RequiresPermissions("mining:user:edit")
 	@PostMapping("/updateUserMobile")
@@ -288,6 +383,13 @@ public class MiningUserController extends BaseController {
 		return userProfileService.updateUserMobile(userId, mobile);
 	}
 
+	/**
+	 * Update user email.
+	 *
+	 * @param userId the user id
+	 * @param email  the email
+	 * @return the ajax result
+	 */
 	@Log(title = "修改用户邮箱", businessType = BusinessType.UPDATE, isSaveRequestData = true)
 	@RequiresPermissions("mining:user:edit")
 	@PostMapping("/updateUserEmail")

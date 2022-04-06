@@ -23,24 +23,41 @@ import com.github.ecsoya.sword.wallet.config.WalletConfig;
 import com.github.ecsoya.sword.wallet.domain.Ticker;
 import com.github.ecsoya.sword.wallet.service.IWalletTickerService;
 
+/**
+ * The Class WalletTickerServiceImpl.
+ */
 @Service
 public class WalletTickerServiceImpl implements IWalletTickerService {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(IWalletTickerService.class);
 
+	/** The Constant TIME_FORMAT. */
 	private static final String TIME_FORMAT = "yyyyMMddHHmm";
 
+	/** The Constant CNY_USD_EXCHANGE_RATE. */
 	private static final String CNY_USD_EXCHANGE_RATE = "CNY_USD_EXCHANGE_RATE";
+
+	/** The Constant URL_EXCHANGE_RATE. */
 	private static final String URL_EXCHANGE_RATE = "https://openexchangerates.org/api/latest.json?app_id=10579f44977344d383975f6fcc3e0c33&symbols=CNY";
 
+	/** The Constant USDT_CNY_PRICE. */
 	private static final String USDT_CNY_PRICE = "USDT_CNY_PRICE";
 
+	/** The templates. */
 	@Autowired(required = false)
 	private RedisTemplate<String, Object> templates;
 
+	/** The config. */
 	@Autowired
 	private WalletConfig config;
 
+	/**
+	 * Gets the ticker.
+	 *
+	 * @param symbol the symbol
+	 * @return the ticker
+	 */
 	@Override
 	public CommonResult<Ticker> getTicker(String symbol) {
 		final CommonResult<Ticker> ticker = getTickerByUsdt(symbol);
@@ -61,6 +78,12 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		return CommonResult.fail("无法获取实时价格");
 	}
 
+	/**
+	 * Gets the ticker by usdt.
+	 *
+	 * @param symbol the symbol
+	 * @return the ticker by usdt
+	 */
 	private CommonResult<Ticker> getTickerByUsdt(String symbol) {
 		if (StringUtils.isEmpty(symbol)) {
 			return CommonResult.fail("币种错误");
@@ -78,6 +101,12 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		return ticker;
 	}
 
+	/**
+	 * Gets the ticker for market.
+	 *
+	 * @param market the market
+	 * @return the ticker for market
+	 */
 	private CommonResult<Ticker> getTickerForMarket(String market) {
 		String priceUrl = config.getPriceUrl();
 		String name = config.getMarket();
@@ -112,6 +141,12 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		}
 	}
 
+	/**
+	 * Parses the.
+	 *
+	 * @param value the value
+	 * @return the big decimal
+	 */
 	private static BigDecimal parse(String value) {
 		if (StringUtils.isEmpty(value)) {
 			return BigDecimal.ZERO;
@@ -123,6 +158,12 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		}
 	}
 
+	/**
+	 * Gets the simple cache.
+	 *
+	 * @param name the name
+	 * @return the simple cache
+	 */
 	private Ticker getSimpleCache(String name) {
 		if (templates == null || StringUtils.isEmpty(name)) {
 			return null;
@@ -134,6 +175,12 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		}
 	}
 
+	/**
+	 * Sets the simple cache.
+	 *
+	 * @param name   the name
+	 * @param ticker the ticker
+	 */
 	private void setSimpleCache(String name, Ticker ticker) {
 		if (templates == null || StringUtils.isEmpty(name) || ticker == null) {
 			return;
@@ -141,10 +188,23 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		templates.opsForValue().set(name, ticker, 10, TimeUnit.MINUTES);
 	}
 
+	/**
+	 * Gets the ticker cache name.
+	 *
+	 * @param name the name
+	 * @param date the date
+	 * @return the ticker cache name
+	 */
 	private String getTickerCacheName(String name, Date date) {
 		return "sword-wallet:ticker:" + name + ":" + DateUtils.parseDateToStr(TIME_FORMAT, date);
 	}
 
+	/**
+	 * Put ticker to redis.
+	 *
+	 * @param name   the name
+	 * @param ticker the ticker
+	 */
 	private void putTickerToRedis(String name, Ticker ticker) {
 		if (templates == null || name == null || ticker == null) {
 			return;
@@ -154,6 +214,13 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		log.info("putTickerToRedis {}={}", cacheName, ticker);
 	}
 
+	/**
+	 * Gets the tikcer from redis.
+	 *
+	 * @param name the name
+	 * @param date the date
+	 * @return the tikcer from redis
+	 */
 	private Ticker getTikcerFromRedis(String name, Date date) {
 		if (templates == null || StringUtils.isEmpty(name)) {
 			return null;
@@ -182,6 +249,12 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		return ticker;
 	}
 
+	/**
+	 * Gets the price.
+	 *
+	 * @param symbol the symbol
+	 * @return the price
+	 */
 	@Override
 	public BigDecimal getPrice(String symbol) {
 		final CommonResult<Ticker> ticker = getTicker(symbol);
@@ -194,6 +267,13 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		return BigDecimal.ZERO;
 	}
 
+	/**
+	 * Gets the ticker from history.
+	 *
+	 * @param symbol the symbol
+	 * @param time   the time
+	 * @return the ticker from history
+	 */
 	@Override
 	public Ticker getTickerFromHistory(String symbol, Date time) {
 		if (time == null || StringUtils.isEmpty(symbol)) {
@@ -228,6 +308,12 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		return ticker;
 	}
 
+	/**
+	 * Update ticker cache.
+	 *
+	 * @param symbol the symbol
+	 * @return the ticker
+	 */
 	@Override
 	public Ticker updateTickerCache(String symbol) {
 		if (StringUtils.isEmpty(symbol)) {
@@ -237,6 +323,11 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		return ticker.getData();
 	}
 
+	/**
+	 * Gets the cny usd exchange rate.
+	 *
+	 * @return the cny usd exchange rate
+	 */
 	@Override
 	public BigDecimal getCnyUsdExchangeRate() {
 		BigDecimal exchangeRate = null;
@@ -259,6 +350,11 @@ public class WalletTickerServiceImpl implements IWalletTickerService {
 		return exchangeRate;
 	}
 
+	/**
+	 * Gets the usdt cny price.
+	 *
+	 * @return the usdt cny price
+	 */
 	@Override
 	public BigDecimal getUsdtCnyPrice() {
 		BigDecimal usdt_cny = null;

@@ -6,55 +6,69 @@ import java.util.Objects;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * 操作消息提醒
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class AjaxResult.
  */
 public class AjaxResult extends HashMap<String, Object> {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** 状态码 */
+	/** The Constant CODE_TAG. */
 	public static final String CODE_TAG = "code";
 
-	/** 返回内容 */
+	/** The Constant MSG_TAG. */
 	public static final String MSG_TAG = "msg";
 
-	/** 数据对象 */
+	/** The Constant DATA_TAG. */
 	public static final String DATA_TAG = "data";
 
 	/**
-	 * 状态类型
+	 * The Enum Type.
 	 */
 	public enum Type {
-		/** 成功 */
+
+		/** The success. */
 		SUCCESS(0),
-		/** 警告 */
+
+		/** The warn. */
 		WARN(301),
-		/** 错误 */
+
+		/** The error. */
 		ERROR(500);
 
+		/** The value. */
 		private final int value;
 
+		/**
+		 * Instantiates a new type.
+		 *
+		 * @param value the value
+		 */
 		Type(int value) {
 			this.value = value;
 		}
 
+		/**
+		 * Value.
+		 *
+		 * @return the int
+		 */
 		public int value() {
 			return this.value;
 		}
 	}
 
 	/**
-	 * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
+	 * Instantiates a new ajax result.
 	 */
 	public AjaxResult() {
 	}
 
 	/**
-	 * 初始化一个新创建的 AjaxResult 对象
+	 * Instantiates a new ajax result.
 	 *
-	 * @param type 状态类型
-	 * @param msg  返回内容
+	 * @param type the type
+	 * @param msg  the msg
 	 */
 	public AjaxResult(Type type, String msg) {
 		super.put(CODE_TAG, type.value);
@@ -62,11 +76,11 @@ public class AjaxResult extends HashMap<String, Object> {
 	}
 
 	/**
-	 * 初始化一个新创建的 AjaxResult 对象
+	 * Instantiates a new ajax result.
 	 *
-	 * @param type 状态类型
-	 * @param msg  返回内容
-	 * @param data 数据对象
+	 * @param type the type
+	 * @param msg  the msg
+	 * @param data the data
 	 */
 	public AjaxResult(Type type, String msg, Object data) {
 		super.put(CODE_TAG, type.value);
@@ -77,11 +91,11 @@ public class AjaxResult extends HashMap<String, Object> {
 	}
 
 	/**
-	 * 方便链式调用
+	 * Put.
 	 *
-	 * @param key   键
-	 * @param value 值
-	 * @return 数据对象
+	 * @param key   the key
+	 * @param value the value
+	 * @return the ajax result
 	 */
 	@Override
 	public AjaxResult put(String key, Object value) {
@@ -89,111 +103,137 @@ public class AjaxResult extends HashMap<String, Object> {
 		return this;
 	}
 
+	/**
+	 * Gets the code.
+	 *
+	 * @return the code
+	 */
 	public int getCode() {
 		return (int) get(CODE_TAG);
 	}
 
+	/**
+	 * Checks if is ok.
+	 *
+	 * @return true, if is ok
+	 */
 	public boolean isOK() {
 		return Objects.equals(0, get(CODE_TAG));
 	}
 
+	/**
+	 * Gets the data.
+	 *
+	 * @return the data
+	 */
 	public Object getData() {
 		return get(DATA_TAG);
 	}
 
+	/**
+	 * Gets the msg.
+	 *
+	 * @return the msg
+	 */
 	public String getMsg() {
 		return (String) get(MSG_TAG);
 	}
 
+	/**
+	 * Sets the data.
+	 *
+	 * @param data the new data
+	 */
 	public void setData(Object data) {
 		put(DATA_TAG, data);
 	}
 
 	/**
-	 * 返回成功消息
+	 * Success.
 	 *
-	 * @return 成功消息
+	 * @return the ajax result
 	 */
 	public static AjaxResult success() {
 		return AjaxResult.success("操作成功");
 	}
 
 	/**
-	 * 返回成功数据
+	 * Success.
 	 *
-	 * @return 成功消息
+	 * @param data the data
+	 * @return the ajax result
 	 */
 	public static AjaxResult success(Object data) {
 		return AjaxResult.success("操作成功", data);
 	}
 
 	/**
-	 * 返回成功消息
+	 * Success.
 	 *
-	 * @param msg 返回内容
-	 * @return 成功消息
+	 * @param msg the msg
+	 * @return the ajax result
 	 */
 	public static AjaxResult success(String msg) {
 		return AjaxResult.success(msg, null);
 	}
 
 	/**
-	 * 返回成功消息
+	 * Success.
 	 *
-	 * @param msg  返回内容
-	 * @param data 数据对象
-	 * @return 成功消息
+	 * @param msg  the msg
+	 * @param data the data
+	 * @return the ajax result
 	 */
 	public static AjaxResult success(String msg, Object data) {
 		return new AjaxResult(Type.SUCCESS, msg, data);
 	}
 
 	/**
-	 * 返回警告消息
+	 * Warn.
 	 *
-	 * @param msg 返回内容
-	 * @return 警告消息
+	 * @param msg the msg
+	 * @return the ajax result
 	 */
 	public static AjaxResult warn(String msg) {
 		return AjaxResult.warn(msg, null);
 	}
 
 	/**
-	 * 返回警告消息
+	 * Warn.
 	 *
-	 * @param msg  返回内容
-	 * @param data 数据对象
-	 * @return 警告消息
+	 * @param msg  the msg
+	 * @param data the data
+	 * @return the ajax result
 	 */
 	public static AjaxResult warn(String msg, Object data) {
 		return new AjaxResult(Type.WARN, msg, data);
 	}
 
 	/**
-	 * 返回错误消息
+	 * Error.
 	 *
-	 * @return
+	 * @return the ajax result
 	 */
 	public static AjaxResult error() {
 		return AjaxResult.error("操作失败");
 	}
 
 	/**
-	 * 返回错误消息
+	 * Error.
 	 *
-	 * @param msg 返回内容
-	 * @return 警告消息
+	 * @param msg the msg
+	 * @return the ajax result
 	 */
 	public static AjaxResult error(String msg) {
 		return AjaxResult.error(msg, null);
 	}
 
 	/**
-	 * 返回错误消息
+	 * Error.
 	 *
-	 * @param msg  返回内容
-	 * @param data 数据对象
-	 * @return 警告消息
+	 * @param msg  the msg
+	 * @param data the data
+	 * @return the ajax result
 	 */
 	public static AjaxResult error(String msg, Object data) {
 		return new AjaxResult(Type.ERROR, msg, data);

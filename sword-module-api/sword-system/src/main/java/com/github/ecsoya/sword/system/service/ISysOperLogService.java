@@ -5,44 +5,43 @@ import java.util.List;
 import com.github.ecsoya.sword.system.domain.SysOperLog;
 
 /**
- * 操作日志 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysOperLogService.
  */
 public interface ISysOperLogService {
+
 	/**
-	 * 新增操作日志
+	 * Insert operlog.
 	 *
-	 * @param operLog 操作日志对象
+	 * @param operLog the oper log
 	 */
 	public void insertOperlog(SysOperLog operLog);
 
 	/**
-	 * 查询系统操作日志集合
+	 * Select oper log list.
 	 *
-	 * @param operLog 操作日志对象
-	 * @return 操作日志集合
+	 * @param operLog the oper log
+	 * @return the list
 	 */
 	public List<SysOperLog> selectOperLogList(SysOperLog operLog);
 
 	/**
-	 * 批量删除系统操作日志
+	 * Delete oper log by ids.
 	 *
-	 * @param ids 需要删除的数据
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteOperLogByIds(String ids);
 
 	/**
-	 * 查询操作日志详细
+	 * Select oper log by id.
 	 *
-	 * @param operId 操作ID
-	 * @return 操作日志对象
+	 * @param operId the oper id
+	 * @return the sys oper log
 	 */
 	public SysOperLog selectOperLogById(Long operId);
 
 	/**
-	 * 清空操作日志
+	 * Clean oper log.
 	 */
 	public void cleanOperLog();
 }

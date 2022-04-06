@@ -22,19 +22,24 @@ import com.github.ecsoya.sword.system.domain.SysOperNotify;
 import com.github.ecsoya.sword.system.service.ISysOperNotifyService;
 
 /**
- * 敏感操作通知Controller
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-04-06
+ * The Class SysOperNotifyController.
  */
 @Controller
 @RequestMapping("/system/notify")
 public class SysOperNotifyController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/notify";
 
+	/** The sys oper notify service. */
 	@Autowired
 	private ISysOperNotifyService sysOperNotifyService;
 
+	/**
+	 * Index.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:notify:view")
 	@GetMapping()
 	public String index() {
@@ -42,7 +47,10 @@ public class SysOperNotifyController extends BaseController {
 	}
 
 	/**
-	 * 查询敏感操作通知列表
+	 * List.
+	 *
+	 * @param sysOperNotify the sys oper notify
+	 * @return the table data info
 	 */
 	@RequiresPermissions("system:notify:list")
 	@PostMapping("/list")
@@ -54,7 +62,10 @@ public class SysOperNotifyController extends BaseController {
 	}
 
 	/**
-	 * 导出敏感操作通知列表
+	 * Export.
+	 *
+	 * @param sysOperNotify the sys oper notify
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:notify:export")
 	@Log(title = "敏感操作通知", businessType = BusinessType.EXPORT)
@@ -67,7 +78,9 @@ public class SysOperNotifyController extends BaseController {
 	}
 
 	/**
-	 * 新增敏感操作通知
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -75,7 +88,10 @@ public class SysOperNotifyController extends BaseController {
 	}
 
 	/**
-	 * 新增保存敏感操作通知
+	 * Adds the save.
+	 *
+	 * @param sysOperNotify the sys oper notify
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:notify:add")
 	@Log(title = "敏感操作通知", businessType = BusinessType.INSERT)
@@ -86,7 +102,11 @@ public class SysOperNotifyController extends BaseController {
 	}
 
 	/**
-	 * 修改敏感操作通知
+	 * Edits the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
@@ -96,7 +116,10 @@ public class SysOperNotifyController extends BaseController {
 	}
 
 	/**
-	 * 修改保存敏感操作通知
+	 * Edits the save.
+	 *
+	 * @param sysOperNotify the sys oper notify
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:notify:edit")
 	@Log(title = "敏感操作通知", businessType = BusinessType.UPDATE)
@@ -107,7 +130,10 @@ public class SysOperNotifyController extends BaseController {
 	}
 
 	/**
-	 * 删除敏感操作通知
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:notify:remove")
 	@Log(title = "敏感操作通知", businessType = BusinessType.DELETE)

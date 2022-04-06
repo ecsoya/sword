@@ -10,73 +10,114 @@ import com.github.ecsoya.sword.user.domain.UserReferrer;
 import com.github.ecsoya.sword.user.domain.UserReferrerInfo;
 
 /**
- * 用户直推Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface UserReferrerMapper.
  */
 public interface UserReferrerMapper {
+
 	/**
-	 * 查询用户直推
+	 * Select user referrer by id.
 	 *
-	 * @param userId 用户直推ID
-	 * @return 用户直推
+	 * @param userId the user id
+	 * @return the user referrer
 	 */
 	public UserReferrer selectUserReferrerById(Long userId);
 
 	/**
-	 * 查询用户直推列表
+	 * Select user referrer list.
 	 *
-	 * @param userReferrer 用户直推
-	 * @return 用户直推集合
+	 * @param userReferrer the user referrer
+	 * @return the list
 	 */
 	public List<UserReferrer> selectUserReferrerList(UserReferrer userReferrer);
 
 	/**
-	 * 新增用户直推
+	 * Insert user referrer.
 	 *
-	 * @param userReferrer 用户直推
-	 * @return 结果
+	 * @param userReferrer the user referrer
+	 * @return the int
 	 */
 	public int insertUserReferrer(UserReferrer userReferrer);
 
 	/**
-	 * 修改用户直推
+	 * Update user referrer.
 	 *
-	 * @param userReferrer 用户直推
-	 * @return 结果
+	 * @param userReferrer the user referrer
+	 * @return the int
 	 */
 	public int updateUserReferrer(UserReferrer userReferrer);
 
 	/**
-	 * 删除用户直推
+	 * Delete user referrer by id.
 	 *
-	 * @param userId 用户直推ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int deleteUserReferrerById(Long userId);
 
 	/**
-	 * 批量删除用户直推
+	 * Delete user referrer by ids.
 	 *
-	 * @param userIds 需要删除的数据ID
-	 * @return 结果
+	 * @param userIds the user ids
+	 * @return the int
 	 */
 	public int deleteUserReferrerByIds(String[] userIds);
 
+	/**
+	 * Select user referrer by code.
+	 *
+	 * @param code the code
+	 * @return the user referrer
+	 */
 	public UserReferrer selectUserReferrerByCode(String code);
 
+	/**
+	 * Select all user ids.
+	 *
+	 * @return the list
+	 */
 	public List<Long> selectAllUserIds();
 
+	/**
+	 * Select referral user ids by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	public List<Long> selectReferralUserIdsByUserId(Long userId);
 
+	/**
+	 * Select user referrer list for update.
+	 *
+	 * @param baseUrl the base url
+	 * @return the list
+	 */
 	public List<UserReferrer> selectUserReferrerListForUpdate(String baseUrl);
 
+	/**
+	 * Select referral count by user id.
+	 *
+	 * @param userId the user id
+	 * @param start  the start
+	 * @param end    the end
+	 * @return the long
+	 */
 	public Long selectReferralCountByUserId(@Param("userId") Long userId, @Param("start") Date start,
 			@Param("end") Date end);
 
+	/**
+	 * Select user referrer list by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	public List<UserProfile> selectUserReferrerListByUserId(Long userId);
 
+	/**
+	 * Select user referrer info list.
+	 *
+	 * @param query the query
+	 * @return the list
+	 */
 	public List<UserReferrerInfo> selectUserReferrerInfoList(UserReferrerInfo query);
 
 }

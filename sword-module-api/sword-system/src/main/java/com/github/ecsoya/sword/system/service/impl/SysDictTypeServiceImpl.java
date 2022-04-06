@@ -22,20 +22,21 @@ import com.github.ecsoya.sword.system.mapper.SysDictTypeMapper;
 import com.github.ecsoya.sword.system.service.ISysDictTypeService;
 
 /**
- * 字典 业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysDictTypeServiceImpl.
  */
 @Service
 public class SysDictTypeServiceImpl implements ISysDictTypeService {
+
+	/** The dict type mapper. */
 	@Autowired
 	private SysDictTypeMapper dictTypeMapper;
 
+	/** The dict data mapper. */
 	@Autowired
 	private SysDictDataMapper dictDataMapper;
 
 	/**
-	 * 项目启动时，初始化字典到缓存
+	 * Inits the.
 	 */
 	@PostConstruct
 	public void init() {
@@ -47,10 +48,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 根据条件分页查询字典类型
+	 * Select dict type list.
 	 *
-	 * @param dictType 字典类型信息
-	 * @return 字典类型集合信息
+	 * @param dictType the dict type
+	 * @return the list
 	 */
 	@Override
 	public List<SysDictType> selectDictTypeList(SysDictType dictType) {
@@ -58,9 +59,9 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 根据所有字典类型
+	 * Select dict type all.
 	 *
-	 * @return 字典类型集合信息
+	 * @return the list
 	 */
 	@Override
 	public List<SysDictType> selectDictTypeAll() {
@@ -68,10 +69,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 根据字典类型查询字典数据
+	 * Select dict data by type.
 	 *
-	 * @param dictType 字典类型
-	 * @return 字典数据集合信息
+	 * @param dictType the dict type
+	 * @return the list
 	 */
 	@Override
 	public List<SysDictData> selectDictDataByType(String dictType) {
@@ -88,10 +89,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 根据字典类型ID查询信息
+	 * Select dict type by id.
 	 *
-	 * @param dictId 字典类型ID
-	 * @return 字典类型
+	 * @param dictId the dict id
+	 * @return the sys dict type
 	 */
 	@Override
 	public SysDictType selectDictTypeById(Long dictId) {
@@ -99,10 +100,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 根据字典类型查询信息
+	 * Select dict type by type.
 	 *
-	 * @param dictType 字典类型
-	 * @return 字典类型
+	 * @param dictType the dict type
+	 * @return the sys dict type
 	 */
 	@Override
 	public SysDictType selectDictTypeByType(String dictType) {
@@ -110,10 +111,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 批量删除字典类型
+	 * Delete dict type by ids.
 	 *
-	 * @param ids 需要删除的数据
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteDictTypeByIds(String ids) {
@@ -132,7 +133,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 清空缓存数据
+	 * Clear cache.
 	 */
 	@Override
 	public void clearCache() {
@@ -140,10 +141,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 新增保存字典类型信息
+	 * Insert dict type.
 	 *
-	 * @param dictType 字典类型信息
-	 * @return 结果
+	 * @param dictType the dict type
+	 * @return the int
 	 */
 	@Override
 	public int insertDictType(SysDictType dictType) {
@@ -155,10 +156,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 修改保存字典类型信息
+	 * Update dict type.
 	 *
-	 * @param dictType 字典类型信息
-	 * @return 结果
+	 * @param dictType the dict type
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -173,10 +174,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 校验字典类型称是否唯一
+	 * Check dict type unique.
 	 *
-	 * @param dict 字典类型
-	 * @return 结果
+	 * @param dict the dict
+	 * @return the string
 	 */
 	@Override
 	public String checkDictTypeUnique(SysDictType dict) {
@@ -189,10 +190,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	}
 
 	/**
-	 * 查询字典类型树
+	 * Select dict tree.
 	 *
-	 * @param dictType 字典类型
-	 * @return 所有字典类型
+	 * @param dictType the dict type
+	 * @return the list
 	 */
 	@Override
 	public List<Ztree> selectDictTree(SysDictType dictType) {
@@ -210,6 +211,12 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 		return ztrees;
 	}
 
+	/**
+	 * Trans dict name.
+	 *
+	 * @param dictType the dict type
+	 * @return the string
+	 */
 	public String transDictName(SysDictType dictType) {
 		final StringBuffer sb = new StringBuffer();
 		sb.append("(" + dictType.getDictName() + ")");

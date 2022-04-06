@@ -1,58 +1,37 @@
 package com.github.ecsoya.sword.common.enums;
 
 /**
- * 业务操作类型
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Enum BusinessType.
  */
 public enum BusinessType {
-	/**
-	 * 其它
-	 */
+
+	/** The other. */
 	OTHER,
 
-	/**
-	 * 新增
-	 */
+	/** The insert. */
 	INSERT,
 
-	/**
-	 * 修改
-	 */
+	/** The update. */
 	UPDATE,
 
-	/**
-	 * 删除
-	 */
+	/** The delete. */
 	DELETE,
 
-	/**
-	 * 授权
-	 */
+	/** The grant. */
 	GRANT,
 
-	/**
-	 * 导出
-	 */
+	/** The export. */
 	EXPORT,
 
-	/**
-	 * 导入
-	 */
+	/** The import. */
 	IMPORT,
 
-	/**
-	 * 强退
-	 */
+	/** The force. */
 	FORCE,
 
-	/**
-	 * 生成代码
-	 */
+	/** The gencode. */
 	GENCODE,
 
-	/**
-	 * 清空
-	 */
+	/** The clean. */
 	CLEAN,
 }

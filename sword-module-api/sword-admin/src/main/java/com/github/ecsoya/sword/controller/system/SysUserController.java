@@ -33,33 +33,48 @@ import com.github.ecsoya.sword.system.service.ISysUserService;
 import com.google.common.base.Objects;
 
 /**
- * 用户信息
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysUserController.
  */
 @Controller
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/user";
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/** The role service. */
 	@Autowired
 	private ISysRoleService roleService;
 
+	/** The post service. */
 	@Autowired
 	private ISysPostService postService;
 
+	/** The password service. */
 	@Autowired
 	private SysPasswordService passwordService;
 
+	/**
+	 * User.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:user:view")
 	@GetMapping()
 	public String user() {
 		return prefix + "/user";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param user the user
+	 * @return the table data info
+	 */
 	@RequiresPermissions("system:user:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -75,6 +90,12 @@ public class SysUserController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param user the user
+	 * @return the ajax result
+	 */
 	@Log(title = "用户管理", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("system:user:export")
 	@PostMapping("/export")
@@ -91,6 +112,14 @@ public class SysUserController extends BaseController {
 		return util.exportExcel(list, "用户数据");
 	}
 
+	/**
+	 * Import data.
+	 *
+	 * @param file          the file
+	 * @param updateSupport the update support
+	 * @return the ajax result
+	 * @throws Exception the exception
+	 */
 	@Log(title = "用户管理", businessType = BusinessType.IMPORT)
 	@RequiresPermissions("system:user:import")
 	@PostMapping("/importData")
@@ -104,6 +133,11 @@ public class SysUserController extends BaseController {
 		return AjaxResult.error("Unsupported");
 	}
 
+	/**
+	 * Import template.
+	 *
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("system:user:view")
 	@GetMapping("/importTemplate")
 	@ResponseBody
@@ -114,7 +148,10 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 新增用户
+	 * Adds the.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add(ModelMap mmap) {
@@ -124,7 +161,10 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 新增保存用户
+	 * Adds the save.
+	 *
+	 * @param user the user
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:user:add")
 	@Log(title = "用户管理", businessType = BusinessType.INSERT)
@@ -148,7 +188,11 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 修改用户
+	 * Edits the.
+	 *
+	 * @param userId the user id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{userId}")
 	public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
@@ -161,7 +205,10 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 修改保存用户
+	 * Edits the save.
+	 *
+	 * @param user the user
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:user:edit")
 	@Log(title = "用户管理", businessType = BusinessType.UPDATE)
@@ -180,6 +227,13 @@ public class SysUserController extends BaseController {
 		return toAjax(userService.updateUser(user));
 	}
 
+	/**
+	 * Reset pwd.
+	 *
+	 * @param userId the user id
+	 * @param mmap   the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("system:user:resetPwd")
 	@GetMapping("/resetPwd/{userId}")
 	public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap) {
@@ -187,6 +241,12 @@ public class SysUserController extends BaseController {
 		return prefix + "/resetPwd";
 	}
 
+	/**
+	 * Reset pwd save.
+	 *
+	 * @param user the user
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("system:user:resetPwd")
 	@Log(title = "重置密码", businessType = BusinessType.UPDATE)
 	@PostMapping("/resetPwd")
@@ -205,7 +265,11 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 进入授权角色页
+	 * Auth role.
+	 *
+	 * @param userId the user id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/authRole/{userId}")
 	public String authRole(@PathVariable("userId") Long userId, ModelMap mmap) {
@@ -219,7 +283,11 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 用户授权角色
+	 * Insert auth role.
+	 *
+	 * @param userId  the user id
+	 * @param roleIds the role ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:user:add")
 	@Log(title = "用户管理", businessType = BusinessType.GRANT)
@@ -230,6 +298,12 @@ public class SysUserController extends BaseController {
 		return success();
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("system:user:remove")
 	@Log(title = "用户管理", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
@@ -240,7 +314,10 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 校验用户名
+	 * Check login name unique.
+	 *
+	 * @param user the user
+	 * @return the string
 	 */
 	@PostMapping("/checkLoginNameUnique")
 	@ResponseBody
@@ -249,7 +326,10 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 校验手机号码
+	 * Check phone unique.
+	 *
+	 * @param user the user
+	 * @return the string
 	 */
 	@PostMapping("/checkPhoneUnique")
 	@ResponseBody
@@ -258,7 +338,10 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 校验email邮箱
+	 * Check email unique.
+	 *
+	 * @param user the user
+	 * @return the string
 	 */
 	@PostMapping("/checkEmailUnique")
 	@ResponseBody
@@ -267,7 +350,10 @@ public class SysUserController extends BaseController {
 	}
 
 	/**
-	 * 用户状态修改
+	 * Change status.
+	 *
+	 * @param user the user
+	 * @return the ajax result
 	 */
 	@Log(title = "用户管理", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("system:user:edit")

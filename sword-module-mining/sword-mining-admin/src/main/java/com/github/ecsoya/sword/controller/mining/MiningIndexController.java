@@ -23,18 +23,26 @@ import com.github.ecsoya.sword.report.domain.DateCount;
 import com.github.ecsoya.sword.wallet.domain.Ticker;
 import com.github.ecsoya.sword.wallet.service.IWalletService;
 
+/**
+ * The Class MiningIndexController.
+ */
 @Controller
 @RequestMapping("/mining/index")
 public class MiningIndexController extends BaseController {
 
+	/** The mining user service. */
 	@Autowired
 	private IMiningUserService miningUserService;
 
+	/** The wallet service. */
 	@Autowired
 	private IWalletService walletService;
 
 	/**
-	 * 查询KC实时价格
+	 * Price 7 days.
+	 *
+	 * @param symbol the symbol
+	 * @return the ajax result
 	 */
 	@GetMapping("/price/histogram")
 	@ResponseBody
@@ -54,6 +62,12 @@ public class MiningIndexController extends BaseController {
 		return map;
 	}
 
+	/**
+	 * Price.
+	 *
+	 * @param symbol the symbol
+	 * @return the ajax result
+	 */
 	@GetMapping("/price")
 	@ResponseBody
 	public AjaxResult price(String symbol) {
@@ -97,6 +111,11 @@ public class MiningIndexController extends BaseController {
 		return samples;
 	}
 
+	/**
+	 * Regusers.
+	 *
+	 * @return the ajax result
+	 */
 	@GetMapping("/regusers")
 	@ResponseBody
 	public AjaxResult regusers() {

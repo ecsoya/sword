@@ -12,22 +12,23 @@ import com.github.ecsoya.sword.system.service.ISysOperLogService;
 import com.github.ecsoya.sword.system.service.ISysOperNotifyService;
 
 /**
- * 操作日志 服务层处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysOperLogServiceImpl.
  */
 @Service
 public class SysOperLogServiceImpl implements ISysOperLogService {
+
+	/** The oper log mapper. */
 	@Autowired
 	private SysOperLogMapper operLogMapper;
 
+	/** The oper notify service. */
 	@Autowired
 	private ISysOperNotifyService operNotifyService;
 
 	/**
-	 * 新增操作日志
+	 * Insert operlog.
 	 *
-	 * @param operLog 操作日志对象
+	 * @param operLog the oper log
 	 */
 	@Override
 	public void insertOperlog(SysOperLog operLog) {
@@ -36,10 +37,10 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 	}
 
 	/**
-	 * 查询系统操作日志集合
+	 * Select oper log list.
 	 *
-	 * @param operLog 操作日志对象
-	 * @return 操作日志集合
+	 * @param operLog the oper log
+	 * @return the list
 	 */
 	@Override
 	public List<SysOperLog> selectOperLogList(SysOperLog operLog) {
@@ -47,10 +48,10 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 	}
 
 	/**
-	 * 批量删除系统操作日志
+	 * Delete oper log by ids.
 	 *
-	 * @param ids 需要删除的数据
-	 * @return
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteOperLogByIds(String ids) {
@@ -58,10 +59,10 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 	}
 
 	/**
-	 * 查询操作日志详细
+	 * Select oper log by id.
 	 *
-	 * @param operId 操作ID
-	 * @return 操作日志对象
+	 * @param operId the oper id
+	 * @return the sys oper log
 	 */
 	@Override
 	public SysOperLog selectOperLogById(Long operId) {
@@ -69,7 +70,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
 	}
 
 	/**
-	 * 清空操作日志
+	 * Clean oper log.
 	 */
 	@Override
 	public void cleanOperLog() {

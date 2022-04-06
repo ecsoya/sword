@@ -24,16 +24,33 @@ import com.github.ecsoya.sword.service.IMobileCodeService;
 import com.github.ecsoya.sword.version.domain.SwordVersion;
 import com.github.ecsoya.sword.version.service.ISwordVersionService;
 
+/**
+ * The Class SwordUtils.
+ */
 public class SwordUtils {
 
+	/** The Constant SWORD_CACHE. */
 	private static final String SWORD_CACHE = "sword:app:cache:";
 
+	/** The redis. */
 	private static RedisTemplate<String, Object> redis = SpringUtils.getBean("template");
 
+	/**
+	 * Gets the user id.
+	 *
+	 * @return the user id
+	 * @throws UserNotLoginException the user not login exception
+	 */
 	public static Long getUserId() throws UserNotLoginException {
 		return getUser().getUserId();
 	}
 
+	/**
+	 * Gets the subject.
+	 *
+	 * @return the subject
+	 * @throws UserNotLoginException the user not login exception
+	 */
 	public static Subject getSubject() throws UserNotLoginException {
 		final Subject subject = SecurityUtils.getSubject();
 		if (subject == null) {
@@ -42,6 +59,11 @@ public class SwordUtils {
 		return subject;
 	}
 
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
 	public static SysUser getUser() {
 		SysUser user = null;
 		final Object obj = getSubject().getPrincipal();
@@ -57,6 +79,14 @@ public class SwordUtils {
 		throw new UserNotLoginException();
 	}
 
+	/**
+	 * Gets the cache.
+	 *
+	 * @param <T>  the generic type
+	 * @param name the name
+	 * @param t    the t
+	 * @return the cache
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getCache(String name, Class<T> t) {
 		if (isDev() || redis == null || StringUtils.isEmpty(name) || t == null) {
@@ -75,6 +105,14 @@ public class SwordUtils {
 		return (T) object;
 	}
 
+	/**
+	 * Sets the cache.
+	 *
+	 * @param name    the name
+	 * @param value   the value
+	 * @param timeout the timeout
+	 * @return true, if successful
+	 */
 	public static boolean setCache(String name, Object value, Duration timeout) {
 		if (redis == null || StringUtils.isEmpty(name) || value == null) {
 			return false;
@@ -83,6 +121,13 @@ public class SwordUtils {
 		return true;
 	}
 
+	/**
+	 * Sets the cache by day.
+	 *
+	 * @param name  the name
+	 * @param value the value
+	 * @return true, if successful
+	 */
 	public static boolean setCacheByDay(String name, Object value) {
 		if (redis == null || StringUtils.isEmpty(name) || value == null) {
 			return false;
@@ -92,6 +137,11 @@ public class SwordUtils {
 		return true;
 	}
 
+	/**
+	 * Gets the expires seconds.
+	 *
+	 * @return the expires seconds
+	 */
 	private static Long getExpiresSeconds() {
 //		Date nowDate = DateUtils.getNowDate();
 //		Date endDate = DateUtils.getEndOf(nowDate);
@@ -99,18 +149,40 @@ public class SwordUtils {
 		return 5 * 60l;
 	}
 
+	/**
+	 * Gets the cache name.
+	 *
+	 * @param name the name
+	 * @return the cache name
+	 */
 	private static String getCacheName(String name) {
 		return SWORD_CACHE + name;
 	}
 
+	/**
+	 * Checks if is dev.
+	 *
+	 * @return true, if is dev
+	 */
 	private static boolean isDev() {
 		return SpringUtils.testProfile("dev") || SpringUtils.testProfile("local");
 	}
 
+	/**
+	 * Checks if is prod.
+	 *
+	 * @return true, if is prod
+	 */
 	private static boolean isProd() {
 		return SpringUtils.testProfile("prod");
 	}
 
+	/**
+	 * Verify code.
+	 *
+	 * @param code the code
+	 * @return the common result
+	 */
 	public static CommonResult<?> verifyCode(String code) {
 		if (isDev() && org.apache.commons.lang3.StringUtils.equals("000000", code)) {
 			return CommonResult.success();
@@ -127,6 +199,13 @@ public class SwordUtils {
 		}
 	}
 
+	/**
+	 * Verify code by username.
+	 *
+	 * @param username the username
+	 * @param code     the code
+	 * @return the common result
+	 */
 	public static CommonResult<?> verifyCodeByUsername(String username, String code) {
 		if (org.apache.commons.lang3.StringUtils.equals("000000", code)) {
 			if (isDev()) {
@@ -147,6 +226,13 @@ public class SwordUtils {
 		}
 	}
 
+	/**
+	 * Verify code.
+	 *
+	 * @param source the source
+	 * @param code   the code
+	 * @return the common result
+	 */
 	public static CommonResult<?> verifyCode(String source, String code) {
 		if (isDev() && org.apache.commons.lang3.StringUtils.equals("000000", code)) {
 			return CommonResult.success();
@@ -163,6 +249,12 @@ public class SwordUtils {
 		}
 	}
 
+	/**
+	 * Check version.
+	 *
+	 * @param version the version
+	 * @return the common result
+	 */
 	public static CommonResult<?> checkVersion(Long version) {
 		final SwordVersion current = getVersion();
 		if (current != null && version != null && version < current.getVersion()) {
@@ -171,6 +263,11 @@ public class SwordUtils {
 		return CommonResult.success();
 	}
 
+	/**
+	 * Gets the version.
+	 *
+	 * @return the version
+	 */
 	public static SwordVersion getVersion() {
 		final HttpServletRequest request = ServletUtils.getRequest();
 		final String type = getType(request);
@@ -183,6 +280,12 @@ public class SwordUtils {
 		return version;
 	}
 
+	/**
+	 * Gets the type.
+	 *
+	 * @param request the request
+	 * @return the type
+	 */
 	private static String getType(HttpServletRequest request) {
 		try {
 			if (request == null) {

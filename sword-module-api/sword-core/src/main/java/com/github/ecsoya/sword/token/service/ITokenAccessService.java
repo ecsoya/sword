@@ -5,57 +5,55 @@ import java.util.List;
 import com.github.ecsoya.sword.token.domain.TokenAccess;
 
 /**
- * 操作日志记录Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-07
+ * The Interface ITokenAccessService.
  */
 public interface ITokenAccessService {
+
 	/**
-	 * 查询操作日志记录
+	 * Select token access by id.
 	 *
-	 * @param operId 操作日志记录ID
-	 * @return 操作日志记录
+	 * @param operId the oper id
+	 * @return the token access
 	 */
 	public TokenAccess selectTokenAccessById(Long operId);
 
 	/**
-	 * 查询操作日志记录列表
+	 * Select token access list.
 	 *
-	 * @param tokenAccess 操作日志记录
-	 * @return 操作日志记录集合
+	 * @param tokenAccess the token access
+	 * @return the list
 	 */
 	public List<TokenAccess> selectTokenAccessList(TokenAccess tokenAccess);
 
 	/**
-	 * 新增操作日志记录
+	 * Insert token access.
 	 *
-	 * @param tokenAccess 操作日志记录
-	 * @return 结果
+	 * @param tokenAccess the token access
+	 * @return the int
 	 */
 	public int insertTokenAccess(TokenAccess tokenAccess);
 
 	/**
-	 * 修改操作日志记录
+	 * Update token access.
 	 *
-	 * @param tokenAccess 操作日志记录
-	 * @return 结果
+	 * @param tokenAccess the token access
+	 * @return the int
 	 */
 	public int updateTokenAccess(TokenAccess tokenAccess);
 
 	/**
-	 * 批量删除操作日志记录
+	 * Delete token access by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteTokenAccessByIds(String ids);
 
 	/**
-	 * 删除操作日志记录信息
+	 * Delete token access by id.
 	 *
-	 * @param operId 操作日志记录ID
-	 * @return 结果
+	 * @param operId the oper id
+	 * @return the int
 	 */
 	public int deleteTokenAccessById(Long operId);
 }

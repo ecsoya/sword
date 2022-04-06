@@ -7,119 +7,118 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.common.core.domain.entity.SysMenu;
 
 /**
- * 菜单表 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface SysMenuMapper.
  */
 public interface SysMenuMapper {
+
 	/**
-	 * 查询系统所有菜单（含按钮）
+	 * Select menu all.
 	 *
-	 * @return 菜单列表
+	 * @return the list
 	 */
 	public List<SysMenu> selectMenuAll();
 
 	/**
-	 * 根据用户ID查询菜单
+	 * Select menu all by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 菜单列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<SysMenu> selectMenuAllByUserId(Long userId);
 
 	/**
-	 * 查询系统正常显示菜单（不含按钮）
+	 * Select menu normal all.
 	 *
-	 * @return 菜单列表
+	 * @return the list
 	 */
 	public List<SysMenu> selectMenuNormalAll();
 
 	/**
-	 * 根据用户ID查询菜单
+	 * Select menus by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 菜单列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<SysMenu> selectMenusByUserId(Long userId);
 
 	/**
-	 * 根据用户ID查询权限
+	 * Select perms by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 权限列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<String> selectPermsByUserId(Long userId);
 
 	/**
-	 * 根据角色ID查询菜单
+	 * Select menu tree.
 	 *
-	 * @param roleId 角色ID
-	 * @return 菜单列表
+	 * @param roleId the role id
+	 * @return the list
 	 */
 	public List<String> selectMenuTree(Long roleId);
 
 	/**
-	 * 查询系统菜单列表
+	 * Select menu list.
 	 *
-	 * @param menu 菜单信息
-	 * @return 菜单列表
+	 * @param menu the menu
+	 * @return the list
 	 */
 	public List<SysMenu> selectMenuList(SysMenu menu);
 
 	/**
-	 * 查询系统菜单列表
+	 * Select menu list by user id.
 	 *
-	 * @param menu 菜单信息
-	 * @return 菜单列表
+	 * @param menu the menu
+	 * @return the list
 	 */
 	public List<SysMenu> selectMenuListByUserId(SysMenu menu);
 
 	/**
-	 * 删除菜单管理信息
+	 * Delete menu by id.
 	 *
-	 * @param menuId 菜单ID
-	 * @return 结果
+	 * @param menuId the menu id
+	 * @return the int
 	 */
 	public int deleteMenuById(Long menuId);
 
 	/**
-	 * 根据菜单ID查询信息
+	 * Select menu by id.
 	 *
-	 * @param menuId 菜单ID
-	 * @return 菜单信息
+	 * @param menuId the menu id
+	 * @return the sys menu
 	 */
 	public SysMenu selectMenuById(Long menuId);
 
 	/**
-	 * 查询菜单数量
+	 * Select count menu by parent id.
 	 *
-	 * @param parentId 菜单父ID
-	 * @return 结果
+	 * @param parentId the parent id
+	 * @return the int
 	 */
 	public int selectCountMenuByParentId(Long parentId);
 
 	/**
-	 * 新增菜单信息
+	 * Insert menu.
 	 *
-	 * @param menu 菜单信息
-	 * @return 结果
+	 * @param menu the menu
+	 * @return the int
 	 */
 	public int insertMenu(SysMenu menu);
 
 	/**
-	 * 修改菜单信息
+	 * Update menu.
 	 *
-	 * @param menu 菜单信息
-	 * @return 结果
+	 * @param menu the menu
+	 * @return the int
 	 */
 	public int updateMenu(SysMenu menu);
 
 	/**
-	 * 校验菜单名称是否唯一
+	 * Check menu name unique.
 	 *
-	 * @param menuName 菜单名称
-	 * @param parentId 父菜单ID
-	 * @return 结果
+	 * @param menuName the menu name
+	 * @param parentId the parent id
+	 * @return the sys menu
 	 */
 	public SysMenu checkMenuNameUnique(@Param("menuName") String menuName, @Param("parentId") Long parentId);
 }

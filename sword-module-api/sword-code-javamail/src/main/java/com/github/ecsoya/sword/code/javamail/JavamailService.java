@@ -7,12 +7,24 @@ import org.springframework.stereotype.Component;
 
 import com.github.ecsoya.sword.common.core.domain.CommonResult;
 
+/**
+ * The Class JavamailService.
+ */
 @Component
 public class JavamailService {
 
+	/** The config. */
 	@Autowired
 	private JavamailCodeProperties config;
 
+	/**
+	 * Send email.
+	 *
+	 * @param address the address
+	 * @param subject the subject
+	 * @param content the content
+	 * @return the common result
+	 */
 	public CommonResult<?> sendEmail(String address, String subject, String content) {
 		try {
 			final HtmlEmail email = new HtmlEmail();

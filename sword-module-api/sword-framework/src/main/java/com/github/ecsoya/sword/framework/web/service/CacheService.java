@@ -14,19 +14,18 @@ import com.github.ecsoya.sword.common.utils.CacheUtils;
 import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 
 /**
- * 缓存操作处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class CacheService.
  */
 @Service
 public class CacheService {
 
+	/** The cache manager. */
 	private static CacheManager cacheManager = SpringUtils.getBean(CacheManager.class);
 
 	/**
-	 * 获取所有缓存名称
+	 * Gets the cache names.
 	 *
-	 * @return 缓存列表
+	 * @return the cache names
 	 */
 	public String[] getCacheNames() {
 		String[] cacheNames = new String[0];
@@ -37,6 +36,12 @@ public class CacheService {
 		return ArrayUtils.removeElement(cacheNames, Constants.SYS_AUTH_CACHE);
 	}
 
+	/**
+	 * Gets the cache names.
+	 *
+	 * @param redis the redis
+	 * @return the cache names
+	 */
 	private String[] getCacheNames(RedisCacheManager redis) {
 		if (redis == null) {
 			return new String[0];
@@ -55,21 +60,21 @@ public class CacheService {
 	}
 
 	/**
-	 * 根据缓存名称获取所有键名
+	 * Gets the cache keys.
 	 *
-	 * @param cacheName 缓存名称
-	 * @return 键名列表
+	 * @param cacheName the cache name
+	 * @return the cache keys
 	 */
 	public Set<String> getCacheKeys(String cacheName) {
 		return CacheUtils.getCache(cacheName).keys();
 	}
 
 	/**
-	 * 根据缓存名称和键名获取内容值
+	 * Gets the cache value.
 	 *
-	 * @param cacheName 缓存名称
-	 * @param cacheKey  键名
-	 * @return 键值
+	 * @param cacheName the cache name
+	 * @param cacheKey  the cache key
+	 * @return the cache value
 	 */
 	public Object getCacheValue(String cacheName, String cacheKey) {
 		final String simpleKey = cacheKey.replaceAll("shiro:cache:" + cacheName + ":", "");
@@ -78,19 +83,19 @@ public class CacheService {
 	}
 
 	/**
-	 * 根据名称删除缓存信息
+	 * Clear cache name.
 	 *
-	 * @param cacheName 缓存名称
+	 * @param cacheName the cache name
 	 */
 	public void clearCacheName(String cacheName) {
 		CacheUtils.removeAll(cacheName);
 	}
 
 	/**
-	 * 根据名称和键名删除缓存信息
+	 * Clear cache key.
 	 *
-	 * @param cacheName 缓存名称
-	 * @param cacheKey  键名
+	 * @param cacheName the cache name
+	 * @param cacheKey  the cache key
 	 */
 	public void clearCacheKey(String cacheName, String cacheKey) {
 		final String simpleKey = cacheKey.replaceAll("shiro:cache:" + cacheName + ":", "");
@@ -98,7 +103,7 @@ public class CacheService {
 	}
 
 	/**
-	 * 清理所有缓存
+	 * Clear all.
 	 */
 	public void clearAll() {
 		final String[] cacheNames = getCacheNames();

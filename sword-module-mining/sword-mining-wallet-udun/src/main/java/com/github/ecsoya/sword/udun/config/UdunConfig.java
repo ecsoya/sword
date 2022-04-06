@@ -7,12 +7,21 @@ import org.springframework.stereotype.Component;
 
 import com.github.ecsoya.sword.udun.http.client.UdunWalletClient;
 
+/**
+ * The Class UdunConfig.
+ */
 @Component
 public class UdunConfig {
 
+	/** The properties. */
 	@Autowired
 	private UdunWalletProperties properties;
 
+	/**
+	 * Udun client.
+	 *
+	 * @return the udun wallet client
+	 */
 	@Bean
 	public UdunWalletClient udunClient() {
 		RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(properties.getConnectTimeout())

@@ -14,9 +14,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 程序注解配置
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class ApplicationConfig.
  */
 @Configuration
 // 表示通过aop框架暴露该代理对象,AopContext能够访问
@@ -25,6 +23,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @MapperScan("com.github.ecsoya.sword.**.mapper")
 public class ApplicationConfig {
 
+	/**
+	 * Template.
+	 *
+	 * @param factory the factory
+	 * @return the redis template
+	 */
 	@SuppressWarnings("deprecation")
 	@Bean(name = "template")
 	public RedisTemplate<String, Object> template(RedisConnectionFactory factory) {

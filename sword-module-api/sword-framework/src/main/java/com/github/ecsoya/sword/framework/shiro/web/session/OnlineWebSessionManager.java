@@ -24,13 +24,21 @@ import com.github.ecsoya.sword.system.domain.SysUserOnline;
 import com.github.ecsoya.sword.system.service.ISysUserOnlineService;
 
 /**
- * 主要是在此如果会话的属性修改了 就标识下其修改了 然后方便 OnlineSessionDao同步
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class OnlineWebSessionManager.
  */
 public class OnlineWebSessionManager extends DefaultWebSessionManager {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(OnlineWebSessionManager.class);
 
+	/**
+	 * Sets the attribute.
+	 *
+	 * @param sessionKey   the session key
+	 * @param attributeKey the attribute key
+	 * @param value        the value
+	 * @throws InvalidSessionException the invalid session exception
+	 */
 	@Override
 	public void setAttribute(SessionKey sessionKey, Object attributeKey, Object value) throws InvalidSessionException {
 		super.setAttribute(sessionKey, attributeKey, value);
@@ -40,6 +48,12 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
 		}
 	}
 
+	/**
+	 * Need mark attribute changed.
+	 *
+	 * @param attributeKey the attribute key
+	 * @return true, if successful
+	 */
 	private boolean needMarkAttributeChanged(Object attributeKey) {
 		if (attributeKey == null) {
 			return false;
@@ -58,6 +72,14 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
 		return true;
 	}
 
+	/**
+	 * Removes the attribute.
+	 *
+	 * @param sessionKey   the session key
+	 * @param attributeKey the attribute key
+	 * @return the object
+	 * @throws InvalidSessionException the invalid session exception
+	 */
 	@Override
 	public Object removeAttribute(SessionKey sessionKey, Object attributeKey) throws InvalidSessionException {
 		final Object removed = super.removeAttribute(sessionKey, attributeKey);
@@ -69,6 +91,12 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
 		return removed;
 	}
 
+	/**
+	 * Gets the online session.
+	 *
+	 * @param sessionKey the session key
+	 * @return the online session
+	 */
 	public OnlineSession getOnlineSession(SessionKey sessionKey) {
 		OnlineSession session = null;
 		final Object obj = doGetSession(sessionKey);
@@ -80,7 +108,7 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
 	}
 
 	/**
-	 * 验证session是否有效 用于删除过期session
+	 * Validate sessions.
 	 */
 	@Override
 	public void validateSessions() {
@@ -140,6 +168,11 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
 
 	}
 
+	/**
+	 * Gets the active sessions.
+	 *
+	 * @return the active sessions
+	 */
 	@Override
 	protected Collection<Session> getActiveSessions() {
 		throw new UnsupportedOperationException("getActiveSessions method not supported");

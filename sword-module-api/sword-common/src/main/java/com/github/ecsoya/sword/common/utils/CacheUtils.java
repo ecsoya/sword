@@ -11,33 +11,35 @@ import org.slf4j.LoggerFactory;
 import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 
 /**
- * Cache工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class CacheUtils.
  */
 public class CacheUtils {
+
+	/** The logger. */
 	private static Logger logger = LoggerFactory.getLogger(CacheUtils.class);
 
+	/** The cache manager. */
 	private static CacheManager cacheManager = SpringUtils.getBean(CacheManager.class);
 
+	/** The Constant SYS_CACHE. */
 	private static final String SYS_CACHE = "sys-cache";
 
 	/**
-	 * 获取SYS_CACHE缓存
+	 * Gets the.
 	 *
-	 * @param key
-	 * @return
+	 * @param key the key
+	 * @return the object
 	 */
 	public static Object get(String key) {
 		return get(SYS_CACHE, key);
 	}
 
 	/**
-	 * 获取SYS_CACHE缓存
+	 * Gets the.
 	 *
-	 * @param key
-	 * @param defaultValue
-	 * @return
+	 * @param key          the key
+	 * @param defaultValue the default value
+	 * @return the object
 	 */
 	public static Object get(String key, Object defaultValue) {
 		final Object value = get(key);
@@ -45,43 +47,42 @@ public class CacheUtils {
 	}
 
 	/**
-	 * 写入SYS_CACHE缓存
+	 * Put.
 	 *
-	 * @param key
-	 * @return
+	 * @param key   the key
+	 * @param value the value
 	 */
 	public static void put(String key, Object value) {
 		put(SYS_CACHE, key, value);
 	}
 
 	/**
-	 * 从SYS_CACHE缓存中移除
+	 * Removes the.
 	 *
-	 * @param key
-	 * @return
+	 * @param key the key
 	 */
 	public static void remove(String key) {
 		remove(SYS_CACHE, key);
 	}
 
 	/**
-	 * 获取缓存
+	 * Gets the.
 	 *
-	 * @param cacheName
-	 * @param key
-	 * @return
+	 * @param cacheName the cache name
+	 * @param key       the key
+	 * @return the object
 	 */
 	public static Object get(String cacheName, String key) {
 		return getCache(cacheName).get(getKey(key));
 	}
 
 	/**
-	 * 获取缓存
+	 * Gets the.
 	 *
-	 * @param cacheName
-	 * @param key
-	 * @param defaultValue
-	 * @return
+	 * @param cacheName    the cache name
+	 * @param key          the key
+	 * @param defaultValue the default value
+	 * @return the object
 	 */
 	public static Object get(String cacheName, String key, Object defaultValue) {
 		final Object value = get(cacheName, getKey(key));
@@ -89,30 +90,30 @@ public class CacheUtils {
 	}
 
 	/**
-	 * 写入缓存
+	 * Put.
 	 *
-	 * @param cacheName
-	 * @param key
-	 * @param value
+	 * @param cacheName the cache name
+	 * @param key       the key
+	 * @param value     the value
 	 */
 	public static void put(String cacheName, String key, Object value) {
 		getCache(cacheName).put(getKey(key), value);
 	}
 
 	/**
-	 * 从缓存中移除
+	 * Removes the.
 	 *
-	 * @param cacheName
-	 * @param key
+	 * @param cacheName the cache name
+	 * @param key       the key
 	 */
 	public static void remove(String cacheName, String key) {
 		getCache(cacheName).remove(getKey(key));
 	}
 
 	/**
-	 * 从缓存中移除所有
+	 * Removes the all.
 	 *
-	 * @param cacheName
+	 * @param cacheName the cache name
 	 */
 	public static void removeAll(String cacheName) {
 		final Cache<String, Object> cache = getCache(cacheName);
@@ -124,19 +125,19 @@ public class CacheUtils {
 	}
 
 	/**
-	 * 从缓存中移除指定key
+	 * Removes the by keys.
 	 *
-	 * @param keys
+	 * @param keys the keys
 	 */
 	public static void removeByKeys(Set<String> keys) {
 		removeByKeys(SYS_CACHE, keys);
 	}
 
 	/**
-	 * 从缓存中移除指定key
+	 * Removes the by keys.
 	 *
-	 * @param cacheName
-	 * @param keys
+	 * @param cacheName the cache name
+	 * @param keys      the keys
 	 */
 	public static void removeByKeys(String cacheName, Set<String> keys) {
 		for (final Iterator<String> it = keys.iterator(); it.hasNext();) {
@@ -146,20 +147,20 @@ public class CacheUtils {
 	}
 
 	/**
-	 * 获取缓存键名
+	 * Gets the key.
 	 *
-	 * @param key
-	 * @return
+	 * @param key the key
+	 * @return the key
 	 */
 	private static String getKey(String key) {
 		return key;
 	}
 
 	/**
-	 * 获得一个Cache，没有则显示日志。
+	 * Gets the cache.
 	 *
-	 * @param cacheName
-	 * @return
+	 * @param cacheName the cache name
+	 * @return the cache
 	 */
 	public static Cache<String, Object> getCache(String cacheName) {
 		final Cache<String, Object> cache = cacheManager.getCache(cacheName);

@@ -5,48 +5,47 @@ import java.util.List;
 import com.github.ecsoya.sword.system.domain.SysNotice;
 
 /**
- * 公告 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface SysNoticeMapper.
  */
 public interface SysNoticeMapper {
+
 	/**
-	 * 查询公告信息
+	 * Select notice by id.
 	 *
-	 * @param noticeId 公告ID
-	 * @return 公告信息
+	 * @param noticeId the notice id
+	 * @return the sys notice
 	 */
 	public SysNotice selectNoticeById(Long noticeId);
 
 	/**
-	 * 查询公告列表
+	 * Select notice list.
 	 *
-	 * @param notice 公告信息
-	 * @return 公告集合
+	 * @param notice the notice
+	 * @return the list
 	 */
 	public List<SysNotice> selectNoticeList(SysNotice notice);
 
 	/**
-	 * 新增公告
+	 * Insert notice.
 	 *
-	 * @param notice 公告信息
-	 * @return 结果
+	 * @param notice the notice
+	 * @return the int
 	 */
 	public int insertNotice(SysNotice notice);
 
 	/**
-	 * 修改公告
+	 * Update notice.
 	 *
-	 * @param notice 公告信息
-	 * @return 结果
+	 * @param notice the notice
+	 * @return the int
 	 */
 	public int updateNotice(SysNotice notice);
 
 	/**
-	 * 批量删除公告
+	 * Delete notice by ids.
 	 *
-	 * @param noticeIds 需要删除的数据ID
-	 * @return 结果
+	 * @param noticeIds the notice ids
+	 * @return the int
 	 */
 	public int deleteNoticeByIds(String[] noticeIds);
 }

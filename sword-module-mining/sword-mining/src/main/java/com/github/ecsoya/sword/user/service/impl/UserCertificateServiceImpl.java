@@ -18,27 +18,28 @@ import com.github.ecsoya.sword.user.service.IUserCertificateService;
 import com.github.ecsoya.sword.wallet.service.IUserWalletService;
 
 /**
- * 用户实名Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-23
+ * The Class UserCertificateServiceImpl.
  */
 @Service
 public class UserCertificateServiceImpl implements IUserCertificateService {
+
+	/** The user certificate mapper. */
 	@Autowired
 	private UserCertificateMapper userCertificateMapper;
 
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
+	/** The wallet service. */
 	@Autowired
 	private IUserWalletService walletService;
 
 	/**
-	 * 查询用户实名
+	 * Select user certificate by id.
 	 *
-	 * @param userId 用户实名ID
-	 * @return 用户实名
+	 * @param userId the user id
+	 * @return the user certificate
 	 */
 	@Override
 	public UserCertificate selectUserCertificateById(Long userId) {
@@ -46,10 +47,10 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 	}
 
 	/**
-	 * 查询用户实名列表
+	 * Select user certificate list.
 	 *
-	 * @param userCertificate 用户实名
-	 * @return 用户实名
+	 * @param userCertificate the user certificate
+	 * @return the list
 	 */
 	@Override
 	public List<UserCertificate> selectUserCertificateList(UserCertificate userCertificate) {
@@ -57,10 +58,10 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 	}
 
 	/**
-	 * 新增用户实名
+	 * Insert user certificate.
 	 *
-	 * @param userCertificate 用户实名
-	 * @return 结果
+	 * @param userCertificate the user certificate
+	 * @return the int
 	 */
 	@Override
 	public int insertUserCertificate(UserCertificate userCertificate) {
@@ -71,10 +72,10 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 	}
 
 	/**
-	 * 修改用户实名
+	 * Update user certificate.
 	 *
-	 * @param userCertificate 用户实名
-	 * @return 结果
+	 * @param userCertificate the user certificate
+	 * @return the int
 	 */
 	@Override
 	public int updateUserCertificate(UserCertificate userCertificate) {
@@ -83,10 +84,10 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 	}
 
 	/**
-	 * 删除用户实名对象
+	 * Delete user certificate by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserCertificateByIds(String ids) {
@@ -94,16 +95,24 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 	}
 
 	/**
-	 * 删除用户实名信息
+	 * Delete user certificate by id.
 	 *
-	 * @param userId 用户实名ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserCertificateById(Long userId) {
 		return userCertificateMapper.deleteUserCertificateById(userId);
 	}
 
+	/**
+	 * Update user certificate status.
+	 *
+	 * @param userId the user id
+	 * @param status the status
+	 * @param remark the remark
+	 * @return the int
+	 */
 	@Override
 	public int updateUserCertificateStatus(Long userId, Integer status, String remark) {
 		if (userId == null || status == null || status > UserCertificate.STATUS_SUCCESS
@@ -129,6 +138,13 @@ public class UserCertificateServiceImpl implements IUserCertificateService {
 		return rows;
 	}
 
+	/**
+	 * Check user certificate.
+	 *
+	 * @param userId the user id
+	 * @param kind   the kind
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> checkUserCertificate(Long userId, Integer kind) {
 		final String value = configService.selectConfigValueByKey(IMiningConstants.ENABLE_USER_CERTIFICATE);

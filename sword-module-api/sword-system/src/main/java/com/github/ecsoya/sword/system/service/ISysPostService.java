@@ -5,88 +5,87 @@ import java.util.List;
 import com.github.ecsoya.sword.system.domain.SysPost;
 
 /**
- * 岗位信息 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysPostService.
  */
 public interface ISysPostService {
+
 	/**
-	 * 查询岗位信息集合
+	 * Select post list.
 	 *
-	 * @param post 岗位信息
-	 * @return 岗位信息集合
+	 * @param post the post
+	 * @return the list
 	 */
 	public List<SysPost> selectPostList(SysPost post);
 
 	/**
-	 * 查询所有岗位
+	 * Select post all.
 	 *
-	 * @return 岗位列表
+	 * @return the list
 	 */
 	public List<SysPost> selectPostAll();
 
 	/**
-	 * 根据用户ID查询岗位
+	 * Select posts by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 岗位列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<SysPost> selectPostsByUserId(Long userId);
 
 	/**
-	 * 通过岗位ID查询岗位信息
+	 * Select post by id.
 	 *
-	 * @param postId 岗位ID
-	 * @return 角色对象信息
+	 * @param postId the post id
+	 * @return the sys post
 	 */
 	public SysPost selectPostById(Long postId);
 
 	/**
-	 * 批量删除岗位信息
+	 * Delete post by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
-	 * @throws Exception 异常
+	 * @param ids the ids
+	 * @return the int
+	 * @throws Exception the exception
 	 */
 	public int deletePostByIds(String ids) throws Exception;
 
 	/**
-	 * 新增保存岗位信息
+	 * Insert post.
 	 *
-	 * @param post 岗位信息
-	 * @return 结果
+	 * @param post the post
+	 * @return the int
 	 */
 	public int insertPost(SysPost post);
 
 	/**
-	 * 修改保存岗位信息
+	 * Update post.
 	 *
-	 * @param post 岗位信息
-	 * @return 结果
+	 * @param post the post
+	 * @return the int
 	 */
 	public int updatePost(SysPost post);
 
 	/**
-	 * 通过岗位ID查询岗位使用数量
+	 * Count user post by id.
 	 *
-	 * @param postId 岗位ID
-	 * @return 结果
+	 * @param postId the post id
+	 * @return the int
 	 */
 	public int countUserPostById(Long postId);
 
 	/**
-	 * 校验岗位名称
+	 * Check post name unique.
 	 *
-	 * @param post 岗位信息
-	 * @return 结果
+	 * @param post the post
+	 * @return the string
 	 */
 	public String checkPostNameUnique(SysPost post);
 
 	/**
-	 * 校验岗位编码
+	 * Check post code unique.
 	 *
-	 * @param post 岗位信息
-	 * @return 结果
+	 * @param post the post
+	 * @return the string
 	 */
 	public String checkPostCodeUnique(SysPost post);
 }

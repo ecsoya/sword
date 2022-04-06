@@ -15,21 +15,20 @@ import com.github.ecsoya.sword.common.utils.DateUtils;
 import com.github.ecsoya.sword.common.utils.IdWorker;
 
 /**
- * 用户文章Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-02-04
+ * The Class UserArticleServiceImpl.
  */
 @Service
 public class UserArticleServiceImpl implements IUserArticleService {
+
+	/** The user article mapper. */
 	@Autowired
 	private UserArticleMapper userArticleMapper;
 
 	/**
-	 * 查询用户文章
+	 * Select user article by id.
 	 *
-	 * @param id 用户文章ID
-	 * @return 用户文章
+	 * @param id the id
+	 * @return the user article
 	 */
 	@Override
 	public UserArticle selectUserArticleById(Long id) {
@@ -37,10 +36,10 @@ public class UserArticleServiceImpl implements IUserArticleService {
 	}
 
 	/**
-	 * 查询用户文章列表
+	 * Select user article list.
 	 *
-	 * @param userArticle 用户文章
-	 * @return 用户文章
+	 * @param userArticle the user article
+	 * @return the list
 	 */
 	@Override
 	public List<UserArticle> selectUserArticleList(UserArticle userArticle) {
@@ -48,10 +47,10 @@ public class UserArticleServiceImpl implements IUserArticleService {
 	}
 
 	/**
-	 * 新增用户文章
+	 * Insert user article.
 	 *
-	 * @param userArticle 用户文章
-	 * @return 结果
+	 * @param userArticle the user article
+	 * @return the int
 	 */
 	@Override
 	public int insertUserArticle(UserArticle userArticle) {
@@ -65,10 +64,10 @@ public class UserArticleServiceImpl implements IUserArticleService {
 	}
 
 	/**
-	 * 修改用户文章
+	 * Update user article.
 	 *
-	 * @param userArticle 用户文章
-	 * @return 结果
+	 * @param userArticle the user article
+	 * @return the int
 	 */
 	@Override
 	public int updateUserArticle(UserArticle userArticle) {
@@ -77,10 +76,10 @@ public class UserArticleServiceImpl implements IUserArticleService {
 	}
 
 	/**
-	 * 删除用户文章对象
+	 * Delete user article by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserArticleByIds(String ids) {
@@ -88,16 +87,23 @@ public class UserArticleServiceImpl implements IUserArticleService {
 	}
 
 	/**
-	 * 删除用户文章信息
+	 * Delete user article by id.
 	 *
-	 * @param id 用户文章ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserArticleById(Long id) {
 		return userArticleMapper.deleteUserArticleById(id);
 	}
 
+	/**
+	 * Select user article by article id.
+	 *
+	 * @param articleId the article id
+	 * @param userId    the user id
+	 * @return the user article
+	 */
 	@Override
 	public UserArticle selectUserArticleByArticleId(Long articleId, Long userId) {
 		if (articleId == null || userId == null) {
@@ -117,6 +123,12 @@ public class UserArticleServiceImpl implements IUserArticleService {
 		return article;
 	}
 
+	/**
+	 * Select user article comment list.
+	 *
+	 * @param articleId the article id
+	 * @return the list
+	 */
 	@Override
 	public List<UserArticleComment> selectUserArticleCommentList(Long articleId) {
 		if (articleId == null) {

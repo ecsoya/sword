@@ -14,23 +14,35 @@ import com.aliyun.oss.model.ObjectMetadata;
 import com.github.ecsoya.sword.upload.core.FileUploadException;
 import com.github.ecsoya.sword.upload.core.UploadConfig;
 import com.github.ecsoya.sword.upload.core.UploadData;
-import com.github.ecsoya.sword.upload.uploader.AbstractFileUploader;
 
 /**
- * 文件上传工具类
- *
- * @author AngryRED (jin.liu@soyatec.com)
+ * The Class AliyunFileUploader.
  */
 @Service
 public class AliyunFileUploader extends AbstractFileUploader {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(AliyunFileUploader.class);
 
+	/**
+	 * Test upload config.
+	 *
+	 * @param config the config
+	 * @throws FileUploadException the file upload exception
+	 */
 	@Override
 	protected void testUploadConfig(UploadConfig config) throws FileUploadException {
 		config.testCloudValidated();
 	}
 
+	/**
+	 * Do upload.
+	 *
+	 * @param files  the files
+	 * @param config the config
+	 * @return the list
+	 * @throws FileUploadException the file upload exception
+	 */
 	@Override
 	protected List<String> doUpload(List<UploadData> files, UploadConfig config) throws FileUploadException {
 		log.info("AliyunFileUploader, config={}", config);

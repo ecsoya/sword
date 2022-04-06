@@ -27,24 +27,39 @@ import com.github.ecsoya.sword.quartz.service.ISysJobService;
 import com.github.ecsoya.sword.quartz.util.CronUtils;
 
 /**
- * 调度任务信息操作处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysJobController.
  */
 @Controller
 @RequestMapping("/monitor/job")
 public class SysJobController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "monitor/job";
+
+	/** The Constant LOOKUP_RMI. */
 	public static final String LOOKUP_RMI = "rmi://";
+
+	/** The job service. */
 	@Autowired
 	private ISysJobService jobService;
 
+	/**
+	 * Job.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("monitor:job:view")
 	@GetMapping()
 	public String job() {
 		return prefix + "/job";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param job the job
+	 * @return the table data info
+	 */
 	@RequiresPermissions("monitor:job:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -54,6 +69,12 @@ public class SysJobController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param job the job
+	 * @return the ajax result
+	 */
 	@Log(title = "定时任务", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("monitor:job:export")
 	@PostMapping("/export")
@@ -64,6 +85,13 @@ public class SysJobController extends BaseController {
 		return util.exportExcel(list, "定时任务");
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 * @throws SchedulerException the scheduler exception
+	 */
 	@Log(title = "定时任务", businessType = BusinessType.DELETE)
 	@RequiresPermissions("monitor:job:remove")
 	@PostMapping("/remove")
@@ -73,6 +101,13 @@ public class SysJobController extends BaseController {
 		return success();
 	}
 
+	/**
+	 * Detail.
+	 *
+	 * @param jobId the job id
+	 * @param mmap  the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("monitor:job:detail")
 	@GetMapping("/detail/{jobId}")
 	public String detail(@PathVariable("jobId") Long jobId, ModelMap mmap) {
@@ -82,7 +117,11 @@ public class SysJobController extends BaseController {
 	}
 
 	/**
-	 * 任务调度状态修改
+	 * Change status.
+	 *
+	 * @param job the job
+	 * @return the ajax result
+	 * @throws SchedulerException the scheduler exception
 	 */
 	@Log(title = "定时任务", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("monitor:job:changeStatus")
@@ -95,7 +134,11 @@ public class SysJobController extends BaseController {
 	}
 
 	/**
-	 * 任务调度立即执行一次
+	 * Run.
+	 *
+	 * @param job the job
+	 * @return the ajax result
+	 * @throws SchedulerException the scheduler exception
 	 */
 	@Log(title = "定时任务", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("monitor:job:changeStatus")
@@ -107,7 +150,9 @@ public class SysJobController extends BaseController {
 	}
 
 	/**
-	 * 新增调度
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -115,7 +160,12 @@ public class SysJobController extends BaseController {
 	}
 
 	/**
-	 * 新增保存调度
+	 * Adds the save.
+	 *
+	 * @param job the job
+	 * @return the ajax result
+	 * @throws SchedulerException the scheduler exception
+	 * @throws TaskException      the task exception
 	 */
 	@Log(title = "定时任务", businessType = BusinessType.INSERT)
 	@RequiresPermissions("monitor:job:add")
@@ -131,7 +181,11 @@ public class SysJobController extends BaseController {
 	}
 
 	/**
-	 * 修改调度
+	 * Edits the.
+	 *
+	 * @param jobId the job id
+	 * @param mmap  the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{jobId}")
 	public String edit(@PathVariable("jobId") Long jobId, ModelMap mmap) {
@@ -140,7 +194,12 @@ public class SysJobController extends BaseController {
 	}
 
 	/**
-	 * 修改保存调度
+	 * Edits the save.
+	 *
+	 * @param job the job
+	 * @return the ajax result
+	 * @throws SchedulerException the scheduler exception
+	 * @throws TaskException      the task exception
 	 */
 	@Log(title = "定时任务", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("monitor:job:edit")
@@ -156,7 +215,10 @@ public class SysJobController extends BaseController {
 	}
 
 	/**
-	 * 校验cron表达式是否有效
+	 * Check cron expression is valid.
+	 *
+	 * @param job the job
+	 * @return true, if successful
 	 */
 	@PostMapping("/checkCronExpressionIsValid")
 	@ResponseBody

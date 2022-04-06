@@ -11,13 +11,15 @@ import com.github.ecsoya.sword.generator.domain.GenTable;
 import com.github.ecsoya.sword.generator.domain.GenTableColumn;
 
 /**
- * 代码生成器 工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class GenUtils.
  */
 public class GenUtils {
+
 	/**
-	 * 初始化表信息
+	 * Inits the table.
+	 *
+	 * @param genTable the gen table
+	 * @param operName the oper name
 	 */
 	public static void initTable(GenTable genTable, String operName) {
 		genTable.setClassName(convertClassName(genTable.getTableName()));
@@ -30,7 +32,10 @@ public class GenUtils {
 	}
 
 	/**
-	 * 初始化列属性字段
+	 * Inits the column field.
+	 *
+	 * @param column the column
+	 * @param table  the table
 	 */
 	public static void initColumnField(GenTableColumn column, GenTable table) {
 		final String dataType = getDbType(column.getColumnType());
@@ -112,21 +117,21 @@ public class GenUtils {
 	}
 
 	/**
-	 * 校验数组是否包含指定值
+	 * Arrays contains.
 	 *
-	 * @param arr         数组
-	 * @param targetValue 值
-	 * @return 是否包含
+	 * @param arr         the arr
+	 * @param targetValue the target value
+	 * @return true, if successful
 	 */
 	public static boolean arraysContains(String[] arr, String targetValue) {
 		return Arrays.asList(arr).contains(targetValue);
 	}
 
 	/**
-	 * 获取模块名
+	 * Gets the module name.
 	 *
-	 * @param packageName 包名
-	 * @return 模块名
+	 * @param packageName the package name
+	 * @return the module name
 	 */
 	public static String getModuleName(String packageName) {
 		final int lastIndex = packageName.lastIndexOf(".");
@@ -136,10 +141,10 @@ public class GenUtils {
 	}
 
 	/**
-	 * 获取业务名
+	 * Gets the business name.
 	 *
-	 * @param tableName 表名
-	 * @return 业务名
+	 * @param tableName the table name
+	 * @return the business name
 	 */
 	public static String getBusinessName(String tableName) {
 		final int lastIndex = tableName.lastIndexOf("_");
@@ -149,10 +154,10 @@ public class GenUtils {
 	}
 
 	/**
-	 * 表名转换成Java类名
+	 * Convert class name.
 	 *
-	 * @param tableName 表名称
-	 * @return 类名
+	 * @param tableName the table name
+	 * @return the string
 	 */
 	public static String convertClassName(String tableName) {
 		final boolean autoRemovePre = GenConfig.getAutoRemovePre();
@@ -165,11 +170,11 @@ public class GenUtils {
 	}
 
 	/**
-	 * 批量替换前缀
+	 * Replace first.
 	 *
-	 * @param replacementm 替换值
-	 * @param searchList   替换列表
-	 * @return
+	 * @param replacementm the replacementm
+	 * @param searchList   the search list
+	 * @return the string
 	 */
 	public static String replaceFirst(String replacementm, String[] searchList) {
 		String text = replacementm;
@@ -183,10 +188,10 @@ public class GenUtils {
 	}
 
 	/**
-	 * 关键字替换
+	 * Replace text.
 	 *
-	 * @param text 需要被替换的名字
-	 * @return 替换后的名字
+	 * @param text the text
+	 * @return the string
 	 */
 	public static String replaceText(String text) {
 		if (StringUtils.isEmpty(text)) {
@@ -200,10 +205,10 @@ public class GenUtils {
 	}
 
 	/**
-	 * 获取数据库类型字段
+	 * Gets the db type.
 	 *
-	 * @param columnType 列类型
-	 * @return 截取后的列类型
+	 * @param columnType the column type
+	 * @return the db type
 	 */
 	public static String getDbType(String columnType) {
 		if (org.apache.commons.lang3.StringUtils.indexOf(columnType, "(") > 0) {
@@ -214,10 +219,10 @@ public class GenUtils {
 	}
 
 	/**
-	 * 获取字段长度
+	 * Gets the column length.
 	 *
-	 * @param columnType 列类型
-	 * @return 截取后的列类型
+	 * @param columnType the column type
+	 * @return the column length
 	 */
 	public static Integer getColumnLength(String columnType) {
 		if (org.apache.commons.lang3.StringUtils.indexOf(columnType, "(") > 0) {
@@ -229,10 +234,10 @@ public class GenUtils {
 	}
 
 	/**
-	 * 获取空数组列表
+	 * Empty list.
 	 *
-	 * @param length 长度
-	 * @return 数组信息
+	 * @param length the length
+	 * @return the string[]
 	 */
 	public static String[] emptyList(int length) {
 		final String[] values = new String[length];

@@ -7,65 +7,64 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.system.domain.SysUserRole;
 
 /**
- * 用户与角色关联表 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface SysUserRoleMapper.
  */
 public interface SysUserRoleMapper {
+
 	/**
-	 * 通过用户ID查询用户和角色关联
+	 * Select user role by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 用户和角色关联列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<SysUserRole> selectUserRoleByUserId(Long userId);
 
 	/**
-	 * 通过用户ID删除用户和角色关联
+	 * Delete user role by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int deleteUserRoleByUserId(Long userId);
 
 	/**
-	 * 批量删除用户和角色关联
+	 * Delete user role.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserRole(Long[] ids);
 
 	/**
-	 * 通过角色ID查询角色使用数量
+	 * Count user role by role id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 结果
+	 * @param roleId the role id
+	 * @return the int
 	 */
 	public int countUserRoleByRoleId(Long roleId);
 
 	/**
-	 * 批量新增用户角色信息
+	 * Batch user role.
 	 *
-	 * @param userRoleList 用户角色列表
-	 * @return 结果
+	 * @param userRoleList the user role list
+	 * @return the int
 	 */
 	public int batchUserRole(List<SysUserRole> userRoleList);
 
 	/**
-	 * 删除用户和角色关联信息
+	 * Delete user role info.
 	 *
-	 * @param userRole 用户和角色关联信息
-	 * @return 结果
+	 * @param userRole the user role
+	 * @return the int
 	 */
 	public int deleteUserRoleInfo(SysUserRole userRole);
 
 	/**
-	 * 批量取消授权用户角色
+	 * Delete user role infos.
 	 *
-	 * @param roleId  角色ID
-	 * @param userIds 需要删除的用户数据ID
-	 * @return 结果
+	 * @param roleId  the role id
+	 * @param userIds the user ids
+	 * @return the int
 	 */
 	public int deleteUserRoleInfos(@Param("roleId") Long roleId, @Param("userIds") Long[] userIds);
 }

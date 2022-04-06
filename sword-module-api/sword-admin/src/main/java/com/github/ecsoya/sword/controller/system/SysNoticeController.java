@@ -22,18 +22,24 @@ import com.github.ecsoya.sword.system.domain.SysNotice;
 import com.github.ecsoya.sword.system.service.ISysNoticeService;
 
 /**
- * 公告 信息操作处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysNoticeController.
  */
 @Controller
 @RequestMapping("/system/notice")
 public class SysNoticeController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/notice";
 
+	/** The notice service. */
 	@Autowired
 	private ISysNoticeService noticeService;
 
+	/**
+	 * Notice.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:notice:view")
 	@GetMapping()
 	public String notice() {
@@ -41,7 +47,10 @@ public class SysNoticeController extends BaseController {
 	}
 
 	/**
-	 * 查询公告列表
+	 * List.
+	 *
+	 * @param notice the notice
+	 * @return the table data info
 	 */
 	@RequiresPermissions("system:notice:list")
 	@PostMapping("/list")
@@ -53,7 +62,9 @@ public class SysNoticeController extends BaseController {
 	}
 
 	/**
-	 * 新增公告
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -61,7 +72,10 @@ public class SysNoticeController extends BaseController {
 	}
 
 	/**
-	 * 新增保存公告
+	 * Adds the save.
+	 *
+	 * @param notice the notice
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:notice:add")
 	@Log(title = "通知公告", businessType = BusinessType.INSERT)
@@ -73,7 +87,11 @@ public class SysNoticeController extends BaseController {
 	}
 
 	/**
-	 * 修改公告
+	 * Edits the.
+	 *
+	 * @param noticeId the notice id
+	 * @param mmap     the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{noticeId}")
 	public String edit(@PathVariable("noticeId") Long noticeId, ModelMap mmap) {
@@ -82,7 +100,10 @@ public class SysNoticeController extends BaseController {
 	}
 
 	/**
-	 * 修改保存公告
+	 * Edits the save.
+	 *
+	 * @param notice the notice
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:notice:edit")
 	@Log(title = "通知公告", businessType = BusinessType.UPDATE)
@@ -94,7 +115,10 @@ public class SysNoticeController extends BaseController {
 	}
 
 	/**
-	 * 删除公告
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:notice:remove")
 	@Log(title = "通知公告", businessType = BusinessType.DELETE)

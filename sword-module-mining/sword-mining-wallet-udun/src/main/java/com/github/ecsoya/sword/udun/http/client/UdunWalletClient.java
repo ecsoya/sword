@@ -30,31 +30,66 @@ import com.github.ecsoya.sword.udun.domain.UTransfer;
 import com.github.ecsoya.sword.udun.http.ResponseMessage;
 import com.github.ecsoya.sword.udun.utils.HttpUtil;
 
+/**
+ * The Class UdunWalletClient.
+ */
 public class UdunWalletClient implements WalletClient<String> {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(UdunWalletClient.class);
+
+	/** The gateway. */
 	private String gateway;
+
+	/** The connection exception. */
 	private static String CONNECTION_EXCEPTION = "connect exception";
+
+	/** The encode type. */
 	private static String ENCODE_TYPE = "UTF-8";
+
+	/** The content type value. */
 	private static String CONTENT_TYPE_VALUE = "application/json";
+
+	/** The content type name. */
 	private static String CONTENT_TYPE_NAME = "Content-Type";
+
+	/** The connect timeout. */
 	private int connectTimeout = 1000;
+
+	/** The request timeout. */
 	private int requestTimeout = 1000;
+
+	/** The redirect enabled. */
 	private Boolean redirectEnabled = true;
 
+	/** The merchant id. */
 	private String merchantId;
+
+	/** The merchant key. */
 	private String merchantKey;
 
+	/** The Constant cookieStore. */
 	public static final CookieStore cookieStore = new BasicCookieStore();
 
+	/** The request config. */
 	public RequestConfig requestConfig;
 
+	/**
+	 * Instantiates a new udun wallet client.
+	 */
 	public UdunWalletClient() {
 		RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectTimeout)
 				.setConnectionRequestTimeout(requestTimeout).setRedirectsEnabled(redirectEnabled).build();
 		this.requestConfig = requestConfig;
 	}
 
+	/**
+	 * Instantiates a new udun wallet client.
+	 *
+	 * @param gateway    the gateway
+	 * @param merchantId the merchant id
+	 * @param key        the key
+	 */
 	public UdunWalletClient(String gateway, String merchantId, String key) {
 		RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectTimeout)
 				.setConnectionRequestTimeout(requestTimeout).setRedirectsEnabled(redirectEnabled).build();
@@ -64,6 +99,14 @@ public class UdunWalletClient implements WalletClient<String> {
 		this.requestConfig = requestConfig;
 	}
 
+	/**
+	 * Instantiates a new udun wallet client.
+	 *
+	 * @param host          the host
+	 * @param merchantId    the merchant id
+	 * @param key           the key
+	 * @param requestConfig the request config
+	 */
 	public UdunWalletClient(String host, String merchantId, String key, RequestConfig requestConfig) {
 		this.gateway = host;
 		this.merchantId = merchantId;
@@ -72,12 +115,14 @@ public class UdunWalletClient implements WalletClient<String> {
 	}
 
 	/**
-	 * 创建地址
+	 * Creates the coin address.
 	 *
-	 * @param mainCoinType
-	 * @param callbackUrl
-	 * @return
-	 * @throws Exception
+	 * @param mainCoinType the main coin type
+	 * @param callbackUrl  the callback url
+	 * @param alias        the alias
+	 * @param walletId     the wallet id
+	 * @return the response message
+	 * @throws Exception the exception
 	 */
 	public ResponseMessage<UAddress> createCoinAddress(String mainCoinType, String callbackUrl, String alias,
 			String walletId) throws Exception {
@@ -105,13 +150,13 @@ public class UdunWalletClient implements WalletClient<String> {
 	}
 
 	/**
-	 * 创建批量地址
+	 * Creates the batch coin address.
 	 *
-	 * @param mainCoinType
-	 * @param callbackUrl
-	 * @param count
-	 * @return
-	 * @throws Exception
+	 * @param mainCoinType the main coin type
+	 * @param callbackUrl  the callback url
+	 * @param count        the count
+	 * @return the response message
+	 * @throws Exception the exception
 	 */
 	public ResponseMessage<List<UAddress>> createBatchCoinAddress(String mainCoinType, String callbackUrl, int count)
 			throws Exception {
@@ -132,16 +177,17 @@ public class UdunWalletClient implements WalletClient<String> {
 	}
 
 	/**
-	 * 转账
+	 * Transfer.
 	 *
-	 * @param orderId
-	 * @param amount
-	 * @param mainCoinType
-	 * @param subCoinType
-	 * @param address
-	 * @param callbackUrl
-	 * @return
-	 * @throws Exception
+	 * @param orderId      the order id
+	 * @param amount       the amount
+	 * @param mainCoinType the main coin type
+	 * @param subCoinType  the sub coin type
+	 * @param address      the address
+	 * @param callbackUrl  the callback url
+	 * @param memo         the memo
+	 * @return the response message
+	 * @throws Exception the exception
 	 */
 	public ResponseMessage<String> transfer(String orderId, BigDecimal amount, String mainCoinType, String subCoinType,
 			String address, String callbackUrl, String memo) throws Exception {
@@ -162,16 +208,17 @@ public class UdunWalletClient implements WalletClient<String> {
 	}
 
 	/**
-	 * 代付
+	 * Auto transfer.
 	 *
-	 * @param orderId
-	 * @param amount
-	 * @param mainCoinType
-	 * @param subCoinType
-	 * @param address
-	 * @param callbackUrl
-	 * @return
-	 * @throws Exception
+	 * @param orderId      the order id
+	 * @param amount       the amount
+	 * @param mainCoinType the main coin type
+	 * @param subCoinType  the sub coin type
+	 * @param address      the address
+	 * @param callbackUrl  the callback url
+	 * @param memo         the memo
+	 * @return the response message
+	 * @throws Exception the exception
 	 */
 	public ResponseMessage<String> autoTransfer(String orderId, BigDecimal amount, String mainCoinType,
 			String subCoinType, String address, String callbackUrl, String memo) throws Exception {
@@ -192,11 +239,12 @@ public class UdunWalletClient implements WalletClient<String> {
 	}
 
 	/**
-	 * 检查是否内部地址
+	 * Check address.
 	 *
-	 * @param address
-	 * @return
-	 * @throws Exception
+	 * @param mainCoinType the main coin type
+	 * @param address      the address
+	 * @return true, if successful
+	 * @throws Exception the exception
 	 */
 	public boolean checkAddress(String mainCoinType, String address) throws Exception {
 		JSONObject jsonObject = new JSONObject();
@@ -210,10 +258,11 @@ public class UdunWalletClient implements WalletClient<String> {
 	}
 
 	/**
-	 * 获取支持的币种和对应余额
+	 * Gets the support coin.
 	 *
-	 * @return
-	 * @throws Exception
+	 * @param showBalance the show balance
+	 * @return the support coin
+	 * @throws Exception the exception
 	 */
 	public List<USupportCoin> getSupportCoin(Boolean showBalance) throws Exception {
 		JSONObject jsonObject = new JSONObject();
@@ -226,11 +275,12 @@ public class UdunWalletClient implements WalletClient<String> {
 	}
 
 	/**
-	 * 检查是否支持该币种
+	 * Check support.
 	 *
-	 * @param coinName
-	 * @return
-	 * @throws Exception
+	 * @param merchantId the merchant id
+	 * @param coinName   the coin name
+	 * @return true, if successful
+	 * @throws Exception the exception
 	 */
 	public boolean checkSupport(Long merchantId, String coinName) throws Exception {
 		boolean supported = false;
@@ -245,13 +295,13 @@ public class UdunWalletClient implements WalletClient<String> {
 	}
 
 	/**
-	 * 是否支持代付条件
+	 * Check proxy.
 	 *
-	 * @param amount
-	 * @param mainCoinType
-	 * @param subCoinType
-	 * @return
-	 * @throws Exception
+	 * @param amount       the amount
+	 * @param mainCoinType the main coin type
+	 * @param subCoinType  the sub coin type
+	 * @return true, if successful
+	 * @throws Exception the exception
 	 */
 	public boolean checkProxy(BigDecimal amount, String mainCoinType, String subCoinType) throws Exception {
 		JSONObject jsonObject = new JSONObject();
@@ -265,17 +315,17 @@ public class UdunWalletClient implements WalletClient<String> {
 	}
 
 	/**
-	 * 查询交易记录
+	 * Query transaction.
 	 *
-	 * @param mainCoinType
-	 * @param coinType
-	 * @param tradeId
-	 * @param tradeType
-	 * @param address
-	 * @param startTimestamp 时间戳 毫秒
-	 * @param endTimestamp   时间戳 毫秒
-	 * @return
-	 * @throws Exception
+	 * @param mainCoinType   the main coin type
+	 * @param coinType       the coin type
+	 * @param tradeId        the trade id
+	 * @param tradeType      the trade type
+	 * @param address        the address
+	 * @param startTimestamp the start timestamp
+	 * @param endTimestamp   the end timestamp
+	 * @return the list
+	 * @throws Exception the exception
 	 */
 	public List<UTransaction> queryTransaction(String mainCoinType, String coinType, String tradeId, Integer tradeType,
 			String address, String startTimestamp, String endTimestamp) throws Exception {
@@ -293,6 +343,13 @@ public class UdunWalletClient implements WalletClient<String> {
 		return trades;
 	}
 
+	/**
+	 * Post.
+	 *
+	 * @param url the url
+	 * @param map the map
+	 * @return the response message
+	 */
 	public ResponseMessage<String> post(String url, Map<String, String> map) {
 		CloseableHttpClient httpCilent = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
 		HttpPost httpPost = new HttpPost(gateway + url);
@@ -340,6 +397,12 @@ public class UdunWalletClient implements WalletClient<String> {
 		return ResponseMessage.error(CONNECTION_EXCEPTION);
 	}
 
+	/**
+	 * Gets the.
+	 *
+	 * @param url the url
+	 * @return the response message
+	 */
 	public ResponseMessage<String> get(String url) {
 		CloseableHttpClient httpCilent = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
 		HttpGet httpGet = new HttpGet(url);
@@ -373,12 +436,22 @@ public class UdunWalletClient implements WalletClient<String> {
 		return ResponseMessage.error(CONNECTION_EXCEPTION);
 	}
 
+	/**
+	 * Sets the cookie store.
+	 *
+	 * @param cookielist the new cookie store
+	 */
 	public static void setCookieStore(List<BasicClientCookie> cookielist) {
 		for (BasicClientCookie cookie : cookielist) {
 			UdunWalletClient.cookieStore.addCookie(cookie);
 		}
 	}
 
+	/**
+	 * Creates the cookie.
+	 *
+	 * @param cookielist the cookielist
+	 */
 	public static void createCookie(List<BasicClientCookie> cookielist) {
 		for (BasicClientCookie cookie : cookielist) {
 			UdunWalletClient.cookieStore.addCookie(cookie);

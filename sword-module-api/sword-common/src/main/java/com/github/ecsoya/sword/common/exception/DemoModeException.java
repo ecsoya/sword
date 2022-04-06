@@ -1,13 +1,16 @@
 package com.github.ecsoya.sword.common.exception;
 
 /**
- * 演示模式异常
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class DemoModeException.
  */
 public class DemoModeException extends RuntimeException {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instantiates a new demo mode exception.
+	 */
 	public DemoModeException() {
 	}
 }

@@ -23,20 +23,24 @@ import com.github.ecsoya.sword.quartz.util.CronUtils;
 import com.github.ecsoya.sword.quartz.util.ScheduleUtils;
 
 /**
- * 定时任务调度信息 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysJobServiceImpl.
  */
 @Service
 public class SysJobServiceImpl implements ISysJobService {
+
+	/** The scheduler. */
 	@Autowired
 	private Scheduler scheduler;
 
+	/** The job mapper. */
 	@Autowired
 	private SysJobMapper jobMapper;
 
 	/**
-	 * 项目启动时，初始化定时器 主要是防止手动修改数据库导致未同步到定时任务处理（注：不能手动修改数据库ID和任务组名，否则会导致脏数据）
+	 * Inits the.
+	 *
+	 * @throws SchedulerException the scheduler exception
+	 * @throws TaskException      the task exception
 	 */
 	@PostConstruct
 	public void init() throws SchedulerException, TaskException {
@@ -51,10 +55,10 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 获取quartz调度器的计划任务列表
+	 * Select job list.
 	 *
-	 * @param job 调度信息
-	 * @return
+	 * @param job the job
+	 * @return the list
 	 */
 	@Override
 	public List<SysJob> selectJobList(SysJob job) {
@@ -62,10 +66,10 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 通过调度任务ID查询调度信息
+	 * Select job by id.
 	 *
-	 * @param jobId 调度任务ID
-	 * @return 调度任务对象信息
+	 * @param jobId the job id
+	 * @return the sys job
 	 */
 	@Override
 	public SysJob selectJobById(Long jobId) {
@@ -73,9 +77,11 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 暂停任务
+	 * Pause job.
 	 *
-	 * @param job 调度信息
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
 	 */
 	@Override
 	@Transactional
@@ -91,9 +97,11 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 恢复任务
+	 * Resume job.
 	 *
-	 * @param job 调度信息
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
 	 */
 	@Override
 	@Transactional
@@ -109,9 +117,11 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 删除任务后，所对应的trigger也将被删除
+	 * Delete job.
 	 *
-	 * @param job 调度信息
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
 	 */
 	@Override
 	@Transactional
@@ -126,10 +136,10 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 批量删除调度信息
+	 * Delete job by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @throws SchedulerException the scheduler exception
 	 */
 	@Override
 	@Transactional
@@ -142,9 +152,11 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 任务调度状态修改
+	 * Change status.
 	 *
-	 * @param job 调度信息
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
 	 */
 	@Override
 	@Transactional
@@ -160,9 +172,10 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 立即运行任务
+	 * Run.
 	 *
-	 * @param job 调度信息
+	 * @param job the job
+	 * @throws SchedulerException the scheduler exception
 	 */
 	@Override
 	@Transactional
@@ -176,9 +189,12 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 新增任务
+	 * Insert job.
 	 *
-	 * @param job 调度信息 调度信息
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
+	 * @throws TaskException      the task exception
 	 */
 	@Override
 	@Transactional
@@ -192,9 +208,12 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 更新任务的时间表达式
+	 * Update job.
 	 *
-	 * @param job 调度信息
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
+	 * @throws TaskException      the task exception
 	 */
 	@Override
 	@Transactional
@@ -208,10 +227,12 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 更新任务
+	 * Update scheduler job.
 	 *
-	 * @param job      任务对象
-	 * @param jobGroup 任务组名
+	 * @param job      the job
+	 * @param jobGroup the job group
+	 * @throws SchedulerException the scheduler exception
+	 * @throws TaskException      the task exception
 	 */
 	public void updateSchedulerJob(SysJob job, String jobGroup) throws SchedulerException, TaskException {
 		final Long jobId = job.getJobId();
@@ -225,10 +246,10 @@ public class SysJobServiceImpl implements ISysJobService {
 	}
 
 	/**
-	 * 校验cron表达式是否有效
+	 * Check cron expression is valid.
 	 *
-	 * @param cronExpression 表达式
-	 * @return 结果
+	 * @param cronExpression the cron expression
+	 * @return true, if successful
 	 */
 	@Override
 	public boolean checkCronExpressionIsValid(String cronExpression) {

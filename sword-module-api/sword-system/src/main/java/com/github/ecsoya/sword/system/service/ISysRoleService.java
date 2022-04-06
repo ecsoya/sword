@@ -7,155 +7,159 @@ import com.github.ecsoya.sword.common.core.domain.entity.SysRole;
 import com.github.ecsoya.sword.system.domain.SysUserRole;
 
 /**
- * 角色业务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysRoleService.
  */
 public interface ISysRoleService {
+
 	/**
-	 * 根据条件分页查询角色数据
+	 * Select role list.
 	 *
-	 * @param role 角色信息
-	 * @return 角色数据集合信息
+	 * @param role the role
+	 * @return the list
 	 */
 	public List<SysRole> selectRoleList(SysRole role);
 
 	/**
-	 * 根据用户ID查询角色
+	 * Select role keys.
 	 *
-	 * @param userId 用户ID
-	 * @return 权限列表
+	 * @param userId the user id
+	 * @return the sets the
 	 */
 	public Set<String> selectRoleKeys(Long userId);
 
 	/**
-	 * 根据用户ID查询角色
+	 * Select roles by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 角色列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	public List<SysRole> selectRolesByUserId(Long userId);
 
 	/**
-	 * 查询所有角色
+	 * Select role all.
 	 *
-	 * @return 角色列表
+	 * @return the list
 	 */
 	public List<SysRole> selectRoleAll();
 
 	/**
-	 * 通过角色ID查询角色
+	 * Select role by id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 角色对象信息
+	 * @param roleId the role id
+	 * @return the sys role
 	 */
 	public SysRole selectRoleById(Long roleId);
 
 	/**
-	 * 通过角色ID删除角色
+	 * Delete role by id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 结果
+	 * @param roleId the role id
+	 * @return true, if successful
 	 */
 	public boolean deleteRoleById(Long roleId);
 
 	/**
-	 * 批量删除角色用户信息
+	 * Delete role by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
-	 * @throws Exception 异常
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteRoleByIds(String ids);
 
 	/**
-	 * 新增保存角色信息
+	 * Insert role.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	public int insertRole(SysRole role);
 
 	/**
-	 * 修改保存角色信息
+	 * Update role.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	public int updateRole(SysRole role);
 
 	/**
-	 * 修改数据权限信息
+	 * Auth data scope.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	public int authDataScope(SysRole role);
 
 	/**
-	 * 校验角色名称是否唯一
+	 * Check role name unique.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the string
 	 */
 	public String checkRoleNameUnique(SysRole role);
 
 	/**
-	 * 校验角色权限是否唯一
+	 * Check role key unique.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the string
 	 */
 	public String checkRoleKeyUnique(SysRole role);
 
 	/**
-	 * 校验角色是否允许操作
+	 * Check role allowed.
 	 *
-	 * @param role 角色信息
+	 * @param role the role
 	 */
 	public void checkRoleAllowed(SysRole role);
 
 	/**
-	 * 通过角色ID查询角色使用数量
+	 * Count user role by role id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 结果
+	 * @param roleId the role id
+	 * @return the int
 	 */
 	public int countUserRoleByRoleId(Long roleId);
 
 	/**
-	 * 角色状态修改
+	 * Change status.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	public int changeStatus(SysRole role);
 
 	/**
-	 * 取消授权用户角色
+	 * Delete auth user.
 	 *
-	 * @param userRole 用户和角色关联信息
-	 * @return 结果
+	 * @param userRole the user role
+	 * @return the int
 	 */
 	public int deleteAuthUser(SysUserRole userRole);
 
 	/**
-	 * 批量取消授权用户角色
+	 * Delete auth users.
 	 *
-	 * @param roleId  角色ID
-	 * @param userIds 需要删除的用户数据ID
-	 * @return 结果
+	 * @param roleId  the role id
+	 * @param userIds the user ids
+	 * @return the int
 	 */
 	public int deleteAuthUsers(Long roleId, String userIds);
 
 	/**
-	 * 批量选择授权用户角色
+	 * Insert auth users.
 	 *
-	 * @param roleId  角色ID
-	 * @param userIds 需要删除的用户数据ID
-	 * @return 结果
+	 * @param roleId  the role id
+	 * @param userIds the user ids
+	 * @return the int
 	 */
 	public int insertAuthUsers(Long roleId, String userIds);
 
+	/**
+	 * Select role ids by role key.
+	 *
+	 * @param roleKey the role key
+	 * @return the long[]
+	 */
 	public Long[] selectRoleIdsByRoleKey(String roleKey);
 }

@@ -2,25 +2,45 @@ package com.github.ecsoya.sword.code.service;
 
 import com.github.ecsoya.sword.common.core.domain.CommonResult;
 
+/**
+ * The Interface IMailService.
+ */
 public interface IMailService {
 
 	/**
-	 * 发送邮件
+	 * Send email.
+	 *
+	 * @param email   the email
+	 * @param subject the subject
+	 * @param content the content
+	 * @return the common result
 	 */
 	public CommonResult<?> sendEmail(String email, String subject, String content);
 
 	/**
-	 * 发送验证码
+	 * Send code.
+	 *
+	 * @param email    the email
+	 * @param subject  the subject
+	 * @param template the template
+	 * @return the common result
 	 */
 	public CommonResult<?> sendCode(String email, String subject, String template);
 
 	/**
-	 * 发送验证码
+	 * Send code.
+	 *
+	 * @param email the email
+	 * @return the common result
 	 */
 	public CommonResult<?> sendCode(String email);
 
 	/**
-	 * 验证验证码是否正确
+	 * Verify code.
+	 *
+	 * @param email the email
+	 * @param code  the code
+	 * @return the common result
 	 */
 	public CommonResult<?> verifyCode(String email, String code);
 

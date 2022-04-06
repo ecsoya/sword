@@ -5,59 +5,64 @@ import java.util.List;
 import com.github.ecsoya.sword.wallet.domain.UserWalletAddress;
 
 /**
- * 用户钱包地址Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface IUserWalletAddressService.
  */
 public interface IUserWalletAddressService {
+
 	/**
-	 * 查询用户钱包地址
+	 * Select user wallet address by id.
 	 *
-	 * @param id 用户钱包地址ID
-	 * @return 用户钱包地址
+	 * @param id the id
+	 * @return the user wallet address
 	 */
 	public UserWalletAddress selectUserWalletAddressById(Long id);
 
 	/**
-	 * 查询用户钱包地址列表
+	 * Select user wallet address list.
 	 *
-	 * @param userWalletAddress 用户钱包地址
-	 * @return 用户钱包地址集合
+	 * @param userWalletAddress the user wallet address
+	 * @return the list
 	 */
 	public List<UserWalletAddress> selectUserWalletAddressList(UserWalletAddress userWalletAddress);
 
 	/**
-	 * 新增用户钱包地址
+	 * Insert user wallet address.
 	 *
-	 * @param userWalletAddress 用户钱包地址
-	 * @return 结果
+	 * @param userWalletAddress the user wallet address
+	 * @return the int
 	 */
 	public int insertUserWalletAddress(UserWalletAddress userWalletAddress);
 
 	/**
-	 * 修改用户钱包地址
+	 * Update user wallet address.
 	 *
-	 * @param userWalletAddress 用户钱包地址
-	 * @return 结果
+	 * @param userWalletAddress the user wallet address
+	 * @return the int
 	 */
 	public int updateUserWalletAddress(UserWalletAddress userWalletAddress);
 
 	/**
-	 * 批量删除用户钱包地址
+	 * Delete user wallet address by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserWalletAddressByIds(String ids);
 
 	/**
-	 * 删除用户钱包地址信息
+	 * Delete user wallet address by id.
 	 *
-	 * @param id 用户钱包地址ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserWalletAddressById(Long id);
 
+	/**
+	 * Select user wallet address by user id.
+	 *
+	 * @param userId the user id
+	 * @param symbol the symbol
+	 * @return the list
+	 */
 	public List<UserWalletAddress> selectUserWalletAddressByUserId(Long userId, String symbol);
 }

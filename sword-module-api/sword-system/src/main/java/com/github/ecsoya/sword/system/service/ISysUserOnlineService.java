@@ -6,70 +6,67 @@ import java.util.List;
 import com.github.ecsoya.sword.system.domain.SysUserOnline;
 
 /**
- * 在线用户 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysUserOnlineService.
  */
 public interface ISysUserOnlineService {
+
 	/**
-	 * 通过会话序号查询信息
+	 * Select online by id.
 	 *
-	 * @param sessionId 会话ID
-	 * @return 在线用户信息
+	 * @param sessionId the session id
+	 * @return the sys user online
 	 */
 	public SysUserOnline selectOnlineById(String sessionId);
 
 	/**
-	 * 通过会话序号删除信息
+	 * Delete online by id.
 	 *
-	 * @param sessionId 会话ID
-	 * @return 在线用户信息
+	 * @param sessionId the session id
 	 */
 	public void deleteOnlineById(String sessionId);
 
 	/**
-	 * 通过会话序号删除信息
+	 * Batch delete online.
 	 *
-	 * @param sessions 会话ID集合
-	 * @return 在线用户信息
+	 * @param sessions the sessions
 	 */
 	public void batchDeleteOnline(List<String> sessions);
 
 	/**
-	 * 保存会话信息
+	 * Save online.
 	 *
-	 * @param online 会话信息
+	 * @param online the online
 	 */
 	public void saveOnline(SysUserOnline online);
 
 	/**
-	 * 查询会话集合
+	 * Select user online list.
 	 *
-	 * @param userOnline 分页参数
-	 * @return 会话集合
+	 * @param userOnline the user online
+	 * @return the list
 	 */
 	public List<SysUserOnline> selectUserOnlineList(SysUserOnline userOnline);
 
 	/**
-	 * 强退用户
+	 * Force logout.
 	 *
-	 * @param sessionId 会话ID
+	 * @param sessionId the session id
 	 */
 	public void forceLogout(String sessionId);
 
 	/**
-	 * 清理用户缓存
+	 * Removes the user cache.
 	 *
-	 * @param loginName 登录名称
-	 * @param sessionId 会话ID
+	 * @param loginName the login name
+	 * @param sessionId the session id
 	 */
 	public void removeUserCache(String loginName, String sessionId);
 
 	/**
-	 * 查询会话集合
+	 * Select online by expired.
 	 *
-	 * @param expiredDate 有效期
-	 * @return 会话集合
+	 * @param expiredDate the expired date
+	 * @return the list
 	 */
 	public List<SysUserOnline> selectOnlineByExpired(Date expiredDate);
 }

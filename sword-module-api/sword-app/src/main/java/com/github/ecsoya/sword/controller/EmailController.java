@@ -17,17 +17,27 @@ import com.github.ecsoya.sword.utils.SwordUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * The Class EmailController.
+ */
 @RestController
 @RequestMapping("/open/email")
 @Api(tags = { "邮箱验证码" }, description = "获取、验证")
 public class EmailController extends BaseController {
 
+	/** The mail service. */
 	@Autowired
 	private IMailCodeService mailService;
 
+	/** The user service. */
 	@Autowired
 	private IUserProfileService userService;
 
+	/**
+	 * Delivery.
+	 *
+	 * @return the common result
+	 */
 	@ApiOperation("发送邮箱验证码，无参")
 	@PostMapping("/delivery")
 	@RepeatSubmit
@@ -36,6 +46,12 @@ public class EmailController extends BaseController {
 		return mailService.sendCodeByUserId(userId);
 	}
 
+	/**
+	 * Delivery by user name.
+	 *
+	 * @param username the username
+	 * @return the common result
+	 */
 	@ApiOperation("发送邮箱验证码，用户名")
 	@PostMapping("/deliveryByUsername")
 	@RepeatSubmit
@@ -50,6 +66,12 @@ public class EmailController extends BaseController {
 		return mailService.sendCodeByUserId(userId);
 	}
 
+	/**
+	 * Delivery by email.
+	 *
+	 * @param email the email
+	 * @return the common result
+	 */
 	@ApiOperation("发送邮箱验证码，邮箱")
 	@PostMapping("/deliveryByEmail")
 	@RepeatSubmit
@@ -61,8 +83,10 @@ public class EmailController extends BaseController {
 	}
 
 	/**
+	 * Verify.
 	 *
-	 * 验证邮箱验证码
+	 * @param code the code
+	 * @return the common result
 	 */
 	@ApiOperation("验证邮箱验证码，无参")
 	@GetMapping("/verify")
@@ -73,8 +97,11 @@ public class EmailController extends BaseController {
 	}
 
 	/**
+	 * Verify by username.
 	 *
-	 * 验证邮箱验证码
+	 * @param username the username
+	 * @param code     the code
+	 * @return the common result
 	 */
 	@ApiOperation("验证邮箱验证码，用户名")
 	@GetMapping("/verifyByUsername")
@@ -91,8 +118,11 @@ public class EmailController extends BaseController {
 	}
 
 	/**
+	 * Verify by email.
 	 *
-	 * 验证邮箱验证码
+	 * @param email the email
+	 * @param code  the code
+	 * @return the common result
 	 */
 	@ApiOperation("验证邮箱验证码，邮箱")
 	@GetMapping("/verifyByEmail")

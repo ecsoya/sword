@@ -8,13 +8,12 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import com.github.ecsoya.sword.common.constant.Constants;
 
 /**
- * VelocityEngine工厂
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class VelocityInitializer.
  */
 public class VelocityInitializer {
+
 	/**
-	 * 初始化vm方法
+	 * Inits the velocity.
 	 */
 	public static void initVelocity() {
 		final Properties p = new Properties();

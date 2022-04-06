@@ -13,15 +13,27 @@ import com.github.ecsoya.sword.common.annotation.RepeatSubmit;
 import com.github.ecsoya.sword.common.core.domain.CommonResult;
 import com.github.ecsoya.sword.token.annotation.TokenAccessLog;
 
+/**
+ * The Class MiningOpenController.
+ */
 @CrossOrigin(origins = { "*" }, maxAge = 3600)
 @RestController
 @RequestMapping(value = "/open/v1", produces = "application/json;charset=utf-8")
 public class MiningOpenController {
+
+	/** The log. */
 	private static Logger log = LoggerFactory.getLogger(MiningOpenController.class);
 
+	/** The notify service. */
 	@Autowired
 	private IWithdrawalNotifyService notifyService;
 
+	/**
+	 * Confirm.
+	 *
+	 * @param token the token
+	 * @return the common result
+	 */
 	@TokenAccessLog(title = "提币审核", description = "/open/v1/confirm")
 	@GetMapping("/confirm")
 	@RepeatSubmit

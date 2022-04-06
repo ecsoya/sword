@@ -10,15 +10,15 @@ import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 import com.github.ecsoya.sword.quartz.domain.SysJob;
 
 /**
- * 任务执行工具
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class JobInvokeUtil.
  */
 public class JobInvokeUtil {
+
 	/**
-	 * 执行方法
+	 * Invoke method.
 	 *
-	 * @param sysJob 系统任务
+	 * @param sysJob the sys job
+	 * @throws Exception the exception
 	 */
 	public static void invokeMethod(SysJob sysJob) throws Exception {
 		final String invokeTarget = sysJob.getInvokeTarget();
@@ -36,11 +36,16 @@ public class JobInvokeUtil {
 	}
 
 	/**
-	 * 调用任务方法
+	 * Invoke method.
 	 *
-	 * @param bean         目标对象
-	 * @param methodName   方法名称
-	 * @param methodParams 方法参数
+	 * @param bean         the bean
+	 * @param methodName   the method name
+	 * @param methodParams the method params
+	 * @throws NoSuchMethodException     the no such method exception
+	 * @throws SecurityException         the security exception
+	 * @throws IllegalAccessException    the illegal access exception
+	 * @throws IllegalArgumentException  the illegal argument exception
+	 * @throws InvocationTargetException the invocation target exception
 	 */
 	private static void invokeMethod(Object bean, String methodName, List<Object[]> methodParams)
 			throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
@@ -55,20 +60,20 @@ public class JobInvokeUtil {
 	}
 
 	/**
-	 * 校验是否为为class包名
+	 * Checks if is valid class name.
 	 *
-	 * @param invokeTarget 名称
-	 * @return true是 false否
+	 * @param invokeTarget the invoke target
+	 * @return true, if is valid class name
 	 */
 	public static boolean isValidClassName(String invokeTarget) {
 		return org.apache.commons.lang3.StringUtils.countMatches(invokeTarget, ".") > 1;
 	}
 
 	/**
-	 * 获取bean名称
+	 * Gets the bean name.
 	 *
-	 * @param invokeTarget 目标字符串
-	 * @return bean名称
+	 * @param invokeTarget the invoke target
+	 * @return the bean name
 	 */
 	public static String getBeanName(String invokeTarget) {
 		final String beanName = org.apache.commons.lang3.StringUtils.substringBefore(invokeTarget, "(");
@@ -76,10 +81,10 @@ public class JobInvokeUtil {
 	}
 
 	/**
-	 * 获取bean方法
+	 * Gets the method name.
 	 *
-	 * @param invokeTarget 目标字符串
-	 * @return method方法
+	 * @param invokeTarget the invoke target
+	 * @return the method name
 	 */
 	public static String getMethodName(String invokeTarget) {
 		final String methodName = org.apache.commons.lang3.StringUtils.substringBefore(invokeTarget, "(");
@@ -87,10 +92,10 @@ public class JobInvokeUtil {
 	}
 
 	/**
-	 * 获取method方法参数相关列表
+	 * Gets the method params.
 	 *
-	 * @param invokeTarget 目标字符串
-	 * @return method方法相关参数列表
+	 * @param invokeTarget the invoke target
+	 * @return the method params
 	 */
 	public static List<Object[]> getMethodParams(String invokeTarget) {
 		final String methodStr = org.apache.commons.lang3.StringUtils.substringBetween(invokeTarget, "(", ")");
@@ -131,10 +136,10 @@ public class JobInvokeUtil {
 	}
 
 	/**
-	 * 获取参数类型
+	 * Gets the method params type.
 	 *
-	 * @param methodParams 参数相关列表
-	 * @return 参数类型列表
+	 * @param methodParams the method params
+	 * @return the method params type
 	 */
 	public static Class<?>[] getMethodParamsType(List<Object[]> methodParams) {
 		final Class<?>[] classs = new Class<?>[methodParams.size()];
@@ -147,10 +152,10 @@ public class JobInvokeUtil {
 	}
 
 	/**
-	 * 获取参数值
+	 * Gets the method params value.
 	 *
-	 * @param methodParams 参数相关列表
-	 * @return 参数值列表
+	 * @param methodParams the method params
+	 * @return the method params value
 	 */
 	public static Object[] getMethodParamsValue(List<Object[]> methodParams) {
 		final Object[] classs = new Object[methodParams.size()];

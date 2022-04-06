@@ -18,23 +18,24 @@ import com.github.ecsoya.sword.system.mapper.SysUserOnlineMapper;
 import com.github.ecsoya.sword.system.service.ISysUserOnlineService;
 
 /**
- * 在线用户 服务层处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysUserOnlineServiceImpl.
  */
 @Service
 public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
+
+	/** The user online dao. */
 	@Autowired
 	private SysUserOnlineMapper userOnlineDao;
 
+	/** The cache manager. */
 	@Autowired
 	private CacheManager cacheManager;
 
 	/**
-	 * 通过会话序号查询信息
+	 * Select online by id.
 	 *
-	 * @param sessionId 会话ID
-	 * @return 在线用户信息
+	 * @param sessionId the session id
+	 * @return the sys user online
 	 */
 	@Override
 	public SysUserOnline selectOnlineById(String sessionId) {
@@ -42,10 +43,9 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 	}
 
 	/**
-	 * 通过会话序号删除信息
+	 * Delete online by id.
 	 *
-	 * @param sessionId 会话ID
-	 * @return 在线用户信息
+	 * @param sessionId the session id
 	 */
 	@Override
 	public void deleteOnlineById(String sessionId) {
@@ -56,10 +56,9 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 	}
 
 	/**
-	 * 通过会话序号删除信息
+	 * Batch delete online.
 	 *
-	 * @param sessions 会话ID集合
-	 * @return 在线用户信息
+	 * @param sessions the sessions
 	 */
 	@Override
 	public void batchDeleteOnline(List<String> sessions) {
@@ -72,9 +71,9 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 	}
 
 	/**
-	 * 保存会话信息
+	 * Save online.
 	 *
-	 * @param online 会话信息
+	 * @param online the online
 	 */
 	@Override
 	public void saveOnline(SysUserOnline online) {
@@ -82,9 +81,10 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 	}
 
 	/**
-	 * 查询会话集合
+	 * Select user online list.
 	 *
-	 * @param userOnline 在线用户
+	 * @param userOnline the user online
+	 * @return the list
 	 */
 	@Override
 	public List<SysUserOnline> selectUserOnlineList(SysUserOnline userOnline) {
@@ -92,9 +92,9 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 	}
 
 	/**
-	 * 强退用户
+	 * Force logout.
 	 *
-	 * @param sessionId 会话ID
+	 * @param sessionId the session id
 	 */
 	@Override
 	public void forceLogout(String sessionId) {
@@ -102,10 +102,10 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 	}
 
 	/**
-	 * 清理用户缓存
+	 * Removes the user cache.
 	 *
-	 * @param loginName 登录名称
-	 * @param sessionId 会话ID
+	 * @param loginName the login name
+	 * @param sessionId the session id
 	 */
 	@Override
 	public void removeUserCache(String loginName, String sessionId) {
@@ -118,9 +118,10 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
 	}
 
 	/**
-	 * 查询会话集合
+	 * Select online by expired.
 	 *
-	 * @param expiredDate 失效日期
+	 * @param expiredDate the expired date
+	 * @return the list
 	 */
 	@Override
 	public List<SysUserOnline> selectOnlineByExpired(Date expiredDate) {

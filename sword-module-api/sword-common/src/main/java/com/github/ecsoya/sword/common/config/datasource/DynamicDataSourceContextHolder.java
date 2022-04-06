@@ -4,21 +4,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 数据源切换处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class DynamicDataSourceContextHolder.
  */
 public class DynamicDataSourceContextHolder {
+
+	/** The Constant log. */
 	public static final Logger log = LoggerFactory.getLogger(DynamicDataSourceContextHolder.class);
 
-	/**
-	 * 使用ThreadLocal维护变量，ThreadLocal为每个使用该变量的线程提供独立的变量副本，
-	 * 所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。
-	 */
+	/** The Constant CONTEXT_HOLDER. */
 	private static final ThreadLocal<String> CONTEXT_HOLDER = new ThreadLocal<>();
 
 	/**
-	 * 设置数据源的变量
+	 * Sets the data source type.
+	 *
+	 * @param dsType the new data source type
 	 */
 	public static void setDataSourceType(String dsType) {
 		log.info("切换到{}数据源", dsType);
@@ -26,14 +25,16 @@ public class DynamicDataSourceContextHolder {
 	}
 
 	/**
-	 * 获得数据源的变量
+	 * Gets the data source type.
+	 *
+	 * @return the data source type
 	 */
 	public static String getDataSourceType() {
 		return CONTEXT_HOLDER.get();
 	}
 
 	/**
-	 * 清空数据源变量
+	 * Clear data source type.
 	 */
 	public static void clearDataSourceType() {
 		CONTEXT_HOLDER.remove();

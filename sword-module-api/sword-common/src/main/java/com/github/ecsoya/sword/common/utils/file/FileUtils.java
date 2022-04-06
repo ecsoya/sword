@@ -22,19 +22,19 @@ import org.apache.commons.lang3.ArrayUtils;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * 文件处理工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class FileUtils.
  */
 public class FileUtils extends org.apache.commons.io.FileUtils {
+
+	/** The filename pattern. */
 	public static String FILENAME_PATTERN = "[a-zA-Z0-9_\\-\\|\\.\\u4e00-\\u9fa5]+";
 
 	/**
-	 * 输出指定文件的byte数组
+	 * Write bytes.
 	 *
-	 * @param filePath 文件路径
-	 * @param os       输出流
-	 * @return
+	 * @param filePath the file path
+	 * @param os       the os
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void writeBytes(String filePath, OutputStream os) throws IOException {
 		FileInputStream fis = null;
@@ -70,10 +70,10 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 删除文件
+	 * Delete file.
 	 *
-	 * @param filePath 文件
-	 * @return
+	 * @param filePath the file path
+	 * @return true, if successful
 	 */
 	public static boolean deleteFile(String filePath) {
 		boolean flag = false;
@@ -87,20 +87,20 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 文件名称验证
+	 * Checks if is valid filename.
 	 *
-	 * @param filename 文件名称
-	 * @return true 正常 false 非法
+	 * @param filename the filename
+	 * @return true, if is valid filename
 	 */
 	public static boolean isValidFilename(String filename) {
 		return filename.matches(FILENAME_PATTERN);
 	}
 
 	/**
-	 * 检查文件是否可下载
+	 * Check allow download.
 	 *
-	 * @param resource 需要下载的文件
-	 * @return true 正常 false 非法
+	 * @param resource the resource
+	 * @return true, if successful
 	 */
 	public static boolean checkAllowDownload(String resource) {
 		// 禁止目录上跳级别
@@ -118,11 +118,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 下载文件名重新编码
+	 * Sets the file download header.
 	 *
-	 * @param request  请求对象
-	 * @param fileName 文件名
-	 * @return 编码后的文件名
+	 * @param request  the request
+	 * @param fileName the file name
+	 * @return the string
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
 	 */
 	public static String setFileDownloadHeader(HttpServletRequest request, String fileName)
 			throws UnsupportedEncodingException {
@@ -146,11 +147,11 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 下载文件名重新编码
+	 * Sets the attachment response header.
 	 *
-	 * @param response     响应对象
-	 * @param realFileName 真实文件名
-	 * @return
+	 * @param response     the response
+	 * @param realFileName the real file name
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
 	 */
 	public static void setAttachmentResponseHeader(HttpServletResponse response, String realFileName)
 			throws UnsupportedEncodingException {
@@ -164,16 +165,23 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 百分号编码工具方法
+	 * Percent encode.
 	 *
-	 * @param s 需要百分号编码的字符串
-	 * @return 百分号编码后的字符串
+	 * @param s the s
+	 * @return the string
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
 	 */
 	public static String percentEncode(String s) throws UnsupportedEncodingException {
 		final String encode = URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
 		return encode.replaceAll("\\+", "%20");
 	}
 
+	/**
+	 * Download url as string.
+	 *
+	 * @param detailsUrl the details url
+	 * @return the string
+	 */
 	public static String downloadUrlAsString(String detailsUrl) {
 		if (StringUtils.isEmpty(detailsUrl)) {
 			return null;

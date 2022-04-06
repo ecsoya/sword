@@ -6,67 +6,98 @@ import com.github.ecsoya.sword.message.IMessageService;
 import com.github.ecsoya.sword.message.domain.UserMessage;
 
 /**
- * 用户消息Service接口
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-05-20
+ * The Interface IUserMessageService.
  */
 public interface IUserMessageService extends IMessageService {
+
 	/**
-	 * 查询用户消息
-	 * 
-	 * @param id 用户消息ID
-	 * @return 用户消息
+	 * Select user message by id.
+	 *
+	 * @param id the id
+	 * @return the user message
 	 */
 	public UserMessage selectUserMessageById(Long id);
 
 	/**
-	 * 查询用户消息列表
-	 * 
-	 * @param userMessage 用户消息
-	 * @return 用户消息集合
+	 * Select user message list.
+	 *
+	 * @param userMessage the user message
+	 * @return the list
 	 */
 	public List<UserMessage> selectUserMessageList(UserMessage userMessage);
 
 	/**
-	 * 新增用户消息
-	 * 
-	 * @param userMessage 用户消息
-	 * @return 结果
+	 * Insert user message.
+	 *
+	 * @param userMessage the user message
+	 * @return the int
 	 */
 	public int insertUserMessage(UserMessage userMessage);
 
 	/**
-	 * 修改用户消息
-	 * 
-	 * @param userMessage 用户消息
-	 * @return 结果
+	 * Update user message.
+	 *
+	 * @param userMessage the user message
+	 * @return the int
 	 */
 	public int updateUserMessage(UserMessage userMessage);
 
 	/**
-	 * 批量删除用户消息
-	 * 
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * Delete user message by ids.
+	 *
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserMessageByIds(String ids);
 
 	/**
-	 * 删除用户消息信息
-	 * 
-	 * @param id 用户消息ID
-	 * @return 结果
+	 * Delete user message by id.
+	 *
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserMessageById(Long id);
 
+	/**
+	 * Select user message unread count.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	public int selectUserMessageUnreadCount(Long userId);
 
+	/**
+	 * Publish user messages.
+	 *
+	 * @param messageId the message id
+	 * @param type      the type
+	 * @param userIds   the user ids
+	 * @return the int
+	 */
 	public int publishUserMessages(Long messageId, Integer type, Long... userIds);
 
+	/**
+	 * Read user message by ids.
+	 *
+	 * @param userId the user id
+	 * @param ids    the ids
+	 * @return the int
+	 */
 	public int readUserMessageByIds(Long userId, String ids);
 
+	/**
+	 * Read user message by user id.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	public int readUserMessageByUserId(Long userId);
 
+	/**
+	 * Removes the all user message by user id.
+	 *
+	 * @param userId the user id
+	 * @return the int
+	 */
 	public int removeAllUserMessageByUserId(Long userId);
 }

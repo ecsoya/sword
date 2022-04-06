@@ -20,20 +20,20 @@ import com.github.ecsoya.sword.system.mapper.SysDeptMapper;
 import com.github.ecsoya.sword.system.service.ISysDeptService;
 
 /**
- * 部门管理 服务实现
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysDeptServiceImpl.
  */
 @Service
 public class SysDeptServiceImpl implements ISysDeptService {
+
+	/** The dept mapper. */
 	@Autowired
 	private SysDeptMapper deptMapper;
 
 	/**
-	 * 查询部门管理数据
+	 * Select dept list.
 	 *
-	 * @param dept 部门信息
-	 * @return 部门信息集合
+	 * @param dept the dept
+	 * @return the list
 	 */
 	@Override
 	@DataScope(deptAlias = "d")
@@ -42,10 +42,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 查询部门管理树
+	 * Select dept tree.
 	 *
-	 * @param dept 部门信息
-	 * @return 所有部门信息
+	 * @param dept the dept
+	 * @return the list
 	 */
 	@Override
 	@DataScope(deptAlias = "d")
@@ -56,10 +56,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 查询部门管理树（排除下级）
+	 * Select dept tree exclude child.
 	 *
-	 * @param deptId 部门ID
-	 * @return 所有部门信息
+	 * @param dept the dept
+	 * @return the list
 	 */
 	@Override
 	@DataScope(deptAlias = "d")
@@ -79,10 +79,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 根据角色ID查询部门（数据权限）
+	 * Role dept tree data.
 	 *
-	 * @param role 角色对象
-	 * @return 部门列表（数据权限）
+	 * @param role the role
+	 * @return the list
 	 */
 	@Override
 	public List<Ztree> roleDeptTreeData(SysRole role) {
@@ -99,21 +99,21 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 对象转部门树
+	 * Inits the ztree.
 	 *
-	 * @param deptList 部门列表
-	 * @return 树结构列表
+	 * @param deptList the dept list
+	 * @return the list
 	 */
 	public List<Ztree> initZtree(List<SysDept> deptList) {
 		return initZtree(deptList, null);
 	}
 
 	/**
-	 * 对象转部门树
+	 * Inits the ztree.
 	 *
-	 * @param deptList     部门列表
-	 * @param roleDeptList 角色已存在菜单列表
-	 * @return 树结构列表
+	 * @param deptList     the dept list
+	 * @param roleDeptList the role dept list
+	 * @return the list
 	 */
 	public List<Ztree> initZtree(List<SysDept> deptList, List<String> roleDeptList) {
 
@@ -136,10 +136,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 查询部门人数
+	 * Select dept count.
 	 *
-	 * @param parentId 部门ID
-	 * @return 结果
+	 * @param parentId the parent id
+	 * @return the int
 	 */
 	@Override
 	public int selectDeptCount(Long parentId) {
@@ -149,10 +149,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 查询部门是否存在用户
+	 * Check dept exist user.
 	 *
-	 * @param deptId 部门ID
-	 * @return 结果 true 存在 false 不存在
+	 * @param deptId the dept id
+	 * @return true, if successful
 	 */
 	@Override
 	public boolean checkDeptExistUser(Long deptId) {
@@ -161,10 +161,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 删除部门管理信息
+	 * Delete dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 结果
+	 * @param deptId the dept id
+	 * @return the int
 	 */
 	@Override
 	public int deleteDeptById(Long deptId) {
@@ -172,10 +172,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 新增保存部门信息
+	 * Insert dept.
 	 *
-	 * @param dept 部门信息
-	 * @return 结果
+	 * @param dept the dept
+	 * @return the int
 	 */
 	@Override
 	public int insertDept(SysDept dept) {
@@ -189,10 +189,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 修改保存部门信息
+	 * Update dept.
 	 *
-	 * @param dept 部门信息
-	 * @return 结果
+	 * @param dept the dept
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -214,9 +214,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 修改该部门的父级部门状态
+	 * Update parent dept status.
 	 *
-	 * @param dept 当前部门
+	 * @param dept the dept
 	 */
 	private void updateParentDeptStatus(SysDept dept) {
 		final String updateBy = dept.getUpdateBy();
@@ -226,11 +226,11 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 修改子元素关系
+	 * Update dept children.
 	 *
-	 * @param deptId       被修改的部门ID
-	 * @param newAncestors 新的父ID集合
-	 * @param oldAncestors 旧的父ID集合
+	 * @param deptId       the dept id
+	 * @param newAncestors the new ancestors
+	 * @param oldAncestors the old ancestors
 	 */
 	public void updateDeptChildren(Long deptId, String newAncestors, String oldAncestors) {
 		final List<SysDept> children = deptMapper.selectChildrenDeptById(deptId);
@@ -243,10 +243,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 根据部门ID查询信息
+	 * Select dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 部门信息
+	 * @param deptId the dept id
+	 * @return the sys dept
 	 */
 	@Override
 	public SysDept selectDeptById(Long deptId) {
@@ -254,10 +254,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 根据ID查询所有子部门（正常状态）
+	 * Select normal children dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 子部门数
+	 * @param deptId the dept id
+	 * @return the int
 	 */
 	@Override
 	public int selectNormalChildrenDeptById(Long deptId) {
@@ -265,10 +265,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	}
 
 	/**
-	 * 校验部门名称是否唯一
+	 * Check dept name unique.
 	 *
-	 * @param dept 部门信息
-	 * @return 结果
+	 * @param dept the dept
+	 * @return the string
 	 */
 	@Override
 	public String checkDeptNameUnique(SysDept dept) {

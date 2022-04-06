@@ -14,21 +14,20 @@ import com.github.ecsoya.sword.mining.mapper.MiningSymbolMapper;
 import com.github.ecsoya.sword.mining.service.IMiningSymbolService;
 
 /**
- * 币种Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-08
+ * The Class MiningSymbolServiceImpl.
  */
 @Service
 public class MiningSymbolServiceImpl implements IMiningSymbolService {
+
+	/** The mining symbol mapper. */
 	@Autowired
 	private MiningSymbolMapper miningSymbolMapper;
 
 	/**
-	 * 查询币种
+	 * Select mining symbol by id.
 	 *
-	 * @param symbol 币种ID
-	 * @return 币种
+	 * @param symbol the symbol
+	 * @return the mining symbol
 	 */
 	@Override
 	public MiningSymbol selectMiningSymbolById(String symbol) {
@@ -36,10 +35,10 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 	}
 
 	/**
-	 * 查询币种列表
+	 * Select mining symbol list.
 	 *
-	 * @param miningSymbol 币种
-	 * @return 币种
+	 * @param miningSymbol the mining symbol
+	 * @return the list
 	 */
 	@Override
 	public List<MiningSymbol> selectMiningSymbolList(MiningSymbol miningSymbol) {
@@ -47,10 +46,10 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 	}
 
 	/**
-	 * 新增币种
+	 * Insert mining symbol.
 	 *
-	 * @param miningSymbol 币种
-	 * @return 结果
+	 * @param miningSymbol the mining symbol
+	 * @return the int
 	 */
 	@Override
 	public int insertMiningSymbol(MiningSymbol miningSymbol) {
@@ -61,10 +60,10 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 	}
 
 	/**
-	 * 修改币种
+	 * Update mining symbol.
 	 *
-	 * @param miningSymbol 币种
-	 * @return 结果
+	 * @param miningSymbol the mining symbol
+	 * @return the int
 	 */
 	@Override
 	public int updateMiningSymbol(MiningSymbol miningSymbol) {
@@ -73,10 +72,10 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 	}
 
 	/**
-	 * 删除币种对象
+	 * Delete mining symbol by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteMiningSymbolByIds(String ids) {
@@ -84,27 +83,44 @@ public class MiningSymbolServiceImpl implements IMiningSymbolService {
 	}
 
 	/**
-	 * 删除币种信息
+	 * Delete mining symbol by id.
 	 *
-	 * @param symbol 币种ID
-	 * @return 结果
+	 * @param symbol the symbol
+	 * @return the int
 	 */
 	@Override
 	public int deleteMiningSymbolById(String symbol) {
 		return miningSymbolMapper.deleteMiningSymbolById(symbol);
 	}
 
+	/**
+	 * Select mining symbols.
+	 *
+	 * @return the list
+	 */
 	@Override
 	public List<String> selectMiningSymbols() {
 		return selectMiningSymbols(false);
 	}
 
+	/**
+	 * Select mining symbols.
+	 *
+	 * @param onlyBitcoin the only bitcoin
+	 * @return the list
+	 */
 	@Override
 	public List<String> selectMiningSymbols(boolean onlyBitcoin) {
 		Integer type = onlyBitcoin ? MiningSymbol.TYPE_BITCOIN : null;
 		return miningSymbolMapper.selectMiningSymbols(type);
 	}
 
+	/**
+	 * Select mining symbol chain.
+	 *
+	 * @param symbol the symbol
+	 * @return the string
+	 */
 	@Override
 	public String selectMiningSymbolChain(String symbol) {
 		if (StringUtils.isEmpty(symbol)) {

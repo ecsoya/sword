@@ -16,12 +16,25 @@ import com.sendcloud.sdk.model.TextContent;
 import com.sendcloud.sdk.model.TextContent.ScContentType;
 import com.sendcloud.sdk.util.ResponseData;
 
+/**
+ * The Class SendCloudService.
+ */
 @Component
 public class SendCloudService {
 
+	/** The config. */
 	@Autowired
 	private SendCloudProperties config;
 
+	/**
+	 * Send common.
+	 *
+	 * @param email   the email
+	 * @param subject the subject
+	 * @param html    the html
+	 * @return the response data
+	 * @throws Throwable the throwable
+	 */
 	public ResponseData sendCommon(String email, String subject, String html) throws Throwable {
 		final MailAddressReceiver receiver = new MailAddressReceiver();
 		// 添加收件人
@@ -49,6 +62,15 @@ public class SendCloudService {
 		return sc.sendMail(mail, credential, config.getRegion());
 	}
 
+	/**
+	 * Send template.
+	 *
+	 * @param email    the email
+	 * @param subject  the subject
+	 * @param template the template
+	 * @return the response data
+	 * @throws Throwable the throwable
+	 */
 	public ResponseData sendTemplate(String email, String subject, String template) throws Throwable {
 		final MailBody body = new MailBody();
 		// 设置 From

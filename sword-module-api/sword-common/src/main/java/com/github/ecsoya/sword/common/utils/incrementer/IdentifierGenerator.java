@@ -18,27 +18,23 @@ package com.github.ecsoya.sword.common.utils.incrementer;
 import com.github.ecsoya.sword.common.utils.IdWorker;
 
 /**
- * Id生成器接口
- *
- * @author sd-wangtaicheng@sdcncsi.com.cn nieqiuqiu
- * @since 2019-10-15
- * @since 3.3.0
+ * The Interface IdentifierGenerator.
  */
 public interface IdentifierGenerator {
 
 	/**
-	 * 生成Id
+	 * Next id.
 	 *
-	 * @param entity 实体
-	 * @return id
+	 * @param entity the entity
+	 * @return the number
 	 */
 	Number nextId(Object entity);
 
 	/**
-	 * 生成uuid
+	 * Next UUID.
 	 *
-	 * @param entity 实体
-	 * @return uuid
+	 * @param entity the entity
+	 * @return the string
 	 */
 	default String nextUUID(Object entity) {
 		return IdWorker.get32UUID();

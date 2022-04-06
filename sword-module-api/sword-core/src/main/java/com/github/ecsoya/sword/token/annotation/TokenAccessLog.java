@@ -7,24 +7,31 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 自定义操作日志记录注解
- *
- * @author AngryRED (jin.liu@soyatec.com)
- *
+ * The Interface TokenAccessLog.
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface TokenAccessLog {
+
 	/**
-	 * 模块
+	 * Title.
+	 *
+	 * @return the string
 	 */
 	public String title() default "";
 
+	/**
+	 * Description.
+	 *
+	 * @return the string
+	 */
 	public String description() default "";
 
 	/**
-	 * 是否保存请求的参数
+	 * Checks if is save request data.
+	 *
+	 * @return true, if is save request data
 	 */
 	public boolean isSaveRequestData() default true;
 }

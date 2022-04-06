@@ -19,18 +19,22 @@ import com.github.ecsoya.sword.quartz.domain.SysJobLog;
 import com.github.ecsoya.sword.quartz.service.ISysJobLogService;
 
 /**
- * 抽象quartz调用
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class AbstractQuartzJob.
  */
 public abstract class AbstractQuartzJob implements Job {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
 
-	/**
-	 * 线程本地变量
-	 */
+	/** The thread local. */
 	private static ThreadLocal<Date> threadLocal = new ThreadLocal<>();
 
+	/**
+	 * Execute.
+	 *
+	 * @param context the context
+	 * @throws JobExecutionException the job execution exception
+	 */
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		final SysJob sysJob = new SysJob();
@@ -48,20 +52,21 @@ public abstract class AbstractQuartzJob implements Job {
 	}
 
 	/**
-	 * 执行前
+	 * Before.
 	 *
-	 * @param context 工作执行上下文对象
-	 * @param sysJob  系统计划任务
+	 * @param context the context
+	 * @param sysJob  the sys job
 	 */
 	protected void before(JobExecutionContext context, SysJob sysJob) {
 		threadLocal.set(new Date());
 	}
 
 	/**
-	 * 执行后
+	 * After.
 	 *
-	 * @param context        工作执行上下文对象
-	 * @param sysScheduleJob 系统计划任务
+	 * @param context the context
+	 * @param sysJob  the sys job
+	 * @param e       the e
 	 */
 	protected void after(JobExecutionContext context, SysJob sysJob, Exception e) {
 		final Date startTime = threadLocal.get();
@@ -88,11 +93,11 @@ public abstract class AbstractQuartzJob implements Job {
 	}
 
 	/**
-	 * 执行方法，由子类重载
+	 * Do execute.
 	 *
-	 * @param context 工作执行上下文对象
-	 * @param sysJob  系统计划任务
-	 * @throws Exception 执行过程中的异常
+	 * @param context the context
+	 * @param sysJob  the sys job
+	 * @throws Exception the exception
 	 */
 	protected abstract void doExecute(JobExecutionContext context, SysJob sysJob) throws Exception;
 }

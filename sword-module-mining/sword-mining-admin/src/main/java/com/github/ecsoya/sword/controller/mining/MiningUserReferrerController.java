@@ -19,21 +19,37 @@ import com.github.ecsoya.sword.common.enums.BusinessType;
 import com.github.ecsoya.sword.user.domain.UserReferrerInfo;
 import com.github.ecsoya.sword.user.service.IUserReferrerService;
 
+/**
+ * The Class MiningUserReferrerController.
+ */
 @Controller
 @RequestMapping("/mining/user/referrer")
 public class MiningUserReferrerController extends BaseController {
 
+	/** The Constant prefix. */
 	private static final String prefix = "mining/user";
 
+	/** The user referrer service. */
 	@Autowired
 	private IUserReferrerService userReferrerService;
 
+	/**
+	 * List.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("mining:user:referrer:view")
 	@GetMapping
 	public String list() {
 		return prefix + "/referrer";
 	}
 
+	/**
+	 * Table.
+	 *
+	 * @param query the query
+	 * @return the table data info
+	 */
 	@RequiresPermissions("mining:user:referrer:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -44,6 +60,13 @@ public class MiningUserReferrerController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Import data.
+	 *
+	 * @param file the file
+	 * @return the ajax result
+	 * @throws Exception the exception
+	 */
 	@Log(title = "导入外部推荐关系", businessType = BusinessType.IMPORT)
 	@RequiresPermissions("mining:user:referrer:import")
 	@PostMapping("/importData")

@@ -25,24 +25,36 @@ import com.github.ecsoya.sword.system.domain.SysPost;
 import com.github.ecsoya.sword.system.service.ISysPostService;
 
 /**
- * 岗位信息操作处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysPostController.
  */
 @Controller
 @RequestMapping("/system/post")
 public class SysPostController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/post";
 
+	/** The post service. */
 	@Autowired
 	private ISysPostService postService;
 
+	/**
+	 * Operlog.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:post:view")
 	@GetMapping()
 	public String operlog() {
 		return prefix + "/post";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param post the post
+	 * @return the table data info
+	 */
 	@RequiresPermissions("system:post:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -52,6 +64,12 @@ public class SysPostController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param post the post
+	 * @return the ajax result
+	 */
 	@Log(title = "岗位管理", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("system:post:export")
 	@PostMapping("/export")
@@ -62,6 +80,12 @@ public class SysPostController extends BaseController {
 		return util.exportExcel(list, "岗位数据");
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("system:post:remove")
 	@Log(title = "岗位管理", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
@@ -75,7 +99,9 @@ public class SysPostController extends BaseController {
 	}
 
 	/**
-	 * 新增岗位
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -83,7 +109,10 @@ public class SysPostController extends BaseController {
 	}
 
 	/**
-	 * 新增保存岗位
+	 * Adds the save.
+	 *
+	 * @param post the post
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:post:add")
 	@Log(title = "岗位管理", businessType = BusinessType.INSERT)
@@ -100,7 +129,11 @@ public class SysPostController extends BaseController {
 	}
 
 	/**
-	 * 修改岗位
+	 * Edits the.
+	 *
+	 * @param postId the post id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{postId}")
 	public String edit(@PathVariable("postId") Long postId, ModelMap mmap) {
@@ -109,7 +142,10 @@ public class SysPostController extends BaseController {
 	}
 
 	/**
-	 * 修改保存岗位
+	 * Edits the save.
+	 *
+	 * @param post the post
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:post:edit")
 	@Log(title = "岗位管理", businessType = BusinessType.UPDATE)
@@ -126,7 +162,10 @@ public class SysPostController extends BaseController {
 	}
 
 	/**
-	 * 校验岗位名称
+	 * Check post name unique.
+	 *
+	 * @param post the post
+	 * @return the string
 	 */
 	@PostMapping("/checkPostNameUnique")
 	@ResponseBody
@@ -135,7 +174,10 @@ public class SysPostController extends BaseController {
 	}
 
 	/**
-	 * 校验岗位编码
+	 * Check post code unique.
+	 *
+	 * @param post the post
+	 * @return the string
 	 */
 	@PostMapping("/checkPostCodeUnique")
 	@ResponseBody

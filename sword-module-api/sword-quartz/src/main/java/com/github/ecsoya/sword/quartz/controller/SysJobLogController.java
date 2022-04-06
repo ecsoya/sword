@@ -26,21 +26,30 @@ import com.github.ecsoya.sword.quartz.service.ISysJobLogService;
 import com.github.ecsoya.sword.quartz.service.ISysJobService;
 
 /**
- * 调度日志操作处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysJobLogController.
  */
 @Controller
 @RequestMapping("/monitor/jobLog")
 public class SysJobLogController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "monitor/job";
 
+	/** The job service. */
 	@Autowired
 	private ISysJobService jobService;
 
+	/** The job log service. */
 	@Autowired
 	private ISysJobLogService jobLogService;
 
+	/**
+	 * Job log.
+	 *
+	 * @param jobId the job id
+	 * @param mmap  the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("monitor:job:view")
 	@GetMapping()
 	public String jobLog(@RequestParam(value = "jobId", required = false) Long jobId, ModelMap mmap) {
@@ -51,6 +60,12 @@ public class SysJobLogController extends BaseController {
 		return prefix + "/jobLog";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param jobLog the job log
+	 * @return the table data info
+	 */
 	@RequiresPermissions("monitor:job:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -60,6 +75,12 @@ public class SysJobLogController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param jobLog the job log
+	 * @return the ajax result
+	 */
 	@Log(title = "调度日志", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("monitor:job:export")
 	@PostMapping("/export")
@@ -70,6 +91,12 @@ public class SysJobLogController extends BaseController {
 		return util.exportExcel(list, "调度日志");
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@Log(title = "调度日志", businessType = BusinessType.DELETE)
 	@RequiresPermissions("monitor:job:remove")
 	@PostMapping("/remove")
@@ -78,6 +105,13 @@ public class SysJobLogController extends BaseController {
 		return toAjax(jobLogService.deleteJobLogByIds(ids));
 	}
 
+	/**
+	 * Detail.
+	 *
+	 * @param jobLogId the job log id
+	 * @param mmap     the mmap
+	 * @return the string
+	 */
 	@RequiresPermissions("monitor:job:detail")
 	@GetMapping("/detail/{jobLogId}")
 	public String detail(@PathVariable("jobLogId") Long jobLogId, ModelMap mmap) {
@@ -86,6 +120,11 @@ public class SysJobLogController extends BaseController {
 		return prefix + "/detail";
 	}
 
+	/**
+	 * Clean.
+	 *
+	 * @return the ajax result
+	 */
 	@Log(title = "调度日志", businessType = BusinessType.CLEAN)
 	@RequiresPermissions("monitor:job:remove")
 	@PostMapping("/clean")

@@ -7,25 +7,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Bean 工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class BeanUtils.
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {
-	/** Bean方法名中属性名开始的下标 */
+
+	/** The Constant BEAN_METHOD_PROP_INDEX. */
 	private static final int BEAN_METHOD_PROP_INDEX = 3;
 
-	/** * 匹配getter方法的正则表达式 */
+	/** The Constant GET_PATTERN. */
 	private static final Pattern GET_PATTERN = Pattern.compile("get(\\p{javaUpperCase}\\w*)");
 
-	/** * 匹配setter方法的正则表达式 */
+	/** The Constant SET_PATTERN. */
 	private static final Pattern SET_PATTERN = Pattern.compile("set(\\p{javaUpperCase}\\w*)");
 
 	/**
-	 * Bean属性复制工具方法。
+	 * Copy bean prop.
 	 *
-	 * @param dest 目标对象
-	 * @param src  源对象
+	 * @param dest the dest
+	 * @param src  the src
 	 */
 	public static void copyBeanProp(Object dest, Object src) {
 		try {
@@ -36,10 +35,10 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 	}
 
 	/**
-	 * 获取对象的setter方法。
+	 * Gets the setter methods.
 	 *
-	 * @param obj 对象
-	 * @return 对象的setter方法列表
+	 * @param obj the obj
+	 * @return the setter methods
 	 */
 	public static List<Method> getSetterMethods(Object obj) {
 		// setter方法列表
@@ -61,10 +60,10 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 	}
 
 	/**
-	 * 获取对象的getter方法。
+	 * Gets the getter methods.
 	 *
-	 * @param obj 对象
-	 * @return 对象的getter方法列表
+	 * @param obj the obj
+	 * @return the getter methods
 	 */
 
 	public static List<Method> getGetterMethods(Object obj) {
@@ -84,12 +83,11 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 	}
 
 	/**
-	 * 检查Bean方法名中的属性名是否相等。<br>
-	 * 如getName()和setName()属性名一样，getName()和setAge()属性名不一样。
+	 * Checks if is method prop equals.
 	 *
-	 * @param m1 方法名1
-	 * @param m2 方法名2
-	 * @return 属性名一样返回true，否则返回false
+	 * @param m1 the m 1
+	 * @param m2 the m 2
+	 * @return true, if is method prop equals
 	 */
 
 	public static boolean isMethodPropEquals(String m1, String m2) {

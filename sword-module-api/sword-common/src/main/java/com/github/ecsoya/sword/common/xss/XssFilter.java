@@ -18,21 +18,22 @@ import javax.servlet.http.HttpServletResponse;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * 防止XSS攻击的过滤器
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class XssFilter.
  */
 public class XssFilter implements Filter {
-	/**
-	 * 排除链接
-	 */
+
+	/** The excludes. */
 	public List<String> excludes = new ArrayList<>();
 
-	/**
-	 * xss过滤开关
-	 */
+	/** The enabled. */
 	public boolean enabled = false;
 
+	/**
+	 * Inits the.
+	 *
+	 * @param filterConfig the filter config
+	 * @throws ServletException the servlet exception
+	 */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		final String tempExcludes = filterConfig.getInitParameter("excludes");
@@ -48,6 +49,15 @@ public class XssFilter implements Filter {
 		}
 	}
 
+	/**
+	 * Do filter.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @param chain    the chain
+	 * @throws IOException      Signals that an I/O exception has occurred.
+	 * @throws ServletException the servlet exception
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -61,6 +71,13 @@ public class XssFilter implements Filter {
 		chain.doFilter(xssRequest, response);
 	}
 
+	/**
+	 * Handle exclude URL.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return true, if successful
+	 */
 	private boolean handleExcludeURL(HttpServletRequest request, HttpServletResponse response) {
 		if (!enabled) {
 			return true;
@@ -79,6 +96,9 @@ public class XssFilter implements Filter {
 		return false;
 	}
 
+	/**
+	 * Destroy.
+	 */
 	@Override
 	public void destroy() {
 

@@ -8,66 +8,81 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.wallet.domain.UserWalletAccount;
 
 /**
- * 用户钱包账号Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface UserWalletAccountMapper.
  */
 public interface UserWalletAccountMapper {
+
 	/**
-	 * 查询用户钱包账号
+	 * Select user wallet account by id.
 	 *
-	 * @param id 用户钱包账号ID
-	 * @return 用户钱包账号
+	 * @param id the id
+	 * @return the user wallet account
 	 */
 	public UserWalletAccount selectUserWalletAccountById(Long id);
 
 	/**
-	 * 查询用户钱包账号列表
+	 * Select user wallet account list.
 	 *
-	 * @param userWalletAccount 用户钱包账号
-	 * @return 用户钱包账号集合
+	 * @param userWalletAccount the user wallet account
+	 * @return the list
 	 */
 	public List<UserWalletAccount> selectUserWalletAccountList(UserWalletAccount userWalletAccount);
 
 	/**
-	 * 新增用户钱包账号
+	 * Insert user wallet account.
 	 *
-	 * @param userWalletAccount 用户钱包账号
-	 * @return 结果
+	 * @param userWalletAccount the user wallet account
+	 * @return the int
 	 */
 	public int insertUserWalletAccount(UserWalletAccount userWalletAccount);
 
 	/**
-	 * 修改用户钱包账号
+	 * Update user wallet account.
 	 *
-	 * @param userWalletAccount 用户钱包账号
-	 * @return 结果
+	 * @param userWalletAccount the user wallet account
+	 * @return the int
 	 */
 	public int updateUserWalletAccount(UserWalletAccount userWalletAccount);
 
 	/**
-	 * 删除用户钱包账号
+	 * Delete user wallet account by id.
 	 *
-	 * @param id 用户钱包账号ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserWalletAccountById(Long id);
 
 	/**
-	 * 批量删除用户钱包账号
+	 * Delete user wallet account by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserWalletAccountByIds(String[] ids);
 
+	/**
+	 * Select user wallet account.
+	 *
+	 * @param userId the user id
+	 * @param symbol the symbol
+	 * @return the user wallet account
+	 */
 	public UserWalletAccount selectUserWalletAccount(@Param("userId") Long userId, @Param("symbol") String symbol);
 
 	/**
-	 * 锁行
+	 * Lock user wallet account by id.
+	 *
+	 * @param id the id
+	 * @return the user wallet account
 	 */
 	public UserWalletAccount lockUserWalletAccountById(Long id);
 
+	/**
+	 * Select user account amount.
+	 *
+	 * @param symbol the symbol
+	 * @param kind   the kind
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserAccountAmount(@Param("symbol") String symbol, @Param("kind") Integer kind);
 }

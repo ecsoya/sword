@@ -22,13 +22,19 @@ import com.github.ecsoya.sword.common.constant.Constants;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * 图片处理工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class ImageUtils.
  */
 public class ImageUtils {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
 
+	/**
+	 * Gets the image.
+	 *
+	 * @param imagePath the image path
+	 * @return the image
+	 */
 	public static byte[] getImage(String imagePath) {
 		final InputStream is = getFile(imagePath);
 		try {
@@ -41,6 +47,12 @@ public class ImageUtils {
 		}
 	}
 
+	/**
+	 * Gets the file.
+	 *
+	 * @param imagePath the image path
+	 * @return the file
+	 */
 	public static InputStream getFile(String imagePath) {
 		try {
 			byte[] result = readFile(imagePath);
@@ -53,10 +65,10 @@ public class ImageUtils {
 	}
 
 	/**
-	 * 读取文件为字节数据
+	 * Read file.
 	 *
-	 * @param key 地址
-	 * @return 字节数据
+	 * @param url the url
+	 * @return the byte[]
 	 */
 	public static byte[] readFile(String url) {
 		InputStream in = null;
@@ -87,6 +99,13 @@ public class ImageUtils {
 		}
 	}
 
+	/**
+	 * Compress image.
+	 *
+	 * @param in    the in
+	 * @param width the width
+	 * @return the input stream
+	 */
 	public static InputStream compressImage(InputStream in, int width) {
 		if (width <= 0) {
 			return null;
@@ -108,6 +127,13 @@ public class ImageUtils {
 		}
 	}
 
+	/**
+	 * To input stream.
+	 *
+	 * @param image  the image
+	 * @param format the format
+	 * @return the input stream
+	 */
 	public static InputStream toInputStream(BufferedImage image, String format) {
 		if (image == null) {
 			return null;

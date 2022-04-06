@@ -16,26 +16,47 @@ import com.github.ecsoya.sword.utils.SwordUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * The Class UserCertificateController.
+ */
 @RestController
 @RequestMapping("/user/certificate")
 @Api(tags = { "实名认证" }, description = "增、删、改")
 public class UserCertificateController extends BaseController {
 
+	/** The certificate service. */
 	@Autowired
 	private IUserCertificateService certificateService;
 
+	/**
+	 * Verify.
+	 *
+	 * @param kind the kind
+	 * @return the common result
+	 */
 	@ApiOperation(value = "检测是否需要实名验证", notes = "kind: 1-钱包 2-提币 4-购买矿机")
 	@GetMapping("/verify")
 	public CommonResult<?> verify(Integer kind) {
 		return certificateService.checkUserCertificate(SwordUtils.getUserId(), kind);
 	}
 
+	/**
+	 * Info.
+	 *
+	 * @return the common result
+	 */
 	@ApiOperation(value = "获取实名验证信息", notes = "type: 0-身份证 1-护照；status: 0-提交 1-失败 2-成功；")
 	@GetMapping("/info")
 	public CommonResult<UserCertificate> info() {
 		return CommonResult.build(certificateService.selectUserCertificateById(SwordUtils.getUserId()));
 	}
 
+	/**
+	 * Edits the.
+	 *
+	 * @param uc the uc
+	 * @return the common result
+	 */
 	@ApiOperation(value = "添加或修改实名验证信息", notes = "type: 0-身份证 1-护照 2-其它；realName: 实名；identityNumber：号码；frontImageUrl：正面照片；backImageUrl：背面照片；holdingImageUrl：手持照片；country：国家\n 三位字母国家码（ARE(\"阿拉伯联合酋长国\", \"United Arab Emirates\"),\n"
 			+ "	JOR(\"约旦\", \"Jordan\"),\n" + "	SYR(\"叙利亚\", \"Syria\"),\n" + "	HRV(\"克罗地亚\", \"Croatia\"),\n"
 			+ "	BEL(\"比利时\", \"Belgium\"),\n" + "	PAN(\"巴拿马\", \"Panama\"),\n" + "	MLT(\"马耳他\", \"Malta\"),\n"

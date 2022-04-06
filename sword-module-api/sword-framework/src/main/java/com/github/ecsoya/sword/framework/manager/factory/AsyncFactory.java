@@ -22,19 +22,18 @@ import com.github.ecsoya.sword.system.service.impl.SysLogininforServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
- * 异步工厂（产生任务用）
- *
- * @author liuhulu
- *
+ * A factory for creating Async objects.
  */
 public class AsyncFactory {
+
+	/** The Constant sys_user_logger. */
 	private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");
 
 	/**
-	 * 同步session到数据库
+	 * Sync session to db.
 	 *
-	 * @param session 在线用户会话
-	 * @return 任务task
+	 * @param session the session
+	 * @return the timer task
 	 */
 	public static TimerTask syncSessionToDb(final OnlineSession session) {
 		return new TimerTask() {
@@ -59,10 +58,10 @@ public class AsyncFactory {
 	}
 
 	/**
-	 * 操作日志记录
+	 * Record oper.
 	 *
-	 * @param operLog 操作日志信息
-	 * @return 任务task
+	 * @param operLog the oper log
+	 * @return the timer task
 	 */
 	public static TimerTask recordOper(final SysOperLog operLog) {
 		return new TimerTask() {
@@ -76,13 +75,13 @@ public class AsyncFactory {
 	}
 
 	/**
-	 * 记录登录信息
+	 * Record logininfor.
 	 *
-	 * @param username 用户名
-	 * @param status   状态
-	 * @param message  消息
-	 * @param args     列表
-	 * @return 任务task
+	 * @param username the username
+	 * @param status   the status
+	 * @param message  the message
+	 * @param args     the args
+	 * @return the timer task
 	 */
 	public static TimerTask recordLogininfor(final String username, final String status, final String message,
 			final Object... args) {

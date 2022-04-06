@@ -1,42 +1,41 @@
 package com.github.ecsoya.sword.common.utils.uuid;
 
 /**
- * ID生成器工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class IdUtils.
  */
 public class IdUtils {
+
 	/**
-	 * 获取随机UUID
+	 * Random UUID.
 	 *
-	 * @return 随机UUID
+	 * @return the string
 	 */
 	public static String randomUUID() {
 		return UUID.randomUUID().toString();
 	}
 
 	/**
-	 * 简化的UUID，去掉了横线
+	 * Simple UUID.
 	 *
-	 * @return 简化的UUID，去掉了横线
+	 * @return the string
 	 */
 	public static String simpleUUID() {
 		return UUID.randomUUID().toString(true);
 	}
 
 	/**
-	 * 获取随机UUID，使用性能更好的ThreadLocalRandom生成UUID
+	 * Fast UUID.
 	 *
-	 * @return 随机UUID
+	 * @return the string
 	 */
 	public static String fastUUID() {
 		return UUID.fastUUID().toString();
 	}
 
 	/**
-	 * 简化的UUID，去掉了横线，使用性能更好的ThreadLocalRandom生成UUID
+	 * Fast simple UUID.
 	 *
-	 * @return 简化的UUID，去掉了横线
+	 * @return the string
 	 */
 	public static String fastSimpleUUID() {
 		return UUID.fastUUID().toString(true);

@@ -4,13 +4,14 @@ import com.github.ecsoya.sword.common.constant.Constants;
 import com.github.ecsoya.sword.common.utils.ServletUtils;
 
 /**
- * 表格数据处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class TableSupport.
  */
 public class TableSupport {
+
 	/**
-	 * 封装分页对象
+	 * Gets the page domain.
+	 *
+	 * @return the page domain
 	 */
 	public static PageDomain getPageDomain() {
 		final PageDomain pageDomain = new PageDomain();
@@ -25,6 +26,11 @@ public class TableSupport {
 		return pageDomain;
 	}
 
+	/**
+	 * Builds the page request.
+	 *
+	 * @return the page domain
+	 */
 	public static PageDomain buildPageRequest() {
 		return getPageDomain();
 	}

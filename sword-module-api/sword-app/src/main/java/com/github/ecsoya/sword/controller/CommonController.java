@@ -27,20 +27,22 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 通用请求处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class CommonController.
  */
 @RestController
 @Api(tags = { "上传" }, description = "上传、下载")
 public class CommonController {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
 	/**
-	 * 通用下载请求
+	 * File download.
 	 *
-	 * @param fileName 文件名称
-	 * @param delete   是否删除
+	 * @param fileName the file name
+	 * @param delete   the delete
+	 * @param response the response
+	 * @param request  the request
 	 */
 	@ApiOperation("通用下载请求")
 	@GetMapping("common/download")
@@ -65,7 +67,12 @@ public class CommonController {
 	}
 
 	/**
-	 * 通用上传请求
+	 * Upload file.
+	 *
+	 * @param file  the file
+	 * @param width the width
+	 * @return the ajax result
+	 * @throws Exception the exception
 	 */
 	@ApiOperation("通用上传请求")
 	@PostMapping("/common/upload")
@@ -99,7 +106,12 @@ public class CommonController {
 	}
 
 	/**
-	 * 本地资源通用下载
+	 * Resource download.
+	 *
+	 * @param resource the resource
+	 * @param request  the request
+	 * @param response the response
+	 * @throws Exception the exception
 	 */
 	@ApiOperation("本地资源通用下载")
 	@GetMapping("/common/download/resource")

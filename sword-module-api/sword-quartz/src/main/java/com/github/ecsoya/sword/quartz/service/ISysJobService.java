@@ -8,96 +8,103 @@ import com.github.ecsoya.sword.common.exception.job.TaskException;
 import com.github.ecsoya.sword.quartz.domain.SysJob;
 
 /**
- * 定时任务调度信息信息 服务层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface ISysJobService.
  */
 public interface ISysJobService {
+
 	/**
-	 * 获取quartz调度器的计划任务
+	 * Select job list.
 	 *
-	 * @param job 调度信息
-	 * @return 调度任务集合
+	 * @param job the job
+	 * @return the list
 	 */
 	public List<SysJob> selectJobList(SysJob job);
 
 	/**
-	 * 通过调度任务ID查询调度信息
+	 * Select job by id.
 	 *
-	 * @param jobId 调度任务ID
-	 * @return 调度任务对象信息
+	 * @param jobId the job id
+	 * @return the sys job
 	 */
 	public SysJob selectJobById(Long jobId);
 
 	/**
-	 * 暂停任务
+	 * Pause job.
 	 *
-	 * @param job 调度信息
-	 * @return 结果
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
 	 */
 	public int pauseJob(SysJob job) throws SchedulerException;
 
 	/**
-	 * 恢复任务
+	 * Resume job.
 	 *
-	 * @param job 调度信息
-	 * @return 结果
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
 	 */
 	public int resumeJob(SysJob job) throws SchedulerException;
 
 	/**
-	 * 删除任务后，所对应的trigger也将被删除
+	 * Delete job.
 	 *
-	 * @param job 调度信息
-	 * @return 结果
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
 	 */
 	public int deleteJob(SysJob job) throws SchedulerException;
 
 	/**
-	 * 批量删除调度信息
+	 * Delete job by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @throws SchedulerException the scheduler exception
 	 */
 	public void deleteJobByIds(String ids) throws SchedulerException;
 
 	/**
-	 * 任务调度状态修改
+	 * Change status.
 	 *
-	 * @param job 调度信息
-	 * @return 结果
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
 	 */
 	public int changeStatus(SysJob job) throws SchedulerException;
 
 	/**
-	 * 立即运行任务
+	 * Run.
 	 *
-	 * @param job 调度信息
-	 * @return 结果
+	 * @param job the job
+	 * @throws SchedulerException the scheduler exception
 	 */
 	public void run(SysJob job) throws SchedulerException;
 
 	/**
-	 * 新增任务
+	 * Insert job.
 	 *
-	 * @param job 调度信息
-	 * @return 结果
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
+	 * @throws TaskException      the task exception
 	 */
 	public int insertJob(SysJob job) throws SchedulerException, TaskException;
 
 	/**
-	 * 更新任务
+	 * Update job.
 	 *
-	 * @param job 调度信息
-	 * @return 结果
+	 * @param job the job
+	 * @return the int
+	 * @throws SchedulerException the scheduler exception
+	 * @throws TaskException      the task exception
 	 */
 	public int updateJob(SysJob job) throws SchedulerException, TaskException;
 
 	/**
-	 * 校验cron表达式是否有效
+	 * Check cron expression is valid.
 	 *
-	 * @param cronExpression 表达式
-	 * @return 结果
+	 * @param cronExpression the cron expression
+	 * @return true, if successful
 	 */
 	public boolean checkCronExpressionIsValid(String cronExpression);
 }

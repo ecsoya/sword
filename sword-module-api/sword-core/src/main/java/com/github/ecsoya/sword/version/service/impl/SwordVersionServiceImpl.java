@@ -19,24 +19,32 @@ import com.github.ecsoya.sword.version.service.ISwordVersionService;
 import com.github.pagehelper.page.PageMethod;
 
 /**
- * 版本Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-22
+ * The Class SwordVersionServiceImpl.
  */
 @Service
 public class SwordVersionServiceImpl implements ISwordVersionService {
+
+	/** The sword version mapper. */
 	@Autowired
 	private SwordVersionMapper swordVersionMapper;
 
+	/** The Constant CACHE_VERSION. */
 	private static final String CACHE_VERSION = "sword:version:";
+
+	/** The Constant types. */
 	private static final List<String> types = Arrays.asList(SwordVersion.TYPE_IOS, SwordVersion.TYPE_ANDROID);
 
+	/**
+	 * Inits the.
+	 */
 	@PostConstruct
 	public void init() {
 		rebuildCache();
 	}
 
+	/**
+	 * Rebuild cache.
+	 */
 	private void rebuildCache() {
 		for (final String type : types) {
 			final SwordVersion version = swordVersionMapper.selectLatestSwordVersion(type);
@@ -48,10 +56,10 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 	}
 
 	/**
-	 * 查询版本
+	 * Select sword version by id.
 	 *
-	 * @param id 版本ID
-	 * @return 版本
+	 * @param id the id
+	 * @return the sword version
 	 */
 	@Override
 	public SwordVersion selectSwordVersionById(Long id) {
@@ -59,10 +67,10 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 	}
 
 	/**
-	 * 查询版本列表
+	 * Select sword version list.
 	 *
-	 * @param swordVersion 版本
-	 * @return 版本
+	 * @param swordVersion the sword version
+	 * @return the list
 	 */
 	@Override
 	public List<SwordVersion> selectSwordVersionList(SwordVersion swordVersion) {
@@ -70,10 +78,10 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 	}
 
 	/**
-	 * 新增版本
+	 * Insert sword version.
 	 *
-	 * @param swordVersion 版本
-	 * @return 结果
+	 * @param swordVersion the sword version
+	 * @return the int
 	 */
 	@Override
 	public int insertSwordVersion(SwordVersion swordVersion) {
@@ -91,10 +99,10 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 	}
 
 	/**
-	 * 修改版本
+	 * Update sword version.
 	 *
-	 * @param swordVersion 版本
-	 * @return 结果
+	 * @param swordVersion the sword version
+	 * @return the int
 	 */
 	@Override
 	public int updateSwordVersion(SwordVersion swordVersion) {
@@ -107,10 +115,10 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 	}
 
 	/**
-	 * 删除版本对象
+	 * Delete sword version by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteSwordVersionByIds(String ids) {
@@ -122,10 +130,10 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 	}
 
 	/**
-	 * 删除版本信息
+	 * Delete sword version by id.
 	 *
-	 * @param id 版本ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteSwordVersionById(Long id) {
@@ -136,6 +144,12 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 		return rows;
 	}
 
+	/**
+	 * Select latest version.
+	 *
+	 * @param type the type
+	 * @return the sword version
+	 */
 	@Override
 	public SwordVersion selectLatestVersion(String type) {
 		if (StringUtils.isEmpty(type)) {
@@ -149,6 +163,12 @@ public class SwordVersionServiceImpl implements ISwordVersionService {
 		return swordVersionMapper.selectLatestSwordVersion(type);
 	}
 
+	/**
+	 * Select latest version number.
+	 *
+	 * @param type the type
+	 * @return the long
+	 */
 	@Override
 	public Long selectLatestVersionNumber(String type) {
 		final SwordVersion version = selectLatestVersion(type);

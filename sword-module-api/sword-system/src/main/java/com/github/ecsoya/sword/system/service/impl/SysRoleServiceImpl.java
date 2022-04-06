@@ -28,29 +28,32 @@ import com.github.ecsoya.sword.system.mapper.SysUserRoleMapper;
 import com.github.ecsoya.sword.system.service.ISysRoleService;
 
 /**
- * 角色 业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysRoleServiceImpl.
  */
 @Service
 public class SysRoleServiceImpl implements ISysRoleService {
+
+	/** The role mapper. */
 	@Autowired
 	private SysRoleMapper roleMapper;
 
+	/** The role menu mapper. */
 	@Autowired
 	private SysRoleMenuMapper roleMenuMapper;
 
+	/** The user role mapper. */
 	@Autowired
 	private SysUserRoleMapper userRoleMapper;
 
+	/** The role dept mapper. */
 	@Autowired
 	private SysRoleDeptMapper roleDeptMapper;
 
 	/**
-	 * 根据条件分页查询角色数据
+	 * Select role list.
 	 *
-	 * @param role 角色信息
-	 * @return 角色数据集合信息
+	 * @param role the role
+	 * @return the list
 	 */
 	@Override
 	@DataScope(deptAlias = "d")
@@ -59,10 +62,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 根据用户ID查询权限
+	 * Select role keys.
 	 *
-	 * @param userId 用户ID
-	 * @return 权限列表
+	 * @param userId the user id
+	 * @return the sets the
 	 */
 	@Override
 	public Set<String> selectRoleKeys(Long userId) {
@@ -77,10 +80,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 根据用户ID查询角色
+	 * Select roles by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 角色列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	@Override
 	public List<SysRole> selectRolesByUserId(Long userId) {
@@ -98,9 +101,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 查询所有角色
+	 * Select role all.
 	 *
-	 * @return 角色列表
+	 * @return the list
 	 */
 	@Override
 	public List<SysRole> selectRoleAll() {
@@ -108,10 +111,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 通过角色ID查询角色
+	 * Select role by id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 角色对象信息
+	 * @param roleId the role id
+	 * @return the sys role
 	 */
 	@Override
 	public SysRole selectRoleById(Long roleId) {
@@ -119,10 +122,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 通过角色ID删除角色
+	 * Delete role by id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 结果
+	 * @param roleId the role id
+	 * @return true, if successful
 	 */
 	@Override
 	@Transactional
@@ -135,10 +138,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 批量删除角色信息
+	 * Delete role by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @throws Exception
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -159,10 +162,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 新增保存角色信息
+	 * Insert role.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -173,10 +176,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 修改保存角色信息
+	 * Update role.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -189,10 +192,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 修改数据权限信息
+	 * Auth data scope.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -206,9 +209,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 新增角色菜单信息
+	 * Insert role menu.
 	 *
-	 * @param role 角色对象
+	 * @param role the role
+	 * @return the int
 	 */
 	public int insertRoleMenu(SysRole role) {
 		int rows = 1;
@@ -227,9 +231,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 新增角色部门信息(数据权限)
+	 * Insert role dept.
 	 *
-	 * @param role 角色对象
+	 * @param role the role
+	 * @return the int
 	 */
 	public int insertRoleDept(SysRole role) {
 		int rows = 1;
@@ -248,10 +253,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 校验角色名称是否唯一
+	 * Check role name unique.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the string
 	 */
 	@Override
 	public String checkRoleNameUnique(SysRole role) {
@@ -264,10 +269,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 校验角色权限是否唯一
+	 * Check role key unique.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the string
 	 */
 	@Override
 	public String checkRoleKeyUnique(SysRole role) {
@@ -280,9 +285,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 校验角色是否允许操作
+	 * Check role allowed.
 	 *
-	 * @param role 角色信息
+	 * @param role the role
 	 */
 	@Override
 	public void checkRoleAllowed(SysRole role) {
@@ -292,10 +297,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 通过角色ID查询角色使用数量
+	 * Count user role by role id.
 	 *
-	 * @param roleId 角色ID
-	 * @return 结果
+	 * @param roleId the role id
+	 * @return the int
 	 */
 	@Override
 	public int countUserRoleByRoleId(Long roleId) {
@@ -303,10 +308,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 角色状态修改
+	 * Change status.
 	 *
-	 * @param role 角色信息
-	 * @return 结果
+	 * @param role the role
+	 * @return the int
 	 */
 	@Override
 	public int changeStatus(SysRole role) {
@@ -314,10 +319,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 取消授权用户角色
+	 * Delete auth user.
 	 *
-	 * @param userRole 用户和角色关联信息
-	 * @return 结果
+	 * @param userRole the user role
+	 * @return the int
 	 */
 	@Override
 	public int deleteAuthUser(SysUserRole userRole) {
@@ -325,11 +330,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 批量取消授权用户角色
+	 * Delete auth users.
 	 *
-	 * @param roleId  角色ID
-	 * @param userIds 需要删除的用户数据ID
-	 * @return 结果
+	 * @param roleId  the role id
+	 * @param userIds the user ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteAuthUsers(Long roleId, String userIds) {
@@ -337,11 +342,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	}
 
 	/**
-	 * 批量选择授权用户角色
+	 * Insert auth users.
 	 *
-	 * @param roleId  角色ID
-	 * @param userIds 需要删除的用户数据ID
-	 * @return 结果
+	 * @param roleId  the role id
+	 * @param userIds the user ids
+	 * @return the int
 	 */
 	@Override
 	public int insertAuthUsers(Long roleId, String userIds) {
@@ -357,6 +362,12 @@ public class SysRoleServiceImpl implements ISysRoleService {
 		return userRoleMapper.batchUserRole(list);
 	}
 
+	/**
+	 * Select role ids by role key.
+	 *
+	 * @param roleKey the role key
+	 * @return the long[]
+	 */
 	@Override
 	public Long[] selectRoleIdsByRoleKey(String roleKey) {
 		if (StringUtils.isEmpty(roleKey)) {

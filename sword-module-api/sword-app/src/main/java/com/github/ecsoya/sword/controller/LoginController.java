@@ -34,25 +34,33 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+/**
+ * The Class LoginController.
+ */
 @RestController
 @RequestMapping("/open")
 @Api(tags = { "登录" }, description = "登录、退出、账号切换、忘记密码")
 public class LoginController extends BaseController {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
+	/** The sys user service. */
 	@Autowired
 	private ISysUserService sysUserService;
 
+	/** The user service. */
 	@Autowired
 	private IUserProfileService userService;
 
 	/**
-	 * 用户登录
+	 * Login.
 	 *
-	 * @param username
-	 * @param password
-	 * @return
+	 * @param username the username
+	 * @param password the password
+	 * @param code     the code
+	 * @param version  the version
+	 * @return the common result
 	 */
 	@ApiOperation("用户名+密码+验证码登录")
 	@PostMapping("/login")
@@ -89,11 +97,12 @@ public class LoginController extends BaseController {
 	}
 
 	/**
-	 * 用户登录
+	 * Login by mobile.
 	 *
-	 * @param username
-	 * @param password
-	 * @return
+	 * @param mobile  the mobile
+	 * @param code    the code
+	 * @param version the version
+	 * @return the common result
 	 */
 	@ApiOperation(value = "手机号+验证码登录", notes = "使用手机号+短信验证码快捷登录，此API使用于能发手机验证码，且手机号码唯一的系统")
 	@PostMapping("/loginByMobile")
@@ -133,11 +142,12 @@ public class LoginController extends BaseController {
 	}
 
 	/**
-	 * 用户登录
+	 * Login by email.
 	 *
-	 * @param username
-	 * @param password
-	 * @return
+	 * @param email   the email
+	 * @param code    the code
+	 * @param version the version
+	 * @return the common result
 	 */
 	@ApiOperation(value = "邮箱+验证码登录", notes = "使用邮箱+验证码快捷登录，此API适用于能发送邮箱验证码，且邮箱唯一的系统")
 	@PostMapping("/loginByEmail")
@@ -176,6 +186,14 @@ public class LoginController extends BaseController {
 		}
 	}
 
+	/**
+	 * Reset pwd.
+	 *
+	 * @param username the username
+	 * @param code     the code
+	 * @param password the password
+	 * @return the common result
+	 */
 	@ApiOperation("重置密码")
 	@PostMapping("/resetPwd")
 	@RepeatSubmit
@@ -201,12 +219,23 @@ public class LoginController extends BaseController {
 		return CommonResult.ajax(sysUserService.resetUserPwd(resetPwd));
 	}
 
+	/**
+	 * Accounts.
+	 *
+	 * @return the common result
+	 */
 	@ApiOperation("加载同邮箱账号")
 	@GetMapping("/accounts")
 	public CommonResult<List<String>> accounts() {
 		return userService.selectUserAccountsFromEmail(SwordUtils.getUserId(), UserConstants.REGISTER_USER_TYPE);
 	}
 
+	/**
+	 * Switch account.
+	 *
+	 * @param account the account
+	 * @return the common result
+	 */
 	@ApiOperation("切换账号")
 	@PostMapping("/switchAccount")
 	@RepeatSubmit
@@ -248,11 +277,9 @@ public class LoginController extends BaseController {
 	}
 
 	/**
-	 * 用户退出
+	 * Logout.
 	 *
-	 * @param username
-	 * @param password
-	 * @return
+	 * @return the common result
 	 */
 	@PostMapping("/exit")
 	@RepeatSubmit

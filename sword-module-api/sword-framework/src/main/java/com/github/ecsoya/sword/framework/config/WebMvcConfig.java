@@ -11,8 +11,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
+/**
+ * The Class WebMvcConfig.
+ */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+	/**
+	 * Configure message converters.
+	 *
+	 * @param converters the converters
+	 */
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		final MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();

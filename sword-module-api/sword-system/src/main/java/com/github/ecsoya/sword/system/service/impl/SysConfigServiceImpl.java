@@ -18,17 +18,17 @@ import com.github.ecsoya.sword.system.mapper.SysConfigMapper;
 import com.github.ecsoya.sword.system.service.ISysConfigService;
 
 /**
- * 参数配置 服务层实现
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysConfigServiceImpl.
  */
 @Service
 public class SysConfigServiceImpl implements ISysConfigService {
+
+	/** The config mapper. */
 	@Autowired
 	private SysConfigMapper configMapper;
 
 	/**
-	 * 项目启动时，初始化参数到缓存
+	 * Inits the.
 	 */
 	@PostConstruct
 	public void init() {
@@ -39,10 +39,10 @@ public class SysConfigServiceImpl implements ISysConfigService {
 	}
 
 	/**
-	 * 查询参数配置信息
+	 * Select config by id.
 	 *
-	 * @param configId 参数配置ID
-	 * @return 参数配置信息
+	 * @param configId the config id
+	 * @return the sys config
 	 */
 	@Override
 	public SysConfig selectConfigById(Long configId) {
@@ -52,10 +52,10 @@ public class SysConfigServiceImpl implements ISysConfigService {
 	}
 
 	/**
-	 * 根据键名查询参数配置信息
+	 * Select config value by key.
 	 *
-	 * @param configKey 参数key
-	 * @return 参数键值
+	 * @param configKey the config key
+	 * @return the string
 	 */
 	@Override
 	public String selectConfigValueByKey(String configKey) {
@@ -73,6 +73,12 @@ public class SysConfigServiceImpl implements ISysConfigService {
 		return org.apache.commons.lang3.StringUtils.EMPTY;
 	}
 
+	/**
+	 * Select config by key.
+	 *
+	 * @param configKey the config key
+	 * @return the sys config
+	 */
 	@Override
 	public SysConfig selectConfigByKey(String configKey) {
 		if (StringUtils.isEmpty(configKey)) {
@@ -84,10 +90,10 @@ public class SysConfigServiceImpl implements ISysConfigService {
 	}
 
 	/**
-	 * 查询参数配置列表
+	 * Select config list.
 	 *
-	 * @param config 参数配置信息
-	 * @return 参数配置集合
+	 * @param config the config
+	 * @return the list
 	 */
 	@Override
 	public List<SysConfig> selectConfigList(SysConfig config) {
@@ -95,10 +101,10 @@ public class SysConfigServiceImpl implements ISysConfigService {
 	}
 
 	/**
-	 * 新增参数配置
+	 * Insert config.
 	 *
-	 * @param config 参数配置信息
-	 * @return 结果
+	 * @param config the config
+	 * @return the int
 	 */
 	@Override
 	public int insertConfig(SysConfig config) {
@@ -110,10 +116,10 @@ public class SysConfigServiceImpl implements ISysConfigService {
 	}
 
 	/**
-	 * 修改参数配置
+	 * Update config.
 	 *
-	 * @param config 参数配置信息
-	 * @return 结果
+	 * @param config the config
+	 * @return the int
 	 */
 	@Override
 	public int updateConfig(SysConfig config) {
@@ -126,10 +132,10 @@ public class SysConfigServiceImpl implements ISysConfigService {
 	}
 
 	/**
-	 * 批量删除参数配置对象
+	 * Delete config by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteConfigByIds(String ids) {
@@ -149,7 +155,7 @@ public class SysConfigServiceImpl implements ISysConfigService {
 	}
 
 	/**
-	 * 清空缓存数据
+	 * Clear cache.
 	 */
 	@Override
 	public void clearCache() {
@@ -157,10 +163,10 @@ public class SysConfigServiceImpl implements ISysConfigService {
 	}
 
 	/**
-	 * 校验参数键名是否唯一
+	 * Check config key unique.
 	 *
-	 * @param config 参数配置信息
-	 * @return 结果
+	 * @param config the config
+	 * @return the string
 	 */
 	@Override
 	public String checkConfigKeyUnique(SysConfig config) {
@@ -173,24 +179,30 @@ public class SysConfigServiceImpl implements ISysConfigService {
 	}
 
 	/**
-	 * 获取cache name
+	 * Gets the cache name.
 	 *
-	 * @return 缓存名
+	 * @return the cache name
 	 */
 	private String getCacheName() {
 		return Constants.SYS_CONFIG_CACHE;
 	}
 
 	/**
-	 * 设置cache key
+	 * Gets the cache key.
 	 *
-	 * @param configKey 参数键
-	 * @return 缓存键key
+	 * @param configKey the config key
+	 * @return the cache key
 	 */
 	private String getCacheKey(String configKey) {
 		return Constants.SYS_CONFIG_KEY + configKey;
 	}
 
+	/**
+	 * Select config with key.
+	 *
+	 * @param configKey the config key
+	 * @return the sys config
+	 */
 	@Override
 	public SysConfig selectConfigWithKey(String configKey) {
 		if (StringUtils.isEmpty(configKey)) {
@@ -201,6 +213,12 @@ public class SysConfigServiceImpl implements ISysConfigService {
 		return configMapper.selectConfig(config);
 	}
 
+	/**
+	 * Check boolean config value.
+	 *
+	 * @param configKey the config key
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean checkBooleanConfigValue(String configKey) {
 		if (StringUtils.isEmpty(configKey)) {

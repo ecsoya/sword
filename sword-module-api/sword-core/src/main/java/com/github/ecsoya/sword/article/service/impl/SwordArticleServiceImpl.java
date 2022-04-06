@@ -14,21 +14,20 @@ import com.github.ecsoya.sword.common.utils.DateUtils;
 import com.github.ecsoya.sword.common.utils.IdWorker;
 
 /**
- * 文章Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-02-04
+ * The Class SwordArticleServiceImpl.
  */
 @Service
 public class SwordArticleServiceImpl implements ISwordArticleService {
+
+	/** The sword article mapper. */
 	@Autowired
 	private SwordArticleMapper swordArticleMapper;
 
 	/**
-	 * 查询文章
+	 * Select sword article by id.
 	 *
-	 * @param id 文章ID
-	 * @return 文章
+	 * @param id the id
+	 * @return the sword article
 	 */
 	@Override
 	public SwordArticle selectSwordArticleById(Long id) {
@@ -36,10 +35,10 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 	}
 
 	/**
-	 * 查询文章列表
+	 * Select sword article list.
 	 *
-	 * @param swordArticle 文章
-	 * @return 文章
+	 * @param swordArticle the sword article
+	 * @return the list
 	 */
 	@Override
 	public List<SwordArticle> selectSwordArticleList(SwordArticle swordArticle) {
@@ -47,10 +46,10 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 	}
 
 	/**
-	 * 新增文章
+	 * Insert sword article.
 	 *
-	 * @param swordArticle 文章
-	 * @return 结果
+	 * @param swordArticle the sword article
+	 * @return the int
 	 */
 	@Override
 	public int insertSwordArticle(SwordArticle swordArticle) {
@@ -64,10 +63,10 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 	}
 
 	/**
-	 * 修改文章
+	 * Update sword article.
 	 *
-	 * @param swordArticle 文章
-	 * @return 结果
+	 * @param swordArticle the sword article
+	 * @return the int
 	 */
 	@Override
 	public int updateSwordArticle(SwordArticle swordArticle) {
@@ -76,10 +75,10 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 	}
 
 	/**
-	 * 删除文章对象
+	 * Delete sword article by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteSwordArticleByIds(String ids) {
@@ -87,16 +86,21 @@ public class SwordArticleServiceImpl implements ISwordArticleService {
 	}
 
 	/**
-	 * 删除文章信息
+	 * Delete sword article by id.
 	 *
-	 * @param id 文章ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteSwordArticleById(Long id) {
 		return swordArticleMapper.deleteSwordArticleById(id);
 	}
 
+	/**
+	 * Select sword article categories.
+	 *
+	 * @return the list
+	 */
 	@Override
 	public List<String> selectSwordArticleCategories() {
 		final List<String> list = swordArticleMapper.selectSwordArticleCategories();

@@ -23,26 +23,48 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+/**
+ * The Class PriceController.
+ */
 @RestController
 @RequestMapping("/open/price")
 @Api(tags = { "实时价格" }, description = "实时价格、历史价格")
 public class PriceController extends BaseController {
 
+	/** The wallet service. */
 	@Autowired
 	private IWalletService walletService;
 
+	/**
+	 * Latest.
+	 *
+	 * @param symbol the symbol
+	 * @return the common result
+	 */
 	@GetMapping("/latest")
 	@ApiOperation("最新价格")
 	public CommonResult<BigDecimal> latest(@ApiParam("币种标识：小写字母") String symbol) {
 		return CommonResult.build(walletService.getPrice(symbol));
 	}
 
+	/**
+	 * Ticker.
+	 *
+	 * @param symbol the symbol
+	 * @return the common result
+	 */
 	@GetMapping("/ticker")
 	@ApiOperation("最新价格详情")
 	public CommonResult<Ticker> ticker(@ApiParam("币种标识：小写字母") String symbol) {
 		return walletService.getTicker(symbol);
 	}
 
+	/**
+	 * Price 7 days.
+	 *
+	 * @param symbol the symbol
+	 * @return the common result
+	 */
 	@GetMapping("/price/histogram")
 	@ApiOperation("历史价格")
 	public CommonResult<Map<String, Object>> price7days(@ApiParam("币种标识：小写字母") String symbol) {

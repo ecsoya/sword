@@ -1,20 +1,33 @@
 package com.github.ecsoya.sword.common.enums;
 
 /**
- * 用户会话
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Enum OnlineStatus.
  */
 public enum OnlineStatus {
-	/** 用户状态 */
-	on_line("在线"), off_line("离线");
 
+	/** The on line. */
+	on_line("在线"),
+
+	/** The off line. */
+	off_line("离线");
+
+	/** The info. */
 	private final String info;
 
+	/**
+	 * Instantiates a new online status.
+	 *
+	 * @param info the info
+	 */
 	private OnlineStatus(String info) {
 		this.info = info;
 	}
 
+	/**
+	 * Gets the info.
+	 *
+	 * @return the info
+	 */
 	public String getInfo() {
 		return info;
 	}

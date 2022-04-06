@@ -17,18 +17,22 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 /**
- * 用户推荐码接口
- *
- * @author ecsoya
+ * The Class UserReferrerTeamController.
  */
 @RestController
 @RequestMapping("/user/referrer/team")
 @Api(tags = { "推广体系" }, description = "支持仅有直推模式的推广体系")
 public class UserReferrerTeamController extends BaseController {
 
+	/** The referrer team count service. */
 	@Autowired
 	private IUserReferrerTeamCountService referrerTeamCountService;
 
+	/**
+	 * Team.
+	 *
+	 * @return the common result
+	 */
 	@ApiOperation(value = "获取直推团队人数", notes = "直推团队人数：\n1、total - 全部 \n2、today - 今日 \n3、yesterday - 昨日 \n4、单位为 人")
 	@GetMapping()
 	public CommonResult<UserReferrerTeamCount> team() {
@@ -36,6 +40,13 @@ public class UserReferrerTeamController extends BaseController {
 		return CommonResult.build(referrerTeamCountService.selectUserReferrerTeamCountByUserId(userId));
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param pageNum  the page num
+	 * @param pageSize the page size
+	 * @return the table data info
+	 */
 	@ApiOperation(value = "获取直推团队列表（支持分页）", notes = "此处只取直推团队")
 	@GetMapping("/list")
 	public TableDataInfo list(@ApiParam("当前页数，第几页") Integer pageNum, @ApiParam("每页显示多少条") Integer pageSize) {
@@ -44,6 +55,11 @@ public class UserReferrerTeamController extends BaseController {
 		return getDataTable(referrerTeamCountService.selectUserReferrerTeamListByUserId(userId));
 	}
 
+	/**
+	 * Umbrellas.
+	 *
+	 * @return the table data info
+	 */
 	@ApiOperation(value = "获取伞下团队列表（不支持分页）", notes = "此处获取全部伞下团队")
 	@GetMapping("/umbrellas")
 	public TableDataInfo umbrellas() {

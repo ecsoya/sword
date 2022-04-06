@@ -17,20 +17,24 @@ import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 import com.github.ecsoya.sword.system.service.ISysUserService;
 
 /**
- * 注册校验方法
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysRegisterService.
  */
 @Component
 public class SysRegisterService {
+
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/** The password service. */
 	@Autowired
 	private SysPasswordService passwordService;
 
 	/**
-	 * 注册
+	 * Register.
+	 *
+	 * @param user the user
+	 * @return the string
 	 */
 	public String register(SysUser user) {
 		String msg = "";

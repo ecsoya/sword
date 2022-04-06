@@ -15,20 +15,21 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 钱包地址接口
- *
- * @author ecsoya
+ * The Class UserLevelController.
  */
 @RestController
 @RequestMapping("/user/level")
 @Api(tags = { "用户级别" }, description = "查询")
 public class UserLevelController extends BaseController {
 
+	/** The mining level service. */
 	@Autowired
 	private IMiningLevelService miningLevelService;
 
 	/**
-	 * 查询所有钱包地址
+	 * Info.
+	 *
+	 * @return the common result
 	 */
 	@ApiOperation("查询用户级别")
 	@GetMapping

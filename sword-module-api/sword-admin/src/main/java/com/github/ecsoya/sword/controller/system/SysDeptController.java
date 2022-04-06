@@ -26,24 +26,36 @@ import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 import com.github.ecsoya.sword.system.service.ISysDeptService;
 
 /**
- * 部门信息
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysDeptController.
  */
 @Controller
 @RequestMapping("/system/dept")
 public class SysDeptController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/dept";
 
+	/** The dept service. */
 	@Autowired
 	private ISysDeptService deptService;
 
+	/**
+	 * Dept.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:dept:view")
 	@GetMapping()
 	public String dept() {
 		return prefix + "/dept";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param dept the dept
+	 * @return the list
+	 */
 	@RequiresPermissions("system:dept:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -53,7 +65,11 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 新增部门
+	 * Adds the.
+	 *
+	 * @param parentId the parent id
+	 * @param mmap     the mmap
+	 * @return the string
 	 */
 	@GetMapping("/add/{parentId}")
 	public String add(@PathVariable("parentId") Long parentId, ModelMap mmap) {
@@ -62,7 +78,10 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 新增保存部门
+	 * Adds the save.
+	 *
+	 * @param dept the dept
+	 * @return the ajax result
 	 */
 	@Log(title = "部门管理", businessType = BusinessType.INSERT)
 	@RequiresPermissions("system:dept:add")
@@ -77,7 +96,11 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 修改
+	 * Edits the.
+	 *
+	 * @param deptId the dept id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{deptId}")
 	public String edit(@PathVariable("deptId") Long deptId, ModelMap mmap) {
@@ -90,7 +113,10 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 保存
+	 * Edits the save.
+	 *
+	 * @param dept the dept
+	 * @return the ajax result
 	 */
 	@Log(title = "部门管理", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("system:dept:edit")
@@ -110,7 +136,10 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 删除
+	 * Removes the.
+	 *
+	 * @param deptId the dept id
+	 * @return the ajax result
 	 */
 	@Log(title = "部门管理", businessType = BusinessType.DELETE)
 	@RequiresPermissions("system:dept:remove")
@@ -127,7 +156,10 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 校验部门名称
+	 * Check dept name unique.
+	 *
+	 * @param dept the dept
+	 * @return the string
 	 */
 	@PostMapping("/checkDeptNameUnique")
 	@ResponseBody
@@ -136,10 +168,12 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 选择部门树
+	 * Select dept tree.
 	 *
-	 * @param deptId    部门ID
-	 * @param excludeId 排除ID
+	 * @param deptId    the dept id
+	 * @param excludeId the exclude id
+	 * @param mmap      the mmap
+	 * @return the string
 	 */
 	@GetMapping(value = { "/selectDeptTree/{deptId}", "/selectDeptTree/{deptId}/{excludeId}" })
 	public String selectDeptTree(@PathVariable("deptId") Long deptId,
@@ -150,7 +184,9 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 加载部门列表树
+	 * Tree data.
+	 *
+	 * @return the list
 	 */
 	@GetMapping("/treeData")
 	@ResponseBody
@@ -160,7 +196,10 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 加载部门列表树（排除下级）
+	 * Tree data exclude child.
+	 *
+	 * @param excludeId the exclude id
+	 * @return the list
 	 */
 	@GetMapping("/treeData/{excludeId}")
 	@ResponseBody
@@ -172,7 +211,10 @@ public class SysDeptController extends BaseController {
 	}
 
 	/**
-	 * 加载角色部门（数据权限）列表树
+	 * Dept tree data.
+	 *
+	 * @param role the role
+	 * @return the list
 	 */
 	@GetMapping("/roleDeptTreeData")
 	@ResponseBody

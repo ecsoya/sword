@@ -14,34 +14,46 @@ import org.springframework.stereotype.Component;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * spring工具类 方便在非spring管理环境中获取bean
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SpringUtils.
  */
 @Component
 public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {
-	/** Spring应用上下文环境 */
+
+	/** The bean factory. */
 	private static ConfigurableListableBeanFactory beanFactory;
 
+	/** The application context. */
 	private static ApplicationContext applicationContext;
 
+	/**
+	 * Post process bean factory.
+	 *
+	 * @param beanFactory the bean factory
+	 * @throws BeansException the beans exception
+	 */
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		SpringUtils.beanFactory = beanFactory;
 	}
 
+	/**
+	 * Sets the application context.
+	 *
+	 * @param applicationContext the new application context
+	 * @throws BeansException the beans exception
+	 */
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		SpringUtils.applicationContext = applicationContext;
 	}
 
 	/**
-	 * 获取对象
+	 * Gets the bean.
 	 *
-	 * @param name
-	 * @return Object 一个以所给名字注册的bean的实例
-	 * @throws org.springframework.beans.BeansException
-	 *
+	 * @param <T>  the generic type
+	 * @param name the name
+	 * @return the bean
+	 * @throws BeansException the beans exception
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(String name) throws BeansException {
@@ -49,12 +61,12 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
 	}
 
 	/**
-	 * 获取类型为requiredType的对象
+	 * Gets the bean.
 	 *
-	 * @param clz
-	 * @return
-	 * @throws org.springframework.beans.BeansException
-	 *
+	 * @param <T> the generic type
+	 * @param clz the clz
+	 * @return the bean
+	 * @throws BeansException the beans exception
 	 */
 	public static <T> T getBean(Class<T> clz) throws BeansException {
 		final T result = beanFactory.getBean(clz);
@@ -62,55 +74,54 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
 	}
 
 	/**
-	 * 如果BeanFactory包含一个与所给名称匹配的bean定义，则返回true
+	 * Contains bean.
 	 *
-	 * @param name
-	 * @return boolean
+	 * @param name the name
+	 * @return true, if successful
 	 */
 	public static boolean containsBean(String name) {
 		return beanFactory.containsBean(name);
 	}
 
 	/**
-	 * 判断以给定名字注册的bean定义是一个singleton还是一个prototype。
-	 * 如果与给定名字相应的bean定义没有被找到，将会抛出一个异常（NoSuchBeanDefinitionException）
+	 * Checks if is singleton.
 	 *
-	 * @param name
-	 * @return boolean
-	 * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
-	 *
+	 * @param name the name
+	 * @return true, if is singleton
+	 * @throws NoSuchBeanDefinitionException the no such bean definition exception
 	 */
 	public static boolean isSingleton(String name) throws NoSuchBeanDefinitionException {
 		return beanFactory.isSingleton(name);
 	}
 
 	/**
-	 * @param name
-	 * @return Class 注册对象的类型
-	 * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
+	 * Gets the type.
 	 *
+	 * @param name the name
+	 * @return the type
+	 * @throws NoSuchBeanDefinitionException the no such bean definition exception
 	 */
 	public static Class<?> getType(String name) throws NoSuchBeanDefinitionException {
 		return beanFactory.getType(name);
 	}
 
 	/**
-	 * 如果给定的bean名字在bean定义中有别名，则返回这些别名
+	 * Gets the aliases.
 	 *
-	 * @param name
-	 * @return
-	 * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
-	 *
+	 * @param name the name
+	 * @return the aliases
+	 * @throws NoSuchBeanDefinitionException the no such bean definition exception
 	 */
 	public static String[] getAliases(String name) throws NoSuchBeanDefinitionException {
 		return beanFactory.getAliases(name);
 	}
 
 	/**
-	 * 获取aop代理对象
+	 * Gets the aop proxy.
 	 *
-	 * @param invoker
-	 * @return
+	 * @param <T>     the generic type
+	 * @param invoker the invoker
+	 * @return the aop proxy
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getAopProxy(T invoker) {
@@ -118,24 +129,30 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
 	}
 
 	/**
-	 * 获取当前的环境配置，无配置返回null
+	 * Gets the active profiles.
 	 *
-	 * @return 当前的环境配置
+	 * @return the active profiles
 	 */
 	public static String[] getActiveProfiles() {
 		return applicationContext.getEnvironment().getActiveProfiles();
 	}
 
 	/**
-	 * 获取当前的环境配置，当有多个环境配置时，只获取第一个
+	 * Gets the active profile.
 	 *
-	 * @return 当前的环境配置
+	 * @return the active profile
 	 */
 	public static String getActiveProfile() {
 		final String[] activeProfiles = getActiveProfiles();
 		return StringUtils.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
 	}
 
+	/**
+	 * Test profile.
+	 *
+	 * @param profile the profile
+	 * @return true, if successful
+	 */
 	public static boolean testProfile(String profile) {
 		return Objects.equals(profile, getActiveProfile());
 	}

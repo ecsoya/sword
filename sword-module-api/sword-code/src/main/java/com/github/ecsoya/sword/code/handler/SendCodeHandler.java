@@ -1,8 +1,14 @@
 package com.github.ecsoya.sword.code.handler;
 
+/**
+ * The Interface SendCodeHandler.
+ */
 public interface SendCodeHandler {
+
 	/**
-	 * 优先级越高，越先执行
+	 * Gets the priority.
+	 *
+	 * @return the priority
 	 */
 	int getPriority();
 }

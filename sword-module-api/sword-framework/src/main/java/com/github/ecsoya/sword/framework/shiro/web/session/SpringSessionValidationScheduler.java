@@ -17,59 +17,57 @@ import org.springframework.stereotype.Component;
 import com.github.ecsoya.sword.common.utils.Threads;
 
 /**
- * 自定义任务调度器完成
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SpringSessionValidationScheduler.
  */
 @Component
 public class SpringSessionValidationScheduler implements SessionValidationScheduler {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(SpringSessionValidationScheduler.class);
 
+	/** The Constant DEFAULT_SESSION_VALIDATION_INTERVAL. */
 	public static final long DEFAULT_SESSION_VALIDATION_INTERVAL = DefaultSessionManager.DEFAULT_SESSION_VALIDATION_INTERVAL;
 
-	/**
-	 * 定时器，用于处理超时的挂起请求，也用于连接断开时的重连。
-	 */
+	/** The executor service. */
 	@Autowired
 	@Qualifier("scheduledExecutorService")
 	private ScheduledExecutorService executorService;
 
+	/** The enabled. */
 	private volatile boolean enabled = false;
 
-	/**
-	 * 会话验证管理器
-	 */
+	/** The session manager. */
 	@Autowired
 	@Qualifier("sessionManager")
 	@Lazy
 	private ValidatingSessionManager sessionManager;
 
+	/** The session validation interval. */
 	// 相隔多久检查一次session的有效性，单位毫秒，默认就是10分钟
 	@Value("${shiro.session.validationInterval}")
 	private long sessionValidationInterval;
 
+	/**
+	 * Checks if is enabled.
+	 *
+	 * @return the enabled
+	 */
 	@Override
 	public boolean isEnabled() {
 		return this.enabled;
 	}
 
 	/**
-	 * Specifies how frequently (in milliseconds) this Scheduler will call the
-	 * {@link org.apache.shiro.session.mgt.ValidatingSessionManager#validateSessions()
-	 * ValidatingSessionManager#validateSessions()} method.
+	 * Sets the session validation interval.
 	 *
-	 * <p>
-	 * Unless this method is called, the default value is
-	 * {@link #DEFAULT_SESSION_VALIDATION_INTERVAL}.
-	 *
-	 * @param sessionValidationInterval
+	 * @param sessionValidationInterval the new session validation interval
 	 */
 	public void setSessionValidationInterval(long sessionValidationInterval) {
 		this.sessionValidationInterval = sessionValidationInterval;
 	}
 
 	/**
-	 * Starts session validation by creating a spring PeriodicTrigger.
+	 * Enable session validation.
 	 */
 	@Override
 	public void enableSessionValidation() {
@@ -106,6 +104,9 @@ public class SpringSessionValidationScheduler implements SessionValidationSchedu
 		}
 	}
 
+	/**
+	 * Disable session validation.
+	 */
 	@Override
 	public void disableSessionValidation() {
 		if (log.isDebugEnabled()) {

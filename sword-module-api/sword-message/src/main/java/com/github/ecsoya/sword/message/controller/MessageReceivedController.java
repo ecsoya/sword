@@ -18,13 +18,22 @@ import com.github.ecsoya.sword.common.utils.async.AsyncManager;
 import com.github.ecsoya.sword.message.domain.UserMessage;
 import com.github.ecsoya.sword.message.service.IUserMessageService;
 
+/**
+ * The Class MessageReceivedController.
+ */
 @Controller
 @RequestMapping("/message/received")
 public class MessageReceivedController extends AbstractMessageController {
 
+	/** The user message service. */
 	@Autowired
 	private IUserMessageService userMessageService;
 
+	/**
+	 * Gets the message count.
+	 *
+	 * @return the message count
+	 */
 	@GetMapping("/count")
 	@ResponseBody
 	public int getMessageCount() {
@@ -35,11 +44,22 @@ public class MessageReceivedController extends AbstractMessageController {
 		return userMessageService.selectUserMessageUnreadCount(userId);
 	}
 
+	/**
+	 * Index.
+	 *
+	 * @return the string
+	 */
 	@GetMapping()
 	public String index() {
 		return "message/received/message";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param message the message
+	 * @return the table data info
+	 */
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(UserMessage message) {
@@ -48,6 +68,12 @@ public class MessageReceivedController extends AbstractMessageController {
 		return getDataTable(userMessageService.selectUserMessageList(message));
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@Log(title = "用户消息", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
 	@ResponseBody
@@ -55,6 +81,12 @@ public class MessageReceivedController extends AbstractMessageController {
 		return toAjax(userMessageService.deleteUserMessageByIds(ids));
 	}
 
+	/**
+	 * Mark read.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@PostMapping("/markRead")
 	@ResponseBody
 	public AjaxResult markRead(String ids) {
@@ -65,6 +97,11 @@ public class MessageReceivedController extends AbstractMessageController {
 		return toAjax(userMessageService.readUserMessageByIds(userId, ids));
 	}
 
+	/**
+	 * Mark read.
+	 *
+	 * @return the ajax result
+	 */
 	@PostMapping("/clear")
 	@ResponseBody
 	public AjaxResult markRead() {
@@ -72,6 +109,13 @@ public class MessageReceivedController extends AbstractMessageController {
 		return toAjax(userMessageService.removeAllUserMessageByUserId(userId));
 	}
 
+	/**
+	 * Detail.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@GetMapping("/detail")
 	public String detail(Long id, ModelMap mmap) {
 		Long userId = getUserId();

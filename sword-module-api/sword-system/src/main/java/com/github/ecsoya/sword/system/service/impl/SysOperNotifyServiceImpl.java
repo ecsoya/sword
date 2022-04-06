@@ -25,16 +25,15 @@ import com.github.ecsoya.sword.system.service.ISysOperNotifyService;
 import com.github.ecsoya.sword.system.service.ISysUserService;
 
 /**
- * 敏感操作通知Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-04-06
+ * The Class SysOperNotifyServiceImpl.
  */
 @Service
 public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(ISysOperNotifyService.class);
 
+	/** The sys oper notify mapper. */
 	@Autowired
 	private SysOperNotifyMapper sysOperNotifyMapper;
 
@@ -43,17 +42,19 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 //	@Autowired(required = false)
 //	private IMobileService mobileService;
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/** The prefix. */
 	@Value("${server.servlet.context-path:}")
 	private String prefix;
 
 	/**
-	 * 查询敏感操作通知
+	 * Select sys oper notify by id.
 	 *
-	 * @param id 敏感操作通知ID
-	 * @return 敏感操作通知
+	 * @param id the id
+	 * @return the sys oper notify
 	 */
 	@Override
 	public SysOperNotify selectSysOperNotifyById(Long id) {
@@ -61,10 +62,10 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 	}
 
 	/**
-	 * 查询敏感操作通知列表
+	 * Select sys oper notify list.
 	 *
-	 * @param sysOperNotify 敏感操作通知
-	 * @return 敏感操作通知
+	 * @param sysOperNotify the sys oper notify
+	 * @return the list
 	 */
 	@Override
 	public List<SysOperNotify> selectSysOperNotifyList(SysOperNotify sysOperNotify) {
@@ -72,10 +73,10 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 	}
 
 	/**
-	 * 新增敏感操作通知
+	 * Insert sys oper notify.
 	 *
-	 * @param sysOperNotify 敏感操作通知
-	 * @return 结果
+	 * @param sysOperNotify the sys oper notify
+	 * @return the int
 	 */
 	@Override
 	public int insertSysOperNotify(SysOperNotify sysOperNotify) {
@@ -89,10 +90,10 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 	}
 
 	/**
-	 * 修改敏感操作通知
+	 * Update sys oper notify.
 	 *
-	 * @param sysOperNotify 敏感操作通知
-	 * @return 结果
+	 * @param sysOperNotify the sys oper notify
+	 * @return the int
 	 */
 	@Override
 	public int updateSysOperNotify(SysOperNotify sysOperNotify) {
@@ -101,10 +102,10 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 	}
 
 	/**
-	 * 删除敏感操作通知对象
+	 * Delete sys oper notify by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteSysOperNotifyByIds(String ids) {
@@ -112,16 +113,23 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 	}
 
 	/**
-	 * 删除敏感操作通知信息
+	 * Delete sys oper notify by id.
 	 *
-	 * @param id 敏感操作通知ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteSysOperNotifyById(Long id) {
 		return sysOperNotifyMapper.deleteSysOperNotifyById(id);
 	}
 
+	/**
+	 * Select notifies by type.
+	 *
+	 * @param type the type
+	 * @param url  the url
+	 * @return the sys oper notify
+	 */
 	private SysOperNotify selectNotifiesByType(Integer type, String url) {
 		final SysOperNotify query = new SysOperNotify();
 		query.setType(type);
@@ -145,6 +153,11 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 		}).findFirst().orElse(null);
 	}
 
+	/**
+	 * Notify by oper log.
+	 *
+	 * @param operLog the oper log
+	 */
 	@Override
 	public void notifyByOperLog(SysOperLog operLog) {
 		if (operLog == null || StringUtils.isEmpty(operLog.getOperUrl())) {
@@ -208,6 +221,12 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 //		}
 //	}
 
+	/**
+	 * Gets the admin.
+	 *
+	 * @param operLog the oper log
+	 * @return the admin
+	 */
 	private SysUser getAdmin(SysOperLog operLog) {
 		if (operLog == null) {
 			return null;
@@ -219,6 +238,13 @@ public class SysOperNotifyServiceImpl implements ISysOperNotifyService {
 		return userService.selectUserByLoginName(admin);
 	}
 
+	/**
+	 * Format template.
+	 *
+	 * @param notify  the notify
+	 * @param operLog the oper log
+	 * @return the string
+	 */
 	private String formatTemplate(SysOperNotify notify, SysOperLog operLog) {
 		if (notify == null || operLog == null) {
 			return null;

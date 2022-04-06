@@ -26,24 +26,36 @@ import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 import com.github.ecsoya.sword.system.service.ISysMenuService;
 
 /**
- * 菜单信息
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysMenuController.
  */
 @Controller
 @RequestMapping("/system/menu")
 public class SysMenuController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/menu";
 
+	/** The menu service. */
 	@Autowired
 	private ISysMenuService menuService;
 
+	/**
+	 * Menu.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:menu:view")
 	@GetMapping()
 	public String menu() {
 		return prefix + "/menu";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param menu the menu
+	 * @return the list
+	 */
 	@RequiresPermissions("system:menu:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -54,7 +66,10 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 删除菜单
+	 * Removes the.
+	 *
+	 * @param menuId the menu id
+	 * @return the ajax result
 	 */
 	@Log(title = "菜单管理", businessType = BusinessType.DELETE)
 	@RequiresPermissions("system:menu:remove")
@@ -72,7 +87,11 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 新增
+	 * Adds the.
+	 *
+	 * @param parentId the parent id
+	 * @param mmap     the mmap
+	 * @return the string
 	 */
 	@GetMapping("/add/{parentId}")
 	public String add(@PathVariable("parentId") Long parentId, ModelMap mmap) {
@@ -89,7 +108,10 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 新增保存菜单
+	 * Adds the save.
+	 *
+	 * @param menu the menu
+	 * @return the ajax result
 	 */
 	@Log(title = "菜单管理", businessType = BusinessType.INSERT)
 	@RequiresPermissions("system:menu:add")
@@ -105,7 +127,11 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 修改菜单
+	 * Edits the.
+	 *
+	 * @param menuId the menu id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{menuId}")
 	public String edit(@PathVariable("menuId") Long menuId, ModelMap mmap) {
@@ -114,7 +140,10 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 修改保存菜单
+	 * Edits the save.
+	 *
+	 * @param menu the menu
+	 * @return the ajax result
 	 */
 	@Log(title = "菜单管理", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("system:menu:edit")
@@ -130,7 +159,9 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 选择菜单图标
+	 * Icon.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/icon")
 	public String icon() {
@@ -138,7 +169,10 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 校验菜单名称
+	 * Check menu name unique.
+	 *
+	 * @param menu the menu
+	 * @return the string
 	 */
 	@PostMapping("/checkMenuNameUnique")
 	@ResponseBody
@@ -147,7 +181,10 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 加载角色菜单列表树
+	 * Role menu tree data.
+	 *
+	 * @param role the role
+	 * @return the list
 	 */
 	@GetMapping("/roleMenuTreeData")
 	@ResponseBody
@@ -158,7 +195,9 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 加载所有菜单列表树
+	 * Menu tree data.
+	 *
+	 * @return the list
 	 */
 	@GetMapping("/menuTreeData")
 	@ResponseBody
@@ -169,7 +208,11 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 选择菜单树
+	 * Select menu tree.
+	 *
+	 * @param menuId the menu id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/selectMenuTree/{menuId}")
 	public String selectMenuTree(@PathVariable("menuId") Long menuId, ModelMap mmap) {

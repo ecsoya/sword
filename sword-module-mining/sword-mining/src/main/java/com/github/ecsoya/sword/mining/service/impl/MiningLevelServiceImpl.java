@@ -13,21 +13,20 @@ import com.github.ecsoya.sword.mining.mapper.MiningLevelMapper;
 import com.github.ecsoya.sword.mining.service.IMiningLevelService;
 
 /**
- * Mining级别Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-03-15
+ * The Class MiningLevelServiceImpl.
  */
 @Service
 public class MiningLevelServiceImpl implements IMiningLevelService {
+
+	/** The mining level mapper. */
 	@Autowired
 	private MiningLevelMapper miningLevelMapper;
 
 	/**
-	 * 查询Mining级别
+	 * Select mining level by id.
 	 *
-	 * @param id Mining级别ID
-	 * @return Mining级别
+	 * @param id the id
+	 * @return the mining level
 	 */
 	@Override
 	public MiningLevel selectMiningLevelById(Long id) {
@@ -35,10 +34,10 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 	}
 
 	/**
-	 * 查询Mining级别列表
+	 * Select mining level list.
 	 *
-	 * @param miningLevel Mining级别
-	 * @return Mining级别
+	 * @param miningLevel the mining level
+	 * @return the list
 	 */
 	@Override
 	public List<MiningLevel> selectMiningLevelList(MiningLevel miningLevel) {
@@ -46,10 +45,10 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 	}
 
 	/**
-	 * 新增Mining级别
+	 * Insert mining level.
 	 *
-	 * @param miningLevel Mining级别
-	 * @return 结果
+	 * @param miningLevel the mining level
+	 * @return the int
 	 */
 	@Override
 	public int insertMiningLevel(MiningLevel miningLevel) {
@@ -63,10 +62,10 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 	}
 
 	/**
-	 * 修改Mining级别
+	 * Update mining level.
 	 *
-	 * @param miningLevel Mining级别
-	 * @return 结果
+	 * @param miningLevel the mining level
+	 * @return the int
 	 */
 	@Override
 	public int updateMiningLevel(MiningLevel miningLevel) {
@@ -75,10 +74,10 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 	}
 
 	/**
-	 * 删除Mining级别对象
+	 * Delete mining level by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteMiningLevelByIds(String ids) {
@@ -86,16 +85,22 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 	}
 
 	/**
-	 * 删除Mining级别信息
+	 * Delete mining level by id.
 	 *
-	 * @param id Mining级别ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteMiningLevelById(Long id) {
 		return miningLevelMapper.deleteMiningLevelById(id);
 	}
 
+	/**
+	 * Select mining level by user id.
+	 *
+	 * @param userId the user id
+	 * @return the mining level
+	 */
 	@Override
 	public MiningLevel selectMiningLevelByUserId(Long userId) {
 		if (userId == null) {
@@ -104,6 +109,12 @@ public class MiningLevelServiceImpl implements IMiningLevelService {
 		return miningLevelMapper.selectMiningLevelByUserId(userId);
 	}
 
+	/**
+	 * Select mining level list by type.
+	 *
+	 * @param type the type
+	 * @return the list
+	 */
 	@Override
 	public List<MiningLevel> selectMiningLevelListByType(Integer type) {
 		final MiningLevel query = new MiningLevel();

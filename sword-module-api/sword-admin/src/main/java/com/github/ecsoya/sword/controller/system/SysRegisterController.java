@@ -13,23 +13,35 @@ import com.github.ecsoya.sword.framework.shiro.service.SysRegisterService;
 import com.github.ecsoya.sword.system.service.ISysConfigService;
 
 /**
- * 注册验证
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysRegisterController.
  */
 //@Controller
 public class SysRegisterController extends BaseController {
+
+	/** The register service. */
 	@Autowired
 	private SysRegisterService registerService;
 
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
+	/**
+	 * Register.
+	 *
+	 * @return the string
+	 */
 	@GetMapping("/register")
 	public String register() {
 		return "register";
 	}
 
+	/**
+	 * Ajax register.
+	 *
+	 * @param user the user
+	 * @return the ajax result
+	 */
 	@PostMapping("/register")
 	@ResponseBody
 	public AjaxResult ajaxRegister(SysUser user) {

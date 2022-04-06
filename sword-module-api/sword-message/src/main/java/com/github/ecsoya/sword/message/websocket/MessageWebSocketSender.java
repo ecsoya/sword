@@ -17,16 +17,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * The Class MessageWebSocketSender.
+ */
 @Component
 @ServerEndpoint(value = "/ws/message/{userId}")
 public class MessageWebSocketSender {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(MessageWebSocketSender.class);
 
+	/** The online. */
 	// 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
 	private static AtomicInteger online = new AtomicInteger();
+
+	/** The web socket map. */
 	private static ConcurrentHashMap<Long, Session> webSocketMap = new ConcurrentHashMap<>();
 
+	/**
+	 * On open.
+	 *
+	 * @param session the session
+	 * @param userId  the user id
+	 */
 	@OnOpen
 	public void onOpen(Session session, @PathParam(value = "userId") Long userId) {
 		log.info("WebSocket.opened={}", userId);
@@ -39,6 +52,11 @@ public class MessageWebSocketSender {
 		}
 	}
 
+	/**
+	 * On close.
+	 *
+	 * @param userId the user id
+	 */
 	@OnClose
 	public void onClose(@PathParam(value = "userId") Long userId) {
 		log.info("WebSocket.closed={}", userId);
@@ -51,12 +69,23 @@ public class MessageWebSocketSender {
 		}
 	}
 
+	/**
+	 * On error.
+	 *
+	 * @param session the session
+	 * @param e       the e
+	 */
 	@OnError
 	public void onError(Session session, Throwable e) {
 		log.error("WebSocket.errored={}", e.getLocalizedMessage());
 		e.printStackTrace();
 	}
 
+	/**
+	 * Dispatch message.
+	 *
+	 * @param message the message
+	 */
 	public void dispatchMessage(String message) {
 		log.info("WebSocket.message={}", message);
 		log.debug("WebSocket.online={}", getOnlineCount());
@@ -70,6 +99,11 @@ public class MessageWebSocketSender {
 		});
 	}
 
+	/**
+	 * Async dispatch message.
+	 *
+	 * @param message the message
+	 */
 	public void asyncDispatchMessage(String message) {
 		log.info("WebSocket.message={}", message);
 		log.debug("WebSocket.online={}", getOnlineCount());
@@ -83,6 +117,12 @@ public class MessageWebSocketSender {
 		});
 	}
 
+	/**
+	 * Dispatch message.
+	 *
+	 * @param message the message
+	 * @param userIds the user ids
+	 */
 	public void dispatchMessage(String message, Long[] userIds) {
 		if (userIds == null || userIds.length == 0) {
 			return;
@@ -102,6 +142,12 @@ public class MessageWebSocketSender {
 
 	}
 
+	/**
+	 * Async dispatch message.
+	 *
+	 * @param message the message
+	 * @param userIds the user ids
+	 */
 	public void asyncDispatchMessage(String message, Long[] userIds) {
 		if (userIds == null || userIds.length == 0) {
 			return;
@@ -120,6 +166,12 @@ public class MessageWebSocketSender {
 		});
 	}
 
+	/**
+	 * Gets the session.
+	 *
+	 * @param userId the user id
+	 * @return the session
+	 */
 	public Session getSession(Long userId) {
 		if (userId == null) {
 			return null;
@@ -127,6 +179,11 @@ public class MessageWebSocketSender {
 		return webSocketMap.get(userId);
 	}
 
+	/**
+	 * Gets the online count.
+	 *
+	 * @return the online count
+	 */
 	public static synchronized int getOnlineCount() {
 		return online.get();
 	}

@@ -6,72 +6,102 @@ import com.github.ecsoya.sword.common.core.domain.CommonResult;
 import com.github.ecsoya.sword.wallet.domain.UserWallet;
 
 /**
- * 用户钱包Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface IUserWalletService.
  */
 public interface IUserWalletService {
+
 	/**
-	 * 查询用户钱包
+	 * Select user wallet by id.
 	 *
-	 * @param userId 用户钱包ID
-	 * @return 用户钱包
+	 * @param userId the user id
+	 * @return the user wallet
 	 */
 	public UserWallet selectUserWalletById(Long userId);
 
 	/**
-	 * 查询用户钱包列表
+	 * Select user wallet list.
 	 *
-	 * @param userWallet 用户钱包
-	 * @return 用户钱包集合
+	 * @param userWallet the user wallet
+	 * @return the list
 	 */
 	public List<UserWallet> selectUserWalletList(UserWallet userWallet);
 
 	/**
-	 * 新增用户钱包
+	 * Insert user wallet.
 	 *
-	 * @param userWallet 用户钱包
-	 * @return 结果
+	 * @param userWallet the user wallet
+	 * @return the int
 	 */
 	public int insertUserWallet(UserWallet userWallet);
 
 	/**
-	 * 修改用户钱包
+	 * Update user wallet.
 	 *
-	 * @param userWallet 用户钱包
-	 * @return 结果
+	 * @param userWallet the user wallet
+	 * @return the int
 	 */
 	public int updateUserWallet(UserWallet userWallet);
 
 	/**
-	 * 批量删除用户钱包
+	 * Delete user wallet by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserWalletByIds(String ids);
 
 	/**
-	 * 删除用户钱包信息
+	 * Delete user wallet by id.
 	 *
-	 * @param userId 用户钱包ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int deleteUserWalletById(Long userId);
 
 	/**
-	 * 更新用户钱包
+	 * Creates the user wallet by user id.
 	 *
-	 * @param createAccounts TODO
+	 * @param userId         the user id
+	 * @param password       the password
+	 * @param createAccounts the create accounts
+	 * @return the int
 	 */
 	public int createUserWalletByUserId(Long userId, String password, boolean createAccounts);
 
+	/**
+	 * Select user wallet by id.
+	 *
+	 * @param userId       the user id
+	 * @param withAccounts the with accounts
+	 * @return the user wallet
+	 */
 	public UserWallet selectUserWalletById(Long userId, boolean withAccounts);
 
+	/**
+	 * Verify user wallet password.
+	 *
+	 * @param userId   the user id
+	 * @param password the password
+	 * @return the common result
+	 */
 	public CommonResult<?> verifyUserWalletPassword(Long userId, String password);
 
+	/**
+	 * Change user wallet password.
+	 *
+	 * @param userId      the user id
+	 * @param oldPassword the old password
+	 * @param newPassword the new password
+	 * @return the common result
+	 */
 	public CommonResult<?> changeUserWalletPassword(Long userId, String oldPassword, String newPassword);
 
+	/**
+	 * Reset user wallet password.
+	 *
+	 * @param userId   the user id
+	 * @param password the password
+	 * @return the int
+	 */
 	public int resetUserWalletPassword(Long userId, String password);
 }

@@ -1,26 +1,25 @@
 package com.github.ecsoya.sword.common.constant;
 
 /**
- * 权限通用常量
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class PermissionConstants.
  */
 public class PermissionConstants {
-	/** 新增权限 */
+
+	/** The Constant ADD_PERMISSION. */
 	public static final String ADD_PERMISSION = "add";
 
-	/** 修改权限 */
+	/** The Constant EDIT_PERMISSION. */
 	public static final String EDIT_PERMISSION = "edit";
 
-	/** 删除权限 */
+	/** The Constant REMOVE_PERMISSION. */
 	public static final String REMOVE_PERMISSION = "remove";
 
-	/** 导出权限 */
+	/** The Constant EXPORT_PERMISSION. */
 	public static final String EXPORT_PERMISSION = "export";
 
-	/** 显示权限 */
+	/** The Constant VIEW_PERMISSION. */
 	public static final String VIEW_PERMISSION = "view";
 
-	/** 查询权限 */
+	/** The Constant LIST_PERMISSION. */
 	public static final String LIST_PERMISSION = "list";
 }

@@ -8,59 +8,64 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.task.domain.SwordTask;
 
 /**
- * 定时任务执行结果Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface SwordTaskMapper.
  */
 public interface SwordTaskMapper {
+
 	/**
-	 * 查询定时任务执行结果
+	 * Select sword task by id.
 	 *
-	 * @param id 定时任务执行结果ID
-	 * @return 定时任务执行结果
+	 * @param id the id
+	 * @return the sword task
 	 */
 	public SwordTask selectSwordTaskById(Long id);
 
 	/**
-	 * 查询定时任务执行结果列表
+	 * Select sword task list.
 	 *
-	 * @param swordTask 定时任务执行结果
-	 * @return 定时任务执行结果集合
+	 * @param swordTask the sword task
+	 * @return the list
 	 */
 	public List<SwordTask> selectSwordTaskList(SwordTask swordTask);
 
 	/**
-	 * 新增定时任务执行结果
+	 * Insert sword task.
 	 *
-	 * @param swordTask 定时任务执行结果
-	 * @return 结果
+	 * @param swordTask the sword task
+	 * @return the int
 	 */
 	public int insertSwordTask(SwordTask swordTask);
 
 	/**
-	 * 修改定时任务执行结果
+	 * Update sword task.
 	 *
-	 * @param swordTask 定时任务执行结果
-	 * @return 结果
+	 * @param swordTask the sword task
+	 * @return the int
 	 */
 	public int updateSwordTask(SwordTask swordTask);
 
 	/**
-	 * 删除定时任务执行结果
+	 * Delete sword task by id.
 	 *
-	 * @param id 定时任务执行结果ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteSwordTaskById(Long id);
 
 	/**
-	 * 批量删除定时任务执行结果
+	 * Delete sword task by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteSwordTaskByIds(String[] ids);
 
+	/**
+	 * Select sword task by name.
+	 *
+	 * @param date the date
+	 * @param name the name
+	 * @return the sword task
+	 */
 	public SwordTask selectSwordTaskByName(@Param("date") Date date, @Param("name") String name);
 }

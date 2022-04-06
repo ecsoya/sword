@@ -17,17 +17,15 @@ import com.github.ecsoya.sword.common.exception.job.TaskException.Code;
 import com.github.ecsoya.sword.quartz.domain.SysJob;
 
 /**
- * 定时任务工具类
- *
- * @author Jin Liu (angryred@qq.com)
- *
+ * The Class ScheduleUtils.
  */
 public class ScheduleUtils {
+
 	/**
-	 * 得到quartz任务类
+	 * Gets the quartz job class.
 	 *
-	 * @param sysJob 执行计划
-	 * @return 具体执行任务类
+	 * @param sysJob the sys job
+	 * @return the quartz job class
 	 */
 	private static Class<? extends Job> getQuartzJobClass(SysJob sysJob) {
 		final boolean isConcurrent = "0".equals(sysJob.getConcurrent());
@@ -35,21 +33,34 @@ public class ScheduleUtils {
 	}
 
 	/**
-	 * 构建任务触发对象
+	 * Gets the trigger key.
+	 *
+	 * @param jobId    the job id
+	 * @param jobGroup the job group
+	 * @return the trigger key
 	 */
 	public static TriggerKey getTriggerKey(Long jobId, String jobGroup) {
 		return TriggerKey.triggerKey(ScheduleConstants.TASK_CLASS_NAME + jobId, jobGroup);
 	}
 
 	/**
-	 * 构建任务键对象
+	 * Gets the job key.
+	 *
+	 * @param jobId    the job id
+	 * @param jobGroup the job group
+	 * @return the job key
 	 */
 	public static JobKey getJobKey(Long jobId, String jobGroup) {
 		return JobKey.jobKey(ScheduleConstants.TASK_CLASS_NAME + jobId, jobGroup);
 	}
 
 	/**
-	 * 创建定时任务
+	 * Creates the schedule job.
+	 *
+	 * @param scheduler the scheduler
+	 * @param job       the job
+	 * @throws SchedulerException the scheduler exception
+	 * @throws TaskException      the task exception
 	 */
 	public static void createScheduleJob(Scheduler scheduler, SysJob job) throws SchedulerException, TaskException {
 		final Class<? extends Job> jobClass = getQuartzJobClass(job);
@@ -84,7 +95,12 @@ public class ScheduleUtils {
 	}
 
 	/**
-	 * 设置定时任务策略
+	 * Handle cron schedule misfire policy.
+	 *
+	 * @param job the job
+	 * @param cb  the cb
+	 * @return the cron schedule builder
+	 * @throws TaskException the task exception
 	 */
 	public static CronScheduleBuilder handleCronScheduleMisfirePolicy(SysJob job, CronScheduleBuilder cb)
 			throws TaskException {

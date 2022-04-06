@@ -12,21 +12,20 @@ import com.github.ecsoya.sword.user.mapper.UserLevelMapper;
 import com.github.ecsoya.sword.user.service.IUserLevelService;
 
 /**
- * 用户级别Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-06
+ * The Class UserLevelServiceImpl.
  */
 @Service
 public class UserLevelServiceImpl implements IUserLevelService {
+
+	/** The user level mapper. */
 	@Autowired
 	private UserLevelMapper userLevelMapper;
 
 	/**
-	 * 查询用户级别
+	 * Select user level by id.
 	 *
-	 * @param userId 用户级别ID
-	 * @return 用户级别
+	 * @param userId the user id
+	 * @return the user level
 	 */
 	@Override
 	public UserLevel selectUserLevelById(Long userId) {
@@ -34,10 +33,10 @@ public class UserLevelServiceImpl implements IUserLevelService {
 	}
 
 	/**
-	 * 查询用户级别列表
+	 * Select user level list.
 	 *
-	 * @param userLevel 用户级别
-	 * @return 用户级别
+	 * @param userLevel the user level
+	 * @return the list
 	 */
 	@Override
 	public List<UserLevel> selectUserLevelList(UserLevel userLevel) {
@@ -45,10 +44,10 @@ public class UserLevelServiceImpl implements IUserLevelService {
 	}
 
 	/**
-	 * 新增用户级别
+	 * Insert user level.
 	 *
-	 * @param userLevel 用户级别
-	 * @return 结果
+	 * @param userLevel the user level
+	 * @return the int
 	 */
 	@Override
 	public int insertUserLevel(UserLevel userLevel) {
@@ -59,10 +58,10 @@ public class UserLevelServiceImpl implements IUserLevelService {
 	}
 
 	/**
-	 * 修改用户级别
+	 * Update user level.
 	 *
-	 * @param userLevel 用户级别
-	 * @return 结果
+	 * @param userLevel the user level
+	 * @return the int
 	 */
 	@Override
 	public int updateUserLevel(UserLevel userLevel) {
@@ -73,10 +72,10 @@ public class UserLevelServiceImpl implements IUserLevelService {
 	}
 
 	/**
-	 * 删除用户级别对象
+	 * Delete user level by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserLevelByIds(String ids) {
@@ -84,16 +83,22 @@ public class UserLevelServiceImpl implements IUserLevelService {
 	}
 
 	/**
-	 * 删除用户级别信息
+	 * Delete user level by id.
 	 *
-	 * @param userId 用户级别ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserLevelById(Long userId) {
 		return userLevelMapper.deleteUserLevelById(userId);
 	}
 
+	/**
+	 * Select user level count.
+	 *
+	 * @param levelId the level id
+	 * @return the long
+	 */
 	@Override
 	public Long selectUserLevelCount(Long levelId) {
 		if (levelId == null) {

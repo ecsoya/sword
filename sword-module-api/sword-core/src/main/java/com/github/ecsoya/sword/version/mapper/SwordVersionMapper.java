@@ -7,59 +7,63 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.version.domain.SwordVersion;
 
 /**
- * 版本Mapper接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-22
+ * The Interface SwordVersionMapper.
  */
 public interface SwordVersionMapper {
+
 	/**
-	 * 查询版本
+	 * Select sword version by id.
 	 *
-	 * @param id 版本ID
-	 * @return 版本
+	 * @param id the id
+	 * @return the sword version
 	 */
 	public SwordVersion selectSwordVersionById(Long id);
 
 	/**
-	 * 查询版本列表
+	 * Select sword version list.
 	 *
-	 * @param swordVersion 版本
-	 * @return 版本集合
+	 * @param swordVersion the sword version
+	 * @return the list
 	 */
 	public List<SwordVersion> selectSwordVersionList(SwordVersion swordVersion);
 
 	/**
-	 * 新增版本
+	 * Insert sword version.
 	 *
-	 * @param swordVersion 版本
-	 * @return 结果
+	 * @param swordVersion the sword version
+	 * @return the int
 	 */
 	public int insertSwordVersion(SwordVersion swordVersion);
 
 	/**
-	 * 修改版本
+	 * Update sword version.
 	 *
-	 * @param swordVersion 版本
-	 * @return 结果
+	 * @param swordVersion the sword version
+	 * @return the int
 	 */
 	public int updateSwordVersion(SwordVersion swordVersion);
 
 	/**
-	 * 删除版本
+	 * Delete sword version by id.
 	 *
-	 * @param id 版本ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteSwordVersionById(Long id);
 
 	/**
-	 * 批量删除版本
+	 * Delete sword version by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteSwordVersionByIds(String[] ids);
 
+	/**
+	 * Select latest sword version.
+	 *
+	 * @param type the type
+	 * @return the sword version
+	 */
 	public SwordVersion selectLatestSwordVersion(@Param("type") String type);
 }

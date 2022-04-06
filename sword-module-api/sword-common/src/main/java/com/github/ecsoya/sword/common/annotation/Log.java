@@ -10,31 +10,38 @@ import com.github.ecsoya.sword.common.enums.BusinessType;
 import com.github.ecsoya.sword.common.enums.OperatorType;
 
 /**
- * 自定义操作日志记录注解
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface Log.
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Log {
+
 	/**
-	 * 模块
+	 * Title.
+	 *
+	 * @return the string
 	 */
 	public String title() default "";
 
 	/**
-	 * 功能
+	 * Business type.
+	 *
+	 * @return the business type
 	 */
 	public BusinessType businessType() default BusinessType.OTHER;
 
 	/**
-	 * 操作人类别
+	 * Operator type.
+	 *
+	 * @return the operator type
 	 */
 	public OperatorType operatorType() default OperatorType.MANAGE;
 
 	/**
-	 * 是否保存请求的参数
+	 * Checks if is save request data.
+	 *
+	 * @return true, if is save request data
 	 */
 	public boolean isSaveRequestData() default true;
 }

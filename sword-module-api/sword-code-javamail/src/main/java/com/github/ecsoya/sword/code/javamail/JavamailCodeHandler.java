@@ -12,26 +12,49 @@ import com.github.ecsoya.sword.common.utils.StringUtils;
 import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 import com.google.auto.service.AutoService;
 
+/**
+ * The Class JavamailCodeHandler.
+ */
 @Component
 @AutoService(IMailCodeHandlerRegistry.class)
 public class JavamailCodeHandler implements SendMailCodeHandler, IMailCodeHandlerRegistry {
 
+	/** The config. */
 	@Autowired
 	private JavamailCodeProperties config;
 
+	/** The service. */
 	@Autowired
 	private JavamailService service;
 
+	/**
+	 * Gets the.
+	 *
+	 * @return the send mail code handler
+	 */
 	@Override
 	public SendMailCodeHandler get() {
 		return SpringUtils.getBean(JavamailCodeHandler.class);
 	}
 
+	/**
+	 * Gets the priority.
+	 *
+	 * @return the priority
+	 */
 	@Override
 	public int getPriority() {
 		return config.getPriority();
 	}
 
+	/**
+	 * Send email.
+	 *
+	 * @param email   the email
+	 * @param subject the subject
+	 * @param content the content
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendEmail(String email, String subject, String content) {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(content)) {
@@ -43,6 +66,13 @@ public class JavamailCodeHandler implements SendMailCodeHandler, IMailCodeHandle
 		return service.sendEmail(email, subject, content);
 	}
 
+	/**
+	 * Send code.
+	 *
+	 * @param email the email
+	 * @param code  the code
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendCode(String email, String code) {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(code)) {
@@ -57,6 +87,15 @@ public class JavamailCodeHandler implements SendMailCodeHandler, IMailCodeHandle
 		return sendEmail(email, subject, content);
 	}
 
+	/**
+	 * Send code.
+	 *
+	 * @param email    the email
+	 * @param code     the code
+	 * @param subject  the subject
+	 * @param template the template
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> sendCode(String email, String code, String subject, String template) {
 		if (StringUtils.isEmpty(email) || StringUtils.isEmpty(code)) {

@@ -27,22 +27,32 @@ import com.github.ecsoya.sword.service.IMailCodeService;
 import com.github.ecsoya.sword.service.IMobileCodeService;
 
 /**
- * 登录验证
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysLoginController.
  */
 @Controller
 public class SysLoginController extends BaseController {
 
+	/** The config. */
 	@Autowired
 	private GlobalConfig config;
 
+	/** The mail code service. */
 	@Autowired(required = false)
 	private IMailCodeService mailCodeService;
 
+	/** The mobile code service. */
 	@Autowired(required = false)
 	private IMobileCodeService mobileCodeService;
 
+	/**
+	 * Login.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @param path     the path
+	 * @param mmap     the mmap
+	 * @return the string
+	 */
 	@GetMapping("/login")
 	public String login(HttpServletRequest request, HttpServletResponse response, String path, ModelMap mmap) {
 		// 如果是Ajax请求，返回Json字符串。
@@ -54,6 +64,15 @@ public class SysLoginController extends BaseController {
 		return "login";
 	}
 
+	/**
+	 * Ajax login.
+	 *
+	 * @param username   the username
+	 * @param password   the password
+	 * @param rememberMe the remember me
+	 * @param notifyCode the notify code
+	 * @return the ajax result
+	 */
 	@PostMapping("/login")
 	@ResponseBody
 	@Log(isSaveRequestData = true, title = "后台登录", businessType = BusinessType.GRANT, operatorType = OperatorType.MANAGE)
@@ -86,6 +105,11 @@ public class SysLoginController extends BaseController {
 		}
 	}
 
+	/**
+	 * Unauth.
+	 *
+	 * @return the string
+	 */
 	@GetMapping("/unauth")
 	public String unauth() {
 		return "error/unauth";

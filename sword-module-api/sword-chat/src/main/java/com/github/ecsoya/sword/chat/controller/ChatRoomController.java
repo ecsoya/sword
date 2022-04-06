@@ -22,19 +22,24 @@ import com.github.ecsoya.sword.common.enums.BusinessType;
 import com.github.ecsoya.sword.common.utils.poi.ExcelUtil;
 
 /**
- * 聊天室Controller
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-06-03
+ * The Class ChatRoomController.
  */
 @Controller
 @RequestMapping("/chat/room")
 public class ChatRoomController extends BaseController {
+
+	/** The prefix. */
 	private String prefix = "chat/room";
 
+	/** The chat room service. */
 	@Autowired
 	private IChatRoomService chatRoomService;
 
+	/**
+	 * Room.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("chat:room:view")
 	@GetMapping()
 	public String room() {
@@ -42,7 +47,10 @@ public class ChatRoomController extends BaseController {
 	}
 
 	/**
-	 * 查询聊天室列表
+	 * List.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the table data info
 	 */
 	@RequiresPermissions("chat:room:list")
 	@PostMapping("/list")
@@ -54,7 +62,10 @@ public class ChatRoomController extends BaseController {
 	}
 
 	/**
-	 * 导出聊天室列表
+	 * Export.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:room:export")
 	@Log(title = "聊天室", businessType = BusinessType.EXPORT)
@@ -67,7 +78,9 @@ public class ChatRoomController extends BaseController {
 	}
 
 	/**
-	 * 新增聊天室
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -75,7 +88,10 @@ public class ChatRoomController extends BaseController {
 	}
 
 	/**
-	 * 新增保存聊天室
+	 * Adds the save.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:room:add")
 	@Log(title = "聊天室", businessType = BusinessType.INSERT)
@@ -86,7 +102,11 @@ public class ChatRoomController extends BaseController {
 	}
 
 	/**
-	 * 修改聊天室
+	 * Edits the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
@@ -96,7 +116,10 @@ public class ChatRoomController extends BaseController {
 	}
 
 	/**
-	 * 修改保存聊天室
+	 * Edits the save.
+	 *
+	 * @param chatRoom the chat room
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:room:edit")
 	@Log(title = "聊天室", businessType = BusinessType.UPDATE)
@@ -107,7 +130,10 @@ public class ChatRoomController extends BaseController {
 	}
 
 	/**
-	 * 删除聊天室
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:room:remove")
 	@Log(title = "聊天室", businessType = BusinessType.DELETE)

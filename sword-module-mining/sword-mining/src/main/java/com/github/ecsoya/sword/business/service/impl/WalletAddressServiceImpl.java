@@ -17,17 +17,28 @@ import com.github.ecsoya.sword.wallet.domain.UserWalletAccount;
 import com.github.ecsoya.sword.wallet.service.IUserWalletAccountService;
 import com.google.common.base.Objects;
 
+/**
+ * The Class WalletAddressServiceImpl.
+ */
 @Service
 public class WalletAddressServiceImpl implements IWalletAddressService {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(IWalletAddressService.class);
 
+	/** The wallet account service. */
 	@Autowired
 	private IUserWalletAccountService walletAccountService;
 
+	/** The symbol service. */
 	@Autowired
 	private IMiningSymbolService symbolService;
 
+	/**
+	 * Update wallet address.
+	 *
+	 * @return the int
+	 */
 	@Override
 	public int updateWalletAddress() {
 		log.info("updateWalletAddress");
@@ -39,6 +50,13 @@ public class WalletAddressServiceImpl implements IWalletAddressService {
 		return 1;
 	}
 
+	/**
+	 * Update wallet address.
+	 *
+	 * @param account    the account
+	 * @param symbolList the symbol list
+	 * @return the int
+	 */
 	private int updateWalletAddress(UserWalletAccount account, List<MiningSymbol> symbolList) {
 		if (account == null) {
 			return 0;

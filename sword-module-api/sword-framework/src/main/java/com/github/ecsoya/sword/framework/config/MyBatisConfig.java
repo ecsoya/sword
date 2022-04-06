@@ -26,17 +26,24 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.ClassUtils;
 
 /**
- * Mybatis支持*匹配扫描包
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class MyBatisConfig.
  */
 @Configuration
 public class MyBatisConfig {
+
+	/** The env. */
 	@Autowired
 	private Environment env;
 
+	/** The Constant DEFAULT_RESOURCE_PATTERN. */
 	static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
 
+	/**
+	 * Sets the type aliases package.
+	 *
+	 * @param typeAliasesPackage the type aliases package
+	 * @return the string
+	 */
 	public static String setTypeAliasesPackage(String typeAliasesPackage) {
 		final ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 		final MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resolver);
@@ -79,6 +86,12 @@ public class MyBatisConfig {
 		return typeAliasesPackage;
 	}
 
+	/**
+	 * Resolve mapper locations.
+	 *
+	 * @param mapperLocations the mapper locations
+	 * @return the resource[]
+	 */
 	public Resource[] resolveMapperLocations(String[] mapperLocations) {
 		final ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
 		final List<Resource> resources = new ArrayList<Resource>();
@@ -95,6 +108,13 @@ public class MyBatisConfig {
 		return resources.toArray(new Resource[resources.size()]);
 	}
 
+	/**
+	 * Sql session factory.
+	 *
+	 * @param dataSource the data source
+	 * @return the sql session factory
+	 * @throws Exception the exception
+	 */
 	@Bean
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 		String typeAliasesPackage = env.getProperty("mybatis.typeAliasesPackage");

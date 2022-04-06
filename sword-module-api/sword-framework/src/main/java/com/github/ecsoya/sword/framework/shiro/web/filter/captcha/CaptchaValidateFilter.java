@@ -12,29 +12,43 @@ import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 import com.google.code.kaptcha.Constants;
 
 /**
- * 验证码过滤器
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class CaptchaValidateFilter.
  */
 public class CaptchaValidateFilter extends AccessControlFilter {
-	/**
-	 * 是否开启验证码
-	 */
+
+	/** The captcha enabled. */
 	private boolean captchaEnabled = false;
 
-	/**
-	 * 验证码类型
-	 */
+	/** The captcha type. */
 	private String captchaType = "math";
 
+	/**
+	 * Sets the captcha enabled.
+	 *
+	 * @param captchaEnabled the new captcha enabled
+	 */
 	public void setCaptchaEnabled(boolean captchaEnabled) {
 		this.captchaEnabled = captchaEnabled;
 	}
 
+	/**
+	 * Sets the captcha type.
+	 *
+	 * @param captchaType the new captcha type
+	 */
 	public void setCaptchaType(String captchaType) {
 		this.captchaType = captchaType;
 	}
 
+	/**
+	 * On pre handle.
+	 *
+	 * @param request     the request
+	 * @param response    the response
+	 * @param mappedValue the mapped value
+	 * @return true, if successful
+	 * @throws Exception the exception
+	 */
 	@Override
 	public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
 		request.setAttribute(ShiroConstants.CURRENT_ENABLED, captchaEnabled);
@@ -42,6 +56,15 @@ public class CaptchaValidateFilter extends AccessControlFilter {
 		return super.onPreHandle(request, response, mappedValue);
 	}
 
+	/**
+	 * Checks if is access allowed.
+	 *
+	 * @param request     the request
+	 * @param response    the response
+	 * @param mappedValue the mapped value
+	 * @return true, if is access allowed
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {
@@ -54,6 +77,13 @@ public class CaptchaValidateFilter extends AccessControlFilter {
 				httpServletRequest.getParameter(ShiroConstants.CURRENT_VALIDATECODE));
 	}
 
+	/**
+	 * Validate response.
+	 *
+	 * @param request      the request
+	 * @param validateCode the validate code
+	 * @return true, if successful
+	 */
 	public boolean validateResponse(HttpServletRequest request, String validateCode) {
 		final Object obj = ShiroUtils.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
 		final String code = String.valueOf(obj != null ? obj : "");
@@ -65,6 +95,14 @@ public class CaptchaValidateFilter extends AccessControlFilter {
 		return true;
 	}
 
+	/**
+	 * On access denied.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return true, if successful
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		request.setAttribute(ShiroConstants.CURRENT_CAPTCHA, ShiroConstants.CAPTCHA_ERROR);

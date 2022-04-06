@@ -22,16 +22,21 @@ import com.github.ecsoya.sword.framework.shiro.session.OnlineSessionDAO;
 import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 
 /**
- * 自定义访问控制
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class OnlineSessionFilter.
  */
 public class OnlineSessionFilter extends AccessControlFilter {
 
+	/** The online session DAO. */
 	private OnlineSessionDAO onlineSessionDAO;
 
 	/**
-	 * 表示是否允许访问；mappedValue就是[urls]配置中拦截器参数部分，如果允许访问返回true，否则false；
+	 * Checks if is access allowed.
+	 *
+	 * @param request     the request
+	 * @param response    the response
+	 * @param mappedValue the mapped value
+	 * @return true, if is access allowed
+	 * @throws Exception the exception
 	 */
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
@@ -65,7 +70,12 @@ public class OnlineSessionFilter extends AccessControlFilter {
 	}
 
 	/**
-	 * 表示当访问拒绝时是否已经处理了；如果返回true表示需要继续处理；如果返回false表示该拦截器实例已经处理了，将直接返回即可。
+	 * On access denied.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return true, if successful
+	 * @throws Exception the exception
 	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
@@ -77,6 +87,13 @@ public class OnlineSessionFilter extends AccessControlFilter {
 		return false;
 	}
 
+	/**
+	 * Redirect to login.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	// 跳转到登录页
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
@@ -92,6 +109,11 @@ public class OnlineSessionFilter extends AccessControlFilter {
 		}
 	}
 
+	/**
+	 * Sets the online session DAO.
+	 *
+	 * @param onlineSessionDAO the new online session DAO
+	 */
 	public void setOnlineSessionDAO(OnlineSessionDAO onlineSessionDAO) {
 		this.onlineSessionDAO = onlineSessionDAO;
 	}

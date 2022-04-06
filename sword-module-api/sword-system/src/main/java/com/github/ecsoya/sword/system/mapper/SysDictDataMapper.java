@@ -7,90 +7,89 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.common.core.domain.entity.SysDictData;
 
 /**
- * 字典表 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface SysDictDataMapper.
  */
 public interface SysDictDataMapper {
+
 	/**
-	 * 根据条件分页查询字典数据
+	 * Select dict data list.
 	 *
-	 * @param dictData 字典数据信息
-	 * @return 字典数据集合信息
+	 * @param dictData the dict data
+	 * @return the list
 	 */
 	public List<SysDictData> selectDictDataList(SysDictData dictData);
 
 	/**
-	 * 根据字典类型查询字典数据
+	 * Select dict data by type.
 	 *
-	 * @param dictType 字典类型
-	 * @return 字典数据集合信息
+	 * @param dictType the dict type
+	 * @return the list
 	 */
 	public List<SysDictData> selectDictDataByType(String dictType);
 
 	/**
-	 * 根据字典类型和字典键值查询字典数据信息
+	 * Select dict label.
 	 *
-	 * @param dictType  字典类型
-	 * @param dictValue 字典键值
-	 * @return 字典标签
+	 * @param dictType  the dict type
+	 * @param dictValue the dict value
+	 * @return the string
 	 */
 	public String selectDictLabel(@Param("dictType") String dictType, @Param("dictValue") String dictValue);
 
 	/**
-	 * 根据字典数据ID查询信息
+	 * Select dict data by id.
 	 *
-	 * @param dictCode 字典数据ID
-	 * @return 字典数据
+	 * @param dictCode the dict code
+	 * @return the sys dict data
 	 */
 	public SysDictData selectDictDataById(Long dictCode);
 
 	/**
-	 * 查询字典数据
+	 * Count dict data by type.
 	 *
-	 * @param dictType 字典类型
-	 * @return 字典数据
+	 * @param dictType the dict type
+	 * @return the int
 	 */
 	public int countDictDataByType(String dictType);
 
 	/**
-	 * 通过字典ID删除字典数据信息
+	 * Delete dict data by id.
 	 *
-	 * @param dictCode 字典数据ID
-	 * @return 结果
+	 * @param dictCode the dict code
+	 * @return the int
 	 */
 	public int deleteDictDataById(Long dictCode);
 
 	/**
-	 * 批量删除字典数据
+	 * Delete dict data by ids.
 	 *
-	 * @param ids 需要删除的数据
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteDictDataByIds(String[] ids);
 
 	/**
-	 * 新增字典数据信息
+	 * Insert dict data.
 	 *
-	 * @param dictData 字典数据信息
-	 * @return 结果
+	 * @param dictData the dict data
+	 * @return the int
 	 */
 	public int insertDictData(SysDictData dictData);
 
 	/**
-	 * 修改字典数据信息
+	 * Update dict data.
 	 *
-	 * @param dictData 字典数据信息
-	 * @return 结果
+	 * @param dictData the dict data
+	 * @return the int
 	 */
 	public int updateDictData(SysDictData dictData);
 
 	/**
-	 * 同步修改字典类型
+	 * Update dict data type.
 	 *
-	 * @param oldDictType 旧字典类型
-	 * @param newDictType 新旧字典类型
-	 * @return 结果
+	 * @param oldDictType the old dict type
+	 * @param newDictType the new dict type
+	 * @return the int
 	 */
 	public int updateDictDataType(@Param("oldDictType") String oldDictType, @Param("newDictType") String newDictType);
 }

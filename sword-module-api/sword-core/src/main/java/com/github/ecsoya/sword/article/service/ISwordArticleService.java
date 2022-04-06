@@ -5,59 +5,62 @@ import java.util.List;
 import com.github.ecsoya.sword.article.domain.SwordArticle;
 
 /**
- * 文章Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-02-04
+ * The Interface ISwordArticleService.
  */
 public interface ISwordArticleService {
+
 	/**
-	 * 查询文章
+	 * Select sword article by id.
 	 *
-	 * @param id 文章ID
-	 * @return 文章
+	 * @param id the id
+	 * @return the sword article
 	 */
 	public SwordArticle selectSwordArticleById(Long id);
 
 	/**
-	 * 查询文章列表
+	 * Select sword article list.
 	 *
-	 * @param swordArticle 文章
-	 * @return 文章集合
+	 * @param swordArticle the sword article
+	 * @return the list
 	 */
 	public List<SwordArticle> selectSwordArticleList(SwordArticle swordArticle);
 
 	/**
-	 * 新增文章
+	 * Insert sword article.
 	 *
-	 * @param swordArticle 文章
-	 * @return 结果
+	 * @param swordArticle the sword article
+	 * @return the int
 	 */
 	public int insertSwordArticle(SwordArticle swordArticle);
 
 	/**
-	 * 修改文章
+	 * Update sword article.
 	 *
-	 * @param swordArticle 文章
-	 * @return 结果
+	 * @param swordArticle the sword article
+	 * @return the int
 	 */
 	public int updateSwordArticle(SwordArticle swordArticle);
 
 	/**
-	 * 批量删除文章
+	 * Delete sword article by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteSwordArticleByIds(String ids);
 
 	/**
-	 * 删除文章信息
+	 * Delete sword article by id.
 	 *
-	 * @param id 文章ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteSwordArticleById(Long id);
 
+	/**
+	 * Select sword article categories.
+	 *
+	 * @return the list
+	 */
 	public List<String> selectSwordArticleCategories();
 }

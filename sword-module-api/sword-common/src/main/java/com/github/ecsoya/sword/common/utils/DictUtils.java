@@ -8,32 +8,29 @@ import com.github.ecsoya.sword.common.constant.Constants;
 import com.github.ecsoya.sword.common.core.domain.entity.SysDictData;
 
 /**
- * 字典工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class DictUtils.
  */
 @Component
 public class DictUtils {
-	/**
-	 * 分隔符
-	 */
+
+	/** The Constant SEPARATOR. */
 	public static final String SEPARATOR = ",";
 
 	/**
-	 * 设置字典缓存
+	 * Sets the dict cache.
 	 *
-	 * @param key       参数键
-	 * @param dictDatas 字典数据列表
+	 * @param key       the key
+	 * @param dictDatas the dict datas
 	 */
 	public static void setDictCache(String key, List<SysDictData> dictDatas) {
 		CacheUtils.put(getCacheName(), getCacheKey(key), dictDatas);
 	}
 
 	/**
-	 * 获取字典缓存
+	 * Gets the dict cache.
 	 *
-	 * @param key 参数键
-	 * @return dictDatas 字典数据列表
+	 * @param key the key
+	 * @return the dict cache
 	 */
 	public static List<SysDictData> getDictCache(String key) {
 		final Object cacheObj = CacheUtils.get(getCacheName(), getCacheKey(key));
@@ -45,34 +42,34 @@ public class DictUtils {
 	}
 
 	/**
-	 * 根据字典类型和字典值获取字典标签
+	 * Gets the dict label.
 	 *
-	 * @param dictType  字典类型
-	 * @param dictValue 字典值
-	 * @return 字典标签
+	 * @param dictType  the dict type
+	 * @param dictValue the dict value
+	 * @return the dict label
 	 */
 	public static String getDictLabel(String dictType, String dictValue) {
 		return getDictLabel(dictType, dictValue, SEPARATOR);
 	}
 
 	/**
-	 * 根据字典类型和字典标签获取字典值
+	 * Gets the dict value.
 	 *
-	 * @param dictType  字典类型
-	 * @param dictLabel 字典标签
-	 * @return 字典值
+	 * @param dictType  the dict type
+	 * @param dictLabel the dict label
+	 * @return the dict value
 	 */
 	public static String getDictValue(String dictType, String dictLabel) {
 		return getDictValue(dictType, dictLabel, SEPARATOR);
 	}
 
 	/**
-	 * 根据字典类型和字典值获取字典标签
+	 * Gets the dict label.
 	 *
-	 * @param dictType  字典类型
-	 * @param dictValue 字典值
-	 * @param separator 分隔符
-	 * @return 字典标签
+	 * @param dictType  the dict type
+	 * @param dictValue the dict value
+	 * @param separator the separator
+	 * @return the dict label
 	 */
 	public static String getDictLabel(String dictType, String dictValue, String separator) {
 		final StringBuilder propertyString = new StringBuilder();
@@ -98,12 +95,12 @@ public class DictUtils {
 	}
 
 	/**
-	 * 根据字典类型和字典标签获取字典值
+	 * Gets the dict value.
 	 *
-	 * @param dictType  字典类型
-	 * @param dictLabel 字典标签
-	 * @param separator 分隔符
-	 * @return 字典值
+	 * @param dictType  the dict type
+	 * @param dictLabel the dict label
+	 * @param separator the separator
+	 * @return the dict value
 	 */
 	public static String getDictValue(String dictType, String dictLabel, String separator) {
 		final StringBuilder propertyString = new StringBuilder();
@@ -129,26 +126,26 @@ public class DictUtils {
 	}
 
 	/**
-	 * 清空字典缓存
+	 * Clear dict cache.
 	 */
 	public static void clearDictCache() {
 		CacheUtils.removeAll(getCacheName());
 	}
 
 	/**
-	 * 获取cache name
+	 * Gets the cache name.
 	 *
-	 * @return 缓存名
+	 * @return the cache name
 	 */
 	public static String getCacheName() {
 		return Constants.SYS_DICT_CACHE;
 	}
 
 	/**
-	 * 设置cache key
+	 * Gets the cache key.
 	 *
-	 * @param configKey 参数键
-	 * @return 缓存键key
+	 * @param configKey the config key
+	 * @return the cache key
 	 */
 	public static String getCacheKey(String configKey) {
 		return Constants.SYS_DICT_KEY + configKey;

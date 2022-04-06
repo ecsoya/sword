@@ -11,20 +11,20 @@ import com.github.ecsoya.sword.generator.mapper.GenTableColumnMapper;
 import com.github.ecsoya.sword.generator.service.IGenTableColumnService;
 
 /**
- * 业务字段 服务层实现
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class GenTableColumnServiceImpl.
  */
 @Service
 public class GenTableColumnServiceImpl implements IGenTableColumnService {
+
+	/** The gen table column mapper. */
 	@Autowired
 	private GenTableColumnMapper genTableColumnMapper;
 
 	/**
-	 * 查询业务字段列表
+	 * Select gen table column list by table id.
 	 *
-	 * @param genTableColumn 业务字段信息
-	 * @return 业务字段集合
+	 * @param genTableColumn the gen table column
+	 * @return the list
 	 */
 	@Override
 	public List<GenTableColumn> selectGenTableColumnListByTableId(GenTableColumn genTableColumn) {
@@ -32,10 +32,10 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
 	}
 
 	/**
-	 * 新增业务字段
+	 * Insert gen table column.
 	 *
-	 * @param genTableColumn 业务字段信息
-	 * @return 结果
+	 * @param genTableColumn the gen table column
+	 * @return the int
 	 */
 	@Override
 	public int insertGenTableColumn(GenTableColumn genTableColumn) {
@@ -43,10 +43,10 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
 	}
 
 	/**
-	 * 修改业务字段
+	 * Update gen table column.
 	 *
-	 * @param genTableColumn 业务字段信息
-	 * @return 结果
+	 * @param genTableColumn the gen table column
+	 * @return the int
 	 */
 	@Override
 	public int updateGenTableColumn(GenTableColumn genTableColumn) {
@@ -54,10 +54,10 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
 	}
 
 	/**
-	 * 删除业务字段对象
+	 * Delete gen table column by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteGenTableColumnByIds(String ids) {

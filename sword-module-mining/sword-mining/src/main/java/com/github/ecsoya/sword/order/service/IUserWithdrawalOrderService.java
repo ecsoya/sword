@@ -9,96 +9,147 @@ import com.github.ecsoya.sword.order.domain.UserWithdrawalManual;
 import com.github.ecsoya.sword.order.domain.UserWithdrawalOrder;
 
 /**
- * 提现订单Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface IUserWithdrawalOrderService.
  */
 public interface IUserWithdrawalOrderService {
+
 	/**
-	 * 查询提现订单
+	 * Select user withdrawal order by id.
 	 *
-	 * @param id 提现订单ID
-	 * @return 提现订单
+	 * @param id the id
+	 * @return the user withdrawal order
 	 */
 	public UserWithdrawalOrder selectUserWithdrawalOrderById(Long id);
 
+	/**
+	 * Select user withdrawal order by order no.
+	 *
+	 * @param orderNo the order no
+	 * @return the user withdrawal order
+	 */
 	public UserWithdrawalOrder selectUserWithdrawalOrderByOrderNo(String orderNo);
 
 	/**
-	 * 查询提现订单列表
+	 * Select user withdrawal order list.
 	 *
-	 * @param userWithdrawalOrder 提现订单
-	 * @return 提现订单集合
+	 * @param userWithdrawalOrder the user withdrawal order
+	 * @return the list
 	 */
 	public List<UserWithdrawalOrder> selectUserWithdrawalOrderList(UserWithdrawalOrder userWithdrawalOrder);
 
 	/**
-	 * 新增提现订单
+	 * Insert user withdrawal order.
 	 *
-	 * @param userWithdrawalOrder 提现订单
-	 * @return 结果
+	 * @param userWithdrawalOrder the user withdrawal order
+	 * @return the int
 	 */
 	public int insertUserWithdrawalOrder(UserWithdrawalOrder userWithdrawalOrder);
 
 	/**
-	 * 修改提现订单
+	 * Update user withdrawal order.
 	 *
-	 * @param userWithdrawalOrder 提现订单
-	 * @return 结果
+	 * @param userWithdrawalOrder the user withdrawal order
+	 * @return the int
 	 */
 	public int updateUserWithdrawalOrder(UserWithdrawalOrder userWithdrawalOrder);
 
 	/**
-	 * 批量删除提现订单
+	 * Delete user withdrawal order by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserWithdrawalOrderByIds(String ids);
 
 	/**
-	 * 删除提现订单信息
+	 * Delete user withdrawal order by id.
 	 *
-	 * @param id 提现订单ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserWithdrawalOrderById(Long id);
 
 	/**
-	 * 用户发起提现申请
+	 * Withdrawal.
+	 *
+	 * @param userId   the user id
+	 * @param symbol   the symbol
+	 * @param address  the address
+	 * @param amount   the amount
+	 * @param password the password
+	 * @return the common result
+	 * @throws TransactionException the transaction exception
 	 */
 	public CommonResult<UserWithdrawalOrder> withdrawal(Long userId, String symbol, String address, BigDecimal amount,
 			String password) throws TransactionException;
 
 	/**
-	 * 用户取消提币
+	 * Cancel withdrawal.
+	 *
+	 * @param userId  the user id
+	 * @param orderNo the order no
+	 * @param remark  the remark
+	 * @return the common result
+	 * @throws TransactionException the transaction exception
 	 */
 	public CommonResult<?> cancelWithdrawal(Long userId, String orderNo, String remark) throws TransactionException;
 
 	/**
-	 * 用户确认提币
+	 * Confirm withdrawal.
+	 *
+	 * @param userId  the user id
+	 * @param orderNo the order no
+	 * @return the common result
+	 * @throws TransactionException the transaction exception
 	 */
 	public CommonResult<?> confirmWithdrawal(Long userId, String orderNo) throws TransactionException;
 
 	/**
-	 * 后台提币审核拒绝
+	 * Cancel withdrawal.
+	 *
+	 * @param orderNos the order nos
+	 * @param remark   the remark
+	 * @return the common result
 	 */
 	public CommonResult<?> cancelWithdrawal(String orderNos, String remark);
 
 	/**
-	 * 后台提币审核通过
+	 * Confirm withdrawal.
+	 *
+	 * @param orderNos the order nos
+	 * @return the common result
 	 */
 	public CommonResult<?> confirmWithdrawal(String orderNos);
 
+	/**
+	 * Select user withdrawal amount.
+	 *
+	 * @param userWithdrawalOrder the user withdrawal order
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserWithdrawalAmount(UserWithdrawalOrder userWithdrawalOrder);
 
+	/**
+	 * Select user withdrawal amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserWithdrawalAmount(String symbol);
 
+	/**
+	 * Select user withdrawal fee amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserWithdrawalFeeAmount(String symbol);
 
 	/**
-	 * 后台手工核销提币订单
+	 * Manual withdrawal record.
+	 *
+	 * @param manual the manual
+	 * @return the common result
 	 */
 	public CommonResult<?> manualWithdrawalRecord(UserWithdrawalManual manual);
 

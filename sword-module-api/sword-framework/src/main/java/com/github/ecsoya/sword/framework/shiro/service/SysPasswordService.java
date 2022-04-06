@@ -22,25 +22,36 @@ import com.github.ecsoya.sword.common.utils.async.AsyncManager;
 import com.github.ecsoya.sword.framework.manager.factory.AsyncFactory;
 
 /**
- * 登录密码方法
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysPasswordService.
  */
 @Component
 public class SysPasswordService {
+
+	/** The cache manager. */
 	@Autowired
 	private CacheManager cacheManager;
 
+	/** The login record cache. */
 	private Cache<String, AtomicInteger> loginRecordCache;
 
+	/** The max retry count. */
 	@Value(value = "${user.password.maxRetryCount}")
 	private String maxRetryCount;
 
+	/**
+	 * Inits the.
+	 */
 	@PostConstruct
 	public void init() {
 		loginRecordCache = cacheManager.getCache(ShiroConstants.LOGINRECORDCACHE);
 	}
 
+	/**
+	 * Validate.
+	 *
+	 * @param user     the user
+	 * @param password the password
+	 */
 	public void validate(SysUser user, String password) {
 		final String loginName = user.getLoginName();
 
@@ -66,15 +77,35 @@ public class SysPasswordService {
 		}
 	}
 
+	/**
+	 * Matches.
+	 *
+	 * @param user        the user
+	 * @param newPassword the new password
+	 * @return true, if successful
+	 */
 	public boolean matches(SysUser user, String newPassword) {
 		return PasswordMatcher.matches(user, newPassword);
 //		return user.getPassword().equals(encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
 	}
 
+	/**
+	 * Clear login record cache.
+	 *
+	 * @param loginName the login name
+	 */
 	public void clearLoginRecordCache(String loginName) {
 		loginRecordCache.remove(loginName);
 	}
 
+	/**
+	 * Encrypt password.
+	 *
+	 * @param loginName the login name
+	 * @param password  the password
+	 * @param salt      the salt
+	 * @return the string
+	 */
 	public String encryptPassword(String loginName, String password, String salt) {
 		SysUser user = new SysUser();
 		user.setLoginName(loginName);
@@ -83,6 +114,11 @@ public class SysPasswordService {
 		return PasswordMatcher.encryptPassword(user, password);
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 //		System.out.println(StringUtils.encryptPassword("develop", "qwer1234", "111111"));
 //		System.out.println(StringUtils.encryptPassword("admin", "qwer1234", "222222"));

@@ -1,6 +1,5 @@
 package com.github.ecsoya.sword.upload.utils;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,19 +12,16 @@ import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 import com.github.ecsoya.sword.upload.service.IFileUploadService;
 
 /**
- * 文件上传工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class FileUploadUtils.
  */
 public class FileUploadUtils {
 
 	/**
-	 * 根据文件路径上传
+	 * Upload.
 	 *
-	 * @param file 上传的文件
-	 *
-	 * @return 文件名称
-	 * @throws IOException
+	 * @param file the file
+	 * @return the string
+	 * @throws Exception the exception
 	 */
 	public static final String upload(MultipartFile file) throws Exception {
 		final IFileUploadService service = SpringUtils.getBean(IFileUploadService.class);
@@ -37,12 +33,11 @@ public class FileUploadUtils {
 	}
 
 	/**
-	 * 根据文件路径上传
+	 * Upload.
 	 *
-	 * @param file 上传的文件
-	 *
-	 * @return 文件名称
-	 * @throws IOException
+	 * @param files the files
+	 * @return the list
+	 * @throws Exception the exception
 	 */
 	public static final List<String> upload(MultipartFile... files) throws Exception {
 		if (files == null || files.length == 0) {
@@ -56,6 +51,14 @@ public class FileUploadUtils {
 		return null;
 	}
 
+	/**
+	 * Upload.
+	 *
+	 * @param fileName    the file name
+	 * @param inputStream the input stream
+	 * @return the string
+	 * @throws Exception the exception
+	 */
 	public static String upload(String fileName, InputStream inputStream) throws Exception {
 		final IFileUploadService service = SpringUtils.getBean(IFileUploadService.class);
 		final CommonResult<String> result = service.uploadFile(fileName, inputStream);

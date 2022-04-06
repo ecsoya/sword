@@ -18,23 +18,34 @@ import com.github.ecsoya.sword.mining.service.IMiningSymbolService;
 import com.github.ecsoya.sword.service.ILockService;
 import com.github.ecsoya.sword.wallet.service.IWalletService;
 
+/**
+ * The Class TickerCacheTask.
+ */
 @Configuration
 @EnableScheduling
 public class TickerCacheTask {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(TickerCacheTask.class);
 
+	/** The Constant LOCK_NAME. */
 	private static final String LOCK_NAME = "sword.tickerCacheLock";
 
+	/** The wallet service. */
 	@Autowired
 	private IWalletService walletService;
 
+	/** The symbol service. */
 	@Autowired
 	private IMiningSymbolService symbolService;
 
+	/** The lock service. */
 	@Autowired
 	private ILockService lockService;
 
+	/**
+	 * Cache ticker.
+	 */
 	@Scheduled(cron = "0 */5 * * * ?")
 	public void cacheTicker() {
 		log.info("TickerCacheTask at {}", DateUtils.getNowDateStr());

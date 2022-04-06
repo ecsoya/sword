@@ -16,22 +16,39 @@ import org.springframework.core.io.ClassPathResource;
 import com.github.ecsoya.sword.common.utils.DateUtils;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
+/**
+ * The Class WalletConfig.
+ */
 @Configuration
 @ConfigurationProperties("wallet.ticker")
 public class WalletConfig {
 
+	/** The price url. */
 	private String priceUrl = "https://api.gateio.ws/api/v4/spot/tickers";
 
+	/** The market. */
 	private String market = "currency_pair";
 
+	/** The history files. */
 	private Map<String, String> historyFiles;
 
+	/** The histories. */
 	private Map<String, Map<Date, BigDecimal>> histories;
 
+	/**
+	 * Gets the history files.
+	 *
+	 * @return the history files
+	 */
 	public Map<String, String> getHistoryFiles() {
 		return historyFiles;
 	}
 
+	/**
+	 * Sets the history files.
+	 *
+	 * @param historyFiles the history files
+	 */
 	public void setHistoryFiles(Map<String, String> historyFiles) {
 		this.historyFiles = historyFiles;
 		if (historyFiles != null && !historyFiles.isEmpty()) {
@@ -39,6 +56,11 @@ public class WalletConfig {
 		}
 	}
 
+	/**
+	 * Gets the histories.
+	 *
+	 * @return the histories
+	 */
 	public Map<String, Map<Date, BigDecimal>> getHistories() {
 		if (histories == null) {
 			histories = new HashMap<String, Map<Date, BigDecimal>>();
@@ -46,10 +68,22 @@ public class WalletConfig {
 		return histories;
 	}
 
+	/**
+	 * Sets the histories.
+	 *
+	 * @param histories the histories
+	 */
 	public void setHistories(Map<String, Map<Date, BigDecimal>> histories) {
 		this.histories = histories;
 	}
 
+	/**
+	 * Gets the price.
+	 *
+	 * @param symbol the symbol
+	 * @param date   the date
+	 * @return the price
+	 */
 	public BigDecimal getPrice(String symbol, Date date) {
 		if (StringUtils.isEmpty(symbol) || date == null || histories == null || histories.isEmpty()) {
 			return null;
@@ -67,6 +101,9 @@ public class WalletConfig {
 		return null;
 	}
 
+	/**
+	 * Builds the histories.
+	 */
 	private void buildHistories() {
 		if (historyFiles == null || historyFiles.isEmpty()) {
 			return;
@@ -102,18 +139,38 @@ public class WalletConfig {
 		}
 	}
 
+	/**
+	 * Gets the price url.
+	 *
+	 * @return the price url
+	 */
 	public String getPriceUrl() {
 		return priceUrl;
 	}
 
+	/**
+	 * Sets the price url.
+	 *
+	 * @param priceUrl the new price url
+	 */
 	public void setPriceUrl(String priceUrl) {
 		this.priceUrl = priceUrl;
 	}
 
+	/**
+	 * Gets the market.
+	 *
+	 * @return the market
+	 */
 	public String getMarket() {
 		return market;
 	}
 
+	/**
+	 * Sets the market.
+	 *
+	 * @param market the new market
+	 */
 	public void setMarket(String market) {
 		this.market = market;
 	}

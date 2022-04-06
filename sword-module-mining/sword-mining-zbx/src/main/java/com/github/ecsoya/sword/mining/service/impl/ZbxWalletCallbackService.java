@@ -28,24 +28,38 @@ import com.github.ecsoya.sword.wallet.domain.UserWalletAccount;
 import com.github.ecsoya.sword.wallet.service.IUserWalletAccountService;
 import com.github.ecsoya.sword.zbx.domain.ZbxOrderRawData;
 
+/**
+ * The Class ZbxWalletCallbackService.
+ */
 @Service
 public class ZbxWalletCallbackService implements IWalletCallbackService<ZbxOrderRawData> {
 
+	/** The user wallet account service. */
 	@Autowired
 	private IUserWalletAccountService userWalletAccountService;
 
+	/** The user deposite order service. */
 	@Autowired
 	private IUserDepositOrderService userDepositeOrderService;
 
+	/** The user deposite record service. */
 	@Autowired
 	private IUserDepositRecordService userDepositeRecordService;
 
+	/** The user withdrawal order service. */
 	@Autowired
 	private IUserWithdrawalOrderService userWithdrawalOrderService;
 
+	/** The user withdrawal record service. */
 	@Autowired
 	private IUserWithdrawalRecordService userWithdrawalRecordService;
 
+	/**
+	 * Process order.
+	 *
+	 * @param rawData the raw data
+	 * @return the common result
+	 */
 	@Override
 	@Transactional(rollbackFor = TransactionException.class)
 	public CommonResult<?> processOrder(ZbxOrderRawData rawData) {
@@ -60,6 +74,12 @@ public class ZbxWalletCallbackService implements IWalletCallbackService<ZbxOrder
 		return CommonResult.fail("未知类型"); //$NON-NLS-1$
 	}
 
+	/**
+	 * Process withdrawal order.
+	 *
+	 * @param rawData the raw data
+	 * @return the common result
+	 */
 	private CommonResult<?> processWithdrawalOrder(ZbxOrderRawData rawData) {
 		if (rawData == null || !rawData.isWithdrawal()) {
 			return CommonResult.fail("无效的提币订单"); //$NON-NLS-1$
@@ -116,6 +136,18 @@ public class ZbxWalletCallbackService implements IWalletCallbackService<ZbxOrder
 		}
 	}
 
+	/**
+	 * Adds the withdrawal record.
+	 *
+	 * @param userId  the user id
+	 * @param amount  the amount
+	 * @param fee     the fee
+	 * @param orderNo the order no
+	 * @param symbol  the symbol
+	 * @param success the success
+	 * @param remark  the remark
+	 * @return true, if successful
+	 */
 	private boolean addWithdrawalRecord(Long userId, BigDecimal amount, BigDecimal fee, String orderNo, String symbol,
 			boolean success, String remark) {
 		// 1. 扣款
@@ -139,6 +171,13 @@ public class ZbxWalletCallbackService implements IWalletCallbackService<ZbxOrder
 		return true;
 	}
 
+	/**
+	 * Sets the withdrawal order feedback.
+	 *
+	 * @param orderNo  the order no
+	 * @param feedback the feedback
+	 * @return the int
+	 */
 	private int setWithdrawalOrderFeedback(String orderNo, Integer feedback) {
 		final UserWithdrawalOrder order = userWithdrawalOrderService.selectUserWithdrawalOrderByOrderNo(orderNo);
 		if (order == null) {
@@ -151,6 +190,16 @@ public class ZbxWalletCallbackService implements IWalletCallbackService<ZbxOrder
 		return userWithdrawalOrderService.updateUserWithdrawalOrder(update);
 	}
 
+	/**
+	 * Result.
+	 *
+	 * @param orderId  the order id
+	 * @param status   the status
+	 * @param feedback the feedback
+	 * @param remark   the remark
+	 * @param success  the success
+	 * @return the common result
+	 */
 	private CommonResult<?> result(Long orderId, Integer status, Integer feedback, String remark, boolean success) {
 		final UserWithdrawalOrder update = new UserWithdrawalOrder();
 		update.setId(orderId);
@@ -164,6 +213,12 @@ public class ZbxWalletCallbackService implements IWalletCallbackService<ZbxOrder
 		return CommonResult.fail(remark);
 	}
 
+	/**
+	 * Process deposite order.
+	 *
+	 * @param rawData the raw data
+	 * @return the common result
+	 */
 	private CommonResult<?> processDepositeOrder(ZbxOrderRawData rawData) {
 		if (rawData == null || !rawData.isDeposit()) {
 			return CommonResult.fail("无效的充值订单"); //$NON-NLS-1$

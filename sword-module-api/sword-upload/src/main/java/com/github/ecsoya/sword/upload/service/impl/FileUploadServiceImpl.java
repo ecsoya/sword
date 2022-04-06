@@ -17,16 +17,28 @@ import com.github.ecsoya.sword.upload.core.UploadData;
 import com.github.ecsoya.sword.upload.service.IFileUploadService;
 import com.github.ecsoya.sword.upload.uploader.FileUploader;
 
+/**
+ * The Class FileUploadServiceImpl.
+ */
 @Component
 @Service
 public class FileUploadServiceImpl implements IFileUploadService {
 
+	/** The uploader. */
 	@Autowired(required = false)
 	private FileUploader uploader;
 
+	/** The config. */
 	@Autowired(required = false)
 	private UploadConfig config;
 
+	/**
+	 * Upload file.
+	 *
+	 * @param file the file
+	 * @return the common result
+	 * @throws FileUploadException the file upload exception
+	 */
 	@Override
 	public CommonResult<String> uploadFile(MultipartFile file) throws FileUploadException {
 		if (file == null) {
@@ -40,6 +52,13 @@ public class FileUploadServiceImpl implements IFileUploadService {
 		return CommonResult.success(data == null || data.isEmpty() ? null : data.get(0));
 	}
 
+	/**
+	 * Upload.
+	 *
+	 * @param files the files
+	 * @return the common result
+	 * @throws FileUploadException the file upload exception
+	 */
 	@Override
 	public CommonResult<List<String>> upload(List<MultipartFile> files) throws FileUploadException {
 		if (uploader == null) {
@@ -52,6 +71,14 @@ public class FileUploadServiceImpl implements IFileUploadService {
 		return CommonResult.build(uploader.upload(datas, config));
 	}
 
+	/**
+	 * Upload file.
+	 *
+	 * @param fileName the file name
+	 * @param content  the content
+	 * @return the common result
+	 * @throws FileUploadException the file upload exception
+	 */
 	@Override
 	public CommonResult<String> uploadFile(String fileName, InputStream content) throws FileUploadException {
 		if (uploader == null) {

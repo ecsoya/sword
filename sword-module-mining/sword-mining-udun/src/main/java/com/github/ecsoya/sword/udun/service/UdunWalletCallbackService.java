@@ -31,27 +31,42 @@ import com.github.ecsoya.sword.utils.MathUtils;
 import com.github.ecsoya.sword.wallet.domain.UserWalletAccount;
 import com.github.ecsoya.sword.wallet.service.IUserWalletAccountService;
 
+/**
+ * The Class UdunWalletCallbackService.
+ */
 @Service
 public class UdunWalletCallbackService implements IWalletCallbackService<WalletNotify> {
 
+	/** The properties. */
 	@Autowired
 	private UdunWalletProperties properties;
 
+	/** The user deposit record service. */
 	@Autowired
 	private IUserDepositRecordService userDepositRecordService;
 
+	/** The user deposit order service. */
 	@Autowired
 	private IUserDepositOrderService userDepositOrderService;
 
+	/** The user wallet account service. */
 	@Autowired
 	private IUserWalletAccountService userWalletAccountService;
 
+	/** The user withdrawal record service. */
 	@Autowired
 	private IUserWithdrawalRecordService userWithdrawalRecordService;
 
+	/** The user withdrawal order service. */
 	@Autowired
 	private IUserWithdrawalOrderService userWithdrawalOrderService;
 
+	/**
+	 * Process order.
+	 *
+	 * @param data the data
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<?> processOrder(WalletNotify data) {
 		if (data == null) {
@@ -69,6 +84,12 @@ public class UdunWalletCallbackService implements IWalletCallbackService<WalletN
 		return result;
 	}
 
+	/**
+	 * Process withdrawal order.
+	 *
+	 * @param data the data
+	 * @return the common result
+	 */
 	private CommonResult<?> processWithdrawalOrder(WalletNotify data) {
 		if (data == null || !WalletNotify.TYPE_WITHDRAWAL.equals(data.getTradeType())) {
 			return CommonResult.fail("参数错误");
@@ -161,6 +182,12 @@ public class UdunWalletCallbackService implements IWalletCallbackService<WalletN
 		return CommonResult.success(data.getOrderNo());
 	}
 
+	/**
+	 * Process deposite order.
+	 *
+	 * @param data the data
+	 * @return the common result
+	 */
 	private CommonResult<?> processDepositeOrder(WalletNotify data) {
 		if (data == null || !WalletNotify.TYPE_DEPOSITE.equals(data.getTradeType())) {
 			return CommonResult.fail("参数错误");
@@ -231,6 +258,12 @@ public class UdunWalletCallbackService implements IWalletCallbackService<WalletN
 		return CommonResult.success("充值成功");
 	}
 
+	/**
+	 * Parses the raw data.
+	 *
+	 * @param body the body
+	 * @return the common result
+	 */
 	@Override
 	public CommonResult<WalletNotify> parseRawData(String body) {
 		if (StringUtils.isEmpty(body)) {
@@ -276,6 +309,15 @@ public class UdunWalletCallbackService implements IWalletCallbackService<WalletN
 		}
 	}
 
+	/**
+	 * Check signature.
+	 *
+	 * @param timestamp the timestamp
+	 * @param nonce     the nonce
+	 * @param body      the body
+	 * @param sign      the sign
+	 * @return the common result
+	 */
 	public CommonResult<?> checkSignature(String timestamp, String nonce, String body, String sign) {
 		try {
 			if (HttpUtil.checkSign(properties.getMerchantKey(), timestamp, nonce, body, sign)) {

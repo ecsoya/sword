@@ -22,27 +22,40 @@ import com.github.ecsoya.sword.system.domain.SysLogininfor;
 import com.github.ecsoya.sword.system.service.ISysLogininforService;
 
 /**
- * 系统访问记录
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysLogininforController.
  */
 @Controller
 @RequestMapping("/monitor/logininfor")
 public class SysLogininforController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "monitor/logininfor";
 
+	/** The logininfor service. */
 	@Autowired
 	private ISysLogininforService logininforService;
 
+	/** The password service. */
 	@Autowired
 	private SysPasswordService passwordService;
 
+	/**
+	 * Logininfor.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("monitor:logininfor:view")
 	@GetMapping()
 	public String logininfor() {
 		return prefix + "/logininfor";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param logininfor the logininfor
+	 * @return the table data info
+	 */
 	@RequiresPermissions("monitor:logininfor:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -53,6 +66,12 @@ public class SysLogininforController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param logininfor the logininfor
+	 * @return the ajax result
+	 */
 	@Log(title = "登录日志", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("monitor:logininfor:export")
 	@PostMapping("/export")
@@ -64,6 +83,12 @@ public class SysLogininforController extends BaseController {
 		return util.exportExcel(list, "登录日志");
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("monitor:logininfor:remove")
 	@Log(title = "登录日志", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
@@ -72,6 +97,11 @@ public class SysLogininforController extends BaseController {
 		return toAjax(logininforService.deleteLogininforByIds(ids));
 	}
 
+	/**
+	 * Clean.
+	 *
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("monitor:logininfor:remove")
 	@Log(title = "登录日志", businessType = BusinessType.CLEAN)
 	@PostMapping("/clean")
@@ -81,6 +111,12 @@ public class SysLogininforController extends BaseController {
 		return success();
 	}
 
+	/**
+	 * Unlock.
+	 *
+	 * @param loginName the login name
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("monitor:logininfor:unlock")
 	@Log(title = "账户解锁", businessType = BusinessType.OTHER)
 	@PostMapping("/unlock")

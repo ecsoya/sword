@@ -15,51 +15,63 @@ import com.github.ecsoya.sword.framework.manager.factory.AsyncFactory;
 import com.github.ecsoya.sword.framework.shiro.service.SysShiroService;
 
 /**
- * 针对自定义的ShiroSession的db操作
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class OnlineSessionDAO.
  */
 public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
-	/**
-	 * 同步session到数据库的周期 单位为毫秒（默认1分钟）
-	 */
+
+	/** The db sync period. */
 	@Value("${shiro.session.dbSyncPeriod}")
 	private int dbSyncPeriod;
 
-	/**
-	 * 上次同步数据库的时间戳
-	 */
+	/** The Constant LAST_SYNC_DB_TIMESTAMP. */
 	private static final String LAST_SYNC_DB_TIMESTAMP = OnlineSessionDAO.class.getName() + "LAST_SYNC_DB_TIMESTAMP";
 
+	/** The sys shiro service. */
 	@Autowired
 	private SysShiroService sysShiroService;
 
+	/**
+	 * Instantiates a new online session DAO.
+	 */
 	public OnlineSessionDAO() {
 		super();
 	}
 
+	/**
+	 * Instantiates a new online session DAO.
+	 *
+	 * @param expireTime the expire time
+	 */
 	public OnlineSessionDAO(long expireTime) {
 		super();
 	}
 
 	/**
-	 * 根据会话ID获取会话
+	 * Do read session.
 	 *
-	 * @param sessionId 会话ID
-	 * @return ShiroSession
+	 * @param sessionId the session id
+	 * @return the session
 	 */
 	@Override
 	protected Session doReadSession(Serializable sessionId) {
 		return sysShiroService.getSession(sessionId);
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param session the session
+	 * @throws UnknownSessionException the unknown session exception
+	 */
 	@Override
 	public void update(Session session) throws UnknownSessionException {
 		super.update(session);
 	}
 
 	/**
-	 * 更新会话；如更新会话最后访问时间/停止会话/设置超时时间/设置移除属性等会调用
+	 * Sync to db.
+	 *
+	 * @param onlineSession the online session
 	 */
 	public void syncToDb(OnlineSession onlineSession) {
 		final Date lastSyncTimestamp = (Date) onlineSession.getAttribute(LAST_SYNC_DB_TIMESTAMP);
@@ -92,7 +104,9 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
 	}
 
 	/**
-	 * 当会话过期/停止（如用户退出时）属性等会调用
+	 * Do delete.
+	 *
+	 * @param session the session
 	 */
 	@Override
 	protected void doDelete(Session session) {

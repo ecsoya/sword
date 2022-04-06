@@ -13,29 +13,34 @@ import com.github.ecsoya.sword.common.constant.Constants;
 import com.github.ecsoya.sword.framework.interceptor.RepeatSubmitInterceptor;
 
 /**
- * 通用配置
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class ResourcesConfig.
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
-	/**
-	 * 首页地址
-	 */
+
+	/** The index url. */
 	@Value("${shiro.user.indexUrl}")
 	private String indexUrl;
 
+	/** The repeat submit interceptor. */
 	@Autowired
 	private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
 	/**
-	 * 默认首页的设置，当输入域名是可以自动跳转到默认指定的网页
+	 * Adds the view controllers.
+	 *
+	 * @param registry the registry
 	 */
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("forward:" + indexUrl);
 	}
 
+	/**
+	 * Adds the resource handlers.
+	 *
+	 * @param registry the registry
+	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		/** 本地文件上传路径 */
@@ -48,7 +53,9 @@ public class ResourcesConfig implements WebMvcConfigurer {
 	}
 
 	/**
-	 * 自定义拦截规则
+	 * Adds the interceptors.
+	 *
+	 * @param registry the registry
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

@@ -3,13 +3,14 @@ package com.github.ecsoya.sword.common.utils.html;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * 转义和反转义工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class EscapeUtil.
  */
 public class EscapeUtil {
+
+	/** The Constant RE_HTML_MARK. */
 	public static final String RE_HTML_MARK = "(<[^<]*?>)|(<[\\s]*?/[^<]*?>)|(<[^<]*?/[\\s]*?>)";
 
+	/** The Constant TEXT. */
 	private static final char[][] TEXT = new char[64][];
 
 	static {
@@ -26,40 +27,40 @@ public class EscapeUtil {
 	}
 
 	/**
-	 * 转义文本中的HTML字符为安全的字符
+	 * Escape.
 	 *
-	 * @param text 被转义的文本
-	 * @return 转义后的文本
+	 * @param text the text
+	 * @return the string
 	 */
 	public static String escape(String text) {
 		return encode(text);
 	}
 
 	/**
-	 * 还原被转义的HTML特殊字符
+	 * Unescape.
 	 *
-	 * @param content 包含转义符的HTML内容
-	 * @return 转换后的字符串
+	 * @param content the content
+	 * @return the string
 	 */
 	public static String unescape(String content) {
 		return decode(content);
 	}
 
 	/**
-	 * 清除所有HTML标签，但是不删除标签内的内容
+	 * Clean.
 	 *
-	 * @param content 文本
-	 * @return 清除标签后的文本
+	 * @param content the content
+	 * @return the string
 	 */
 	public static String clean(String content) {
 		return new HTMLFilter().filter(content);
 	}
 
 	/**
-	 * Escape编码
+	 * Encode.
 	 *
-	 * @param text 被编码的文本
-	 * @return 编码后的字符
+	 * @param text the text
+	 * @return the string
 	 */
 	private static String encode(String text) {
 		int len;
@@ -80,10 +81,10 @@ public class EscapeUtil {
 	}
 
 	/**
-	 * Escape解码
+	 * Decode.
 	 *
-	 * @param content 被转义的内容
-	 * @return 解码后的字符串
+	 * @param content the content
+	 * @return the string
 	 */
 	public static String decode(String content) {
 		if (StringUtils.isEmpty(content)) {
@@ -116,6 +117,11 @@ public class EscapeUtil {
 		return tmp.toString();
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		final String html = "<script>alert(1);</script>";
 		// String html = "<scr<script>ipt>alert(\"XSS\")</scr<script>ipt>";

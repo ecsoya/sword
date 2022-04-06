@@ -22,19 +22,24 @@ import com.github.ecsoya.sword.common.enums.BusinessType;
 import com.github.ecsoya.sword.common.utils.poi.ExcelUtil;
 
 /**
- * 聊天记录Controller
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-06-03
+ * The Class ChatHistoryController.
  */
 @Controller
 @RequestMapping("/chat/history")
 public class ChatHistoryController extends BaseController {
+
+	/** The prefix. */
 	private String prefix = "chat/history";
 
+	/** The chat history service. */
 	@Autowired
 	private IChatHistoryService chatHistoryService;
 
+	/**
+	 * History.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("chat:history:view")
 	@GetMapping()
 	public String history() {
@@ -42,7 +47,10 @@ public class ChatHistoryController extends BaseController {
 	}
 
 	/**
-	 * 查询聊天记录列表
+	 * List.
+	 *
+	 * @param chatHistory the chat history
+	 * @return the table data info
 	 */
 	@RequiresPermissions("chat:history:list")
 	@PostMapping("/list")
@@ -54,7 +62,10 @@ public class ChatHistoryController extends BaseController {
 	}
 
 	/**
-	 * 导出聊天记录列表
+	 * Export.
+	 *
+	 * @param chatHistory the chat history
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:history:export")
 	@Log(title = "聊天记录", businessType = BusinessType.EXPORT)
@@ -67,7 +78,9 @@ public class ChatHistoryController extends BaseController {
 	}
 
 	/**
-	 * 新增聊天记录
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -75,7 +88,10 @@ public class ChatHistoryController extends BaseController {
 	}
 
 	/**
-	 * 新增保存聊天记录
+	 * Adds the save.
+	 *
+	 * @param chatHistory the chat history
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:history:add")
 	@Log(title = "聊天记录", businessType = BusinessType.INSERT)
@@ -86,7 +102,11 @@ public class ChatHistoryController extends BaseController {
 	}
 
 	/**
-	 * 修改聊天记录
+	 * Edits the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
@@ -96,7 +116,10 @@ public class ChatHistoryController extends BaseController {
 	}
 
 	/**
-	 * 修改保存聊天记录
+	 * Edits the save.
+	 *
+	 * @param chatHistory the chat history
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:history:edit")
 	@Log(title = "聊天记录", businessType = BusinessType.UPDATE)
@@ -107,7 +130,10 @@ public class ChatHistoryController extends BaseController {
 	}
 
 	/**
-	 * 删除聊天记录
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:history:remove")
 	@Log(title = "聊天记录", businessType = BusinessType.DELETE)

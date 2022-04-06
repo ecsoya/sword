@@ -11,30 +11,30 @@ import com.github.ecsoya.sword.common.utils.spring.SpringUtils;
 import com.github.ecsoya.sword.system.service.ISysConfigService;
 
 /**
- * RuoYi首创 html调用 thymeleaf 实现参数管理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class ConfigService.
  */
 @Service("config")
 public class ConfigService {
+
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
 	/**
-	 * 根据键名查询参数配置信息
+	 * Gets the key.
 	 *
-	 * @param configKey 参数键名
-	 * @return 参数键值
+	 * @param configKey the config key
+	 * @return the key
 	 */
 	public String getKey(String configKey) {
 		return configService.selectConfigValueByKey(configKey);
 	}
 
 	/**
-	 * 查询全局变量 {@link GlobalConfig}
+	 * Global.
 	 *
-	 * @param key
-	 * @return
+	 * @param key the key
+	 * @return the object
 	 */
 	public Object global(String key) {
 		if (StringUtils.isEmpty(key)) {
@@ -50,7 +50,10 @@ public class ConfigService {
 	}
 
 	/**
-	 * spring.profies.activeProfile
+	 * Profile.
+	 *
+	 * @param profile the profile
+	 * @return true, if successful
 	 */
 	public boolean profile(String profile) {
 		return StringUtils.equals(profile, SpringUtils.getActiveProfile());

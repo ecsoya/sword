@@ -9,12 +9,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 /**
- * 定时任务配置
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class ScheduleConfig.
  */
 @Configuration
 public class ScheduleConfig {
+
+	/**
+	 * Scheduler factory bean.
+	 *
+	 * @param dataSource the data source
+	 * @return the scheduler factory bean
+	 */
 	@Bean
 	public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) {
 		final SchedulerFactoryBean factory = new SchedulerFactoryBean();

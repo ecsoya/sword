@@ -28,37 +28,43 @@ import com.github.ecsoya.sword.system.service.ISysConfigService;
 import com.github.ecsoya.sword.system.service.ISysUserService;
 
 /**
- * 用户 业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysUserServiceImpl.
  */
 @Service
 public class SysUserServiceImpl implements ISysUserService {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
+	/** The user mapper. */
 	@Autowired
 	private SysUserMapper userMapper;
 
+	/** The role mapper. */
 	@Autowired
 	private SysRoleMapper roleMapper;
 
+	/** The post mapper. */
 	@Autowired
 	private SysPostMapper postMapper;
 
+	/** The user post mapper. */
 	@Autowired
 	private SysUserPostMapper userPostMapper;
 
+	/** The user role mapper. */
 	@Autowired
 	private SysUserRoleMapper userRoleMapper;
 
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
 	/**
-	 * 根据条件分页查询用户列表
+	 * Select user list.
 	 *
-	 * @param user 用户信息
-	 * @return 用户信息集合信息
+	 * @param user the user
+	 * @return the list
 	 */
 	@Override
 	@DataScope(deptAlias = "d", userAlias = "u")
@@ -67,10 +73,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 根据条件分页查询已分配用户角色列表
+	 * Select allocated list.
 	 *
-	 * @param user 用户信息
-	 * @return 用户信息集合信息
+	 * @param user the user
+	 * @return the list
 	 */
 	@Override
 	@DataScope(deptAlias = "d", userAlias = "u")
@@ -79,10 +85,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 根据条件分页查询未分配用户角色列表
+	 * Select unallocated list.
 	 *
-	 * @param user 用户信息
-	 * @return 用户信息集合信息
+	 * @param user the user
+	 * @return the list
 	 */
 	@Override
 	@DataScope(deptAlias = "d", userAlias = "u")
@@ -91,10 +97,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 通过用户名查询用户
+	 * Select user by login name.
 	 *
-	 * @param userName 用户名
-	 * @return 用户对象信息
+	 * @param userName the user name
+	 * @return the sys user
 	 */
 	@Override
 	public SysUser selectUserByLoginName(String userName) {
@@ -102,10 +108,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 通过手机号码查询用户
+	 * Select user by phone number.
 	 *
-	 * @param phoneNumber 手机号码
-	 * @return 用户对象信息
+	 * @param phoneNumber the phone number
+	 * @return the sys user
 	 */
 	@Override
 	public SysUser selectUserByPhoneNumber(String phoneNumber) {
@@ -113,10 +119,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 通过邮箱查询用户
+	 * Select user by email.
 	 *
-	 * @param email 邮箱
-	 * @return 用户对象信息
+	 * @param email the email
+	 * @return the sys user
 	 */
 	@Override
 	public SysUser selectUserByEmail(String email) {
@@ -124,10 +130,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 通过用户ID查询用户
+	 * Select user by id.
 	 *
-	 * @param userId 用户ID
-	 * @return 用户对象信息
+	 * @param userId the user id
+	 * @return the sys user
 	 */
 	@Override
 	public SysUser selectUserById(Long userId) {
@@ -135,10 +141,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 通过用户ID查询用户和角色关联
+	 * Select user role by user id.
 	 *
-	 * @param userId 用户ID
-	 * @return 用户和角色关联列表
+	 * @param userId the user id
+	 * @return the list
 	 */
 	@Override
 	public List<SysUserRole> selectUserRoleByUserId(Long userId) {
@@ -146,10 +152,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 通过用户ID删除用户
+	 * Delete user by id.
 	 *
-	 * @param userId 用户ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -162,10 +168,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 批量删除用户信息
+	 * Delete user by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -182,10 +188,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 新增保存用户信息
+	 * Insert user.
 	 *
-	 * @param user 用户信息
-	 * @return 结果
+	 * @param user the user
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -200,10 +206,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 注册用户信息
+	 * Register user.
 	 *
-	 * @param user 用户信息
-	 * @return 结果
+	 * @param user the user
+	 * @return true, if successful
 	 */
 	@Override
 	public boolean registerUser(SysUser user) {
@@ -212,10 +218,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 修改保存用户信息
+	 * Update user.
 	 *
-	 * @param user 用户信息
-	 * @return 结果
+	 * @param user the user
+	 * @return the int
 	 */
 	@Override
 	@Transactional
@@ -233,10 +239,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 修改用户个人详细信息
+	 * Update user info.
 	 *
-	 * @param user 用户信息
-	 * @return 结果
+	 * @param user the user
+	 * @return the int
 	 */
 	@Override
 	public int updateUserInfo(SysUser user) {
@@ -244,10 +250,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 用户授权角色
+	 * Insert user auth.
 	 *
-	 * @param userId  用户ID
-	 * @param roleIds 角色组
+	 * @param userId  the user id
+	 * @param roleIds the role ids
 	 */
 	@Override
 	public void insertUserAuth(Long userId, Long[] roleIds) {
@@ -256,10 +262,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 修改用户密码
+	 * Reset user pwd.
 	 *
-	 * @param user 用户信息
-	 * @return 结果
+	 * @param user the user
+	 * @return the int
 	 */
 	@Override
 	public int resetUserPwd(SysUser user) {
@@ -267,9 +273,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 新增用户角色信息
+	 * Insert user role.
 	 *
-	 * @param user 用户对象
+	 * @param userId  the user id
+	 * @param roleIds the role ids
 	 */
 	public void insertUserRole(Long userId, Long[] roleIds) {
 		if (StringUtils.isNotNull(roleIds)) {
@@ -288,18 +295,18 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 新增用户岗位信息
+	 * Insert user post.
 	 *
-	 * @param user 用户对象
+	 * @param user the user
 	 */
 	public void insertUserPost(SysUser user) {
 	}
 
 	/**
-	 * 校验登录名称是否唯一
+	 * Check login name unique.
 	 *
-	 * @param loginName 用户名
-	 * @return
+	 * @param loginName the login name
+	 * @return the string
 	 */
 	@Override
 	public String checkLoginNameUnique(String loginName) {
@@ -311,10 +318,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 校验手机号码是否唯一
+	 * Check phone unique.
 	 *
-	 * @param user 用户信息
-	 * @return
+	 * @param user the user
+	 * @return the string
 	 */
 	@Override
 	public String checkPhoneUnique(SysUser user) {
@@ -327,10 +334,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 校验email是否唯一
+	 * Check email unique.
 	 *
-	 * @param user 用户信息
-	 * @return
+	 * @param user the user
+	 * @return the string
 	 */
 	@Override
 	public String checkEmailUnique(SysUser user) {
@@ -343,9 +350,9 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 校验用户是否允许操作
+	 * Check user allowed.
 	 *
-	 * @param user 用户信息
+	 * @param user the user
 	 */
 	@Override
 	public void checkUserAllowed(SysUser user) {
@@ -355,10 +362,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 查询用户所属角色组
+	 * Select user role group.
 	 *
-	 * @param userId 用户ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the string
 	 */
 	@Override
 	public String selectUserRoleGroup(Long userId) {
@@ -374,10 +381,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 查询用户所属岗位组
+	 * Select user post group.
 	 *
-	 * @param userId 用户ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the string
 	 */
 	@Override
 	public String selectUserPostGroup(Long userId) {
@@ -393,12 +400,12 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 导入用户数据
+	 * Import user.
 	 *
-	 * @param userList        用户数据列表
-	 * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
-	 * @param operName        操作用户
-	 * @return 结果
+	 * @param userList        the user list
+	 * @param isUpdateSupport the is update support
+	 * @param operName        the oper name
+	 * @return the string
 	 */
 	@Override
 	public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName) {
@@ -446,10 +453,10 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	/**
-	 * 用户状态修改
+	 * Change status.
 	 *
-	 * @param user 用户信息
-	 * @return 结果
+	 * @param user the user
+	 * @return the int
 	 */
 	@Override
 	public int changeStatus(SysUser user) {

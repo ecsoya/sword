@@ -16,12 +16,16 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
- * 资源文件配置加载
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class I18nConfig.
  */
 @Configuration
 public class I18nConfig implements WebMvcConfigurer {
+
+	/**
+	 * Locale resolver.
+	 *
+	 * @return the locale resolver
+	 */
 	@Bean
 	public LocaleResolver localeResolver() {
 		final SessionLocaleResolver slr = new SessionLocaleResolver();
@@ -30,6 +34,11 @@ public class I18nConfig implements WebMvcConfigurer {
 		return slr;
 	}
 
+	/**
+	 * Locale change interceptor.
+	 *
+	 * @return the locale change interceptor
+	 */
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		final LocaleChangeInterceptor lci = new HeaderLocaleChangeInterceptor();
@@ -38,12 +47,30 @@ public class I18nConfig implements WebMvcConfigurer {
 		return lci;
 	}
 
+	/**
+	 * Adds the interceptors.
+	 *
+	 * @param registry the registry
+	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 
+	/**
+	 * The Class HeaderLocaleChangeInterceptor.
+	 */
 	public static final class HeaderLocaleChangeInterceptor extends LocaleChangeInterceptor {
+
+		/**
+		 * Pre handle.
+		 *
+		 * @param request  the request
+		 * @param response the response
+		 * @param handler  the handler
+		 * @return true, if successful
+		 * @throws ServletException the servlet exception
+		 */
 		@Override
 		public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 				throws ServletException {
@@ -69,6 +96,12 @@ public class I18nConfig implements WebMvcConfigurer {
 			return super.preHandle(request, response, handler);
 		}
 
+		/**
+		 * Parses the locale value.
+		 *
+		 * @param localeValue the locale value
+		 * @return the locale
+		 */
 		@Override
 		protected Locale parseLocaleValue(String localeValue) {
 			if ("cn".equalsIgnoreCase(localeValue) || "zh".equalsIgnoreCase(localeValue) || "chn".equals(localeValue)) {

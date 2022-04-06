@@ -26,24 +26,36 @@ import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 import com.github.ecsoya.sword.system.service.ISysDictTypeService;
 
 /**
- * 数据字典信息
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysDictTypeController.
  */
 @Controller
 @RequestMapping("/system/dict")
 public class SysDictTypeController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/dict/type";
 
+	/** The dict type service. */
 	@Autowired
 	private ISysDictTypeService dictTypeService;
 
+	/**
+	 * Dict type.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:dict:view")
 	@GetMapping()
 	public String dictType() {
 		return prefix + "/type";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param dictType the dict type
+	 * @return the table data info
+	 */
 	@PostMapping("/list")
 	@RequiresPermissions("system:dict:list")
 	@ResponseBody
@@ -53,6 +65,12 @@ public class SysDictTypeController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param dictType the dict type
+	 * @return the ajax result
+	 */
 	@Log(title = "字典类型", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("system:dict:export")
 	@PostMapping("/export")
@@ -65,7 +83,9 @@ public class SysDictTypeController extends BaseController {
 	}
 
 	/**
-	 * 新增字典类型
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -73,7 +93,10 @@ public class SysDictTypeController extends BaseController {
 	}
 
 	/**
-	 * 新增保存字典类型
+	 * Adds the save.
+	 *
+	 * @param dict the dict
+	 * @return the ajax result
 	 */
 	@Log(title = "字典类型", businessType = BusinessType.INSERT)
 	@RequiresPermissions("system:dict:add")
@@ -88,7 +111,11 @@ public class SysDictTypeController extends BaseController {
 	}
 
 	/**
-	 * 修改字典类型
+	 * Edits the.
+	 *
+	 * @param dictId the dict id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{dictId}")
 	public String edit(@PathVariable("dictId") Long dictId, ModelMap mmap) {
@@ -97,7 +124,10 @@ public class SysDictTypeController extends BaseController {
 	}
 
 	/**
-	 * 修改保存字典类型
+	 * Edits the save.
+	 *
+	 * @param dict the dict
+	 * @return the ajax result
 	 */
 	@Log(title = "字典类型", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("system:dict:edit")
@@ -111,6 +141,12 @@ public class SysDictTypeController extends BaseController {
 		return toAjax(dictTypeService.updateDictType(dict));
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@Log(title = "字典类型", businessType = BusinessType.DELETE)
 	@RequiresPermissions("system:dict:remove")
 	@PostMapping("/remove")
@@ -120,7 +156,9 @@ public class SysDictTypeController extends BaseController {
 	}
 
 	/**
-	 * 清空缓存
+	 * Clear cache.
+	 *
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:dict:remove")
 	@Log(title = "字典类型", businessType = BusinessType.CLEAN)
@@ -132,7 +170,11 @@ public class SysDictTypeController extends BaseController {
 	}
 
 	/**
-	 * 查询字典详细
+	 * Detail.
+	 *
+	 * @param dictId the dict id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@RequiresPermissions("system:dict:list")
 	@GetMapping("/detail/{dictId}")
@@ -143,7 +185,10 @@ public class SysDictTypeController extends BaseController {
 	}
 
 	/**
-	 * 校验字典类型
+	 * Check dict type unique.
+	 *
+	 * @param dictType the dict type
+	 * @return the string
 	 */
 	@PostMapping("/checkDictTypeUnique")
 	@ResponseBody
@@ -152,7 +197,12 @@ public class SysDictTypeController extends BaseController {
 	}
 
 	/**
-	 * 选择字典树
+	 * Select dept tree.
+	 *
+	 * @param columnId the column id
+	 * @param dictType the dict type
+	 * @param mmap     the mmap
+	 * @return the string
 	 */
 	@GetMapping("/selectDictTree/{columnId}/{dictType}")
 	public String selectDeptTree(@PathVariable("columnId") Long columnId, @PathVariable("dictType") String dictType,
@@ -163,7 +213,9 @@ public class SysDictTypeController extends BaseController {
 	}
 
 	/**
-	 * 加载字典列表树
+	 * Tree data.
+	 *
+	 * @return the list
 	 */
 	@GetMapping("/treeData")
 	@ResponseBody

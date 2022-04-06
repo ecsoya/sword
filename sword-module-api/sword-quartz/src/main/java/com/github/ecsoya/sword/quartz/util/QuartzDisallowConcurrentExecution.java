@@ -6,13 +6,18 @@ import org.quartz.JobExecutionContext;
 import com.github.ecsoya.sword.quartz.domain.SysJob;
 
 /**
- * 定时任务处理（禁止并发执行）
- *
- * @author Jin Liu (angryred@qq.com)
- *
+ * The Class QuartzDisallowConcurrentExecution.
  */
 @DisallowConcurrentExecution
 public class QuartzDisallowConcurrentExecution extends AbstractQuartzJob {
+
+	/**
+	 * Do execute.
+	 *
+	 * @param context the context
+	 * @param sysJob  the sys job
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected void doExecute(JobExecutionContext context, SysJob sysJob) throws Exception {
 		JobInvokeUtil.invokeMethod(sysJob);

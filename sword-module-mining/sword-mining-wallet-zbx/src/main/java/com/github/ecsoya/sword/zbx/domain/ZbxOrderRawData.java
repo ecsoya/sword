@@ -7,181 +7,310 @@ import com.github.ecsoya.sword.common.utils.StringUtils;
 import com.github.ecsoya.sword.zbx.utils.HttpUtil;
 
 /**
- * 开放接口返回数据
- *
- * @author ecsoya
- *
+ * The Class ZbxOrderRawData.
  */
 public class ZbxOrderRawData extends ZbxResponse {
 
+	/** The Constant WITHDRAWAL. */
 	public static final String WITHDRAWAL = "withdrawal";
+
+	/** The Constant DEPOSIT. */
 	public static final String DEPOSIT = "deposit";
 
+	/** The Constant DEPOSIT_NONE. */
 	// Status
 	public static final String DEPOSIT_NONE = "0";
+
+	/** The Constant DEPOSIT_SUCCESS. */
 	public static final String DEPOSIT_SUCCESS = "2";
 
+	/** The Constant WITHDRAWAL_NONE. */
 	public static final String WITHDRAWAL_NONE = "0";
+
+	/** The Constant WITHDRAWAL_FAILURE. */
 	public static final String WITHDRAWAL_FAILURE = "1";
+
+	/** The Constant WITHDRAWAL_SUCCESS. */
 	public static final String WITHDRAWAL_SUCCESS = "2";
+
+	/** The Constant WITHDRAWAL_CANCEL. */
 	public static final String WITHDRAWAL_CANCEL = "3";
+
+	/** The Constant WITHDRAWAL_CHECKING. */
 	public static final String WITHDRAWAL_CHECKING = "4";
+
+	/** The Constant WITHDRAWAL_CONFIRMING. */
 	public static final String WITHDRAWAL_CONFIRMING = "5";
 
+	/** The Constant IS_INNER_TRUE. */
 	public static final String IS_INNER_TRUE = "1";
+
+	/** The Constant IS_INNER_FALSE. */
 	public static final String IS_INNER_FALSE = "0";
 
-	/**
-	 * 币种类型
-	 */
+	/** The symbol. */
 	private String symbol;
 
-	/**
-	 * 数量
-	 */
+	/** The amount. */
 	private String amount;
 
-	/**
-	 * 提币业务流水号
-	 */
+	/** The order no. */
 	private String orderNo;
 
-	/**
-	 * 交易哈希
-	 */
+	/** The tx id. */
 	private String txId;
 
-	/**
-	 * 充值: 0:待确认 2:成功 提币： 0:提交 1:失败 2:成功 3:取消 4:审核中 5:待确认
-	 *
-	 */
+	/** The status. */
 	private String status;
 
-	/**
-	 * deposit:充值 withdrawal:提币
-	 *
-	 */
+	/** The method. */
 	private String method;
 
-	/**
-	 * 公玥
-	 */
+	/** The access key. */
 	private String accessKey;
 
-	/**
-	 * 签名
-	 */
+	/** The sign. */
 	private String sign;
 
-	/**
-	 * 13位毫秒
-	 */
+	/** The nonce. */
 	private String nonce;
 
+	/** The chain. */
 	private String chain;
 
+	/** The is inner. */
 	private String isInner;
 
+	/**
+	 * Checks if is deposit.
+	 *
+	 * @return true, if is deposit
+	 */
 	public boolean isDeposit() {
 		return DEPOSIT.equalsIgnoreCase(getMethod());
 	}
 
+	/**
+	 * Checks if is withdrawal.
+	 *
+	 * @return true, if is withdrawal
+	 */
 	public boolean isWithdrawal() {
 		return WITHDRAWAL.equals(getMethod());
 	}
 
+	/**
+	 * Gets the 币种类型.
+	 *
+	 * @return the 币种类型
+	 */
 	public String getSymbol() {
 		return symbol;
 	}
 
+	/**
+	 * Sets the 币种类型.
+	 *
+	 * @param symbol the new 币种类型
+	 */
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
 	}
 
+	/**
+	 * Gets the 数量.
+	 *
+	 * @return the 数量
+	 */
 	public String getAmount() {
 		return amount;
 	}
 
+	/**
+	 * Sets the 数量.
+	 *
+	 * @param amount the new 数量
+	 */
 	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 
+	/**
+	 * Gets the 提币业务流水号.
+	 *
+	 * @return the 提币业务流水号
+	 */
 	public String getOrderNo() {
 		return orderNo;
 	}
 
+	/**
+	 * Sets the 提币业务流水号.
+	 *
+	 * @param orderNo the new 提币业务流水号
+	 */
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
 
+	/**
+	 * Gets the 交易哈希.
+	 *
+	 * @return the 交易哈希
+	 */
 	public String getTxId() {
 		return txId;
 	}
 
+	/**
+	 * Sets the 交易哈希.
+	 *
+	 * @param txId the new 交易哈希
+	 */
 	public void setTxId(String txId) {
 		this.txId = txId;
 	}
 
+	/**
+	 * Gets the 充值: 0:待确认 2:成功 提币： 0:提交 1:失败 2:成功 3:取消 4:审核中 5:待确认.
+	 *
+	 * @return the 充值: 0:待确认 2:成功 提币： 0:提交 1:失败 2:成功 3:取消 4:审核中 5:待确认
+	 */
 	public String getStatus() {
 		return status;
 	}
 
+	/**
+	 * Sets the 充值: 0:待确认 2:成功 提币： 0:提交 1:失败 2:成功 3:取消 4:审核中 5:待确认.
+	 *
+	 * @param status the new 充值: 0:待确认 2:成功 提币： 0:提交 1:失败 2:成功 3:取消 4:审核中 5:待确认
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+	/**
+	 * Gets the deposit:充值 withdrawal:提币.
+	 *
+	 * @return the deposit:充值 withdrawal:提币
+	 */
 	public String getMethod() {
 		return method;
 	}
 
+	/**
+	 * Sets the deposit:充值 withdrawal:提币.
+	 *
+	 * @param method the new deposit:充值 withdrawal:提币
+	 */
 	public void setMethod(String method) {
 		this.method = method;
 	}
 
+	/**
+	 * Gets the 公玥.
+	 *
+	 * @return the 公玥
+	 */
 	public String getAccessKey() {
 		return accessKey;
 	}
 
+	/**
+	 * Sets the 公玥.
+	 *
+	 * @param accessKey the new 公玥
+	 */
 	public void setAccessKey(String accessKey) {
 		this.accessKey = accessKey;
 	}
 
+	/**
+	 * Gets the 签名.
+	 *
+	 * @return the 签名
+	 */
 	public String getSign() {
 		return sign;
 	}
 
+	/**
+	 * Sets the 签名.
+	 *
+	 * @param sign the new 签名
+	 */
 	public void setSign(String sign) {
 		this.sign = sign;
 	}
 
+	/**
+	 * Gets the 13位毫秒.
+	 *
+	 * @return the 13位毫秒
+	 */
 	public String getNonce() {
 		return nonce;
 	}
 
+	/**
+	 * Sets the 13位毫秒.
+	 *
+	 * @param nonce the new 13位毫秒
+	 */
 	public void setNonce(String nonce) {
 		this.nonce = nonce;
 	}
 
+	/**
+	 * Gets the chain.
+	 *
+	 * @return the chain
+	 */
 	public String getChain() {
 		return chain;
 	}
 
+	/**
+	 * Sets the chain.
+	 *
+	 * @param chain the new chain
+	 */
 	public void setChain(String chain) {
 		this.chain = chain;
 	}
 
+	/**
+	 * Gets the checks if is inner.
+	 *
+	 * @return the checks if is inner
+	 */
 	public String getIsInner() {
 		return isInner;
 	}
 
+	/**
+	 * Sets the checks if is inner.
+	 *
+	 * @param isInner the new checks if is inner
+	 */
 	public void setIsInner(String isInner) {
 		this.isInner = isInner;
 	}
 
+	/**
+	 * Checks if is internal.
+	 *
+	 * @return true, if is internal
+	 */
 	public boolean isInternal() {
 		return IS_INNER_TRUE.equals(isInner);
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return "ZbxOrderRawData [symbol=" + symbol + ", amount=" + amount + ", orderNo=" + orderNo + ", txId=" + txId
@@ -189,6 +318,12 @@ public class ZbxOrderRawData extends ZbxResponse {
 				+ ", nonce=" + nonce + ", address=" + getAddress() + ", memo=" + getMemo() + "]";
 	}
 
+	/**
+	 * Check valid.
+	 *
+	 * @param secretKey the secret key
+	 * @return the string
+	 */
 	public String checkValid(String secretKey) {
 		if (StringUtils.isEmpty(secretKey)) {
 			return "SecretKey查询失败";

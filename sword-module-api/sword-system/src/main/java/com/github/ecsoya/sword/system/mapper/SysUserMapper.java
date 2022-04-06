@@ -7,122 +7,121 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.common.core.domain.entity.SysUser;
 
 /**
- * 用户表 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface SysUserMapper.
  */
 public interface SysUserMapper {
+
 	/**
-	 * 根据条件分页查询用户列表
+	 * Select user list.
 	 *
-	 * @param sysUser 用户信息
-	 * @return 用户信息集合信息
+	 * @param sysUser the sys user
+	 * @return the list
 	 */
 	public List<SysUser> selectUserList(SysUser sysUser);
 
 	/**
-	 * 根据条件分页查询未已配用户角色列表
+	 * Select allocated list.
 	 *
-	 * @param user 用户信息
-	 * @return 用户信息集合信息
+	 * @param user the user
+	 * @return the list
 	 */
 	public List<SysUser> selectAllocatedList(SysUser user);
 
 	/**
-	 * 根据条件分页查询未分配用户角色列表
+	 * Select unallocated list.
 	 *
-	 * @param user 用户信息
-	 * @return 用户信息集合信息
+	 * @param user the user
+	 * @return the list
 	 */
 	public List<SysUser> selectUnallocatedList(SysUser user);
 
 	/**
-	 * 通过用户名查询用户
+	 * Select user by login name.
 	 *
-	 * @param userName 用户名
-	 * @return 用户对象信息
+	 * @param userName the user name
+	 * @return the sys user
 	 */
 	public SysUser selectUserByLoginName(String userName);
 
 	/**
-	 * 通过手机号码查询用户
+	 * Select user by phone number.
 	 *
-	 * @param phoneNumber 手机号码
-	 * @return 用户对象信息
+	 * @param phoneNumber the phone number
+	 * @return the sys user
 	 */
 	public SysUser selectUserByPhoneNumber(String phoneNumber);
 
 	/**
-	 * 通过邮箱查询用户
+	 * Select user by email.
 	 *
-	 * @param email 邮箱
-	 * @return 用户对象信息
+	 * @param email the email
+	 * @return the sys user
 	 */
 	public SysUser selectUserByEmail(String email);
 
 	/**
-	 * 通过用户ID查询用户
+	 * Select user by id.
 	 *
-	 * @param userId 用户ID
-	 * @return 用户对象信息
+	 * @param userId the user id
+	 * @return the sys user
 	 */
 	public SysUser selectUserById(Long userId);
 
 	/**
-	 * 通过用户ID删除用户
+	 * Delete user by id.
 	 *
-	 * @param userId 用户ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int deleteUserById(Long userId);
 
 	/**
-	 * 批量删除用户信息
+	 * Delete user by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserByIds(Long[] ids);
 
 	/**
-	 * 修改用户信息
+	 * Update user.
 	 *
-	 * @param user 用户信息
-	 * @return 结果
+	 * @param user the user
+	 * @return the int
 	 */
 	public int updateUser(SysUser user);
 
 	/**
-	 * 新增用户信息
+	 * Insert user.
 	 *
-	 * @param user 用户信息
-	 * @return 结果
+	 * @param user the user
+	 * @return the int
 	 */
 	public int insertUser(SysUser user);
 
 	/**
-	 * 校验用户名称是否唯一
+	 * Check login name unique.
 	 *
-	 * @param loginName 登录名称
-	 * @return 结果
+	 * @param loginName the login name
+	 * @return the int
 	 */
 	public int checkLoginNameUnique(String loginName);
 
 	/**
-	 * 校验手机号码是否唯一
+	 * Check phone unique.
 	 *
-	 * @param phonenumber 手机号码
-	 * @param string
-	 * @return 结果
+	 * @param phonenumber the phonenumber
+	 * @param userType    the user type
+	 * @return the sys user
 	 */
 	public SysUser checkPhoneUnique(@Param("phonenumber") String phonenumber, @Param("userType") String userType);
 
 	/**
-	 * 校验email是否唯一
+	 * Check email unique.
 	 *
-	 * @param email  用户邮箱
-	 * @param string
-	 * @return 结果
+	 * @param email    the email
+	 * @param userType the user type
+	 * @return the sys user
 	 */
 	public SysUser checkEmailUnique(@Param("email") String email, @Param("userType") String userType);
 }

@@ -17,27 +17,33 @@ import com.github.ecsoya.sword.wallet.mapper.UserWalletRecordMapper;
 import com.github.ecsoya.sword.wallet.service.IUserWalletRecordService;
 
 /**
- * 用户钱包记录Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-06
+ * The Class UserWalletRecordServiceImpl.
  */
 @Service
 public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
+
+	/** The user wallet record mapper. */
 	@Autowired
 	private UserWalletRecordMapper userWalletRecordMapper;
+
+	/** The user wallet record mapper 0. */
 	@Autowired
 	private UserWalletRecord0Mapper userWalletRecordMapper0;
+
+	/** The user wallet record mapper 1. */
 	@Autowired
 	private UserWalletRecord1Mapper userWalletRecordMapper1;
+
+	/** The user wallet record mapper 2. */
 	@Autowired
 	private UserWalletRecord2Mapper userWalletRecordMapper2;
 
 	/**
-	 * 查询用户钱包记录
+	 * Select user wallet record by id.
 	 *
-	 * @param id 用户钱包记录ID
-	 * @return 用户钱包记录
+	 * @param id   the id
+	 * @param kind the kind
+	 * @return the user wallet record
 	 */
 	@Override
 	public UserWalletRecord selectUserWalletRecordById(Long id, Integer kind) {
@@ -52,10 +58,10 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	}
 
 	/**
-	 * 查询用户钱包记录列表
+	 * Select user wallet record list.
 	 *
-	 * @param userWalletRecord 用户钱包记录
-	 * @return 用户钱包记录
+	 * @param userWalletRecord the user wallet record
+	 * @return the list
 	 */
 	@Override
 	public List<UserWalletRecord> selectUserWalletRecordList(UserWalletRecord userWalletRecord) {
@@ -71,10 +77,10 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	}
 
 	/**
-	 * 新增用户钱包记录
+	 * Insert user wallet record.
 	 *
-	 * @param userWalletRecord 用户钱包记录
-	 * @return 结果
+	 * @param userWalletRecord the user wallet record
+	 * @return the int
 	 */
 	@Override
 	public int insertUserWalletRecord(UserWalletRecord userWalletRecord) {
@@ -96,10 +102,10 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 	}
 
 	/**
-	 * 修改用户钱包记录
+	 * Update user wallet record.
 	 *
-	 * @param userWalletRecord 用户钱包记录
-	 * @return 结果
+	 * @param userWalletRecord the user wallet record
+	 * @return the int
 	 */
 	@Override
 	public int updateUserWalletRecord(UserWalletRecord userWalletRecord) {
@@ -115,6 +121,12 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 		return userWalletRecordMapper.updateUserWalletRecord(userWalletRecord);
 	}
 
+	/**
+	 * Select user wallet record amount.
+	 *
+	 * @param record the record
+	 * @return the big decimal
+	 */
 	@Override
 	public BigDecimal selectUserWalletRecordAmount(UserWalletRecord record) {
 		Integer kind = record.getKind();
@@ -128,6 +140,12 @@ public class UserWalletRecordServiceImpl implements IUserWalletRecordService {
 		return MathUtils.nullToZero(userWalletRecordMapper.selectUserWalletRecordAmount(record));
 	}
 
+	/**
+	 * Select user wallet record one.
+	 *
+	 * @param query the query
+	 * @return the user wallet record
+	 */
 	@Override
 	public UserWalletRecord selectUserWalletRecordOne(UserWalletRecord query) {
 		if (query == null) {

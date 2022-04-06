@@ -17,20 +17,21 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 用户推荐码接口
- *
- * @author ecsoya
+ * The Class UserReferralController.
  */
 @RestController
 @RequestMapping("/user/referral")
 @Api(tags = { "推荐码" }, description = "查看、刷新")
 public class UserReferralController extends BaseController {
 
+	/** The referrer service. */
 	@Autowired
 	private IUserReferrerService referrerService;
 
 	/**
-	 * 获取推荐码
+	 * Code.
+	 *
+	 * @return the common result
 	 */
 	@ApiOperation(value = "获取推荐码", notes = "如果只支持一个推荐码，用left开头的变量即可")
 	@GetMapping("/code")
@@ -40,7 +41,9 @@ public class UserReferralController extends BaseController {
 	}
 
 	/**
-	 * 强制刷新二维码
+	 * Refresh.
+	 *
+	 * @return the common result
 	 */
 	@ApiOperation("强制刷新二维码")
 	@PostMapping("/refresh")

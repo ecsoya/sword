@@ -20,32 +20,34 @@ import com.github.ecsoya.sword.user.service.IUserBinaryTreeService;
 import com.github.ecsoya.sword.user.service.IUserReferrerService;
 
 /**
- * 用户双区树Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Class UserBinaryTreeServiceImpl.
  */
 @Service
 public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 
+	/** The Constant PAGE_SIZE. */
 	private static final int PAGE_SIZE = 10000;
 
+	/** The user binary tree mapper. */
 	@Autowired
 	private UserBinaryTreeMapper userBinaryTreeMapper;
 
+	/** The Constant LOCK_KEY. */
 	private static final String LOCK_KEY = "binaryTreeLock";
 
+	/** The lock service. */
 	@Autowired
 	private ILockService lockService;
 
+	/** The referrer service. */
 	@Autowired
 	private IUserReferrerService referrerService;
 
 	/**
-	 * 查询用户双区树
+	 * Select user binary tree by id.
 	 *
-	 * @param userId 用户双区树ID
-	 * @return 用户双区树
+	 * @param userId the user id
+	 * @return the user binary tree
 	 */
 	@Override
 	public UserBinaryTree selectUserBinaryTreeById(Long userId) {
@@ -53,10 +55,10 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 	}
 
 	/**
-	 * 查询用户双区树列表
+	 * Select user binary tree list.
 	 *
-	 * @param userBinaryTree 用户双区树
-	 * @return 用户双区树
+	 * @param userBinaryTree the user binary tree
+	 * @return the list
 	 */
 	@Override
 	public List<UserBinaryTree> selectUserBinaryTreeList(UserBinaryTree userBinaryTree) {
@@ -64,10 +66,10 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 	}
 
 	/**
-	 * 新增用户双区树
+	 * Insert user binary tree.
 	 *
-	 * @param userBinaryTree 用户双区树
-	 * @return 结果
+	 * @param userBinaryTree the user binary tree
+	 * @return the int
 	 */
 	@Override
 	public int insertUserBinaryTree(UserBinaryTree userBinaryTree) {
@@ -76,10 +78,10 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 	}
 
 	/**
-	 * 修改用户双区树
+	 * Update user binary tree.
 	 *
-	 * @param userBinaryTree 用户双区树
-	 * @return 结果
+	 * @param userBinaryTree the user binary tree
+	 * @return the int
 	 */
 	@Override
 	public int updateUserBinaryTree(UserBinaryTree userBinaryTree) {
@@ -88,10 +90,10 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 	}
 
 	/**
-	 * 删除用户双区树对象
+	 * Delete user binary tree by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserBinaryTreeByIds(String ids) {
@@ -99,16 +101,21 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 	}
 
 	/**
-	 * 删除用户双区树信息
+	 * Delete user binary tree by id.
 	 *
-	 * @param userId 用户双区树ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserBinaryTreeById(Long userId) {
 		return userBinaryTreeMapper.deleteUserBinaryTreeById(userId);
 	}
 
+	/**
+	 * Update user binary trees.
+	 *
+	 * @return the int
+	 */
 	@Override
 	public int updateUserBinaryTrees() {
 		boolean isLocked = false;
@@ -138,6 +145,14 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		}
 	}
 
+	/**
+	 * Adds the binary tree.
+	 *
+	 * @param referralId the referral id
+	 * @param userId     the user id
+	 * @param leftZone   the left zone
+	 * @return the int
+	 */
 	private int addBinaryTree(Long referralId, Long userId, boolean leftZone) {
 		synchronized (this) {
 			if (referralId == null || referralId == userId) {
@@ -167,6 +182,13 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		}
 	}
 
+	/**
+	 * Sets the binary user to left.
+	 *
+	 * @param referrerId the referrer id
+	 * @param leftId     the left id
+	 * @return the int
+	 */
 	private int setBinaryUserToLeft(Long referrerId, Long leftId) {
 		if (referrerId == null || leftId == null) {
 			return 0;
@@ -190,10 +212,22 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		return updateUserBinaryTree(binary);
 	}
 
+	/**
+	 * Checks if is in binary tree.
+	 *
+	 * @param userId the user id
+	 * @return true, if is in binary tree
+	 */
 	private boolean isInBinaryTree(long userId) {
 		return userBinaryTreeMapper.isInBinaryTree(userId) > 0;
 	}
 
+	/**
+	 * Gets the binary tree.
+	 *
+	 * @param userId the user id
+	 * @return the binary tree
+	 */
 	private UserBinaryTree getBinaryTree(long userId) {
 		UserBinaryTree binary = selectUserBinaryTreeById(userId);
 		if (binary == null) {
@@ -204,6 +238,11 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		return binary;
 	}
 
+	/**
+	 * Select all.
+	 *
+	 * @return the list
+	 */
 	@Override
 	public List<UserBinaryTree> selectAll() {
 		final int count = userBinaryTreeMapper.queryUserBinaryTreeCount();
@@ -220,6 +259,13 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		}
 	}
 
+	/**
+	 * Find binary tree.
+	 *
+	 * @param userId   the user id
+	 * @param treeList the tree list
+	 * @return the user binary tree
+	 */
 	private UserBinaryTree findBinaryTree(Long userId, List<UserBinaryTree> treeList) {
 		if (userId == null || treeList == null || treeList.isEmpty()) {
 			return null;
@@ -227,6 +273,13 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		return treeList.stream().filter(tree -> userId.equals(tree.getUserId())).findFirst().orElse(null);
 	}
 
+	/**
+	 * Select umbrella binary tree list.
+	 *
+	 * @param userId   the user id
+	 * @param treeList the tree list
+	 * @return the list
+	 */
 	@Override
 	public List<UserBinaryTree> selectUmbrellaBinaryTreeList(Long userId, List<UserBinaryTree> treeList) {
 		if (userId == null || treeList == null || treeList.isEmpty()) {
@@ -273,12 +326,26 @@ public class UserBinaryTreeServiceImpl implements IUserBinaryTreeService {
 		return results;
 	}
 
+	/**
+	 * Select umbrella binary tree ids.
+	 *
+	 * @param userId   the user id
+	 * @param treeList the tree list
+	 * @return the list
+	 */
 	@Override
 	public List<Long> selectUmbrellaBinaryTreeIds(Long userId, List<UserBinaryTree> treeList) {
 		return selectUmbrellaBinaryTreeList(userId, treeList).stream().map(t -> t.getUserId())
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * Select user binary tree by user id.
+	 *
+	 * @param userId   the user id
+	 * @param treeList the tree list
+	 * @return the user binary tree
+	 */
 	@Override
 	public UserBinaryTree selectUserBinaryTreeByUserId(Long userId, List<UserBinaryTree> treeList) {
 		if (userId == null || treeList == null || treeList.isEmpty()) {

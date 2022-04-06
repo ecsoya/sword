@@ -13,14 +13,29 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+/**
+ * The Class QrcodeUtils.
+ */
 public class QrcodeUtils {
 
+	/** The Constant DEFAULT_WDITH. */
 	private static final int DEFAULT_WDITH = 350;
+
+	/** The Constant DEFAULT_HEIGHT. */
 	private static final int DEFAULT_HEIGHT = 350;
 
+	/**
+	 * Instantiates a new qrcode utils.
+	 */
 	private QrcodeUtils() {
 	}
 
+	/**
+	 * Generate qrcode.
+	 *
+	 * @param content the content
+	 * @return the buffered image
+	 */
 	public static BufferedImage generateQrcode(String content) {
 		if (content == null) {
 			return null;
@@ -60,6 +75,12 @@ public class QrcodeUtils {
 //			return null;
 //		}
 //	}
+	/**
+	 * Generate.
+	 *
+	 * @param content the content
+	 * @return the string
+	 */
 //
 	public static String generate(String content) {
 		final BufferedImage image = generateQrcode(content);

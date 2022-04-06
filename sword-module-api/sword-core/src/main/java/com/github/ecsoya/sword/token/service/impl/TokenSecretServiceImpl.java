@@ -15,21 +15,20 @@ import com.github.ecsoya.sword.token.mapper.TokenSecretMapper;
 import com.github.ecsoya.sword.token.service.ITokenSecretService;
 
 /**
- * 开放接口APIService业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-07
+ * The Class TokenSecretServiceImpl.
  */
 @Service
 public class TokenSecretServiceImpl implements ITokenSecretService {
+
+	/** The token secret mapper. */
 	@Autowired
 	private TokenSecretMapper tokenSecretMapper;
 
 	/**
-	 * 查询开放接口API
+	 * Select token secret by id.
 	 *
-	 * @param id 开放接口APIID
-	 * @return 开放接口API
+	 * @param id the id
+	 * @return the token secret
 	 */
 	@Override
 	public TokenSecret selectTokenSecretById(Long id) {
@@ -37,10 +36,10 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 	}
 
 	/**
-	 * 查询开放接口API列表
+	 * Select token secret list.
 	 *
-	 * @param tokenSecret 开放接口API
-	 * @return 开放接口API
+	 * @param tokenSecret the token secret
+	 * @return the list
 	 */
 	@Override
 	public List<TokenSecret> selectTokenSecretList(TokenSecret tokenSecret) {
@@ -48,10 +47,10 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 	}
 
 	/**
-	 * 新增开放接口API
+	 * Insert token secret.
 	 *
-	 * @param tokenSecret 开放接口API
-	 * @return 结果
+	 * @param tokenSecret the token secret
+	 * @return the int
 	 */
 	@Override
 	public int insertTokenSecret(TokenSecret tokenSecret) {
@@ -65,10 +64,10 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 	}
 
 	/**
-	 * 修改开放接口API
+	 * Update token secret.
 	 *
-	 * @param tokenSecret 开放接口API
-	 * @return 结果
+	 * @param tokenSecret the token secret
+	 * @return the int
 	 */
 	@Override
 	public int updateTokenSecret(TokenSecret tokenSecret) {
@@ -77,10 +76,10 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 	}
 
 	/**
-	 * 删除开放接口API对象
+	 * Delete token secret by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteTokenSecretByIds(String ids) {
@@ -88,16 +87,22 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 	}
 
 	/**
-	 * 删除开放接口API信息
+	 * Delete token secret by id.
 	 *
-	 * @param id 开放接口APIID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteTokenSecretById(Long id) {
 		return tokenSecretMapper.deleteTokenSecretById(id);
 	}
 
+	/**
+	 * Select token secret key.
+	 *
+	 * @param accessKey the access key
+	 * @return the string
+	 */
 	@Override
 	public String selectTokenSecretKey(String accessKey) {
 		if (StringUtils.isEmpty(accessKey)) {
@@ -106,6 +111,11 @@ public class TokenSecretServiceImpl implements ITokenSecretService {
 		return tokenSecretMapper.selectTokenSecretKey(accessKey);
 	}
 
+	/**
+	 * Generate token secret.
+	 *
+	 * @return the int
+	 */
 	@Override
 	public int generateTokenSecret() {
 		final TokenSecret token = new TokenSecret();

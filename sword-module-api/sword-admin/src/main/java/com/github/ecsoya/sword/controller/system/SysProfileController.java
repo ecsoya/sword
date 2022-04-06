@@ -25,25 +25,31 @@ import com.github.ecsoya.sword.system.service.ISysUserService;
 import com.github.ecsoya.sword.upload.utils.FileUploadUtils;
 
 /**
- * 个人信息 业务处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysProfileController.
  */
 @Controller
 @RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(SysProfileController.class);
 
+	/** The prefix. */
 	private final String prefix = "system/user/profile";
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/** The password service. */
 	@Autowired
 	private SysPasswordService passwordService;
 
 	/**
-	 * 个人信息
+	 * Profile.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping()
 	public String profile(ModelMap mmap) {
@@ -54,6 +60,12 @@ public class SysProfileController extends BaseController {
 		return prefix + "/profile";
 	}
 
+	/**
+	 * Check password.
+	 *
+	 * @param password the password
+	 * @return true, if successful
+	 */
 	@GetMapping("/checkPassword")
 	@ResponseBody
 	public boolean checkPassword(String password) {
@@ -64,6 +76,12 @@ public class SysProfileController extends BaseController {
 		return false;
 	}
 
+	/**
+	 * Reset pwd.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	@GetMapping("/resetPwd")
 	public String resetPwd(ModelMap mmap) {
 		final SysUser user = ShiroUtils.getSysUser();
@@ -71,6 +89,13 @@ public class SysProfileController extends BaseController {
 		return prefix + "/resetPwd";
 	}
 
+	/**
+	 * Reset pwd.
+	 *
+	 * @param oldPassword the old password
+	 * @param newPassword the new password
+	 * @return the ajax result
+	 */
 	@Log(title = "重置密码", businessType = BusinessType.UPDATE)
 	@PostMapping("/resetPwd")
 	@ResponseBody
@@ -93,7 +118,10 @@ public class SysProfileController extends BaseController {
 	}
 
 	/**
-	 * 修改用户
+	 * Edits the.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit")
 	public String edit(ModelMap mmap) {
@@ -103,7 +131,10 @@ public class SysProfileController extends BaseController {
 	}
 
 	/**
-	 * 修改头像
+	 * Avatar.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/avatar")
 	public String avatar(ModelMap mmap) {
@@ -113,7 +144,10 @@ public class SysProfileController extends BaseController {
 	}
 
 	/**
-	 * 修改用户
+	 * Update.
+	 *
+	 * @param user the user
+	 * @return the ajax result
 	 */
 	@Log(title = "个人信息", businessType = BusinessType.UPDATE)
 	@PostMapping("/update")
@@ -132,7 +166,10 @@ public class SysProfileController extends BaseController {
 	}
 
 	/**
-	 * 保存头像
+	 * Update avatar.
+	 *
+	 * @param file the file
+	 * @return the ajax result
 	 */
 	@Log(title = "个人信息", businessType = BusinessType.UPDATE)
 	@PostMapping("/updateAvatar")

@@ -22,23 +22,42 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+/**
+ * The Class RegisterController.
+ */
 @RestController
 @RequestMapping("/open")
 @Api(tags = { "用户注册" }, description = "注册、设置密码")
 public class RegisterController extends BaseController {
 
+	/** The user register service. */
 	@Autowired
 	private IUserRegisterService userRegisterService;
 
+	/** The user profie service. */
 	@Autowired
 	private IUserProfileService userProfieService;
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/** The user wallet service. */
 	@Autowired
 	private IUserWalletService userWalletService;
 
+	/**
+	 * Register user.
+	 *
+	 * @param email          the email
+	 * @param username       the username
+	 * @param password       the password
+	 * @param code           the code
+	 * @param referrerCode   the referrer code
+	 * @param walletPassword the wallet password
+	 * @param mobile         the mobile
+	 * @return the common result
+	 */
 	@ApiOperation("新用户邮箱注册")
 	@PostMapping("/register/email")
 	@RepeatSubmit
@@ -62,6 +81,18 @@ public class RegisterController extends BaseController {
 		return userRegisterService.registerUser(user, referrerCode, walletPassword);
 	}
 
+	/**
+	 * Register user by mobile.
+	 *
+	 * @param email          the email
+	 * @param username       the username
+	 * @param password       the password
+	 * @param code           the code
+	 * @param referrerCode   the referrer code
+	 * @param walletPassword the wallet password
+	 * @param mobile         the mobile
+	 * @return the common result
+	 */
 	@ApiOperation("新用户手机注册")
 	@PostMapping("/register/mobile")
 	@RepeatSubmit
@@ -85,6 +116,15 @@ public class RegisterController extends BaseController {
 		return userRegisterService.registerUser(user, referrerCode, walletPassword);
 	}
 
+	/**
+	 * Reset pwd by mobile.
+	 *
+	 * @param mobile         the mobile
+	 * @param password       the password
+	 * @param code           the code
+	 * @param walletPassword the wallet password
+	 * @return the common result
+	 */
 	@ApiOperation("用户通过手机重置登录密码和钱包支付密码")
 	@PostMapping("/resetPwd/mobile")
 	@RepeatSubmit
@@ -108,6 +148,17 @@ public class RegisterController extends BaseController {
 		return CommonResult.ajax(userWalletService.resetUserWalletPassword(user.getUserId(), walletPassword));
 	}
 
+	/**
+	 * Reset pwd by email.
+	 *
+	 * @param email          the email
+	 * @param password       the password
+	 * @param code           the code
+	 * @param walletPassword the wallet password
+	 * @param mobile         the mobile
+	 * @param loginName      the login name
+	 * @return the common result
+	 */
 	@ApiOperation("用户通过邮箱重置登录密码和钱包支付密码")
 	@PostMapping("/resetPwd/email")
 	@RepeatSubmit

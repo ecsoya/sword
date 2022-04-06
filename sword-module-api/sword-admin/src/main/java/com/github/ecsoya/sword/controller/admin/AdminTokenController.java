@@ -19,15 +19,25 @@ import com.github.ecsoya.sword.common.utils.poi.ExcelUtil;
 import com.github.ecsoya.sword.token.domain.TokenSecret;
 import com.github.ecsoya.sword.token.service.ITokenSecretService;
 
+/**
+ * The Class AdminTokenController.
+ */
 @Controller
 @RequestMapping("/admin/token")
 public class AdminTokenController extends BaseController {
 
+	/** The prefix. */
 	private final String prefix = "admin/token";
 
+	/** The token secret service. */
 	@Autowired
 	private ITokenSecretService tokenSecretService;
 
+	/**
+	 * Token.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("admin:token:view")
 	@GetMapping()
 	public String token() {
@@ -35,7 +45,10 @@ public class AdminTokenController extends BaseController {
 	}
 
 	/**
-	 * 查询开放接口API列表
+	 * List.
+	 *
+	 * @param tokenSecret the token secret
+	 * @return the table data info
 	 */
 	@RequiresPermissions("admin:token:list")
 	@PostMapping("/list")
@@ -47,7 +60,10 @@ public class AdminTokenController extends BaseController {
 	}
 
 	/**
-	 * 导出开放接口API列表
+	 * Export.
+	 *
+	 * @param tokenSecret the token secret
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:token:export")
 	@Log(title = "开放接口API", businessType = BusinessType.EXPORT)
@@ -60,7 +76,9 @@ public class AdminTokenController extends BaseController {
 	}
 
 	/**
-	 * 新增保存开放接口API
+	 * Adds the save.
+	 *
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:token:add")
 	@Log(title = "开放接口API", businessType = BusinessType.INSERT)
@@ -71,7 +89,10 @@ public class AdminTokenController extends BaseController {
 	}
 
 	/**
-	 * 删除开放接口API
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:token:remove")
 	@Log(title = "开放接口API", businessType = BusinessType.DELETE)

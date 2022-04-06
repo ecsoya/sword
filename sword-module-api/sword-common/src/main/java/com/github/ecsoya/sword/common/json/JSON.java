@@ -12,15 +12,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 /**
- * JSON解析处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class JSON.
  */
 public class JSON {
+
+	/** The Constant DEFAULT_FAIL. */
 	public static final String DEFAULT_FAIL = "\"Parse failed\"";
+
+	/** The Constant objectMapper. */
 	private static final ObjectMapper objectMapper = new ObjectMapper();
+
+	/** The Constant objectWriter. */
 	private static final ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
 
+	/**
+	 * Marshal.
+	 *
+	 * @param file  the file
+	 * @param value the value
+	 * @throws Exception the exception
+	 */
 	public static void marshal(File file, Object value) throws Exception {
 		try {
 			objectWriter.writeValue(file, value);
@@ -33,6 +44,13 @@ public class JSON {
 		}
 	}
 
+	/**
+	 * Marshal.
+	 *
+	 * @param os    the os
+	 * @param value the value
+	 * @throws Exception the exception
+	 */
 	public static void marshal(OutputStream os, Object value) throws Exception {
 		try {
 			objectWriter.writeValue(os, value);
@@ -45,6 +63,13 @@ public class JSON {
 		}
 	}
 
+	/**
+	 * Marshal.
+	 *
+	 * @param value the value
+	 * @return the string
+	 * @throws Exception the exception
+	 */
 	public static String marshal(Object value) throws Exception {
 		try {
 			return objectWriter.writeValueAsString(value);
@@ -57,6 +82,13 @@ public class JSON {
 		}
 	}
 
+	/**
+	 * Marshal bytes.
+	 *
+	 * @param value the value
+	 * @return the byte[]
+	 * @throws Exception the exception
+	 */
 	public static byte[] marshalBytes(Object value) throws Exception {
 		try {
 			return objectWriter.writeValueAsBytes(value);
@@ -69,6 +101,15 @@ public class JSON {
 		}
 	}
 
+	/**
+	 * Unmarshal.
+	 *
+	 * @param <T>       the generic type
+	 * @param file      the file
+	 * @param valueType the value type
+	 * @return the t
+	 * @throws Exception the exception
+	 */
 	public static <T> T unmarshal(File file, Class<T> valueType) throws Exception {
 		try {
 			return objectMapper.readValue(file, valueType);
@@ -81,6 +122,15 @@ public class JSON {
 		}
 	}
 
+	/**
+	 * Unmarshal.
+	 *
+	 * @param <T>       the generic type
+	 * @param is        the is
+	 * @param valueType the value type
+	 * @return the t
+	 * @throws Exception the exception
+	 */
 	public static <T> T unmarshal(InputStream is, Class<T> valueType) throws Exception {
 		try {
 			return objectMapper.readValue(is, valueType);
@@ -93,6 +143,15 @@ public class JSON {
 		}
 	}
 
+	/**
+	 * Unmarshal.
+	 *
+	 * @param <T>       the generic type
+	 * @param str       the str
+	 * @param valueType the value type
+	 * @return the t
+	 * @throws Exception the exception
+	 */
 	public static <T> T unmarshal(String str, Class<T> valueType) throws Exception {
 		try {
 			return objectMapper.readValue(str, valueType);
@@ -105,6 +164,15 @@ public class JSON {
 		}
 	}
 
+	/**
+	 * Unmarshal.
+	 *
+	 * @param <T>       the generic type
+	 * @param bytes     the bytes
+	 * @param valueType the value type
+	 * @return the t
+	 * @throws Exception the exception
+	 */
 	public static <T> T unmarshal(byte[] bytes, Class<T> valueType) throws Exception {
 		try {
 			if (bytes == null) {

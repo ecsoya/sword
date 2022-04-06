@@ -8,11 +8,16 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Map通用处理方法
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class MapDataUtil.
  */
 public class MapDataUtil {
+
+	/**
+	 * Convert data map.
+	 *
+	 * @param request the request
+	 * @return the map
+	 */
 	public static Map<String, Object> convertDataMap(HttpServletRequest request) {
 		final Map<String, String[]> properties = request.getParameterMap();
 		final Map<String, Object> returnMap = new HashMap<String, Object>();

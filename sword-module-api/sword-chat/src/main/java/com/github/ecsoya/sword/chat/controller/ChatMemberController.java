@@ -22,19 +22,24 @@ import com.github.ecsoya.sword.common.enums.BusinessType;
 import com.github.ecsoya.sword.common.utils.poi.ExcelUtil;
 
 /**
- * 聊天成员Controller
- * 
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-06-03
+ * The Class ChatMemberController.
  */
 @Controller
 @RequestMapping("/chat/member")
 public class ChatMemberController extends BaseController {
+
+	/** The prefix. */
 	private String prefix = "chat/member";
 
+	/** The chat member service. */
 	@Autowired
 	private IChatMemberService chatMemberService;
 
+	/**
+	 * Member.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("chat:member:view")
 	@GetMapping()
 	public String member() {
@@ -42,7 +47,10 @@ public class ChatMemberController extends BaseController {
 	}
 
 	/**
-	 * 查询聊天成员列表
+	 * List.
+	 *
+	 * @param chatMember the chat member
+	 * @return the table data info
 	 */
 	@RequiresPermissions("chat:member:list")
 	@PostMapping("/list")
@@ -54,7 +62,10 @@ public class ChatMemberController extends BaseController {
 	}
 
 	/**
-	 * 导出聊天成员列表
+	 * Export.
+	 *
+	 * @param chatMember the chat member
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:member:export")
 	@Log(title = "聊天成员", businessType = BusinessType.EXPORT)
@@ -67,7 +78,9 @@ public class ChatMemberController extends BaseController {
 	}
 
 	/**
-	 * 新增聊天成员
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -75,7 +88,10 @@ public class ChatMemberController extends BaseController {
 	}
 
 	/**
-	 * 新增保存聊天成员
+	 * Adds the save.
+	 *
+	 * @param chatMember the chat member
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:member:add")
 	@Log(title = "聊天成员", businessType = BusinessType.INSERT)
@@ -86,7 +102,11 @@ public class ChatMemberController extends BaseController {
 	}
 
 	/**
-	 * 修改聊天成员
+	 * Edits the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
@@ -96,7 +116,10 @@ public class ChatMemberController extends BaseController {
 	}
 
 	/**
-	 * 修改保存聊天成员
+	 * Edits the save.
+	 *
+	 * @param chatMember the chat member
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:member:edit")
 	@Log(title = "聊天成员", businessType = BusinessType.UPDATE)
@@ -107,7 +130,10 @@ public class ChatMemberController extends BaseController {
 	}
 
 	/**
-	 * 删除聊天成员
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("chat:member:remove")
 	@Log(title = "聊天成员", businessType = BusinessType.DELETE)

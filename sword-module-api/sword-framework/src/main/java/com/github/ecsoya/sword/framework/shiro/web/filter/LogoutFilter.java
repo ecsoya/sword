@@ -20,26 +20,42 @@ import com.github.ecsoya.sword.framework.shiro.util.ShiroUtils;
 import com.github.ecsoya.sword.system.service.ISysUserOnlineService;
 
 /**
- * 退出过滤器
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class LogoutFilter.
  */
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(LogoutFilter.class);
 
-	/**
-	 * 退出后重定向的地址
-	 */
+	/** The login url. */
 	private String loginUrl;
 
+	/**
+	 * Gets the login url.
+	 *
+	 * @return the login url
+	 */
 	public String getLoginUrl() {
 		return loginUrl;
 	}
 
+	/**
+	 * Sets the login url.
+	 *
+	 * @param loginUrl the new login url
+	 */
 	public void setLoginUrl(String loginUrl) {
 		this.loginUrl = loginUrl;
 	}
 
+	/**
+	 * Pre handle.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return true, if successful
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
 		try {
@@ -69,7 +85,12 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	}
 
 	/**
-	 * 退出跳转URL
+	 * Gets the redirect url.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @param subject  the subject
+	 * @return the redirect url
 	 */
 	@Override
 	protected String getRedirectUrl(ServletRequest request, ServletResponse response, Subject subject) {

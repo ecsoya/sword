@@ -17,26 +17,62 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.github.pagehelper.Page;
 
+/**
+ * The Class JdbcTemplateSupport.
+ */
 public class JdbcTemplateSupport extends JdbcTemplate {
 
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(JdbcTemplateSupport.class);
 
+	/**
+	 * Instantiates a new jdbc template support.
+	 */
 	public JdbcTemplateSupport() {
 	}
 
+	/**
+	 * Instantiates a new jdbc template support.
+	 *
+	 * @param dataSource the data source
+	 */
 	public JdbcTemplateSupport(DataSource dataSource) {
 		super(dataSource);
 	}
 
+	/**
+	 * Instantiates a new jdbc template support.
+	 *
+	 * @param dataSource the data source
+	 * @param lazyInit   the lazy init
+	 */
 	public JdbcTemplateSupport(DataSource dataSource, boolean lazyInit) {
 		super(dataSource, lazyInit);
 	}
 
+	/**
+	 * Query for page.
+	 *
+	 * @param sql        the sql
+	 * @param pagination the pagination
+	 * @return the page bean
+	 * @throws DataAccessException the data access exception
+	 */
 	public PageBean<Map<String, Object>> queryForPage(String sql, Page<Map<String, Object>> pagination)
 			throws DataAccessException {
 		return queryForPage(sql, pagination, getColumnMapRowMapper());
 	}
 
+	/**
+	 * Query for page.
+	 *
+	 * @param <T>        the generic type
+	 * @param sql        the sql
+	 * @param pagination the pagination
+	 * @param rowMapper  the row mapper
+	 * @return the page bean
+	 * @throws DataAccessException the data access exception
+	 */
 	public <T> PageBean<T> queryForPage(String sql, Page<T> pagination, RowMapper<T> rowMapper)
 			throws DataAccessException {
 
@@ -48,6 +84,17 @@ public class JdbcTemplateSupport extends JdbcTemplate {
 		}, rowMapper);
 	}
 
+	/**
+	 * Query for page.
+	 *
+	 * @param <T>        the generic type
+	 * @param sql        the sql
+	 * @param pagination the pagination
+	 * @param var2       the var 2
+	 * @param var3       the var 3
+	 * @return the page bean
+	 * @throws DataAccessException the data access exception
+	 */
 	public <T> PageBean<T> queryForPage(String sql, Page<T> pagination, PreparedStatementSetter var2, RowMapper<T> var3)
 			throws DataAccessException {
 
@@ -80,6 +127,13 @@ public class JdbcTemplateSupport extends JdbcTemplate {
 		return result;
 	}
 
+	/**
+	 * Parses the limit.
+	 *
+	 * @param <T>        the generic type
+	 * @param pagination the pagination
+	 * @return the string
+	 */
 	private <T> String parseLimit(PageBean<T> pagination) {
 
 		final StringBuffer stringBuffer = new StringBuffer();

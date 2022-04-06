@@ -22,19 +22,24 @@ import com.github.ecsoya.sword.common.enums.BusinessType;
 import com.github.ecsoya.sword.common.utils.poi.ExcelUtil;
 
 /**
- * 文章Controller
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-02-04
+ * The Class AdminArticleController.
  */
 @Controller
 @RequestMapping("/admin/article")
 public class AdminArticleController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "admin/article";
 
+	/** The sword article service. */
 	@Autowired
 	private ISwordArticleService swordArticleService;
 
+	/**
+	 * Article.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("admin:article:view")
 	@GetMapping()
 	public String article() {
@@ -42,7 +47,10 @@ public class AdminArticleController extends BaseController {
 	}
 
 	/**
-	 * 查询文章列表
+	 * List.
+	 *
+	 * @param swordArticle the sword article
+	 * @return the table data info
 	 */
 	@RequiresPermissions("admin:article:list")
 	@PostMapping("/list")
@@ -54,7 +62,10 @@ public class AdminArticleController extends BaseController {
 	}
 
 	/**
-	 * 导出文章列表
+	 * Export.
+	 *
+	 * @param swordArticle the sword article
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:article:export")
 	@Log(title = "文章", businessType = BusinessType.EXPORT)
@@ -67,7 +78,9 @@ public class AdminArticleController extends BaseController {
 	}
 
 	/**
-	 * 新增文章
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -75,7 +88,11 @@ public class AdminArticleController extends BaseController {
 	}
 
 	/**
-	 * 新增文章
+	 * Preview.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/preview")
 	public String preview(Long id, ModelMap mmap) {
@@ -84,7 +101,10 @@ public class AdminArticleController extends BaseController {
 	}
 
 	/**
-	 * 新增文章
+	 * Preview.
+	 *
+	 * @param id the id
+	 * @return the ajax result
 	 */
 	@GetMapping("/content")
 	@ResponseBody
@@ -97,7 +117,10 @@ public class AdminArticleController extends BaseController {
 	}
 
 	/**
-	 * 新增保存文章
+	 * Adds the save.
+	 *
+	 * @param swordArticle the sword article
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:article:add")
 	@Log(title = "文章", businessType = BusinessType.INSERT)
@@ -108,7 +131,11 @@ public class AdminArticleController extends BaseController {
 	}
 
 	/**
-	 * 修改文章
+	 * Edits the.
+	 *
+	 * @param id   the id
+	 * @param mmap the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
@@ -118,7 +145,10 @@ public class AdminArticleController extends BaseController {
 	}
 
 	/**
-	 * 修改保存文章
+	 * Edits the save.
+	 *
+	 * @param swordArticle the sword article
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:article:edit")
 	@Log(title = "文章", businessType = BusinessType.UPDATE)
@@ -129,7 +159,10 @@ public class AdminArticleController extends BaseController {
 	}
 
 	/**
-	 * 删除文章
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("admin:article:remove")
 	@Log(title = "文章", businessType = BusinessType.DELETE)

@@ -1,13 +1,16 @@
 package com.github.ecsoya.sword.common.exception.user;
 
 /**
- * 用户不存在异常类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class UserNotExistsException.
  */
 public class UserNotExistsException extends UserException {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instantiates a new user not exists exception.
+	 */
 	public UserNotExistsException() {
 		super("user.not.exists", null);
 	}

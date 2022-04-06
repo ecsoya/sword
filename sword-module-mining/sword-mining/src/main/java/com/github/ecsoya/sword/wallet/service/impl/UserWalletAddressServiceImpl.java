@@ -17,21 +17,20 @@ import com.github.ecsoya.sword.wallet.mapper.UserWalletAddressMapper;
 import com.github.ecsoya.sword.wallet.service.IUserWalletAddressService;
 
 /**
- * 用户钱包地址Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-06
+ * The Class UserWalletAddressServiceImpl.
  */
 @Service
 public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
+
+	/** The user wallet address mapper. */
 	@Autowired
 	private UserWalletAddressMapper userWalletAddressMapper;
 
 	/**
-	 * 查询用户钱包地址
+	 * Select user wallet address by id.
 	 *
-	 * @param id 用户钱包地址ID
-	 * @return 用户钱包地址
+	 * @param id the id
+	 * @return the user wallet address
 	 */
 	@Override
 	public UserWalletAddress selectUserWalletAddressById(Long id) {
@@ -39,10 +38,10 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 	}
 
 	/**
-	 * 查询用户钱包地址列表
+	 * Select user wallet address list.
 	 *
-	 * @param userWalletAddress 用户钱包地址
-	 * @return 用户钱包地址
+	 * @param userWalletAddress the user wallet address
+	 * @return the list
 	 */
 	@Override
 	public List<UserWalletAddress> selectUserWalletAddressList(UserWalletAddress userWalletAddress) {
@@ -51,6 +50,12 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 		return list;
 	}
 
+	/**
+	 * Update qrcode url.
+	 *
+	 * @param walletAddress the wallet address
+	 * @return the user wallet address
+	 */
 	private UserWalletAddress updateQrcodeUrl(UserWalletAddress walletAddress) {
 		if (walletAddress == null) {
 			return null;
@@ -72,10 +77,10 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 	}
 
 	/**
-	 * 新增用户钱包地址
+	 * Insert user wallet address.
 	 *
-	 * @param userWalletAddress 用户钱包地址
-	 * @return 结果
+	 * @param userWalletAddress the user wallet address
+	 * @return the int
 	 */
 	@Override
 	public int insertUserWalletAddress(UserWalletAddress userWalletAddress) {
@@ -92,10 +97,10 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 	}
 
 	/**
-	 * 修改用户钱包地址
+	 * Update user wallet address.
 	 *
-	 * @param userWalletAddress 用户钱包地址
-	 * @return 结果
+	 * @param userWalletAddress the user wallet address
+	 * @return the int
 	 */
 	@Override
 	public int updateUserWalletAddress(UserWalletAddress userWalletAddress) {
@@ -104,10 +109,10 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 	}
 
 	/**
-	 * 删除用户钱包地址对象
+	 * Delete user wallet address by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWalletAddressByIds(String ids) {
@@ -115,16 +120,23 @@ public class UserWalletAddressServiceImpl implements IUserWalletAddressService {
 	}
 
 	/**
-	 * 删除用户钱包地址信息
+	 * Delete user wallet address by id.
 	 *
-	 * @param id 用户钱包地址ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	@Override
 	public int deleteUserWalletAddressById(Long id) {
 		return userWalletAddressMapper.deleteUserWalletAddressById(id);
 	}
 
+	/**
+	 * Select user wallet address by user id.
+	 *
+	 * @param userId the user id
+	 * @param symbol the symbol
+	 * @return the list
+	 */
 	@Override
 	public List<UserWalletAddress> selectUserWalletAddressByUserId(Long userId, String symbol) {
 		if (userId == null) {

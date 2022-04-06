@@ -11,21 +11,20 @@ import com.github.ecsoya.sword.token.mapper.TokenAccessMapper;
 import com.github.ecsoya.sword.token.service.ITokenAccessService;
 
 /**
- * 操作日志记录Service业务层处理
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-07
+ * The Class TokenAccessServiceImpl.
  */
 @Service
 public class TokenAccessServiceImpl implements ITokenAccessService {
+
+	/** The token access mapper. */
 	@Autowired
 	private TokenAccessMapper tokenAccessMapper;
 
 	/**
-	 * 查询操作日志记录
+	 * Select token access by id.
 	 *
-	 * @param operId 操作日志记录ID
-	 * @return 操作日志记录
+	 * @param operId the oper id
+	 * @return the token access
 	 */
 	@Override
 	public TokenAccess selectTokenAccessById(Long operId) {
@@ -33,10 +32,10 @@ public class TokenAccessServiceImpl implements ITokenAccessService {
 	}
 
 	/**
-	 * 查询操作日志记录列表
+	 * Select token access list.
 	 *
-	 * @param tokenAccess 操作日志记录
-	 * @return 操作日志记录
+	 * @param tokenAccess the token access
+	 * @return the list
 	 */
 	@Override
 	public List<TokenAccess> selectTokenAccessList(TokenAccess tokenAccess) {
@@ -44,10 +43,10 @@ public class TokenAccessServiceImpl implements ITokenAccessService {
 	}
 
 	/**
-	 * 新增操作日志记录
+	 * Insert token access.
 	 *
-	 * @param tokenAccess 操作日志记录
-	 * @return 结果
+	 * @param tokenAccess the token access
+	 * @return the int
 	 */
 	@Override
 	public int insertTokenAccess(TokenAccess tokenAccess) {
@@ -55,10 +54,10 @@ public class TokenAccessServiceImpl implements ITokenAccessService {
 	}
 
 	/**
-	 * 修改操作日志记录
+	 * Update token access.
 	 *
-	 * @param tokenAccess 操作日志记录
-	 * @return 结果
+	 * @param tokenAccess the token access
+	 * @return the int
 	 */
 	@Override
 	public int updateTokenAccess(TokenAccess tokenAccess) {
@@ -66,10 +65,10 @@ public class TokenAccessServiceImpl implements ITokenAccessService {
 	}
 
 	/**
-	 * 删除操作日志记录对象
+	 * Delete token access by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	@Override
 	public int deleteTokenAccessByIds(String ids) {
@@ -77,10 +76,10 @@ public class TokenAccessServiceImpl implements ITokenAccessService {
 	}
 
 	/**
-	 * 删除操作日志记录信息
+	 * Delete token access by id.
 	 *
-	 * @param operId 操作日志记录ID
-	 * @return 结果
+	 * @param operId the oper id
+	 * @return the int
 	 */
 	@Override
 	public int deleteTokenAccessById(Long operId) {

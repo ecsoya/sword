@@ -7,112 +7,111 @@ import org.apache.ibatis.annotations.Param;
 import com.github.ecsoya.sword.common.core.domain.entity.SysDept;
 
 /**
- * 部门管理 数据层
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface SysDeptMapper.
  */
 public interface SysDeptMapper {
+
 	/**
-	 * 查询部门人数
+	 * Select dept count.
 	 *
-	 * @param dept 部门信息
-	 * @return 结果
+	 * @param dept the dept
+	 * @return the int
 	 */
 	public int selectDeptCount(SysDept dept);
 
 	/**
-	 * 查询部门是否存在用户
+	 * Check dept exist user.
 	 *
-	 * @param deptId 部门ID
-	 * @return 结果
+	 * @param deptId the dept id
+	 * @return the int
 	 */
 	public int checkDeptExistUser(Long deptId);
 
 	/**
-	 * 查询部门管理数据
+	 * Select dept list.
 	 *
-	 * @param dept 部门信息
-	 * @return 部门信息集合
+	 * @param dept the dept
+	 * @return the list
 	 */
 	public List<SysDept> selectDeptList(SysDept dept);
 
 	/**
-	 * 删除部门管理信息
+	 * Delete dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 结果
+	 * @param deptId the dept id
+	 * @return the int
 	 */
 	public int deleteDeptById(Long deptId);
 
 	/**
-	 * 新增部门信息
+	 * Insert dept.
 	 *
-	 * @param dept 部门信息
-	 * @return 结果
+	 * @param dept the dept
+	 * @return the int
 	 */
 	public int insertDept(SysDept dept);
 
 	/**
-	 * 修改部门信息
+	 * Update dept.
 	 *
-	 * @param dept 部门信息
-	 * @return 结果
+	 * @param dept the dept
+	 * @return the int
 	 */
 	public int updateDept(SysDept dept);
 
 	/**
-	 * 修改子元素关系
+	 * Update dept children.
 	 *
-	 * @param depts 子元素
-	 * @return 结果
+	 * @param depts the depts
+	 * @return the int
 	 */
 	public int updateDeptChildren(@Param("depts") List<SysDept> depts);
 
 	/**
-	 * 根据部门ID查询信息
+	 * Select dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 部门信息
+	 * @param deptId the dept id
+	 * @return the sys dept
 	 */
 	public SysDept selectDeptById(Long deptId);
 
 	/**
-	 * 校验部门名称是否唯一
+	 * Check dept name unique.
 	 *
-	 * @param deptName 部门名称
-	 * @param parentId 父部门ID
-	 * @return 结果
+	 * @param deptName the dept name
+	 * @param parentId the parent id
+	 * @return the sys dept
 	 */
 	public SysDept checkDeptNameUnique(@Param("deptName") String deptName, @Param("parentId") Long parentId);
 
 	/**
-	 * 根据角色ID查询部门
+	 * Select role dept tree.
 	 *
-	 * @param roleId 角色ID
-	 * @return 部门列表
+	 * @param roleId the role id
+	 * @return the list
 	 */
 	public List<String> selectRoleDeptTree(Long roleId);
 
 	/**
-	 * 修改所在部门的父级部门状态
+	 * Update dept status.
 	 *
-	 * @param dept 部门
+	 * @param dept the dept
 	 */
 	public void updateDeptStatus(SysDept dept);
 
 	/**
-	 * 根据ID查询所有子部门
+	 * Select children dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 部门列表
+	 * @param deptId the dept id
+	 * @return the list
 	 */
 	public List<SysDept> selectChildrenDeptById(Long deptId);
 
 	/**
-	 * 根据ID查询所有子部门（正常状态）
+	 * Select normal children dept by id.
 	 *
-	 * @param deptId 部门ID
-	 * @return 子部门数
+	 * @param deptId the dept id
+	 * @return the int
 	 */
 	public int selectNormalChildrenDeptById(Long deptId);
 }

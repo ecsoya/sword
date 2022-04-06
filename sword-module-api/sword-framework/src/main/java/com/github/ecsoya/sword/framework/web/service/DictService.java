@@ -10,34 +10,35 @@ import com.github.ecsoya.sword.system.service.ISysDictDataService;
 import com.github.ecsoya.sword.system.service.ISysDictTypeService;
 
 /**
- * RuoYi首创 html调用 thymeleaf 实现字典读取
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class DictService.
  */
 @Service("dict")
 public class DictService {
+
+	/** The dict type service. */
 	@Autowired
 	private ISysDictTypeService dictTypeService;
 
+	/** The dict data service. */
 	@Autowired
 	private ISysDictDataService dictDataService;
 
 	/**
-	 * 根据字典类型查询字典数据信息
+	 * Gets the type.
 	 *
-	 * @param dictType 字典类型
-	 * @return 参数键值
+	 * @param dictType the dict type
+	 * @return the type
 	 */
 	public List<SysDictData> getType(String dictType) {
 		return dictTypeService.selectDictDataByType(dictType);
 	}
 
 	/**
-	 * 根据字典类型和字典键值查询字典数据信息
+	 * Gets the label.
 	 *
-	 * @param dictType  字典类型
-	 * @param dictValue 字典键值
-	 * @return 字典标签
+	 * @param dictType  the dict type
+	 * @param dictValue the dict value
+	 * @return the label
 	 */
 	public String getLabel(String dictType, String dictValue) {
 		return dictDataService.selectDictLabel(dictType, dictValue);

@@ -33,27 +33,38 @@ import com.github.ecsoya.sword.system.service.ISysConfigService;
 import com.github.ecsoya.sword.system.service.ISysMenuService;
 
 /**
- * 首页 业务处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysIndexController.
  */
 @Controller
 public class SysIndexController extends BaseController {
+
+	/** The menu service. */
 	@Autowired
 	private ISysMenuService menuService;
 
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
+	/** The password service. */
 	@Autowired
 	private SysPasswordService passwordService;
 
+	/** The config. */
 	@Autowired
 	private GlobalConfig config;
 
+	/** The server. */
 	@Autowired
 	private ServerConfig server;
 
+	/**
+	 * Index.
+	 *
+	 * @param path the path
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	// 系统首页
 	@GetMapping("/index")
 	public String index(String path, ModelMap mmap) {
@@ -93,6 +104,12 @@ public class SysIndexController extends BaseController {
 		return webIndex;
 	}
 
+	/**
+	 * Lockscreen.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	// 锁定屏幕
 	@GetMapping("/lockscreen")
 	public String lockscreen(ModelMap mmap) {
@@ -102,6 +119,12 @@ public class SysIndexController extends BaseController {
 		return "lock";
 	}
 
+	/**
+	 * Unlockscreen.
+	 *
+	 * @param password the password
+	 * @return the ajax result
+	 */
 	// 解锁屏幕
 	@PostMapping("/unlockscreen")
 	@ResponseBody
@@ -117,18 +140,35 @@ public class SysIndexController extends BaseController {
 		return AjaxResult.error("密码不正确，请重新输入。");
 	}
 
+	/**
+	 * Switch skin.
+	 *
+	 * @return the string
+	 */
 	// 切换主题
 	@GetMapping("/system/switchSkin")
 	public String switchSkin() {
 		return "skin";
 	}
 
+	/**
+	 * Menu style.
+	 *
+	 * @param style    the style
+	 * @param response the response
+	 */
 	// 切换菜单
 	@GetMapping("/system/menuStyle/{style}")
 	public void menuStyle(@PathVariable String style, HttpServletResponse response) {
 		CookieUtils.setCookie(response, "nav-style", style);
 	}
 
+	/**
+	 * Main.
+	 *
+	 * @param mmap the mmap
+	 * @return the string
+	 */
 	// 系统介绍
 	@GetMapping("/system/main")
 	public String main(ModelMap mmap) {
@@ -146,6 +186,14 @@ public class SysIndexController extends BaseController {
 		return "main";
 	}
 
+	/**
+	 * Inits the password is modify.
+	 *
+	 * @param pwdUpdateDate the pwd update date
+	 * @param loginName     the login name
+	 * @param password      the password
+	 * @return true, if successful
+	 */
 	// 检查初始密码是否提醒修改
 	public boolean initPasswordIsModify(Date pwdUpdateDate, String loginName, String password) {
 		if (StringUtils.encryptPassword(loginName, "qwer1234", "111111").equals(password)
@@ -157,6 +205,12 @@ public class SysIndexController extends BaseController {
 		return initPasswordModify != null && initPasswordModify == 1 && pwdUpdateDate == null;
 	}
 
+	/**
+	 * Password is expiration.
+	 *
+	 * @param pwdUpdateDate the pwd update date
+	 * @return true, if successful
+	 */
 	// 检查密码是否过期
 	public boolean passwordIsExpiration(Date pwdUpdateDate) {
 		final Integer passwordValidateDays = Convert

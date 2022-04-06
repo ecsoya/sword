@@ -2,56 +2,102 @@ package com.github.ecsoya.sword.code.m5c;
 
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
+/**
+ * The Class M5cResult.
+ */
 public class M5cResult {
 
+	/** The success. */
 	private boolean success;
 
+	/** The msgid. */
 	private String msgid;
 
+	/** The error. */
 	private String error;
 
+	/**
+	 * Instantiates a new m 5 c result.
+	 *
+	 * @param success the success
+	 * @param msgid   the msgid
+	 * @param error   the error
+	 */
 	public M5cResult(boolean success, String msgid, String error) {
 		this.setSuccess(success);
 		this.setMsgid(msgid);
 		this.setError(error);
 	}
 
+	/**
+	 * Checks if is success.
+	 *
+	 * @return true, if is success
+	 */
 	public boolean isSuccess() {
 		return success;
 	}
 
+	/**
+	 * Sets the success.
+	 *
+	 * @param success the new success
+	 */
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
 
+	/**
+	 * Gets the msgid.
+	 *
+	 * @return the msgid
+	 */
 	public String getMsgid() {
 		return msgid;
 	}
 
+	/**
+	 * Sets the msgid.
+	 *
+	 * @param msgid the new msgid
+	 */
 	public void setMsgid(String msgid) {
 		this.msgid = msgid;
 	}
 
+	/**
+	 * Gets the error.
+	 *
+	 * @return the error
+	 */
 	public String getError() {
 		return error;
 	}
 
+	/**
+	 * Sets the error.
+	 *
+	 * @param error the new error
+	 */
 	public void setError(String error) {
 		this.error = error;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return "MessageResult [success=" + success + ", msgid=" + msgid + ", error=" + error + "]";
 	}
 
 	/**
-	 * success:msgid 提交成功。 error:msgid 提交失败 error:Missing username 用户名为空
-	 * error:Missing password 密码为空 error:Missing apikey APIKEY为空 error:Missing
-	 * recipient 手机号码为空 error:Missing message content 短信内容为空 error:Account is
-	 * blocked 帐号被禁用 error:Unrecognized encoding 编码未能识别 error:APIKEY or password_md5
-	 * error APIKEY或密码错误 error:Unauthorized IP address 未授权 IP 地址 error:Account
-	 * balance is insufficient 余额不足
+	 * Creates the.
+	 *
+	 * @param res the res
+	 * @return the m 5 c result
 	 */
 	public static M5cResult create(String res) {
 		if (StringUtils.isEmpty(res)) {

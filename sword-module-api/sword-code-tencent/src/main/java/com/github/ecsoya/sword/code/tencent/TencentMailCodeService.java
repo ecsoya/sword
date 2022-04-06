@@ -11,12 +11,25 @@ import com.tencentcloudapi.ses.v20201002.models.SendEmailRequest;
 import com.tencentcloudapi.ses.v20201002.models.SendEmailResponse;
 import com.tencentcloudapi.ses.v20201002.models.Template;
 
+/**
+ * The Class TencentMailCodeService.
+ */
 @Component
 public class TencentMailCodeService {
 
+	/** The config. */
 	@Autowired
 	private TencentCodeProperties config;
 
+	/**
+	 * Send mail.
+	 *
+	 * @param email        the email
+	 * @param subject      the subject
+	 * @param templateId   the template id
+	 * @param templateData the template data
+	 * @return the send email response
+	 */
 	public SendEmailResponse sendMail(String email, String subject, Long templateId, String templateData) {
 		if (StringUtils.isEmpty(email)) {
 			return null;
@@ -38,6 +51,15 @@ public class TencentMailCodeService {
 		}
 	}
 
+	/**
+	 * Send code.
+	 *
+	 * @param email   the email
+	 * @param subject the subject
+	 * @param code    the code
+	 * @param html    the html
+	 * @return the send email response
+	 */
 	public SendEmailResponse sendCode(String email, String subject, String code, boolean html) {
 		if (StringUtils.isEmpty(email)) {
 			return null;

@@ -8,114 +8,190 @@ import com.github.ecsoya.sword.user.domain.UserReferrer;
 import com.github.ecsoya.sword.user.domain.UserReferrerInfo;
 
 /**
- * 用户直推Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface IUserReferrerService.
  */
 public interface IUserReferrerService {
+
 	/**
-	 * 查询用户直推
+	 * Select user referrer by id.
 	 *
-	 * @param userId 用户直推ID
-	 * @return 用户直推
+	 * @param userId the user id
+	 * @return the user referrer
 	 */
 	public UserReferrer selectUserReferrerById(Long userId);
 
 	/**
-	 * 查询用户直推列表
+	 * Select user referrer list.
 	 *
-	 * @param userReferrer 用户直推
-	 * @return 用户直推集合
+	 * @param userReferrer the user referrer
+	 * @return the list
 	 */
 	public List<UserReferrer> selectUserReferrerList(UserReferrer userReferrer);
 
 	/**
-	 * 新增用户直推
+	 * Insert user referrer.
 	 *
-	 * @param userReferrer 用户直推
-	 * @return 结果
+	 * @param userReferrer the user referrer
+	 * @return the int
 	 */
 	public int insertUserReferrer(UserReferrer userReferrer);
 
 	/**
-	 * 修改用户直推
+	 * Update user referrer.
 	 *
-	 * @param userReferrer 用户直推
-	 * @return 结果
+	 * @param userReferrer the user referrer
+	 * @return the int
 	 */
 	public int updateUserReferrer(UserReferrer userReferrer);
 
 	/**
-	 * 批量删除用户直推
+	 * Delete user referrer by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserReferrerByIds(String ids);
 
 	/**
-	 * 删除用户直推信息
+	 * Delete user referrer by id.
 	 *
-	 * @param userId 用户直推ID
-	 * @return 结果
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int deleteUserReferrerById(Long userId);
 
+	/**
+	 * Select user referrer by code.
+	 *
+	 * @param code the code
+	 * @return the user referrer
+	 */
 	public UserReferrer selectUserReferrerByCode(String code);
 
 	/**
+	 * Select unfinished user referrers.
+	 *
+	 * @return the list
 	 */
 	public List<UserReferrer> selectUnfinishedUserReferrers();
 
+	/**
+	 * Refresh user referrer by id.
+	 *
+	 * @param userId the user id
+	 * @return the user referrer
+	 */
 	public UserReferrer refreshUserReferrerById(Long userId);
 
+	/**
+	 * Select all user ids.
+	 *
+	 * @return the list
+	 */
 	public List<Long> selectAllUserIds();
 
+	/**
+	 * Select referral user ids by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	public List<Long> selectReferralUserIdsByUserId(Long userId);
 
+	/**
+	 * Select user referrer list for update.
+	 *
+	 * @param baseUrl the base url
+	 * @return the list
+	 */
 	public List<UserReferrer> selectUserReferrerListForUpdate(String baseUrl);
 
 	/**
-	 * 查询直推用户数量
+	 * Select referral count by user id.
+	 *
+	 * @param userId the user id
+	 * @param start  the start
+	 * @param end    the end
+	 * @return the long
 	 */
 	public Long selectReferralCountByUserId(Long userId, Date start, Date end);
 
 	/**
-	 * 强制更新推荐码及二维码
+	 * Force update referrer code.
+	 *
+	 * @param userId the user id
+	 * @param left   the left
+	 * @return the int
 	 */
 	public int forceUpdateReferrerCode(Long userId, boolean left);
 
+	/**
+	 * Update all qrcode code.
+	 */
 	public void updateAllQrcodeCode();
 
 	/**
-	 * 右区推荐码是否开放
+	 * Compute right code enabled.
+	 *
+	 * @param userId the user id
+	 * @return the integer
 	 */
 	public Integer computeRightCodeEnabled(Long userId);
 
 	/**
-	 * 左区推荐码是否开放
+	 * Compute left code enabled.
+	 *
+	 * @param userId the user id
+	 * @return the integer
 	 */
 	public Integer computeLeftCodeEnabled(Long userId);
 
 	/**
-	 * 更新推荐码是否可用
+	 * Update user referrer code enabled.
+	 *
+	 * @param userId the user id
+	 * @return the int
 	 */
 	public int updateUserReferrerCodeEnabled(Long userId);
 
+	/**
+	 * Select all.
+	 *
+	 * @return the list
+	 */
 	public List<UserReferrer> selectAll();
 
 	/**
-	 * 查询所有的伞下用户
+	 * Select umbrella user ids.
+	 *
+	 * @param userId   the user id
+	 * @param allUsers the all users
+	 * @return the list
 	 */
 	public List<Long> selectUmbrellaUserIds(Long userId, List<UserReferrer> allUsers);
 
 	/**
-	 * 查询所有的伞下用户
+	 * Select umbrella user ids depth firstly.
+	 *
+	 * @param userId   the user id
+	 * @param allUsers the all users
+	 * @return the list
 	 */
 	public List<Long> selectUmbrellaUserIdsDepthFirstly(Long userId, List<UserReferrer> allUsers);
 
+	/**
+	 * Select user referrer list by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	public List<UserProfile> selectUserReferrerListByUserId(Long userId);
 
+	/**
+	 * Select user referrer info list.
+	 *
+	 * @param query the query
+	 * @return the list
+	 */
 	public List<UserReferrerInfo> selectUserReferrerInfoList(UserReferrerInfo query);
 }

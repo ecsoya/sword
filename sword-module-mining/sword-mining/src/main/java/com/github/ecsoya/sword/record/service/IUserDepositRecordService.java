@@ -6,61 +6,71 @@ import java.util.List;
 import com.github.ecsoya.sword.record.domain.UserDepositRecord;
 
 /**
- * 用户充值Service接口
- *
- * @author Jin Liu (angryred@qq.com)
- * @date 2021-01-05
+ * The Interface IUserDepositRecordService.
  */
 public interface IUserDepositRecordService {
+
 	/**
-	 * 查询用户充值
+	 * Select user deposit record by id.
 	 *
-	 * @param id 用户充值ID
-	 * @return 用户充值
+	 * @param id the id
+	 * @return the user deposit record
 	 */
 	public UserDepositRecord selectUserDepositRecordById(Long id);
 
 	/**
-	 * 查询用户充值列表
+	 * Select user deposit record list.
 	 *
-	 * @param userDepositRecord 用户充值
-	 * @return 用户充值集合
+	 * @param userDepositRecord the user deposit record
+	 * @return the list
 	 */
 	public List<UserDepositRecord> selectUserDepositRecordList(UserDepositRecord userDepositRecord);
 
 	/**
-	 * 新增用户充值
+	 * Insert user deposit record.
 	 *
-	 * @param userDepositRecord 用户充值
-	 * @return 结果
+	 * @param userDepositRecord the user deposit record
+	 * @return the int
 	 */
 	public int insertUserDepositRecord(UserDepositRecord userDepositRecord);
 
 	/**
-	 * 修改用户充值
+	 * Update user deposit record.
 	 *
-	 * @param userDepositRecord 用户充值
-	 * @return 结果
+	 * @param userDepositRecord the user deposit record
+	 * @return the int
 	 */
 	public int updateUserDepositRecord(UserDepositRecord userDepositRecord);
 
 	/**
-	 * 批量删除用户充值
+	 * Delete user deposit record by ids.
 	 *
-	 * @param ids 需要删除的数据ID
-	 * @return 结果
+	 * @param ids the ids
+	 * @return the int
 	 */
 	public int deleteUserDepositRecordByIds(String ids);
 
 	/**
-	 * 删除用户充值信息
+	 * Delete user deposit record by id.
 	 *
-	 * @param id 用户充值ID
-	 * @return 结果
+	 * @param id the id
+	 * @return the int
 	 */
 	public int deleteUserDepositRecordById(Long id);
 
+	/**
+	 * Select user deposit record by tx id.
+	 *
+	 * @param txId the tx id
+	 * @return the user deposit record
+	 */
 	public UserDepositRecord selectUserDepositRecordByTxId(String txId);
 
+	/**
+	 * Select user deposit amount.
+	 *
+	 * @param symbol the symbol
+	 * @return the big decimal
+	 */
 	public BigDecimal selectUserDepositAmount(String symbol);
 }

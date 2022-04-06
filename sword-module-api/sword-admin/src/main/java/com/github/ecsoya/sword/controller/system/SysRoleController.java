@@ -29,27 +29,40 @@ import com.github.ecsoya.sword.system.service.ISysRoleService;
 import com.github.ecsoya.sword.system.service.ISysUserService;
 
 /**
- * 角色信息
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysRoleController.
  */
 @Controller
 @RequestMapping("/system/role")
 public class SysRoleController extends BaseController {
+
+	/** The prefix. */
 	private final String prefix = "system/role";
 
+	/** The role service. */
 	@Autowired
 	private ISysRoleService roleService;
 
+	/** The user service. */
 	@Autowired
 	private ISysUserService userService;
 
+	/**
+	 * Role.
+	 *
+	 * @return the string
+	 */
 	@RequiresPermissions("system:role:view")
 	@GetMapping()
 	public String role() {
 		return prefix + "/role";
 	}
 
+	/**
+	 * List.
+	 *
+	 * @param role the role
+	 * @return the table data info
+	 */
 	@RequiresPermissions("system:role:list")
 	@PostMapping("/list")
 	@ResponseBody
@@ -59,6 +72,12 @@ public class SysRoleController extends BaseController {
 		return getDataTable(list);
 	}
 
+	/**
+	 * Export.
+	 *
+	 * @param role the role
+	 * @return the ajax result
+	 */
 	@Log(title = "角色管理", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("system:role:export")
 	@PostMapping("/export")
@@ -70,7 +89,9 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 新增角色
+	 * Adds the.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/add")
 	public String add() {
@@ -78,7 +99,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 新增保存角色
+	 * Adds the save.
+	 *
+	 * @param role the role
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:role:add")
 	@Log(title = "角色管理", businessType = BusinessType.INSERT)
@@ -97,7 +121,11 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 修改角色
+	 * Edits the.
+	 *
+	 * @param roleId the role id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/edit/{roleId}")
 	public String edit(@PathVariable("roleId") Long roleId, ModelMap mmap) {
@@ -106,7 +134,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 修改保存角色
+	 * Edits the save.
+	 *
+	 * @param role the role
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:role:edit")
 	@Log(title = "角色管理", businessType = BusinessType.UPDATE)
@@ -125,7 +156,11 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 角色分配数据权限
+	 * Auth data scope.
+	 *
+	 * @param roleId the role id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/authDataScope/{roleId}")
 	public String authDataScope(@PathVariable("roleId") Long roleId, ModelMap mmap) {
@@ -134,7 +169,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 保存角色分配数据权限
+	 * Auth data scope save.
+	 *
+	 * @param role the role
+	 * @return the ajax result
 	 */
 	@RequiresPermissions("system:role:edit")
 	@Log(title = "角色管理", businessType = BusinessType.UPDATE)
@@ -150,6 +188,12 @@ public class SysRoleController extends BaseController {
 		return error();
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param ids the ids
+	 * @return the ajax result
+	 */
 	@RequiresPermissions("system:role:remove")
 	@Log(title = "角色管理", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
@@ -159,7 +203,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 校验角色名称
+	 * Check role name unique.
+	 *
+	 * @param role the role
+	 * @return the string
 	 */
 	@PostMapping("/checkRoleNameUnique")
 	@ResponseBody
@@ -168,7 +215,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 校验角色权限
+	 * Check role key unique.
+	 *
+	 * @param role the role
+	 * @return the string
 	 */
 	@PostMapping("/checkRoleKeyUnique")
 	@ResponseBody
@@ -177,7 +227,9 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 选择菜单树
+	 * Select menu tree.
+	 *
+	 * @return the string
 	 */
 	@GetMapping("/selectMenuTree")
 	public String selectMenuTree() {
@@ -185,7 +237,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 角色状态修改
+	 * Change status.
+	 *
+	 * @param role the role
+	 * @return the ajax result
 	 */
 	@Log(title = "角色管理", businessType = BusinessType.UPDATE)
 	@RequiresPermissions("system:role:edit")
@@ -197,7 +252,11 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 分配用户
+	 * Auth user.
+	 *
+	 * @param roleId the role id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@RequiresPermissions("system:role:edit")
 	@GetMapping("/authUser/{roleId}")
@@ -207,7 +266,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 查询已分配用户角色列表
+	 * Allocated list.
+	 *
+	 * @param user the user
+	 * @return the table data info
 	 */
 	@RequiresPermissions("system:role:list")
 	@PostMapping("/authUser/allocatedList")
@@ -219,7 +281,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 取消授权
+	 * Cancel auth user.
+	 *
+	 * @param userRole the user role
+	 * @return the ajax result
 	 */
 	@Log(title = "角色管理", businessType = BusinessType.GRANT)
 	@PostMapping("/authUser/cancel")
@@ -229,7 +294,11 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 批量取消授权
+	 * Cancel auth user all.
+	 *
+	 * @param roleId  the role id
+	 * @param userIds the user ids
+	 * @return the ajax result
 	 */
 	@Log(title = "角色管理", businessType = BusinessType.GRANT)
 	@PostMapping("/authUser/cancelAll")
@@ -239,7 +308,11 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 选择用户
+	 * Select user.
+	 *
+	 * @param roleId the role id
+	 * @param mmap   the mmap
+	 * @return the string
 	 */
 	@GetMapping("/authUser/selectUser/{roleId}")
 	public String selectUser(@PathVariable("roleId") Long roleId, ModelMap mmap) {
@@ -248,7 +321,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 查询未分配用户角色列表
+	 * Unallocated list.
+	 *
+	 * @param user the user
+	 * @return the table data info
 	 */
 	@RequiresPermissions("system:role:list")
 	@PostMapping("/authUser/unallocatedList")
@@ -260,7 +336,11 @@ public class SysRoleController extends BaseController {
 	}
 
 	/**
-	 * 批量选择用户授权
+	 * Select auth user all.
+	 *
+	 * @param roleId  the role id
+	 * @param userIds the user ids
+	 * @return the ajax result
 	 */
 	@Log(title = "角色管理", businessType = BusinessType.GRANT)
 	@PostMapping("/authUser/selectAll")

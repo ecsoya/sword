@@ -6,45 +6,61 @@ import org.springframework.context.annotation.Configuration;
 import com.alibaba.druid.pool.DruidDataSource;
 
 /**
- * druid 配置属性
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class DruidProperties.
  */
 @Configuration
 public class DruidProperties {
+
+	/** The initial size. */
 	@Value("${spring.datasource.druid.initialSize}")
 	private int initialSize;
 
+	/** The min idle. */
 	@Value("${spring.datasource.druid.minIdle}")
 	private int minIdle;
 
+	/** The max active. */
 	@Value("${spring.datasource.druid.maxActive}")
 	private int maxActive;
 
+	/** The max wait. */
 	@Value("${spring.datasource.druid.maxWait}")
 	private int maxWait;
 
+	/** The time between eviction runs millis. */
 	@Value("${spring.datasource.druid.timeBetweenEvictionRunsMillis}")
 	private int timeBetweenEvictionRunsMillis;
 
+	/** The min evictable idle time millis. */
 	@Value("${spring.datasource.druid.minEvictableIdleTimeMillis}")
 	private int minEvictableIdleTimeMillis;
 
+	/** The max evictable idle time millis. */
 	@Value("${spring.datasource.druid.maxEvictableIdleTimeMillis}")
 	private int maxEvictableIdleTimeMillis;
 
+	/** The validation query. */
 	@Value("${spring.datasource.druid.validationQuery}")
 	private String validationQuery;
 
+	/** The test while idle. */
 	@Value("${spring.datasource.druid.testWhileIdle}")
 	private boolean testWhileIdle;
 
+	/** The test on borrow. */
 	@Value("${spring.datasource.druid.testOnBorrow}")
 	private boolean testOnBorrow;
 
+	/** The test on return. */
 	@Value("${spring.datasource.druid.testOnReturn}")
 	private boolean testOnReturn;
 
+	/**
+	 * Data source.
+	 *
+	 * @param datasource the datasource
+	 * @return the druid data source
+	 */
 	public DruidDataSource dataSource(DruidDataSource datasource) {
 		/** 配置初始化大小、最小、最大 */
 		datasource.setInitialSize(initialSize);

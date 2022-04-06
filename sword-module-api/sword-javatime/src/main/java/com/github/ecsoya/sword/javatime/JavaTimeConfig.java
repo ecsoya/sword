@@ -22,19 +22,26 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
+/**
+ * The Class JavaTimeConfig.
+ */
 @Component
 @Configuration
 public class JavaTimeConfig {
 
-	/** 默认日期时间格式 */
+	/** The Constant DEFAULT_DATE_TIME_FORMAT. */
 	public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-	/** 默认日期格式 */
+
+	/** The Constant DEFAULT_DATE_FORMAT. */
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
-	/** 默认时间格式 */
+
+	/** The Constant DEFAULT_TIME_FORMAT. */
 	public static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
 
 	/**
-	 * LocalDate转换器，用于转换RequestParam和PathVariable参数
+	 * Local date converter.
+	 *
+	 * @return the converter
 	 */
 	@Bean
 	public Converter<String, LocalDate> localDateConverter() {
@@ -50,7 +57,9 @@ public class JavaTimeConfig {
 	}
 
 	/**
-	 * LocalDateTime转换器，用于转换RequestParam和PathVariable参数
+	 * Local date time converter.
+	 *
+	 * @return the converter
 	 */
 	@Bean
 	public Converter<String, LocalDateTime> localDateTimeConverter() {
@@ -66,7 +75,9 @@ public class JavaTimeConfig {
 	}
 
 	/**
-	 * LocalTime转换器，用于转换RequestParam和PathVariable参数
+	 * Local time converter.
+	 *
+	 * @return the converter
 	 */
 	@Bean
 	public Converter<String, LocalTime> localTimeConverter() {
@@ -82,7 +93,9 @@ public class JavaTimeConfig {
 	}
 
 	/**
-	 * Json序列化和反序列化转换器，用于转换Post请求体中的json以及将我们的对象序列化为返回响应的json
+	 * Object mapper.
+	 *
+	 * @return the object mapper
 	 */
 	@Bean
 	public ObjectMapper objectMapper() {

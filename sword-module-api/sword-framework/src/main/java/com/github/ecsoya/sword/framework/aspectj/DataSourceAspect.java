@@ -18,22 +18,32 @@ import com.github.ecsoya.sword.common.config.datasource.DynamicDataSourceContext
 import com.github.ecsoya.sword.common.utils.StringUtils;
 
 /**
- * 多数据源处理
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class DataSourceAspect.
  */
 @Aspect
 @Order(1)
 @Component
 public class DataSourceAspect {
+
+	/** The logger. */
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	/**
+	 * Ds point cut.
+	 */
 	@Pointcut("@annotation(com.github.ecsoya.sword.common.annotation.DataSource)"
 			+ "|| @within(com.github.ecsoya.sword.common.annotation.DataSource)")
 	public void dsPointCut() {
 
 	}
 
+	/**
+	 * Around.
+	 *
+	 * @param point the point
+	 * @return the object
+	 * @throws Throwable the throwable
+	 */
 	@Around("dsPointCut()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
 		final DataSource dataSource = getDataSource(point);
@@ -51,7 +61,10 @@ public class DataSourceAspect {
 	}
 
 	/**
-	 * 获取需要切换的数据源
+	 * Gets the data source.
+	 *
+	 * @param point the point
+	 * @return the data source
 	 */
 	public DataSource getDataSource(ProceedingJoinPoint point) {
 		final MethodSignature signature = (MethodSignature) point.getSignature();

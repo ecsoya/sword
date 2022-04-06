@@ -4,33 +4,57 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * 用户和角色关联 sys_user_role
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SysUserRole.
  */
 public class SysUserRole {
-	/** 用户ID */
+
+	/** The user id. */
 	private Long userId;
 
-	/** 角色ID */
+	/** The role id. */
 	private Long roleId;
 
+	/**
+	 * Gets the 用户ID.
+	 *
+	 * @return the 用户ID
+	 */
 	public Long getUserId() {
 		return userId;
 	}
 
+	/**
+	 * Sets the 用户ID.
+	 *
+	 * @param userId the new 用户ID
+	 */
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
+	/**
+	 * Gets the 角色ID.
+	 *
+	 * @return the 角色ID
+	 */
 	public Long getRoleId() {
 		return roleId;
 	}
 
+	/**
+	 * Sets the 角色ID.
+	 *
+	 * @param roleId the new 角色ID
+	 */
 	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("userId", getUserId())

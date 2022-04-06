@@ -7,26 +7,31 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 数据权限过滤注解
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Interface DataScope.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DataScope {
+
 	/**
-	 * 部门表的别名
+	 * Dept alias.
+	 *
+	 * @return the string
 	 */
 	public String deptAlias() default "";
 
 	/**
-	 * 用户表的别名
+	 * User alias.
+	 *
+	 * @return the string
 	 */
 	public String userAlias() default "";
 
 	/**
-	 * 用户表的别名
+	 * User id column.
+	 *
+	 * @return the string
 	 */
 	public String userIdColumn() default "user_id";
 }

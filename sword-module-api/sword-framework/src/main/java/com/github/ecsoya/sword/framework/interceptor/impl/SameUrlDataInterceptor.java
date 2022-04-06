@@ -12,29 +12,39 @@ import com.github.ecsoya.sword.common.json.JSON;
 import com.github.ecsoya.sword.framework.interceptor.RepeatSubmitInterceptor;
 
 /**
- * 判断请求url和数据是否和上一次相同， 如果和上次相同，则是重复提交表单。 有效时间为10秒内。
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class SameUrlDataInterceptor.
  */
 @Component
 public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
+
+	/** The repeat params. */
 	public final String REPEAT_PARAMS = "repeatParams";
 
+	/** The repeat time. */
 	public final String REPEAT_TIME = "repeatTime";
 
+	/** The session repeat key. */
 	public final String SESSION_REPEAT_KEY = "repeatData";
 
-	/**
-	 * 间隔时间，单位:秒 默认10秒
-	 *
-	 * 两次相同参数的请求，如果间隔时间大于该参数，系统不会认定为重复提交的数据
-	 */
+	/** The interval time. */
 	private int intervalTime = 10;
 
+	/**
+	 * Sets the interval time.
+	 *
+	 * @param intervalTime the new interval time
+	 */
 	public void setIntervalTime(int intervalTime) {
 		this.intervalTime = intervalTime;
 	}
 
+	/**
+	 * Checks if is repeat submit.
+	 *
+	 * @param request the request
+	 * @return true, if is repeat submit
+	 * @throws Exception the exception
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean isRepeatSubmit(HttpServletRequest request) throws Exception {
@@ -65,7 +75,11 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
 	}
 
 	/**
-	 * 判断参数是否相同
+	 * Compare params.
+	 *
+	 * @param nowMap the now map
+	 * @param preMap the pre map
+	 * @return true, if successful
 	 */
 	private boolean compareParams(Map<String, Object> nowMap, Map<String, Object> preMap) {
 		final String nowParams = (String) nowMap.get(REPEAT_PARAMS);
@@ -74,7 +88,11 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
 	}
 
 	/**
-	 * 判断两次间隔时间
+	 * Compare time.
+	 *
+	 * @param nowMap the now map
+	 * @param preMap the pre map
+	 * @return true, if successful
 	 */
 	private boolean compareTime(Map<String, Object> nowMap, Map<String, Object> preMap) {
 		final long time1 = (Long) nowMap.get(REPEAT_TIME);

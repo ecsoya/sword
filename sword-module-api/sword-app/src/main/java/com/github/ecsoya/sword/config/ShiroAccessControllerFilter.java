@@ -16,8 +16,20 @@ import com.alibaba.fastjson.JSON;
 import com.github.ecsoya.sword.common.core.domain.CommonResult;
 import com.github.ecsoya.sword.common.exception.user.UserNotLoginException;
 
+/**
+ * The Class ShiroAccessControllerFilter.
+ */
 public class ShiroAccessControllerFilter extends AccessControlFilter {
 
+	/**
+	 * Checks if is access allowed.
+	 *
+	 * @param request     the request
+	 * @param response    the response
+	 * @param mappedValue the mapped value
+	 * @return true, if is access allowed
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {
@@ -31,6 +43,14 @@ public class ShiroAccessControllerFilter extends AccessControlFilter {
 		}
 	}
 
+	/**
+	 * On access denied.
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return true, if successful
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		final HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
@@ -41,6 +61,12 @@ public class ShiroAccessControllerFilter extends AccessControlFilter {
 		return false;
 	}
 
+	/**
+	 * Render json.
+	 *
+	 * @param response   the response
+	 * @param jsonObject the json object
+	 */
 	public static void renderJson(HttpServletResponse response, Object jsonObject) {
 		try {
 			response.setContentType("application/json"); //$NON-NLS-1$

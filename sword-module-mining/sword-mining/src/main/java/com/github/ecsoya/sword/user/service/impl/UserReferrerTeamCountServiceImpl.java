@@ -15,15 +15,26 @@ import com.github.ecsoya.sword.user.service.IUserProfileService;
 import com.github.ecsoya.sword.user.service.IUserReferrerService;
 import com.github.ecsoya.sword.user.service.IUserReferrerTeamCountService;
 
+/**
+ * The Class UserReferrerTeamCountServiceImpl.
+ */
 @Service
 public class UserReferrerTeamCountServiceImpl implements IUserReferrerTeamCountService {
 
+	/** The user referrer service. */
 	@Autowired
 	private IUserReferrerService userReferrerService;
 
+	/** The user profile service. */
 	@Autowired
 	private IUserProfileService userProfileService;
 
+	/**
+	 * Select user referrer team count by user id.
+	 *
+	 * @param userId the user id
+	 * @return the user referrer team count
+	 */
 	@Override
 	public UserReferrerTeamCount selectUserReferrerTeamCountByUserId(Long userId) {
 		if (userId == null) {
@@ -61,11 +72,23 @@ public class UserReferrerTeamCountServiceImpl implements IUserReferrerTeamCountS
 		return team;
 	}
 
+	/**
+	 * Select user referrer team list by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	@Override
 	public List<UserProfile> selectUserReferrerTeamListByUserId(Long userId) {
 		return userReferrerService.selectUserReferrerListByUserId(userId);
 	}
 
+	/**
+	 * Select user umbrella team list by user id.
+	 *
+	 * @param userId the user id
+	 * @return the list
+	 */
 	@Override
 	public List<UserProfile> selectUserUmbrellaTeamListByUserId(Long userId) {
 		final List<UserReferrer> referrerList = userReferrerService.selectAll();

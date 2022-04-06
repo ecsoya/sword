@@ -18,18 +18,34 @@ import com.github.ecsoya.sword.config.jdbc.JdbcTemplateSupport;
 import com.github.ecsoya.sword.config.jdbc.PageBean;
 import com.github.pagehelper.Page;
 
+/**
+ * The Class DatabaseController.
+ */
 @Controller
 @RequestMapping("/database")
 public class DatabaseController extends BaseController {
 
+	/** The jdbc template. */
 	@Autowired
 	private JdbcTemplateSupport jdbcTemplate;
 
+	/**
+	 * Indices.
+	 *
+	 * @return the string
+	 */
 	@GetMapping("/query")
 	public String indices() {
 		return "tool/database/query";
 	}
 
+	/**
+	 * Perform query.
+	 *
+	 * @param dsType the ds type
+	 * @param sql    the sql
+	 * @return the table data info
+	 */
 	@SuppressWarnings("unchecked")
 	@PostMapping("/query")
 	@ResponseBody
@@ -52,6 +68,12 @@ public class DatabaseController extends BaseController {
 		return table;
 	}
 
+	/**
+	 * List table names.
+	 *
+	 * @param dsType the ds type
+	 * @return the list
+	 */
 	@GetMapping("/tables")
 	@ResponseBody
 	public List<String> listTableNames(String dsType) {

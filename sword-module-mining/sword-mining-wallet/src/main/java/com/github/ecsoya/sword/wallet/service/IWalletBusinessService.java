@@ -7,25 +7,40 @@ import com.github.ecsoya.sword.wallet.domain.Address;
 import com.github.ecsoya.sword.wallet.domain.WithdrawalResponse;
 
 /**
- * @author Jin Liu (jin.liu@soyatec.com)
+ * The Interface IWalletBusinessService.
  */
 public interface IWalletBusinessService {
 
 	/**
-	 * 创建充值地址
+	 * Gets the deposit address.
+	 *
+	 * @param symbol the symbol
+	 * @param chain  the chain
+	 * @return the deposit address
 	 */
 	CommonResult<Address> getDepositAddress(String symbol, String chain);
 
 	/**
-	 * 检测提币地址是否合法
-	 * 
+	 * Check withdrawal address.
+	 *
+	 * @param symbol  the symbol
+	 * @param chain   the chain
+	 * @param address the address
+	 * @return the common result
 	 */
 	CommonResult<?> checkWithdrawalAddress(String symbol, String chain, String address);
 
 	/**
-	 * 提币请求
-	 * 
-	 * @param auto auto withdrawal without confirm
+	 * Withdrawal.
+	 *
+	 * @param orderNo the order no
+	 * @param symbol  the symbol
+	 * @param chain   the chain
+	 * @param address the address
+	 * @param memo    the memo
+	 * @param amount  the amount
+	 * @param auto    the auto
+	 * @return the common result
 	 */
 	CommonResult<WithdrawalResponse> withdrawal(String orderNo, String symbol, String chain, String address,
 			String memo, BigDecimal amount, boolean auto);

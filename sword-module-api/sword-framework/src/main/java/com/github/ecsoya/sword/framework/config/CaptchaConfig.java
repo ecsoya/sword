@@ -26,12 +26,16 @@ import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 
 /**
- * 验证码配置
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class CaptchaConfig.
  */
 @Configuration
 public class CaptchaConfig {
+
+	/**
+	 * Gets the kaptcha bean.
+	 *
+	 * @return the kaptcha bean
+	 */
 	@Bean(name = "captchaProducer")
 	public DefaultKaptcha getKaptchaBean() {
 		final DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
@@ -66,6 +70,11 @@ public class CaptchaConfig {
 		return defaultKaptcha;
 	}
 
+	/**
+	 * Gets the kaptcha bean math.
+	 *
+	 * @return the kaptcha bean math
+	 */
 	@Bean(name = "captchaProducerMath")
 	public DefaultKaptcha getKaptchaBeanMath() {
 		final DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
@@ -85,7 +94,8 @@ public class CaptchaConfig {
 		// KAPTCHA_SESSION_KEY
 		properties.setProperty(KAPTCHA_SESSION_CONFIG_KEY, "kaptchaCodeMath");
 		// 验证码文本生成器
-		properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL, "com.github.ecsoya.sword.framework.config.KaptchaTextCreator");
+		properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL,
+				"com.github.ecsoya.sword.framework.config.KaptchaTextCreator");
 		// 验证码文本字符间距 默认为2
 		properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "14");
 		// 验证码文本字符长度 默认为5
@@ -108,7 +118,10 @@ public class CaptchaConfig {
 	}
 
 	/**
-	 * 使用后台配置的颜色
+	 * Apply color.
+	 *
+	 * @param producer the producer
+	 * @return the producer
 	 */
 	public static Producer applyColor(Producer producer) {
 		if (producer instanceof DefaultKaptcha) {

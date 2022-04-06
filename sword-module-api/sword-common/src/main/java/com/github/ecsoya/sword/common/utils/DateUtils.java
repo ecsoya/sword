@@ -20,64 +20,106 @@ import java.util.Locale;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
- * 时间工具类
- *
- * @author Jin Liu (angryred@qq.com)
+ * The Class DateUtils.
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
+
+	/** The yyyy. */
 	public static String YYYY = "yyyy";
 
+	/** The yyyy mm. */
 	public static String YYYY_MM = "yyyy-MM";
 
+	/** The yyyy mm dd. */
 	public static String YYYY_MM_DD = "yyyy-MM-dd";
 
+	/** The yyyymmddhhmmss. */
 	public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
+	/** The yyyy mm dd hh mm ss. */
 	public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+
+	/** The default date format. */
 	public static String DEFAULT_DATE_FORMAT = YYYY_MM_DD_HH_MM_SS;
 
+	/** The parse patterns. */
 	private static String[] parsePatterns = { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
 			"yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss",
 			"yyyy.MM.dd HH:mm", "yyyy.MM" };
 
 	/**
-	 * 获取当前Date型日期
+	 * Gets the now date.
 	 *
-	 * @return Date() 当前日期
+	 * @return the now date
 	 */
 	public static Date getNowDate() {
 		return new Date();
 	}
 
 	/**
-	 * 获取当前日期, 默认格式为yyyy-MM-dd
+	 * Gets the date.
 	 *
-	 * @return String
+	 * @return the date
 	 */
 	public static String getDate() {
 		return dateTimeNow(YYYY_MM_DD);
 	}
 
+	/**
+	 * Gets the time.
+	 *
+	 * @return the time
+	 */
 	public static final String getTime() {
 		return dateTimeNow(YYYY_MM_DD_HH_MM_SS);
 	}
 
+	/**
+	 * Date time now.
+	 *
+	 * @return the string
+	 */
 	public static final String dateTimeNow() {
 		return dateTimeNow(YYYYMMDDHHMMSS);
 	}
 
+	/**
+	 * Date time now.
+	 *
+	 * @param format the format
+	 * @return the string
+	 */
 	public static final String dateTimeNow(final String format) {
 		return parseDateToStr(format, new Date());
 	}
 
+	/**
+	 * Date time.
+	 *
+	 * @param date the date
+	 * @return the string
+	 */
 	public static final String dateTime(final Date date) {
 		return parseDateToStr(YYYY_MM_DD, date);
 	}
 
+	/**
+	 * Parses the date to str.
+	 *
+	 * @param format the format
+	 * @param date   the date
+	 * @return the string
+	 */
 	public static final String parseDateToStr(final String format, final Date date) {
 		return new SimpleDateFormat(format).format(date);
 	}
 
+	/**
+	 * To default.
+	 *
+	 * @param date the date
+	 * @return the string
+	 */
 	public static final String toDefault(final Date date) {
 		if (date == null) {
 			return "";
@@ -85,6 +127,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return new SimpleDateFormat(DEFAULT_DATE_FORMAT).format(date);
 	}
 
+	/**
+	 * Date time.
+	 *
+	 * @param format the format
+	 * @param ts     the ts
+	 * @return the date
+	 */
 	public static final Date dateTime(final String format, final String ts) {
 		try {
 			return new SimpleDateFormat(format).parse(ts);
@@ -93,6 +142,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		}
 	}
 
+	/**
+	 * Default date.
+	 *
+	 * @param ts the ts
+	 * @return the date
+	 */
 	public static final Date defaultDate(final String ts) {
 		try {
 			return new SimpleDateFormat(DEFAULT_DATE_FORMAT).parse(ts);
@@ -102,7 +157,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	/**
-	 * 日期路径 即年/月/日 如2018/08/08
+	 * Date path.
+	 *
+	 * @return the string
 	 */
 	public static final String datePath() {
 		final Date now = new Date();
@@ -110,7 +167,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	/**
-	 * 日期路径 即年/月/日 如20180808
+	 * Date time.
+	 *
+	 * @return the string
 	 */
 	public static final String dateTime() {
 		final Date now = new Date();
@@ -118,7 +177,10 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	/**
-	 * 日期型字符串转化为日期 格式
+	 * Parses the date.
+	 *
+	 * @param str the str
+	 * @return the date
 	 */
 	public static Date parseDate(Object str) {
 		if (str == null) {
@@ -132,7 +194,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	/**
-	 * 获取服务器启动时间
+	 * Gets the server start date.
+	 *
+	 * @return the server start date
 	 */
 	public static Date getServerStartDate() {
 		final long time = ManagementFactory.getRuntimeMXBean().getStartTime();
@@ -140,14 +204,22 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	/**
-	 * 计算相差天数
+	 * Different days by millisecond.
+	 *
+	 * @param date1 the date 1
+	 * @param date2 the date 2
+	 * @return the int
 	 */
 	public static int differentDaysByMillisecond(Date date1, Date date2) {
 		return Math.abs((int) ((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24)));
 	}
 
 	/**
-	 * 计算两个时间差
+	 * Gets the date poor.
+	 *
+	 * @param endDate the end date
+	 * @param nowDate the now date
+	 * @return the date poor
 	 */
 	public static String getDatePoor(Date endDate, Date nowDate) {
 		final long nd = 1000 * 24 * 60 * 60;
@@ -167,6 +239,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return day + "天" + hour + "小时" + min + "分钟";
 	}
 
+	/**
+	 * Gets the interval seconds.
+	 *
+	 * @param start the start
+	 * @param end   the end
+	 * @return the interval seconds
+	 */
 	public static Long getIntervalSeconds(Date start, Date end) {
 		if (start == null || end == null || start.after(end)) {
 			return null;
@@ -175,12 +254,24 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return diff / 1000;
 	}
 
+	/**
+	 * Gets the year.
+	 *
+	 * @param date the date
+	 * @return the year
+	 */
 	public static int getYear(Date date) {
 		final Calendar instance = Calendar.getInstance();
 		instance.setTime(date);
 		return instance.get(Calendar.YEAR);
 	}
 
+	/**
+	 * Gets the age.
+	 *
+	 * @param birthday the birthday
+	 * @return the age
+	 */
 	public static Integer getAge(Date birthday) {
 		if (birthday == null) {
 			return null;
@@ -189,6 +280,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return getYear(now) - getYear(birthday);
 	}
 
+	/**
+	 * Gets the date before.
+	 *
+	 * @param duration the duration
+	 * @return the date before
+	 */
 	public static Date getDateBefore(Integer duration) {
 		if (duration == null || duration < 0) {
 			return null;
@@ -201,6 +298,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return null;
 	}
 
+	/**
+	 * Checks if is before today.
+	 *
+	 * @param date the date
+	 * @return true, if is before today
+	 */
 	public static boolean isBeforeToday(Date date) {
 		if (date == null) {
 			return false;
@@ -214,6 +317,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return date.before(today);
 	}
 
+	/**
+	 * Checks if is before yesterday.
+	 *
+	 * @param date the date
+	 * @return true, if is before yesterday
+	 */
 	public static boolean isBeforeYesterday(Date date) {
 		if (date == null) {
 			return false;
@@ -221,6 +330,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return date.before(getLastDayStart());
 	}
 
+	/**
+	 * To date.
+	 *
+	 * @param localDateTime the local date time
+	 * @return the date
+	 */
 	public static Date toDate(LocalDateTime localDateTime) {
 		if (localDateTime == null) {
 			return null;
@@ -229,26 +344,59 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return Date.from(instant);
 	}
 
+	/**
+	 * To date.
+	 *
+	 * @param localDate the local date
+	 * @return the date
+	 */
 	public static Date toDate(LocalDate localDate) {
 		return toDate(localDate.atStartOfDay());
 	}
 
+	/**
+	 * Gets the last day start.
+	 *
+	 * @return the last day start
+	 */
 	public static Date getLastDayStart() {
 		return toDate(LocalDate.now().atStartOfDay().minusDays(1));
 	}
 
+	/**
+	 * Gets the last day end.
+	 *
+	 * @return the last day end
+	 */
 	public static Date getLastDayEnd() {
 		return getLastDayEnd(1);
 	}
 
+	/**
+	 * Gets the last day end.
+	 *
+	 * @param minusSeconds the minus seconds
+	 * @return the last day end
+	 */
 	public static Date getLastDayEnd(int minusSeconds) {
 		return toDate(LocalDate.now().atStartOfDay().minusSeconds(minusSeconds));
 	}
 
+	/**
+	 * Gets the today start.
+	 *
+	 * @return the today start
+	 */
 	public static Date getTodayStart() {
 		return toDate(LocalDate.now().atStartOfDay());
 	}
 
+	/**
+	 * Checks if is during today.
+	 *
+	 * @param date the date
+	 * @return true, if is during today
+	 */
 	public static boolean isDuringToday(Date date) {
 		if (date == null) {
 			return false;
@@ -260,6 +408,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return date.after(start) && date.before(getNowDate());
 	}
 
+	/**
+	 * Checks if is during yesterday.
+	 *
+	 * @param date the date
+	 * @return true, if is during yesterday
+	 */
 	public static boolean isDuringYesterday(Date date) {
 		if (date == null) {
 			return false;
@@ -267,6 +421,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return date.before(getLastDayEnd()) && date.after(getLastDayStart());
 	}
 
+	/**
+	 * Checks if is during 5 minutes.
+	 *
+	 * @param createTime the create time
+	 * @return true, if is during 5 minutes
+	 */
 	public static boolean isDuring5Minutes(Date createTime) {
 		if (createTime == null) {
 			return false;
@@ -275,6 +435,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return createTime.after(fiveMinutesAgo);
 	}
 
+	/**
+	 * Checks if is before 1 minute.
+	 *
+	 * @param createTime the create time
+	 * @return true, if is before 1 minute
+	 */
 	public static boolean isBefore1Minute(Date createTime) {
 		if (createTime == null) {
 			return false;
@@ -282,16 +448,35 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return createTime.before(toDate(LocalDateTime.now().minusMinutes(1)));
 	}
 
+	/**
+	 * Gets the week start.
+	 *
+	 * @param before the before
+	 * @return the week start
+	 */
 	public static Date getWeekStart(int before) {
 		final LocalDate now = LocalDate.now().minusWeeks(before);
 		return toDate(now.minusDays(now.getDayOfWeek().getValue() - 1).atStartOfDay());
 	}
 
+	/**
+	 * Gets the month start.
+	 *
+	 * @param before the before
+	 * @return the month start
+	 */
 	public static Date getMonthStart(int before) {
 		final LocalDate now = LocalDate.now().minusMonths(before);
 		return toDate(now.plusDays(1 - now.getDayOfMonth()).atStartOfDay());
 	}
 
+	/**
+	 * Gets the dates.
+	 *
+	 * @param from the from
+	 * @param end  the end
+	 * @return the dates
+	 */
 	public static List<Date> getDates(Date from, Date end) {
 		if (from == null || end == null || from.after(end)) {
 			return Collections.emptyList();
@@ -308,6 +493,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return list;
 	}
 
+	/**
+	 * Local date time.
+	 *
+	 * @param date the date
+	 * @return the local date time
+	 */
 	public static LocalDateTime localDateTime(Date date) {
 		if (date == null) {
 			return null;
@@ -315,6 +506,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
 	}
 
+	/**
+	 * Local date.
+	 *
+	 * @param date the date
+	 * @return the local date
+	 */
 	public static LocalDate localDate(Date date) {
 		if (date == null) {
 			return null;
@@ -322,6 +519,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return localDateTime(date).toLocalDate();
 	}
 
+	/**
+	 * Gets the start of.
+	 *
+	 * @param date the date
+	 * @return the start of
+	 */
 	public static Date getStartOf(Date date) {
 		if (date == null) {
 			return null;
@@ -329,6 +532,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return toDate(localDateTime(date).toLocalDate().atStartOfDay());
 	}
 
+	/**
+	 * Gets the end of.
+	 *
+	 * @param date the date
+	 * @return the end of
+	 */
 	public static Date getEndOf(Date date) {
 		if (date == null) {
 			return null;
@@ -336,6 +545,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return toDate(localDateTime(date).toLocalDate().atTime(23, 59, 59));
 	}
 
+	/**
+	 * Gets the month.
+	 *
+	 * @param date the date
+	 * @return the month
+	 */
 	public static Integer getMonth(Date date) {
 		if (date == null) {
 			return null;
@@ -343,6 +558,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return localDateTime(date).getMonthValue();
 	}
 
+	/**
+	 * Gets the month date.
+	 *
+	 * @param date the date
+	 * @return the month date
+	 */
 	public static Date getMonthDate(Date date) {
 		if (date == null) {
 			return null;
@@ -350,6 +571,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return toDate(localDate(date));
 	}
 
+	/**
+	 * Gets the display week.
+	 *
+	 * @param date the date
+	 * @return the display week
+	 */
 	public static String getDisplayWeek(Date date) {
 		if (date == null) {
 			return null;
@@ -357,6 +584,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return localDateTime(date).getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.CHINA);
 	}
 
+	/**
+	 * Zoned date time.
+	 *
+	 * @param date the date
+	 * @return the zoned date time
+	 */
 	public static ZonedDateTime zonedDateTime(Date date) {
 		if (date == null) {
 			return null;
@@ -364,6 +597,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return ZonedDateTime.of(localDateTime(date), ZoneId.systemDefault());
 	}
 
+	/**
+	 * Gets the months.
+	 *
+	 * @param start the start
+	 * @param end   the end
+	 * @return the months
+	 */
 	public static List<Date> getMonths(Date start, Date end) {
 		if (start == null || end == null || start.after(end)) {
 			return Collections.emptyList();
@@ -379,6 +619,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return months;
 	}
 
+	/**
+	 * Gets the month start of.
+	 *
+	 * @param month the month
+	 * @return the month start of
+	 */
 	public static Date getMonthStartOf(Date month) {
 		if (month == null) {
 			return null;
@@ -387,6 +633,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return getStartOf(toDate(date.minusDays(date.getDayOfMonth() - 1)));
 	}
 
+	/**
+	 * Gets the month end of.
+	 *
+	 * @param month the month
+	 * @return the month end of
+	 */
 	public static Date getMonthEndOf(Date month) {
 		if (month == null) {
 			return null;
@@ -395,6 +647,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return getEndOf(toDate(date.withDayOfMonth(date.lengthOfMonth())));
 	}
 
+	/**
+	 * Gets the length of month.
+	 *
+	 * @param month the month
+	 * @return the length of month
+	 */
 	public static Integer getLengthOfMonth(Date month) {
 		if (month == null) {
 			return null;
@@ -404,6 +662,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return localDate.lengthOfMonth();
 	}
 
+	/**
+	 * Gets the day of month.
+	 *
+	 * @param date the date
+	 * @return the day of month
+	 */
 	public static Integer getDayOfMonth(Date date) {
 		if (date == null) {
 			return null;
@@ -413,12 +677,25 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return localDate.getDayOfMonth();
 	}
 
+	/**
+	 * Gets the remain days of month.
+	 *
+	 * @param date the date
+	 * @return the remain days of month
+	 */
 	public static int getRemainDaysOfMonth(Date date) {
 		final LocalDate monthEnd = localDate(getMonthEndOf(date));
 		final LocalDate now = localDate(date);
 		return monthEnd.getDayOfMonth() - now.getDayOfMonth() + 1;
 	}
 
+	/**
+	 * Month equals.
+	 *
+	 * @param d1 the d 1
+	 * @param d2 the d 2
+	 * @return true, if successful
+	 */
 	public static boolean monthEquals(Date d1, Date d2) {
 		if (d1 == null || d2 == null) {
 			return false;
@@ -428,6 +705,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return ld1.getYear() == ld2.getYear() && ld1.getMonthValue() == ld2.getMonthValue();
 	}
 
+	/**
+	 * Day equals.
+	 *
+	 * @param d1 the d 1
+	 * @param d2 the d 2
+	 * @return true, if successful
+	 */
 	public static boolean dayEquals(Date d1, Date d2) {
 		if (d1 == null || d2 == null) {
 			return false;
@@ -438,10 +722,23 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 				&& ld1.getDayOfMonth() == ld2.getDayOfMonth();
 	}
 
+	/**
+	 * Gets the now date str.
+	 *
+	 * @return the now date str
+	 */
 	public static String getNowDateStr() {
 		return toDefault(getNowDate());
 	}
 
+	/**
+	 * Checks if is during.
+	 *
+	 * @param time  the time
+	 * @param start the start
+	 * @param end   the end
+	 * @return true, if is during
+	 */
 	public static boolean isDuring(Date time, Date start, Date end) {
 		if (time == null) {
 			return false;
@@ -455,6 +752,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return true;
 	}
 
+	/**
+	 * Checks if is weekend.
+	 *
+	 * @param date the date
+	 * @return true, if is weekend
+	 */
 	public static boolean isWeekend(Date date) {
 		if (date == null) {
 			return false;
@@ -464,6 +767,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return DayOfWeek.SATURDAY.equals(dayOfWeek) || DayOfWeek.SUNDAY.equals(dayOfWeek);
 	}
 
+	/**
+	 * Gets the mid of date.
+	 *
+	 * @param date the date
+	 * @return the mid of date
+	 */
 	public static Date getMidOfDate(Date date) {
 		if (date == null) {
 			return null;
@@ -472,11 +781,25 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return toDate(localDateTime.withHour(12).withMinute(0).withSecond(0).withNano(0));
 	}
 
+	/**
+	 * Fix hour of date.
+	 *
+	 * @param date the date
+	 * @param hour the hour
+	 * @return the date
+	 */
 	public static Date fixHourOfDate(Date date, int hour) {
 		final LocalDateTime localDateTime = localDateTime(date);
 		return toDate(localDateTime.withHour(hour).withMinute(0).withSecond(0).withNano(0));
 	}
 
+	/**
+	 * Count weeks.
+	 *
+	 * @param start the start
+	 * @param end   the end
+	 * @return the integer
+	 */
 	public static Integer countWeeks(Date start, Date end) {
 		if (start == null || end == null || end.before(start)) {
 			return 0;
@@ -490,6 +813,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return weeks;
 	}
 
+	/**
+	 * Try parse.
+	 *
+	 * @param date    the date
+	 * @param formats the formats
+	 * @return the date
+	 */
 	public static Date tryParse(String date, String... formats) {
 		try {
 			return parseDate(date, formats);

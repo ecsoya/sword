@@ -19,15 +19,29 @@ import com.github.ecsoya.sword.system.service.ISysConfigService;
 import com.github.ecsoya.sword.task.domain.SwordTask;
 import com.github.ecsoya.sword.task.service.ISwordTaskService;
 
+/**
+ * The Class ProfitTaskImpl.
+ */
 @Service
 public class ProfitTaskImpl implements IProfitTask {
+
+	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(IProfitTask.class);
+
+	/** The config service. */
 	@Autowired
 	private ISysConfigService configService;
 
+	/** The task service. */
 	@Autowired
 	private ISwordTaskService taskService;
 
+	/**
+	 * Run.
+	 *
+	 * @param tasks the tasks
+	 * @throws TransactionException the transaction exception
+	 */
 	@Override
 	public void run(TaskRunner[] tasks) throws TransactionException {
 		if (!configService.checkBooleanConfigValue(IMiningConstants.USER_PROFIT_ENABLED)) {
@@ -37,6 +51,13 @@ public class ProfitTaskImpl implements IProfitTask {
 		run(tasks, DateUtils.getLastDayEnd());
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param tasks the tasks
+	 * @param date  the date
+	 * @throws TransactionException the transaction exception
+	 */
 	@Override
 	public void run(TaskRunner[] tasks, Date date) throws TransactionException {
 		log.debug("Sword > 调度任务时间：{}", DateUtils.toDefault(date));
@@ -63,6 +84,14 @@ public class ProfitTaskImpl implements IProfitTask {
 		}
 	}
 
+	/**
+	 * Schedule task.
+	 *
+	 * @param task   the task
+	 * @param runner the runner
+	 * @param date   the date
+	 * @return the int
+	 */
 	private int scheduleTask(SwordTask task, TaskRunner runner, Date date) {
 		if (task == null || runner == null) {
 			return 0;
