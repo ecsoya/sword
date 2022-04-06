@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>sword-module-api</artifactId>
 		<groupId>com.github.ecsoya.sword</groupId>
-		<version>1.0.7</version>
+		<version>1.0.8</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -38,7 +38,7 @@
 
 		<!-- 验证码 -->
 		<dependency>
-			<groupId>com.github.penggle</groupId>
+			<groupId>com.github.ecsoya</groupId>
 			<artifactId>kaptcha</artifactId>
 			<exclusions>
 				<exclusion>

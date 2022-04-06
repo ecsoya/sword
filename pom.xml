@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.ecsoya.sword</groupId>
 	<artifactId>sword</artifactId>
-	<version>1.0.7</version>
+	<version>1.0.8</version>
 	<packaging>pom</packaging>
 	<name>sword</name>
 	<description>Sword Spring Boot Development</description>
@@ -56,7 +56,7 @@
 
 			<!--验证码 -->
 			<dependency>
-				<groupId>com.github.penggle</groupId>
+				<groupId>com.github.ecsoya</groupId>
 				<artifactId>kaptcha</artifactId>
 				<version>${kaptcha.version}</version>
 			</dependency>
@@ -443,4 +443,10 @@
 			</roles>
 		</developer>
 	</developers>
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 </project>
