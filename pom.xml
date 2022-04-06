@@ -427,9 +427,6 @@
 
 
 	</modules>
-	<organization>
-		<name>Soyatec</name>
-	</organization>
 
 	<scm>
 		<developerConnection>AngryRED (angryred@qq.com)</developerConnection>
