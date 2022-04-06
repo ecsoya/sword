@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.github.ecsoya.sword</groupId>
     <artifactId>sword-module-api</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
   </parent>
   <artifactId>sword-code-javamail</artifactId>
   <name>sword-code-javamail</name>

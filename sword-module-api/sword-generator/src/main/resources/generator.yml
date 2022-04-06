@@ -9,3 +9,5 @@ gen:
   autoRemovePre: true
   # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
   tablePrefix: t_
+  # BaseEntity 包名前缀 com.github.ecsoya.sword(.common.core.domain.BaseEntity)
+  domainPackagePrefix: com.github.ecsoya.sword

@@ -49,6 +49,7 @@ public class VelocityUtils {
 		velocityContext.put("moduleName", genTable.getModuleName());
 		velocityContext.put("businessName", genTable.getBusinessName());
 		velocityContext.put("basePackage", getPackagePrefix(packageName));
+		velocityContext.put("domainPackagePrefix", GenConfig.getDomainPackagePrefix());
 		velocityContext.put("packageName", packageName);
 		velocityContext.put("author", genTable.getFunctionAuthor());
 		velocityContext.put("datetime", DateUtils.getDate());

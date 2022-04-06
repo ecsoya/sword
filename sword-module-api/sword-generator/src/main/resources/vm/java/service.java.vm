@@ -3,7 +3,7 @@ package ${packageName}.service;
 import java.util.List;
 import ${packageName}.domain.${ClassName};
 #if($table.tree)
-import com.github.ecsoya.sword.common.core.domain.Ztree;
+import ${domainPackagePrefix}.common.core.domain.Ztree;
 #end
 
 /**

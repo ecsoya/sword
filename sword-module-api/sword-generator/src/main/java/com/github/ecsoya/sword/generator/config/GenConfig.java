@@ -26,6 +26,8 @@ public class GenConfig {
 	/** 表前缀(类名不会包含表前缀) */
 	public static String tablePrefix;
 
+	private static String domainPackagePrefix;
+
 	public static String getAuthor() {
 		return author;
 	}
@@ -60,5 +62,14 @@ public class GenConfig {
 	@Value("${tablePrefix}")
 	public void setTablePrefix(String tablePrefix) {
 		GenConfig.tablePrefix = tablePrefix;
+	}
+
+	public static String getDomainPackagePrefix() {
+		return domainPackagePrefix;
+	}
+
+	@Value("${domainPackagePrefix}")
+	public void setDomainPackagePrefix(String domainPackagePrefix) {
+		GenConfig.domainPackagePrefix = domainPackagePrefix;
 	}
 }
